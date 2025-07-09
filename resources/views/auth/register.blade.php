@@ -9,6 +9,13 @@
             <x-input-error :messages="$errors->get('name')" class="mt-2" />
         </div>
 
+        <!-- NIM -->
+        <div class="mt-4">
+            <x-input-label for="nim" :value="__('NIM')" />
+            <x-text-input id="nim" class="block mt-1 w-full" type="text" name="nim" :value="old('nim')" required autocomplete="nim" />
+            <x-input-error :messages="$errors->get('nim')" class="mt-2" />
+        </div>
+
         <!-- Username -->
         <div class="mt-4">
             <x-input-label for="username" :value="__('Username')" />
@@ -19,7 +26,14 @@
         <!-- Program Studi -->
         <div class="mt-4">
             <x-input-label for="program_studi" :value="__('Program Studi')" />
-            <x-text-input id="program_studi" class="block mt-1 w-full" type="text" name="program_studi" :value="old('program_studi')" required />
+            <select id="program_studi" name="program_studi" class="block mt-1 w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm" required>
+                <option value="">Pilih Program Studi</option>
+                <option value="Teknik Informatika" {{ old('program_studi') == 'Teknik Informatika' ? 'selected' : '' }}>Teknik Informatika</option>
+                <option value="Sistem Informasi" {{ old('program_studi') == 'Sistem Informasi' ? 'selected' : '' }}>Sistem Informasi</option>
+                <option value="Teknologi Informasi" {{ old('program_studi') == 'Teknologi Informasi' ? 'selected' : '' }}>Teknologi Informasi</option>
+                <option value="Teknik Komputer" {{ old('program_studi') == 'Teknik Komputer' ? 'selected' : '' }}>Teknik Komputer</option>
+                <option value="Pendidikan Teknologi Informasi" {{ old('program_studi') == 'Pendidikan Teknologi Informasi' ? 'selected' : '' }}>Pendidikan Teknologi Informasi</option>
+            </select>
             <x-input-error :messages="$errors->get('program_studi')" class="mt-2" />
         </div>
 
@@ -33,21 +47,21 @@
         <!-- Nomor Telepon -->
         <div class="mt-4">
             <x-input-label for="nomor_telepon" :value="__('Nomor Telepon')" />
-            <x-text-input id="nomor_telepon" class="block mt-1 w-full" type="text" name="nomor_telepon" :value="old('nomor_telepon')" />
+            <x-text-input id="nomor_telepon" class="block mt-1 w-full" type="text" name="nomor_telepon" :value="old('nomor_telepon')" required />
             <x-input-error :messages="$errors->get('nomor_telepon')" class="mt-2" />
         </div>
 
         <!-- Tanggal Lahir -->
         <div class="mt-4">
             <x-input-label for="tanggal_lahir" :value="__('Tanggal Lahir')" />
-            <x-text-input id="tanggal_lahir" class="block mt-1 w-full" type="date" name="tanggal_lahir" :value="old('tanggal_lahir')" />
+            <x-text-input id="tanggal_lahir" class="block mt-1 w-full" type="date" name="tanggal_lahir" :value="old('tanggal_lahir')" required />
             <x-input-error :messages="$errors->get('tanggal_lahir')" class="mt-2" />
         </div>
 
         <!-- Jenis Kelamin -->
         <div class="mt-4">
             <x-input-label for="jenis_kelamin" :value="__('Jenis Kelamin')" />
-            <select id="jenis_kelamin" name="jenis_kelamin" class="block mt-1 w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm">
+            <select id="jenis_kelamin" name="jenis_kelamin" class="block mt-1 w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm" required>
                 <option value="">Pilih Jenis Kelamin</option>
                 <option value="Laki-laki" {{ old('jenis_kelamin') == 'Laki-laki' ? 'selected' : '' }}>Laki-laki</option>
                 <option value="Perempuan" {{ old('jenis_kelamin') == 'Perempuan' ? 'selected' : '' }}>Perempuan</option>

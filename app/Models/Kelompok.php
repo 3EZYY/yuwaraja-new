@@ -13,18 +13,18 @@ class Kelompok extends Model
 
     protected $fillable = [
         'nama_kelompok',
-        'penanggung_jawab_id',
+        'spv_id',
     ];
 
     // Relasi
-    public function mahasiswa()
+    public function spv()
     {
-        return $this->hasMany(User::class);
+        return $this->belongsTo(User::class, 'spv_id');
     }
 
-    public function penanggungjawab()
+    public function mahasiswa()
     {
-        return $this->belongsTo(User::class, 'penanggung_jawab_id');
+        return $this->hasMany(User::class, 'kelompok_id');
     }
 
     public function pengumpulanTugas()

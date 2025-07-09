@@ -31,18 +31,33 @@ class RegisteredUserController extends Controller
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
+            'nim' => ['required', 'string', 'unique:'.User::class], // Wajib diisi saat register
             'username' => ['required', 'string', 'max:255', 'unique:'.User::class],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
+            'email' => [
+                'required',
+                'string',
+                'lowercase',
+                'email',
+                'max:255',
+                'unique:'.User::class,
+                // ATURAN BARU DI SINI
+                function ($attribute, $value, $fail) {
+                    if (!(str_ends_with($value, '@gmail.com') || str_ends_with($value, '@student.ub.ac.id'))) {
+                        $fail('Alamat email harus menggunakan @gmail.com atau @student.ub.ac.id.');
+                    }
+                }
+            ],
             'program_studi' => ['required', 'string', 'max:255'],
             'angkatan' => ['required', 'string', 'max:255'],
-            'nomor_telepon' => ['nullable', 'string', 'max:255'],
-            'tanggal_lahir' => ['nullable', 'date'],
-            'jenis_kelamin' => ['nullable', 'string', 'in:Laki-laki,Perempuan'],
+            'nomor_telepon' => ['required', 'string', 'max:255'], // Tambahan 'required'
+            'tanggal_lahir' => ['required', 'date'], // Tambahan 'required'
+            'jenis_kelamin' => ['required', 'string', 'in:Laki-laki,Perempuan'], // Tambahan 'required'
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
         $user = User::create([
             'name' => $request->name,
+            'nim' => $request->nim,
             'username' => $request->username,
             'email' => $request->email,
             'program_studi' => $request->program_studi,

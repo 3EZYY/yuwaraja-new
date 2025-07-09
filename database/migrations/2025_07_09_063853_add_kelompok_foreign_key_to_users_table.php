@@ -11,11 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('kelompok', function (Blueprint $table) {
-            $table->id();
-            $table->string('nama_kelompok')->unique();
-            $table->foreignId('penanggung_jawab_id')->nullable()->constrained('users')->onDelete('set null');
-            $table->timestamps();
+        Schema::table('users', function (Blueprint $table) {
+            //
         });
     }
 
@@ -24,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('kelompok');
+        Schema::table('users', function (Blueprint $table) {
+            //
+        });
     }
 };

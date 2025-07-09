@@ -12,6 +12,7 @@ class AdminUserSeeder extends Seeder
     {
         User::create([
             'name' => 'Admin Yuwaraja',
+            'nim' => '000000000', // NIM khusus untuk admin
             'username' => 'admin',
             'email' => 'admin@yuwaraja.com',
             'program_studi' => 'Sistem Informasi',

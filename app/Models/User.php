@@ -21,6 +21,7 @@ class User extends Authenticatable implements FilamentUser
      */
     protected $fillable = [
         'name',
+        'nim',
         'username',
         'email', 
         'password',
@@ -69,11 +70,16 @@ class User extends Authenticatable implements FilamentUser
     // Relasi dengan model lain
     public function kelompok()
     {
-        return $this->belongsTo(Kelompok::class);
+        return $this->belongsTo(Kelompok::class, 'kelompok_id');
     }
 
-    public function penanggungjawab()
+    public function spv()
     {
-        return $this->hasMany(Kelompok::class, 'penanggung_jawab_id');
+        return $this->belongsTo(\App\Models\User::class, 'spv_id');
+    }
+
+    public function mahasiswa()
+    {
+        return $this->hasMany(\App\Models\User::class, 'kelompok_id');
     }
 }
