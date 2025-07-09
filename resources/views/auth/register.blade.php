@@ -12,8 +12,8 @@
         <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6">
             <!-- Name -->
             <div class="form-field" style="animation-delay: 1.0s;">
-                <x-input-label for="name" value="Full Name" class="mb-1 text-sm text-cyan-300 tracking-wide" />
-                <x-text-input id="name" class="cyber-input" type="text" name="name" :value="old('name')" required
+                <x-input-label for="name" value="Nama Lengkap" class="mb-1 text-sm text-cyan-300 tracking-wide" />
+                <x-text-input id="name" class="cyber-input" type="text" name="name" :value="old('name')" placeholder="Masukan Nama Lengkap" required
                     autofocus autocomplete="name" />
                 <x-input-error :messages="$errors->get('name')" class="mt-2 text-pink-400 text-xs" />
             </div>
@@ -21,26 +21,26 @@
             <!-- NIM -->
             <div class="form-field" style="animation-delay: 1.0s;">
                 <x-input-label for="nim" value="NIM" class="mb-1 text-sm text-cyan-300 tracking-wide" />
-                <x-text-input id="nim" class="cyber-input" type="text" name="nim" :value="old('nim')" required
+                <x-text-input id="nim" class="cyber-input" type="text" name="nim" :value="old('nim')" required placeholder="Masukan NIM"
                     autocomplete="nim" />
                 <x-input-error :messages="$errors->get('nim')" class="mt-2 text-pink-400 text-xs" />
             </div>
 
             <!-- Username -->
             <div class="form-field" style="animation-delay: 1.1s;">
-                <x-input-label for="username" value="Agent ID (Username)"
+                <x-input-label for="username" value="Username"
                     class="mb-1 text-sm text-cyan-300 tracking-wide" />
-                <x-text-input id="username" class="cyber-input" type="text" name="username" :value="old('username')"
+                <x-text-input id="username" class="cyber-input" type="text" name="username" :value="old('username')" placeholder="Masukan Username"
                     required autocomplete="username" />
                 <x-input-error :messages="$errors->get('username')" class="mt-2 text-pink-400 text-xs" />
             </div>
 
             <!-- Program Studi -->
             <div class="form-field" style="animation-delay: 1.1s;">
-                <x-input-label for="program_studi" value="Specialization"
+                <x-input-label for="program_studi" value="Program Studi"
                     class="mb-1 text-sm text-cyan-300 tracking-wide" />
                 <select id="program_studi" name="program_studi" class="cyber-input cyber-select" required>
-                    <option value="" disabled {{ old('program_studi') ? '' : 'selected' }}>Select Specialization...
+                    <option value="" disabled {{ old('program_studi') ? '' : 'selected' }}>Pilih Program Studi</option>
                     </option>
                     <option value="D4 Manajemen Perhotelan"
                         {{ old('program_studi') == 'D4 Manajemen Perhotelan' ? 'selected' : '' }}>D4 Manajemen
@@ -62,25 +62,28 @@
 
             <!-- Angkatan -->
             <div class="form-field" style="animation-delay: 1.2s;">
-                <x-input-label for="angkatan" value="Batch (e.g., 2025)"
+                <x-input-label for="angkatan" value="Angkatan"
                     class="mb-1 text-sm text-cyan-300 tracking-wide" />
                 <x-text-input id="angkatan" class="cyber-input" type="text" name="angkatan" :value="old('angkatan')"
+                    pattern="\d{4}" title="Angkatan harus berupa 4 digit angka"
+                    autocomplete="off" minlength="4" maxlength="4"
+                    placeholder="Masukan Angkatan"
                     required />
                 <x-input-error :messages="$errors->get('angkatan')" class="mt-2 text-pink-400 text-xs" />
             </div>
 
             <!-- Nomor Telepon -->
             <div class="form-field" style="animation-delay: 1.2s;">
-                <x-input-label for="nomor_telepon" value="Comms Number (Phone)"
+                <x-input-label for="nomor_telepon" value="Nomor Telepon"
                     class="mb-1 text-sm text-cyan-300 tracking-wide" />
                 <x-text-input id="nomor_telepon" class="cyber-input" type="text" name="nomor_telepon"
-                    :value="old('nomor_telepon')" required />
+                    :value="old('nomor_telepon')" required placeholder="Masukan Nomor Telepon" />
                 <x-input-error :messages="$errors->get('nomor_telepon')" class="mt-2 text-pink-400 text-xs" />
             </div>
 
             <!-- Tanggal Lahir -->
             <div class="form-field" style="animation-delay: 1.3s;">
-                <x-input-label for="tanggal_lahir" value="Manufacture Date"
+                <x-input-label for="tanggal_lahir" value="Tanggal Lahir"
                     class="mb-1 text-sm text-cyan-300 tracking-wide" />
                 <x-text-input id="tanggal_lahir" class="cyber-input" type="date" name="tanggal_lahir"
                     :value="old('tanggal_lahir')" required />
@@ -89,9 +92,9 @@
 
             <!-- Jenis Kelamin -->
             <div class="form-field" style="animation-delay: 1.3s;">
-                <x-input-label for="jenis_kelamin" value="Model" class="mb-1 text-sm text-cyan-300 tracking-wide" />
+                <x-input-label for="jenis_kelamin" value="Jenis Kelamin" class="mb-1 text-sm text-cyan-300 tracking-wide" />
                 <select id="jenis_kelamin" name="jenis_kelamin" class="cyber-input cyber-select" required>
-                    <option value="" disabled {{ old('jenis_kelamin') ? '' : 'selected' }}>Select Model...</option>
+                    <option value="" disabled {{ old('jenis_kelamin') ? '' : 'selected' }}>Pilih Jenis Kelamin</option>
                     <option value="Laki-laki" {{ old('jenis_kelamin') == 'Laki-laki' ? 'selected' : '' }}>Model L
                     </option>
                     <option value="Perempuan" {{ old('jenis_kelamin') == 'Perempuan' ? 'selected' : '' }}>Model P
@@ -103,9 +106,9 @@
 
         <!-- Email Address -->
         <div class="form-field" style="animation-delay: 1.4s;">
-            <x-input-label for="email" value="Official Email" class="mb-1 text-sm text-cyan-300 tracking-wide" />
+            <x-input-label for="email" value="Email" class="mb-1 text-sm text-cyan-300 tracking-wide" />
             <x-text-input id="email" class="cyber-input" type="email" name="email" :value="old('email')" required
-                autocomplete="username" />
+                autocomplete="username" placeholder="Masukan Email" />
             <x-input-error :messages="$errors->get('email')" class="mt-2 text-pink-400 text-xs" />
         </div>
 
@@ -113,33 +116,33 @@
         <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6">
             <!-- Password -->
             <div class="form-field" style="animation-delay: 1.5s;">
-                <x-input-label for="password" value="Set Access Key (Password)"
+                <x-input-label for="password" value="Password"
                     class="mb-1 text-sm text-cyan-300 tracking-wide" />
                 <x-text-input id="password" class="cyber-input" type="password" name="password" required
-                    autocomplete="new-password" />
+                    autocomplete="new-password" placeholder="Masukan Password" />
                 <x-input-error :messages="$errors->get('password')" class="mt-2 text-pink-400 text-xs" />
             </div>
 
             <!-- Confirm Password -->
             <div class="form-field" style="animation-delay: 1.5s;">
-                <x-input-label for="password_confirmation" value="Confirm Access Key"
+                <x-input-label for="password_confirmation" value="Konfirmasi Password"
                     class="mb-1 text-sm text-cyan-300 tracking-wide" />
                 <x-text-input id="password_confirmation" class="cyber-input" type="password"
-                    name="password_confirmation" required autocomplete="new-password" />
+                    name="password_confirmation" required autocomplete="new-password" placeholder="Masukan Konfirmasi Password" />
                 <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2 text-pink-400 text-xs" />
             </div>
         </div>
 
         <x-primary-button
             class="w-full flex justify-center items-center bg-pink-500 hover:bg-pink-600 text-white font-bold uppercase tracking-wider transform hover:scale-105 transition-all duration-300 shadow-[0_0_15px_rgba(236,72,153,0.6)] hover:shadow-[0_0_25px_rgba(236,72,153,0.8)] focus:bg-pink-700 focus:ring-pink-500 border-none px-6 py-3">
-            {{ __('Submit Registration') }}
+            {{ __('Daftar') }}
         </x-primary-button>
 
         <div class="flex items-center justify-center mt-4 form-field w-full" style="animation-delay: 1.6s;">
-            Already have an ID?
+            Sudah Punya Akun?
             <a class="font-bold underline text-pink-400 hover:text-pink-300 rounded-md focus:outline-none transition px-2"
                 href="{{ route('login') }}">
-                {{ __('Login') }}
+                {{ __('Masuk') }}
             </a>
         </div>
     </form>

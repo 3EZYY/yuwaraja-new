@@ -11,6 +11,7 @@
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Rajdhani:wght@400;700&display=swap" rel="stylesheet">
+
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
         @if (!file_exists(public_path('build/manifest.json')))
@@ -80,6 +81,7 @@
             .corner.bottom-left { bottom: -1px; left: -1px; border-width: 0 0 2px 2px; }
             .corner.bottom-right { bottom: -1px; right: -1px; border-width: 0 2px 2px 0; }
 
+            /* === FORM STYLING (SANGAT PENTING!) === */
             .form-field {
                 position: relative;
                 margin-bottom: 1.5rem; /* 24px */
@@ -101,6 +103,7 @@
                 box-shadow: 0 0 10px rgba(255, 0, 221, 0.5) !important;
                 --tw-ring-shadow: 0 0 #0000 !important;
             }
+            /* FIX UNTUK BROWSER AUTOFILL (background jadi aneh) */
             .cyber-input:-webkit-autofill,
             .cyber-input:-webkit-autofill:hover, 
             .cyber-input:-webkit-autofill:focus, 
