@@ -14,9 +14,17 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('username')->unique();
             $table->string('email')->unique();
+            $table->string('program_studi');
+            $table->string('angkatan');
+            $table->string('nomor_telepon')->nullable();
+            $table->date('tanggal_lahir')->nullable();
+            $table->enum('jenis_kelamin', ['Laki-laki', 'Perempuan'])->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->enum('role', ['admin', 'spv_admin', 'spv', 'mahasiswa'])->default('mahasiswa');
+            $table->unsignedBigInteger('kelompok_id')->nullable(); // Ini akan menjadi foreign key
             $table->rememberToken();
             $table->timestamps();
         });
