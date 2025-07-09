@@ -33,6 +33,8 @@
             </div>
 
             <x-input-error :messages="$errors->get('login')" class="mt-2 text-pink-400" />
+            <x-input-error :messages="$errors->get('email')" class="mt-2 text-pink-400" />
+            <x-input-error :messages="$errors->get('username')" class="mt-2 text-pink-400" />
         </div>
 
         <!-- Password -->

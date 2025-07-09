@@ -41,17 +41,25 @@ class LoginRequest extends FormRequest
     {
         $this->ensureIsNotRateLimited();
 
+        // 1. Ambil input dari field 'login' yang kita buat di view
         $login = $this->input('login');
+        $password = $this->input('password');
+        $remember = $this->boolean('remember');
+
+        // 2. Tentukan apakah inputnya adalah email atau username
         $field = filter_var($login, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
-        
+
+        // 3. Siapkan kredensial untuk dicoba oleh Auth::attempt()
         $credentials = [
             $field => $login,
-            'password' => $this->input('password')
+            'password' => $password
         ];
 
-        if (! Auth::attempt($credentials, $this->boolean('remember'))) {
+        // 4. Coba login HANYA SEKALI dengan kredensial yang tepat
+        if (! Auth::attempt($credentials, $remember)) {
             RateLimiter::hit($this->throttleKey());
 
+            // Lempar error jika gagal
             throw ValidationException::withMessages([
                 'login' => trans('auth.failed'),
             ]);
@@ -89,5 +97,25 @@ class LoginRequest extends FormRequest
     public function throttleKey(): string
     {
         return Str::transliterate(Str::lower($this->string('login')).'|'.$this->ip());
+    }
+
+    /**
+     * Get the path to redirect to after successful login.
+     *
+     * @return string
+     */
+    public function redirectPath(): string
+    {
+        $user = Auth::user();
+        
+        // Jika role user adalah 'admin'
+        if ($user->role === 'admin') {
+            // Arahkan ke URL panel admin Filament
+            return '/admin';
+        }
+        
+        // Untuk semua role lain (mahasiswa, spv)
+        // Arahkan ke dashboard standar
+        return '/dashboard';
     }
 }

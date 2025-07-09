@@ -63,8 +63,8 @@ class User extends Authenticatable implements FilamentUser
      */
     public function canAccessPanel(Panel $panel): bool
     {
-        // Hanya user dengan role 'admin' atau 'spv' yang bisa masuk panel admin
-        return in_array($this->role, ['admin', 'spv']);
+        // Hanya user dengan role 'admin' yang bisa masuk panel admin
+        return $this->role === 'admin';
     }
 
     // Relasi dengan model lain

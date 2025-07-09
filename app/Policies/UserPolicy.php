@@ -68,4 +68,12 @@ class UserPolicy
     {
         return $user->role === 'admin';
     }
+
+    /**
+     * Determine whether the user can access the admin panel.
+     */
+    public function canAccessPanel(User $user): bool
+    {
+        return $user->role === 'admin';
+    }
 }
