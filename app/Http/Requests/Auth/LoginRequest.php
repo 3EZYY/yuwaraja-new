@@ -106,14 +106,8 @@ class LoginRequest extends FormRequest
      */
     public function redirectPath(): string
     {
-        $user = Auth::user();
-        
-        // Redirect berdasarkan role ke dashboard masing-masing
-        return match($user->role) {
-            'admin' => '/admin',  // Ke Filament admin panel
-            'spv' => '/spv/dashboard',
-            'mahasiswa' => '/mahasiswa/dashboard',
-            default => '/dashboard'
-        };
+        // Semua user diarahkan ke /dashboard, 
+        // lalu di route /dashboard akan di-redirect berdasarkan role
+        return '/dashboard';
     }
 }

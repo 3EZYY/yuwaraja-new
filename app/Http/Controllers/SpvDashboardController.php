@@ -27,7 +27,7 @@ class SpvDashboardController extends Controller
         // Statistik
         $totalKelompok = $kelompokDibimbing->count();
         $totalMahasiswa = $mahasiswaDibimbing->count();
-        $tugasSelesai = PengumpulanTugas::whereIn('user_id', $mahasiswaDibimbing->pluck('id'))->count();
+        $tugasSelesai = PengumpulanTugas::whereIn('kelompok_id', $kelompokDibimbing->pluck('id'))->count();
 
         return view('spv.dashboard', compact(
             'user', 
@@ -54,10 +54,9 @@ class SpvDashboardController extends Controller
     {
         $user = Auth::user();
         $kelompokDibimbing = Kelompok::where('spv_id', $user->id)->get();
-        $mahasiswaDibimbing = User::whereIn('kelompok_id', $kelompokDibimbing->pluck('id'))->get();
         
-        $pengumpulanTugas = PengumpulanTugas::whereIn('user_id', $mahasiswaDibimbing->pluck('id'))
-            ->with(['user', 'tugas'])
+        $pengumpulanTugas = PengumpulanTugas::whereIn('kelompok_id', $kelompokDibimbing->pluck('id'))
+            ->with(['kelompok', 'tugas'])
             ->latest()
             ->get();
         

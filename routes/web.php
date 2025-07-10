@@ -25,7 +25,7 @@ Route::get('/dashboard', function () {
     }
     
     return match($user->role) {
-        'admin' => redirect('/admin'),  // Ke Filament admin panel
+        'admin' => redirect('/admin/dashboard'),  // Ke Filament admin panel
         'spv' => redirect('/spv/dashboard'),
         'mahasiswa' => redirect('/mahasiswa/dashboard'),
         default => redirect('/login')
