@@ -66,7 +66,7 @@ class RegisteredUserController extends Controller
             'tanggal_lahir' => $request->tanggal_lahir,
             'jenis_kelamin' => $request->jenis_kelamin,
             'password' => Hash::make($request->password),
-            'role' => 'mahasiswa', // Default role untuk registrasi baru
+            'role' => 'mahasiswa', 
         ]);
 
         event(new Registered($user));
