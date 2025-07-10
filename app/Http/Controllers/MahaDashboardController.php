@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\RedirectResponse;
 
-class MahaDashboardController extends Controller
+class MahasiswaDashboardController extends Controller
 {
     public function index()
     {
@@ -20,7 +20,7 @@ class MahaDashboardController extends Controller
         $jadwal = JadwalAcara::where('tanggal_mulai', '>=', now())->orderBy('tanggal_mulai')->get();
         $tugas = Tugas::all();
 
-        return view('dashboard', compact('user', 'pengumuman', 'jadwal', 'tugas'));
+        return view('mahasiswa.dashboard', compact('user', 'pengumuman', 'jadwal', 'tugas'));
     }
 
     public function showTugas(Tugas $tugas)
@@ -32,7 +32,7 @@ class MahaDashboardController extends Controller
             ->where('tugas_id', $tugas->id)
             ->first();
 
-        return view('maba.show-tugas', compact('tugas', 'pengumpulan'));
+        return view('mahasiswa.show-tugas', compact('tugas', 'pengumpulan'));
     }
 
     public function submitTugas(Request $request, Tugas $tugas): RedirectResponse
