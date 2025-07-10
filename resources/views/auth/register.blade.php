@@ -15,7 +15,7 @@
                 <x-input-label for="name" value="Nama Lengkap" class="mb-1 text-sm text-cyan-300 tracking-wide" />
                 <x-text-input id="name" class="cyber-input" type="text" name="name" :value="old('name')" placeholder="Masukan Nama Lengkap" required
                     autofocus autocomplete="name" />
-                <x-input-error :messages="$errors->get('name')" class="mt-2 text-pink-400 text-xs" />
+                <x-input-error :messages="$errors->get('name')" class="mt-2 text-yellow-400 text-xs" />
             </div>
 
             <!-- NIM -->
@@ -23,7 +23,7 @@
                 <x-input-label for="nim" value="NIM" class="mb-1 text-sm text-cyan-300 tracking-wide" />
                 <x-text-input id="nim" class="cyber-input" type="text" name="nim" :value="old('nim')" required placeholder="Masukan NIM"
                     autocomplete="nim" />
-                <x-input-error :messages="$errors->get('nim')" class="mt-2 text-pink-400 text-xs" />
+                <x-input-error :messages="$errors->get('nim')" class="mt-2 text-yellow-400 text-xs" />
             </div>
 
             <!-- Username -->
@@ -32,7 +32,7 @@
                     class="mb-1 text-sm text-cyan-300 tracking-wide" />
                 <x-text-input id="username" class="cyber-input" type="text" name="username" :value="old('username')" placeholder="Masukan Username"
                     required autocomplete="username" />
-                <x-input-error :messages="$errors->get('username')" class="mt-2 text-pink-400 text-xs" />
+                <x-input-error :messages="$errors->get('username')" class="mt-2 text-yellow-400 text-xs" />
             </div>
 
             <!-- Program Studi -->
@@ -57,7 +57,7 @@
                         {{ old('program_studi') == 'D3 Teknologi Informasi' ? 'selected' : '' }}>D3 Teknologi Informasi
                     </option>
                 </select>
-                <x-input-error :messages="$errors->get('program_studi')" class="mt-2 text-pink-400 text-xs" />
+                <x-input-error :messages="$errors->get('program_studi')" class="mt-2 text-yellow-400 text-xs" />
             </div>
 
             <!-- Angkatan -->
@@ -69,7 +69,7 @@
                     autocomplete="off" minlength="4" maxlength="4"
                     placeholder="Masukan Angkatan"
                     required />
-                <x-input-error :messages="$errors->get('angkatan')" class="mt-2 text-pink-400 text-xs" />
+                <x-input-error :messages="$errors->get('angkatan')" class="mt-2 text-yellow-400 text-xs" />
             </div>
 
             <!-- Nomor Telepon -->
@@ -78,7 +78,7 @@
                     class="mb-1 text-sm text-cyan-300 tracking-wide" />
                 <x-text-input id="nomor_telepon" class="cyber-input" type="text" name="nomor_telepon"
                     :value="old('nomor_telepon')" required placeholder="Masukan Nomor Telepon" />
-                <x-input-error :messages="$errors->get('nomor_telepon')" class="mt-2 text-pink-400 text-xs" />
+                <x-input-error :messages="$errors->get('nomor_telepon')" class="mt-2 text-yellow-400 text-xs" />
             </div>
 
             <!-- Tanggal Lahir -->
@@ -87,7 +87,7 @@
                     class="mb-1 text-sm text-cyan-300 tracking-wide" />
                 <x-text-input id="tanggal_lahir" class="cyber-input" type="date" name="tanggal_lahir"
                     :value="old('tanggal_lahir')" required />
-                <x-input-error :messages="$errors->get('tanggal_lahir')" class="mt-2 text-pink-400 text-xs" />
+                <x-input-error :messages="$errors->get('tanggal_lahir')" class="mt-2 text-yellow-400 text-xs" />
             </div>
 
             <!-- Jenis Kelamin -->
@@ -100,7 +100,7 @@
                     <option value="Perempuan" {{ old('jenis_kelamin') == 'Perempuan' ? 'selected' : '' }}>Model P
                     </option>
                 </select>
-                <x-input-error :messages="$errors->get('jenis_kelamin')" class="mt-2 text-pink-400 text-xs" />
+                <x-input-error :messages="$errors->get('jenis_kelamin')" class="mt-2 text-yellow-400 text-xs" />
             </div>
         </div>
 
@@ -109,7 +109,7 @@
             <x-input-label for="email" value="Email" class="mb-1 text-sm text-cyan-300 tracking-wide" />
             <x-text-input id="email" class="cyber-input" type="email" name="email" :value="old('email')" required
                 autocomplete="username" placeholder="Masukan Email" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2 text-pink-400 text-xs" />
+            <x-input-error :messages="$errors->get('email')" class="mt-2 text-yellow-400 text-xs" />
         </div>
 
         {{-- Layout Grid untuk Password --}}
@@ -120,7 +120,7 @@
                     class="mb-1 text-sm text-cyan-300 tracking-wide" />
                 <x-text-input id="password" class="cyber-input" type="password" name="password" required
                     autocomplete="new-password" placeholder="Masukan Password" />
-                <x-input-error :messages="$errors->get('password')" class="mt-2 text-pink-400 text-xs" />
+                <x-input-error :messages="$errors->get('password')" class="mt-2 text-yellow-400 text-xs" />
             </div>
 
             <!-- Confirm Password -->
@@ -129,18 +129,18 @@
                     class="mb-1 text-sm text-cyan-300 tracking-wide" />
                 <x-text-input id="password_confirmation" class="cyber-input" type="password"
                     name="password_confirmation" required autocomplete="new-password" placeholder="Masukan Konfirmasi Password" />
-                <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2 text-pink-400 text-xs" />
+                <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2 text-yellow-400 text-xs" />
             </div>
         </div>
 
         <x-primary-button
-            class="w-full flex justify-center items-center bg-pink-500 hover:bg-pink-600 text-white font-bold uppercase tracking-wider transform hover:scale-105 transition-all duration-300 shadow-[0_0_15px_rgba(236,72,153,0.6)] hover:shadow-[0_0_25px_rgba(236,72,153,0.8)] focus:bg-pink-700 focus:ring-pink-500 border-none px-6 py-3">
+            class="w-full flex justify-center items-center bg-yellow-500 hover:bg-yellow-600 text-white font-bold uppercase tracking-wider transform hover:scale-105 transition-all duration-300 shadow-[0_0_15px_rgba(247,212,38,0.6)] hover:shadow-[0_0_25px_rgba(247,212,38,0.8)] focus:bg-yellow-700 focus:ring-yellow-500 border-none px-6 py-3">
             {{ __('Daftar') }}
         </x-primary-button>
             
         <div class="flex items-center justify-center mt-4 form-field w-full" style="animation-delay: 1.6s;">
             Sudah Punya Akun?
-            <a class="font-bold underline text-pink-400 hover:text-pink-300 rounded-md focus:outline-none transition px-2"
+            <a class="font-bold underline text-yellow-400 hover:text-yellow-300 rounded-md focus:outline-none transition px-2"
                 href="{{ route('login') }}">
                 {{ __('Masuk') }}
             </a>
