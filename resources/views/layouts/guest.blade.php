@@ -38,7 +38,7 @@
                 position: absolute; inset: 0;
                 background-image:
                     linear-gradient(rgba(0, 255, 255, 0.07) 1px, transparent 1px),
-                    linear-gradient(90deg, rgba(255, 0, 221, 0.07) 1px, transparent 1px);
+                    linear-gradient(90deg, rgba(240, 200, 8, 0.07) 1px, transparent 1px);
                 background-size: 40px 40px;
                 animation: pan-grid 60s linear infinite;
             }
@@ -51,7 +51,7 @@
                 background: rgba(13, 12, 34, 0.7);
                 backdrop-filter: blur(12px);
                 border: 1px solid rgba(0, 225, 255, 0.2);
-                box-shadow: 0 0 40px rgba(236, 72, 153, 0.15);
+                box-shadow: 0 0 40px rgba(247, 212, 38, 0.15);
                 position: relative;
                 overflow: hidden;
                 animation: float-in 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
@@ -72,7 +72,7 @@
             
             .corner {
                 position: absolute; width: 15px; height: 15px;
-                border-color: #ff00dd; border-style: solid;
+                border-color: #F7D426; border-style: solid;
                 opacity: 0; animation: show-borders 1s forwards 1s;
             }
             @keyframes show-borders { to { opacity: 0.8; } }
@@ -99,8 +99,8 @@
             }
             .cyber-input:focus {
                 outline: none !important;
-                border-color: #ff00dd !important;
-                box-shadow: 0 0 10px rgba(255, 0, 221, 0.5) !important;
+                border-color: #F7D426 !important;
+                box-shadow: 0 0 10px rgba(240, 200, 8, 0.5) !important;
                 --tw-ring-shadow: 0 0 #0000 !important;
             }
             /* FIX UNTUK BROWSER AUTOFILL (background jadi aneh) */
@@ -111,7 +111,7 @@
                 -webkit-box-shadow: 0 0 0 30px #1a0f2e inset !important;
                 -webkit-text-fill-color: #e0e0e0 !important;
                 caret-color: #e0e0e0 !important;
-                border-color: #ff00dd !important;
+                border-color: #F7D426 !important;
             }
 
             /* === CUSTOM SELECT/DROPDOWN === */
@@ -160,10 +160,11 @@
                 
                 <div class="text-center mb-8 opacity-0" style="animation: float-in 1s forwards 0.5s;">
                     <a href="/">
+                        <img src="{{ asset('images/logo.svg') }}" alt="Logo Yuwaraaja" class="mx-auto mb-4 w-24 h-24">
                         <h1 class="text-3xl md:text-4xl font-orbitron font-black uppercase text-white">
                             YUWARAJA <span class="text-cyan-400">2025</span>
                         </h1>
-                        <p class="text-pink-400 text-sm tracking-[0.3em]">PKKMB VOKASI UB</p>
+                        <p class="text-yellow-400 text-sm tracking-[0.3em]">PKKMB VOKASI UB</p>
                     </a>
                 </div>
 
