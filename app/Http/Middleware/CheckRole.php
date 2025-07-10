@@ -29,7 +29,7 @@ class CheckRole
 
         // Redirect berdasarkan role user
         return match($user->role) {
-            'admin' => redirect('/admin'),
+            'admin' => redirect('/admin/dashboard'),
             'spv' => redirect('/spv/dashboard'),
             'mahasiswa' => redirect('/mahasiswa/dashboard'),
             default => redirect('/login')

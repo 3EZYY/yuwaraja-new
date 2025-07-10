@@ -108,14 +108,12 @@ class LoginRequest extends FormRequest
     {
         $user = Auth::user();
         
-        // Jika role user adalah 'admin'
-        if ($user->role === 'admin') {
-            // Arahkan ke URL panel admin Filament
-            return '/admin';
-        }
-        
-        // Untuk semua role lain (mahasiswa, spv)
-        // Arahkan ke dashboard standar
-        return '/dashboard';
+        // Redirect berdasarkan role ke dashboard masing-masing
+        return match($user->role) {
+            'admin' => '/admin',  // Ke Filament admin panel
+            'spv' => '/spv/dashboard',
+            'mahasiswa' => '/mahasiswa/dashboard',
+            default => '/dashboard'
+        };
     }
 }

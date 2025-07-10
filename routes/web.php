@@ -3,10 +3,14 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\MahasiswaDashboardController;
 use App\Http\Controllers\SpvDashboardController;
-use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\TugasController;
+use App\Http\Controllers\Api\ValidationController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+
+// API Routes untuk validasi real-time
+Route::get('/api/check-username', [ValidationController::class, 'checkUsername']);
+Route::get('/api/check-email', [ValidationController::class, 'checkEmail']);
 
 Route::get('/', function () {
     return view('welcome');
@@ -21,22 +25,12 @@ Route::get('/dashboard', function () {
     }
     
     return match($user->role) {
-        'admin' => redirect('/admin/dashboard'),
+        'admin' => redirect('/admin'),  // Ke Filament admin panel
         'spv' => redirect('/spv/dashboard'),
         'mahasiswa' => redirect('/mahasiswa/dashboard'),
         default => redirect('/login')
     };
 })->middleware(['auth', 'verified'])->name('dashboard');
-
-// Routes untuk ADMIN
-Route::middleware(['auth', 'verified', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
-    Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
-    Route::get('/users', [AdminDashboardController::class, 'users'])->name('users');
-    Route::get('/kelompok', [AdminDashboardController::class, 'kelompok'])->name('kelompok');
-    Route::get('/tugas', [AdminDashboardController::class, 'tugas'])->name('tugas');
-    Route::get('/pengumuman', [AdminDashboardController::class, 'pengumuman'])->name('pengumuman');
-    Route::get('/jadwal', [AdminDashboardController::class, 'jadwal'])->name('jadwal');
-});
 
 // Routes untuk SPV
 Route::middleware(['auth', 'verified', 'role:spv'])->prefix('spv')->name('spv.')->group(function () {
@@ -56,6 +50,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+// API validation routes
+Route::prefix('api')->group(function () {
+    Route::get('/validate-username', [ValidationController::class, 'validateUsername'])->name('validate.username');
+    Route::get('/validate-email', [ValidationController::class, 'validateEmail'])->name('validate.email');
 });
 
 require __DIR__.'/auth.php';

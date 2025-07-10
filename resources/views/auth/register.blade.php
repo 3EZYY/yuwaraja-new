@@ -147,3 +147,128 @@
         </div>
     </form>
 </x-guest-layout>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.querySelector('form');
+    const usernameInput = document.getElementById('username');
+    const emailInput = document.getElementById('email');
+    
+    // Create validation message elements
+    function createValidationMessage(inputId) {
+        const input = document.getElementById(inputId);
+        const messageEl = document.createElement('div');
+        messageEl.id = `${inputId}-validation-message`;
+        messageEl.className = 'mt-1 text-xs';
+        input.parentNode.appendChild(messageEl);
+        return messageEl;
+    }
+    
+    const usernameMessage = createValidationMessage('username');
+    const emailMessage = createValidationMessage('email');
+    
+    // Debounce function
+    function debounce(func, wait) {
+        let timeout;
+        return function executedFunction(...args) {
+            const later = () => {
+                clearTimeout(timeout);
+                func(...args);
+            };
+            clearTimeout(timeout);
+            timeout = setTimeout(later, wait);
+        };
+    }
+    
+    // Check username availability
+    const checkUsername = debounce(async function(username) {
+        if (username.length < 3) {
+            usernameMessage.textContent = '';
+            return;
+        }
+        
+        try {
+            const response = await fetch(`/api/check-username?username=${encodeURIComponent(username)}`);
+            const data = await response.json();
+            
+            if (data.available) {
+                usernameMessage.textContent = '✓ ' + data.message;
+                usernameMessage.className = 'mt-1 text-xs text-green-400';
+            } else {
+                usernameMessage.textContent = '✗ ' + data.message;
+                usernameMessage.className = 'mt-1 text-xs text-red-400';
+            }
+        } catch (error) {
+            console.error('Error checking username:', error);
+        }
+    }, 500);
+    
+    // Check email availability
+    const checkEmail = debounce(async function(email) {
+        if (!email.includes('@')) {
+            emailMessage.textContent = '';
+            return;
+        }
+        
+        try {
+            const response = await fetch(`/api/check-email?email=${encodeURIComponent(email)}`);
+            const data = await response.json();
+            
+            if (data.available) {
+                emailMessage.textContent = '✓ ' + data.message;
+                emailMessage.className = 'mt-1 text-xs text-green-400';
+            } else {
+                emailMessage.textContent = '✗ ' + data.message;
+                emailMessage.className = 'mt-1 text-xs text-red-400';
+            }
+        } catch (error) {
+            console.error('Error checking email:', error);
+        }
+    }, 500);
+    
+    // Add event listeners
+    usernameInput.addEventListener('input', function() {
+        checkUsername(this.value);
+    });
+    
+    emailInput.addEventListener('input', function() {
+        checkEmail(this.value);
+    });
+    
+    // Form validation on submit
+    form.addEventListener('submit', function(e) {
+        const requiredFields = [
+            'name', 'nim', 'username', 'program_studi', 'angkatan', 
+            'nomor_telepon', 'tanggal_lahir', 'jenis_kelamin', 'email', 
+            'password', 'password_confirmation'
+        ];
+        
+        let hasEmptyFields = false;
+        let emptyFieldNames = [];
+        
+        requiredFields.forEach(fieldName => {
+            const field = document.getElementById(fieldName);
+            if (field && (!field.value || field.value.trim() === '')) {
+                hasEmptyFields = true;
+                emptyFieldNames.push(field.previousElementSibling.textContent || fieldName);
+            }
+        });
+        
+        if (hasEmptyFields) {
+            e.preventDefault();
+            alert('Hayoo jangan lupa semua di isi yaa.. Yang masih kosong: ' + emptyFieldNames.join(', '));
+            return false;
+        }
+        
+        // Check if username or email is not available
+        const usernameAvailable = !usernameMessage.textContent.includes('✗');
+        const emailAvailable = !emailMessage.textContent.includes('✗');
+        
+        if (!usernameAvailable || !emailAvailable) {
+            e.preventDefault();
+            alert('Username atau email sudah dipakai. Silakan gunakan yang lain!');
+            return false;
+        }
+    });
+});
+</script>

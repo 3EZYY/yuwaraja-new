@@ -53,6 +53,22 @@ class RegisteredUserController extends Controller
             'tanggal_lahir' => ['required', 'date'], // Tambahan 'required'
             'jenis_kelamin' => ['required', 'string', 'in:Laki-laki,Perempuan'], // Tambahan 'required'
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
+        ], [
+            // Custom error messages
+            'name.required' => 'Nama lengkap wajib diisi!',
+            'nim.required' => 'NIM wajib diisi!',
+            'nim.unique' => 'NIM sudah terdaftar!',
+            'username.required' => 'Username wajib diisi!',
+            'username.unique' => 'Username sudah dipakai nih!',
+            'email.required' => 'Email wajib diisi!',
+            'email.unique' => 'Email sudah dipakai nih!',
+            'program_studi.required' => 'Program studi wajib dipilih!',
+            'angkatan.required' => 'Angkatan wajib diisi!',
+            'nomor_telepon.required' => 'Nomor telepon wajib diisi!',
+            'tanggal_lahir.required' => 'Tanggal lahir wajib diisi!',
+            'jenis_kelamin.required' => 'Jenis kelamin wajib dipilih!',
+            'password.required' => 'Password wajib diisi!',
+            'password.confirmed' => 'Konfirmasi password tidak cocok!',
         ]);
 
         $user = User::create([
@@ -71,8 +87,7 @@ class RegisteredUserController extends Controller
 
         event(new Registered($user));
 
-        Auth::login($user);
-
-        return redirect()->route('login')->with('status', 'Registrasi berhasil! Silakan login.');
+        // Tidak auto-login, redirect ke halaman login
+        return redirect()->route('login')->with('status', 'Registrasi berhasil! Silakan login dengan akun yang baru dibuat.');
     }
 }
