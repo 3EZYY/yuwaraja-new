@@ -12,7 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            //
+            // Ubah kelompok_id menjadi foreign key dengan constraint
+            $table->foreign('kelompok_id')->references('id')->on('kelompok')->onDelete('set null');
         });
     }
 
@@ -22,7 +23,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            //
+            $table->dropForeign(['kelompok_id']);
         });
     }
 };

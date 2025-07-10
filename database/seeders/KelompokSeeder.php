@@ -24,6 +24,9 @@ class KelompokSeeder extends Seeder
             'password' => Hash::make('password'),
             'program_studi' => 'Teknik Informatika',
             'angkatan' => '2021',
+            'nomor_telepon' => '081234567890',
+            'tanggal_lahir' => '1995-01-01',
+            'jenis_kelamin' => 'Laki-laki',
             'role' => 'spv'
         ]);
 
@@ -35,6 +38,9 @@ class KelompokSeeder extends Seeder
             'password' => Hash::make('password'),
             'program_studi' => 'Teknik Informatika',
             'angkatan' => '2021',
+            'nomor_telepon' => '081234567891',
+            'tanggal_lahir' => '1995-02-01',
+            'jenis_kelamin' => 'Perempuan',
             'role' => 'spv'
         ]);
 
@@ -58,6 +64,9 @@ class KelompokSeeder extends Seeder
             'password' => Hash::make('password'),
             'program_studi' => 'Teknik Informatika',
             'angkatan' => '2022',
+            'nomor_telepon' => '081234567892',
+            'tanggal_lahir' => '2000-01-01',
+            'jenis_kelamin' => 'Laki-laki',
             'role' => 'mahasiswa',
             'kelompok_id' => $kelompok1->id
         ]);
@@ -70,6 +79,9 @@ class KelompokSeeder extends Seeder
             'password' => Hash::make('password'),
             'program_studi' => 'Teknik Informatika',
             'angkatan' => '2022',
+            'nomor_telepon' => '081234567893',
+            'tanggal_lahir' => '2000-02-01',
+            'jenis_kelamin' => 'Perempuan',
             'role' => 'mahasiswa',
             'kelompok_id' => $kelompok2->id
         ]);

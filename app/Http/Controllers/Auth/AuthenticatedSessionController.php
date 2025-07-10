@@ -36,12 +36,17 @@ class AuthenticatedSessionController extends Controller
      */
     public function destroy(Request $request): RedirectResponse
     {
+        // Ambil role user sebelum logout
+        $userRole = Auth::user()->role ?? null;
+        
         Auth::guard('web')->logout();
 
         $request->session()->invalidate();
 
         $request->session()->regenerateToken();
 
-        return redirect('/');
+        // Redirect berdasarkan role
+        // Semua role (admin, spv, mahasiswa) redirect ke /login
+        return redirect()->route('login');
     }
 }

@@ -13,9 +13,9 @@ Route::get('/dashboard', [MahaDashboardController::class, 'index'])
     ->middleware(['auth', 'verified'])->name('dashboard');
 
 // Route untuk tugas
-Route::get('/tugas/{tugas}', [MabaDashboardController::class, 'showTugas'])
+Route::get('/tugas/{tugas}', [MahaDashboardController::class, 'showTugas'])
     ->middleware(['auth', 'verified'])->name('tugas.show');
-Route::post('/tugas/{tugas}/submit', [MabaDashboardController::class, 'submitTugas'])
+Route::post('/tugas/{tugas}/submit', [MahaDashboardController::class, 'submitTugas'])
     ->middleware(['auth', 'verified'])->name('tugas.submit');
 
 Route::middleware('auth')->group(function () {

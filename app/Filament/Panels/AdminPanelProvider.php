@@ -5,6 +5,7 @@ namespace App\Filament\Panels;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
+use Filament\Http\Responses\Auth\Contracts\LogoutResponse;
 use Filament\Pages;
 use Filament\Panel;
 use Filament\PanelProvider;
@@ -13,6 +14,7 @@ use Filament\Widgets;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
@@ -26,12 +28,8 @@ class AdminPanelProvider extends PanelProvider
             ->default()
             ->id('admin')
             ->path('admin')
-            // ->login() // <-- BERI KOMENTAR ATAU HAPUS BARIS INI
-            // atau jika bentuknya method, komentari seluruh method!
-            //
-            // ->login([
-            //     // ... isinya
-            // ])
+            ->login()
+            ->loginRouteSlug('login')
             ->colors([
                 'primary' => Color::Amber,
             ])
@@ -59,5 +57,20 @@ class AdminPanelProvider extends PanelProvider
             ->authMiddleware([
                 Authenticate::class,
             ]);
+    }
+
+    public function register(): void
+    {
+        parent::register();
+        
+        // Override logout response untuk redirect ke halaman login utama
+        $this->app->bind(LogoutResponse::class, function () {
+            return new class implements LogoutResponse {
+                public function toResponse($request): RedirectResponse
+                {
+                    return redirect()->to('/login');
+                }
+            };
+        });
     }
 }
