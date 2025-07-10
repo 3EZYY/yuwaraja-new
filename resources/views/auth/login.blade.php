@@ -75,7 +75,7 @@
             @if (Route::has('password.request'))
             <a href="{{ route('password.request') }}"
                 class="underline text-gray-500 hover:text-cyan-400 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pink-500 transition">
-                {{ __('Forget Password?') }}
+                {{ __('Lupa Password?') }}
             </a>
             @endif
         </div>
@@ -92,7 +92,7 @@
                 <span class="text-gray-400">Belum Punya Akun?</span>
                 <a href="{{ route('register') }}"
                     class="font-bold underline text-pink-400 hover:text-pink-300 rounded-md focus:outline-none transition">
-                    {{ __('Register') }}
+                    {{ __('Daftar') }}
                 </a>
             </p>
             @endif

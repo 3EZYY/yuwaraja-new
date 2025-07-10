@@ -137,7 +137,7 @@
             class="w-full flex justify-center items-center bg-pink-500 hover:bg-pink-600 text-white font-bold uppercase tracking-wider transform hover:scale-105 transition-all duration-300 shadow-[0_0_15px_rgba(236,72,153,0.6)] hover:shadow-[0_0_25px_rgba(236,72,153,0.8)] focus:bg-pink-700 focus:ring-pink-500 border-none px-6 py-3">
             {{ __('Daftar') }}
         </x-primary-button>
-
+            
         <div class="flex items-center justify-center mt-4 form-field w-full" style="animation-delay: 1.6s;">
             Sudah Punya Akun?
             <a class="font-bold underline text-pink-400 hover:text-pink-300 rounded-md focus:outline-none transition px-2"
