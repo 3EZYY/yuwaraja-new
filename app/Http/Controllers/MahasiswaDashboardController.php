@@ -27,7 +27,7 @@ class MahasiswaDashboardController extends Controller
     public function showTugas(Tugas $tugas)
     {
         $user = Auth::user();
-        
+
         // Cek apakah mahasiswa sudah mengumpulkan tugas ini
         $pengumpulan = PengumpulanTugas::where('user_id', $user->id)
             ->where('tugas_id', $tugas->id)
@@ -39,7 +39,7 @@ class MahasiswaDashboardController extends Controller
     public function submitTugas(Request $request, Tugas $tugas): RedirectResponse
     {
         $user = Auth::user();
-        
+
         Log::info('Memulai submitTugas untuk tugas ID: ' . $tugas->id . ' oleh user ID: ' . $user->id);
 
         // Validasi request
@@ -80,6 +80,7 @@ class MahasiswaDashboardController extends Controller
         PengumpulanTugas::create([
             'user_id' => $user->id,
             'tugas_id' => $tugas->id,
+            'kelompok_id' => $user->kelompok_id, // tambahkan kelompok_id
             'file_path' => $filePath,
             'submitted_at' => now(),
         ]);
