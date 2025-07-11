@@ -12,7 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('pengumpulan_tugas', function (Blueprint $table) {
-            $table->unsignedBigInteger('user_id')->change();
+            // Tambah kolom user_id jika belum ada
+            if (!Schema::hasColumn('pengumpulan_tugas', 'user_id')) {
+                $table->unsignedBigInteger('user_id');
+            }
+            // Tambah foreign key
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
@@ -24,6 +28,7 @@ return new class extends Migration
     {
         Schema::table('pengumpulan_tugas', function (Blueprint $table) {
             $table->dropForeign(['user_id']);
+            $table->dropColumn('user_id');
         });
     }
 };
