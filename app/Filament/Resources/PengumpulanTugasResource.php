@@ -42,6 +42,12 @@ class PengumpulanTugasResource extends Resource
                     ->searchable()
                     ->preload()
                     ->required(),
+                Forms\Components\Select::make('kelompok_id')
+                    ->label('Kelompok')
+                    ->relationship('kelompok', 'nama_kelompok')
+                    ->searchable()
+                    ->preload()
+                    ->required(),
                 Forms\Components\DateTimePicker::make('tanggal_submit')
                     ->label('Tanggal Submit')
                     ->required(),
@@ -113,7 +119,7 @@ class PengumpulanTugasResource extends Resource
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ])
-            ->defaultSort('tanggal_submit', 'desc');
+            ->defaultSort('created_at', 'desc');
     }
 
     public static function getRelations(): array

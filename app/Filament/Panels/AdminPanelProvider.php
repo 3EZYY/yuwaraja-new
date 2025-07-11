@@ -29,7 +29,7 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin/dashboard')
             ->authGuard('web')
-            ->login(false)
+            ->login()
             ->registration(false)
             ->passwordReset(false)
             ->emailVerification(false)
