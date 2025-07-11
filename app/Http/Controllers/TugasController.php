@@ -45,7 +45,8 @@ class TugasController extends Controller
         PengumpulanTugas::updateOrCreate(
             [
                 'tugas_id' => $tugas->id,
-                'kelompok_id' => $user->kelompok_id
+                'kelompok_id' => $user->kelompok_id,
+                'user_id' => $user->id
             ],
             [
                 'file_path' => $filePath,
