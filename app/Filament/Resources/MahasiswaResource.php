@@ -25,6 +25,8 @@ class MahasiswaResource extends Resource
 
     protected static ?string $navigationGroup = 'User Management';
 
+    protected static ?string $slug = 'mahasiswa';
+
     public static function getEloquentQuery(): Builder
     {
         return parent::getEloquentQuery()->where('role', 'mahasiswa');
@@ -49,7 +51,7 @@ class MahasiswaResource extends Resource
                     ->maxLength(20),
                 Forms\Components\Select::make('kelompok_id')
                     ->label('Kelompok')
-                    ->relationship('kelompok', 'nama')
+                    ->relationship('kelompok', 'nama_kelompok')
                     ->searchable()
                     ->preload(),
                 Forms\Components\TextInput::make('password')
@@ -76,7 +78,7 @@ class MahasiswaResource extends Resource
                 Tables\Columns\TextColumn::make('nim')
                     ->label('NIM')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('kelompok.nama')
+                Tables\Columns\TextColumn::make('kelompok.nama_kelompok')
                     ->label('Kelompok')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
@@ -92,7 +94,7 @@ class MahasiswaResource extends Resource
             ])
             ->filters([
                 Tables\Filters\SelectFilter::make('kelompok')
-                    ->relationship('kelompok', 'nama'),
+                    ->relationship('kelompok', 'nama_kelompok'),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),

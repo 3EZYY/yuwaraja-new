@@ -28,8 +28,12 @@ class AdminPanelProvider extends PanelProvider
             ->default()
             ->id('admin')
             ->path('admin/dashboard')
-            ->login()
-            ->loginRouteSlug('login')
+            ->authGuard('web')
+            ->login(false)
+            ->registration(false)
+            ->passwordReset(false)
+            ->emailVerification(false)
+            ->profile(false)
             ->colors([
                 'primary' => Color::Amber,
             ])
@@ -56,6 +60,7 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->authMiddleware([
                 Authenticate::class,
+                'role:admin',
             ]);
     }
 

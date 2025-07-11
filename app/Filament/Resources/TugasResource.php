@@ -33,8 +33,13 @@ class TugasResource extends Resource
                     ->columnSpanFull(),
                 Forms\Components\DatePicker::make('deadline')
                     ->required(),
-                Forms\Components\TextInput::make('tipe')
-                    ->required(),
+                Forms\Components\Select::make('tipe')
+                    ->options([
+                        'individual' => 'Individual',
+                        'kelompok' => 'Kelompok',
+                    ])
+                    ->required()
+                    ->default('kelompok'),
                 Forms\Components\Toggle::make('is_active')
                     ->required(),
             ]);

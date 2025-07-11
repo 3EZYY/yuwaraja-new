@@ -32,8 +32,8 @@ class KelompokResource extends Resource
                     ->required()
                     ->maxLength(255)
                     ->label('Nama Kelompok'),
-                Forms\Components\Select::make('penanggung_jawab_id')
-                    ->relationship('penanggungjawab', 'name')
+                Forms\Components\Select::make('spv_id')
+                    ->relationship('spv', 'name', fn ($query) => $query->where('role', 'spv'))
                     ->searchable()
                     ->preload()
                     ->label('Penanggung Jawab'),
@@ -47,7 +47,7 @@ class KelompokResource extends Resource
                 Tables\Columns\TextColumn::make('nama_kelompok')
                     ->searchable()
                     ->label('Nama Kelompok'),
-                Tables\Columns\TextColumn::make('penanggungjawab.name')
+                Tables\Columns\TextColumn::make('spv.name')
                     ->label('Penanggung Jawab')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')

@@ -31,8 +31,14 @@ class PengumumanResource extends Resource
                 Forms\Components\Textarea::make('konten')
                     ->required()
                     ->columnSpanFull(),
-                Forms\Components\TextInput::make('tipe')
-                    ->required(),
+                Forms\Components\Select::make('tipe')
+                    ->options([
+                        'umum' => 'Umum',
+                        'penting' => 'Penting',
+                        'urgent' => 'Urgent',
+                    ])
+                    ->required()
+                    ->default('umum'),
                 Forms\Components\Toggle::make('is_published')
                     ->required(),
                 Forms\Components\DateTimePicker::make('published_at'),

@@ -36,7 +36,13 @@ class JadwalAcaraResource extends Resource
                     ->required(),
                 Forms\Components\TextInput::make('lokasi')
                     ->maxLength(255),
-                Forms\Components\TextInput::make('status')
+                Forms\Components\Select::make('status')
+                    ->options([
+                        'draft' => 'Draft',
+                        'published' => 'Published',
+                        'completed' => 'Completed',
+                        'cancelled' => 'Cancelled',
+                    ])
                     ->required()
                     ->default('draft'),
             ]);
