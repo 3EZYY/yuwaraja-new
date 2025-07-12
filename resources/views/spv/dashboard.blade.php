@@ -5,7 +5,7 @@
         </h2>
     </x-slot>
 
-    <div class="py-12">
+    <div class="py-12 bg-black">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <!-- Welcome Card -->
             <div class="bg-gradient-to-r from-green-600 to-blue-600 overflow-hidden shadow-lg sm:rounded-lg mb-6">

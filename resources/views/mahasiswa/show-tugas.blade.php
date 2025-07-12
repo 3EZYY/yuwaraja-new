@@ -5,7 +5,7 @@
         </h2>
     </x-slot>
 
-    <div class="py-12">
+    <div class="py-12 bg-black">
         <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
             <!-- Flash Messages -->
             @if(session('success'))
@@ -21,7 +21,7 @@
             @endif
 
             <!-- Task Details -->
-            <div class="bg-white shadow-lg rounded-lg overflow-hidden">
+            <div class="bg-black shadow-lg rounded-lg overflow-hidden">
                 <div class="bg-gradient-to-r from-blue-600 to-blue-700 px-6 py-4">
                     <h1 class="text-2xl font-bold text-white">{{ $tugas->judul }}</h1>
                     <div class="flex items-center mt-2 text-blue-100">
