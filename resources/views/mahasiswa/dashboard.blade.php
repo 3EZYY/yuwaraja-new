@@ -2,8 +2,8 @@
     {{-- CSS Kustom untuk tema Cyberpunk Dashboard --}}
     <style>
         :root {
-            --db-bg: #05060B;
-            --db-surface: #0A0F1A;
+            --db-bg: #0b101a;
+            --db-surface: #181825;
             --db-primary: #00d1ff;
             --db-secondary: #ffc900;
             --db-text: #c0c8d6;
@@ -68,9 +68,9 @@
         }
     </style>
 
-  
 
-    <div class="py-12 bg-black">
+
+    <div class="py-12" style="background-color: #0b101a;">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-8">
 
             <!-- Welcome & Profile Card -->

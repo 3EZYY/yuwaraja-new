@@ -7,14 +7,17 @@ use Illuminate\Http\Request;
 
 class MahasiswaPengumumanController extends Controller
 {
+
     public function index()
     {
         $pengumuman = Pengumuman::latest()->paginate(10);
-        return view('mahasiswa.pengumuman.index', compact('pengumuman'));
+        $listMode = true;
+        return view('mahasiswa.pengumuman.pengumuman', compact('pengumuman', 'listMode'));
     }
 
     public function show(Pengumuman $pengumuman)
     {
-        return view('mahasiswa.pengumuman.show', compact('pengumuman'));
+        $detailMode = true;
+        return view('mahasiswa.pengumuman.pengumuman', compact('pengumuman', 'detailMode'));
     }
 }

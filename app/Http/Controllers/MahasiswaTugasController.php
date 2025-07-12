@@ -15,8 +15,8 @@ class MahasiswaTugasController extends Controller
         $pengumpulanTugas = PengumpulanTugas::where('user_id', Auth::id())
             ->get()
             ->keyBy('tugas_id');
-
-        return view('mahasiswa.tugas.list_penugasan', compact('tugas', 'pengumpulanTugas'));
+        $listMode = true;
+        return view('mahasiswa.tugas.penugasan', compact('tugas', 'pengumpulanTugas', 'listMode'));
     }
 
     public function show(Tugas $tugas)
@@ -24,8 +24,8 @@ class MahasiswaTugasController extends Controller
         $pengumpulan = PengumpulanTugas::where('user_id', Auth::id())
             ->where('tugas_id', $tugas->id)
             ->first();
-
-        return view('mahasiswa.tugas.penugasan', compact('tugas', 'pengumpulan'));
+        $detailMode = true;
+        return view('mahasiswa.tugas.penugasan', compact('tugas', 'pengumpulan', 'detailMode'));
     }
 
     public function kerjakan(Tugas $tugas)
@@ -39,7 +39,8 @@ class MahasiswaTugasController extends Controller
                 ->with('error', 'Tugas ini sudah selesai dan dinilai.');
         }
 
-        return view('mahasiswa.tugas.kerjakan', compact('tugas', 'pengumpulan'));
+        $kerjakanMode = true;
+        return view('mahasiswa.tugas.penugasan', compact('tugas', 'pengumpulan', 'kerjakanMode'));
     }
 
     public function submit(Request $request, Tugas $tugas)

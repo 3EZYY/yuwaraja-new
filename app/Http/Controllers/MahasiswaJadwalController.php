@@ -7,14 +7,17 @@ use Illuminate\Http\Request;
 
 class MahasiswaJadwalController extends Controller
 {
+
     public function index()
     {
         $jadwal = JadwalAcara::orderBy('tanggal_mulai')->paginate(10);
-        return view('mahasiswa.jadwal.index', compact('jadwal'));
+        $listMode = true;
+        return view('mahasiswa.jadwal.jadwal', compact('jadwal', 'listMode'));
     }
 
     public function show(JadwalAcara $jadwal)
     {
-        return view('mahasiswa.jadwal.show', compact('jadwal'));
+        $detailMode = true;
+        return view('mahasiswa.jadwal.jadwal', compact('jadwal', 'detailMode'));
     }
 }
