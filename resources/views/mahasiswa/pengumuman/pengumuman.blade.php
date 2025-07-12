@@ -14,6 +14,35 @@
         .ann-date { color: #b2b2d6; font-size: 0.95rem; }
         .ann-snippet { color: #e0e6f0; font-size: 1rem; margin-top: 0.25rem; }
         .ann-divider { border-color: #232347; }
+
+        /* Custom style for detail card */
+        .detail-card {
+            background: #fff;
+            color: #222;
+            border-radius: 16px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+            padding: 32px 28px;
+            margin: 0 auto 24px auto;
+            max-width: 600px;
+        }
+        .detail-card h1 {
+            color: #222;
+            font-weight: bold;
+        }
+        .detail-label {
+            color: #1976d2;
+            font-size: 15px;
+            font-weight: 500;
+            margin-bottom: 2px;
+        }
+        .detail-content {
+            margin-top: 8px;
+            color: #333;
+            font-size: 16px;
+        }
+        .detail-back {
+            margin-top: 18px;
+        }
     </style>
     <div class="py-12">
         <div class="max-w-3xl mx-auto sm:px-6 lg:px-8">
@@ -36,11 +65,21 @@
                     </ul>
                     <div class="mt-8">{{ $pengumuman->links() }}</div>
                 @elseif(isset($detailMode) && $detailMode && $pengumuman)
-                    <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg mb-6">
-                        <div class="p-6">
-                            <h1 class="text-2xl font-bold text-gray-900 mb-4">{{ $pengumuman->judul }}</h1>
-                            <div class="text-sm text-gray-500 mb-2">Diposting: {{ $pengumuman->created_at->format('d M Y H:i') }}</div>
-                            <div class="prose max-w-none text-gray-800 mb-6">{!! nl2br(e($pengumuman->isi)) !!}</div>
+                    <div class="detail-card">
+                        <h1 class="text-2xl font-bold mb-4">{{ $pengumuman->judul }}</h1>
+                        <div class="text-sm text-gray-500 mb-2">Diposting: {{ $pengumuman->created_at->format('d M Y H:i') }}</div>
+                        <div class="detail-label">Tipe: <span>{{ $pengumuman->tipe }}</span></div>
+                        <div class="detail-label mt-2"><b>Konten:</b></div>
+                        <div class="detail-content">
+                            @if(!empty($pengumuman->isi))
+                                {!! nl2br(e($pengumuman->isi)) !!}
+                            @elseif(!empty($pengumuman->konten))
+                                {!! nl2br(e($pengumuman->konten)) !!}
+                            @else
+                                <span class="text-gray-400">(Belum ada konten pengumuman)</span>
+                            @endif
+                        </div>
+                        <div class="detail-back">
                             <a href="{{ route('mahasiswa.pengumuman.index') }}" class="inline-block px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">← Kembali ke Daftar Pengumuman</a>
                         </div>
                     </div>
