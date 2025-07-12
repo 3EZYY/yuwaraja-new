@@ -39,9 +39,7 @@ class JadwalAcaraResource extends Resource
                 Forms\Components\Select::make('status')
                     ->options([
                         'draft' => 'Draft',
-                        'published' => 'Published',
-                        'completed' => 'Completed',
-                        'cancelled' => 'Cancelled',
+                        'published' => 'Publish',
                     ])
                     ->required()
                     ->default('draft'),

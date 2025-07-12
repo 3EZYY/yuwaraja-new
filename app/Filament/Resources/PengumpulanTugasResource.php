@@ -32,7 +32,9 @@ class PengumpulanTugasResource extends Resource
             ->schema([
                 Forms\Components\Select::make('user_id')
                     ->label('Mahasiswa')
-                    ->relationship('user', 'name')
+                    ->relationship('user', 'name', function ($query) {
+                        $query->where('role', 'mahasiswa');
+                    })
                     ->searchable()
                     ->preload()
                     ->required(),

@@ -35,7 +35,6 @@ class PengumumanResource extends Resource
                     ->options([
                         'umum' => 'Umum',
                         'penting' => 'Penting',
-                        'urgent' => 'Urgent',
                     ])
                     ->required()
                     ->default('umum'),

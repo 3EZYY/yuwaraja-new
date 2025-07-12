@@ -7,7 +7,7 @@
 
     <div class="py-12 bg-black">
         <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
-            
+
             <!-- Alert Messages -->
             @if(session('success'))
                 <div class="mb-6 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
@@ -36,7 +36,7 @@
                                 </span>
                             </div>
                         </div>
-                        
+
                         <!-- Status Badge -->
                         @if($pengumpulan)
                             <span class="inline-flex px-3 py-1 text-sm font-semibold rounded-full
@@ -120,13 +120,13 @@
 
                         <form action="{{ route('tugas.submit', $tugas) }}" method="POST" enctype="multipart/form-data" class="space-y-6">
                             @csrf
-                            
+
                             <!-- File Upload -->
                             <div>
                                 <label for="file" class="block text-sm font-medium text-gray-700 mb-2">File Tugas</label>
-                                <input type="file" 
-                                       id="file" 
-                                       name="file" 
+                                <input type="file"
+                                       id="file"
+                                       name="file"
                                        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                                        required
                                        accept=".pdf,.doc,.docx,.zip,.rar">
@@ -139,9 +139,9 @@
                             <!-- Keterangan -->
                             <div>
                                 <label for="keterangan" class="block text-sm font-medium text-gray-700 mb-2">Keterangan (Opsional)</label>
-                                <textarea id="keterangan" 
-                                          name="keterangan" 
-                                          rows="4" 
+                                <textarea id="keterangan"
+                                          name="keterangan"
+                                          rows="4"
                                           class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                                           placeholder="Tambahkan keterangan atau catatan untuk tugas ini...">{{ old('keterangan', $pengumpulan->keterangan ?? '') }}</textarea>
                                 @error('keterangan')
@@ -154,7 +154,7 @@
                                 <a href="{{ route('dashboard') }}" class="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
                                     ← Kembali ke Dashboard
                                 </a>
-                                
+
                                 <button type="submit" class="inline-flex items-center px-6 py-3 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
                                     <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
                                         <path d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM6.293 6.707a1 1 0 010-1.414l3-3a1 1 0 011.414 0l3 3a1 1 0 01-1.414 1.414L11 5.414V13a1 1 0 11-2 0V5.414L7.707 6.707a1 1 0 01-1.414 0z"/>

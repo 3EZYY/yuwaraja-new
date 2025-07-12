@@ -20,7 +20,7 @@ class AdminUserSeeder extends Seeder
                 'nim' => '000000000', // NIM khusus untuk admin
                 'username' => 'admin',
                 'email' => 'admin@yuwaraja.com',
-                'program_studi' => 'Sistem Informasi',
+                'program_studi' => 'D3 Teknologi Informasi',
                 'angkatan' => '2023',
                 'nomor_telepon' => '081234567890',
                 'tanggal_lahir' => '1990-01-01',
