@@ -68,23 +68,7 @@
         }
     </style>
 
-    <x-slot name="header">
-        <div class="flex items-center justify-between">
-            <h2 class="font-semibold text-2xl text-glow-cyan font-orbitron text-white leading-tight">
-                {{ __('MAHASISWA DASHBOARD') }}
-            </h2>
-            <div class="flex items-center bg-black px-3 py-1 rounded-md border border-cyan-900/40">
-                @if(Auth::user()->photo)
-                    <img src="{{ asset('storage/profile/' . Auth::user()->photo) }}" alt="Profile Photo" class="w-8 h-8 rounded-full border-2 border-yellow-400 shadow mr-2">
-                @else
-                    <span class="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center text-yellow-400 font-bold mr-2">
-                        {{ strtoupper(substr(Auth::user()->name,0,1)) }}
-                    </span>
-                @endif
-                <span class="text-white font-semibold text-base">{{ Auth::user()->name }}</span>
-            </div>
-        </div>
-    </x-slot>
+  
 
     <div class="py-12 bg-black">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-8">
@@ -190,70 +174,96 @@
 
             <!-- Daftar Tugas -->
             <div class="cyber-card">
-                <div class="p-6">
-                    <h3 class="text-lg font-bold text-white text-glow-cyan mb-4">📝 DAFTAR MISI (TUGAS)</h3>
-                </div>
-                <div class="overflow-x-auto">
-                    <table class="min-w-full cyber-table">
-                        <thead class="border-b border-t border-cyan-400/20">
-                            <tr>
-                                <th class="px-6 py-3 text-left text-xs font-bold uppercase tracking-wider">Judul Misi</th>
-                                <th class="px-6 py-3 text-left text-xs font-bold uppercase tracking-wider">Deadline</th>
-                                <th class="px-6 py-3 text-left text-xs font-bold uppercase tracking-wider">Tipe</th>
-                                <th class="px-6 py-3 text-left text-xs font-bold uppercase tracking-wider">Status</th>
-                                <th class="px-6 py-3 text-left text-xs font-bold uppercase tracking-wider">Notifikasi</th>
-                            </tr>
-                        </thead>
-                        <tbody class="divide-y divide-gray-800/50">
-                            @forelse($tugas as $task)
-                            <tr class="hover:bg-cyan-400/5">
-                                <td class="px-6 py-4 whitespace-nowrap text-sm font-semibold">
-                                    <a href="{{ route('mahasiswa.tugas.show', $task->id) }}" class="text-white hover:text-yellow-400 hover:underline">
-                                        {{ $task->judul }}
-                                    </a>
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm">{{ $task->deadline->format('d M Y') }}</td>
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    <span class="status-badge {{ $task->tipe == 'kelompok' ? 'bg-blue-900/50 text-blue-300 border border-blue-400/50' : 'bg-green-900/50 text-green-300 border border-green-400/50' }}">
-                                        {{ ucfirst($task->tipe) }}
-                                    </span>
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    <span class="status-badge {{ $task->is_active ? 'bg-yellow-900/50 text-yellow-300 border border-yellow-400/50' : 'bg-gray-700 text-gray-300 border border-gray-600' }}">
-                                        {{ $task->is_active ? 'Aktif' : 'Selesai' }}
-                                    </span>
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    @php $pt = $pengumpulanTugas[$task->id] ?? null; @endphp
-                                    @if($pt)
-                                        <span class="status-badge {{
-                                            $pt->status == 'done' ? 'bg-green-900/50 text-green-300 border border-green-400/50' :
-                                            ($pt->status == 'approved' ? 'bg-blue-900/50 text-blue-300 border border-blue-400/50' :
-                                            ($pt->status == 'reviewed' ? 'bg-yellow-900/50 text-yellow-300 border border-yellow-400/50' : 'bg-gray-700 text-gray-300 border border-gray-600'))
-                                        }}">
-                                            {{ ucfirst($pt->status) }}
-                                        </span>
-                                        @if($pt->status == 'done')
-                                            <span class="text-green-400 ml-2">Tugas kamu sudah selesai &amp; dinilai!</span>
-                                        @elseif($pt->status == 'approved')
-                                            <span class="text-blue-400 ml-2">Tugas kamu sudah di-approve SPV, menunggu finalisasi.</span>
-                                        @elseif($pt->status == 'reviewed')
-                                            <span class="text-yellow-400 ml-2">Tugas kamu sedang diteliti SPV.</span>
-                                        @endif
-                                    @else
-                                        <span class="text-gray-400">Belum ada pengumpulan</span>
-                                    @endif
-                                </td>
-                            </tr>
-                            @empty
-                            <tr>
-                                <td colspan="4" class="px-6 py-8 text-center text-gray-500 italic">// Tidak ada misi aktif saat ini //</td>
-                            </tr>
-                            @endforelse
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+    <div class="p-6">
+        <h3 class="text-lg font-bold text-white text-glow-cyan mb-4">📝 DAFTAR MISI (TUGAS)</h3>
+    </div>
+    <div class="overflow-x-auto">
+        <table class="min-w-full cyber-table">
+            <thead class="border-b border-t border-db-border">
+                <tr>
+                    <th class="px-6 py-3 text-left text-xs font-bold uppercase tracking-wider">Judul Misi</th>
+                    <th class="px-6 py-3 text-left text-xs font-bold uppercase tracking-wider">Deadline</th>
+                    <th class="px-6 py-3 text-left text-xs font-bold uppercase tracking-wider">Status</th>
+                    <th class="px-6 py-3 text-center text-xs font-bold uppercase tracking-wider">Aksi</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-800/50">
+                @forelse($tugas as $task)
+                @php
+                    // Ambil data pengumpulan untuk tugas ini, jika ada.
+                    $pengumpulan = $pengumpulanTugas->get($task->id);
+                @endphp
+                <tr class="hover:bg-cyan-400/5">
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-semibold">
+                        <a href="{{ route('mahasiswa.tugas.show', $task->id) }}" class="text-white hover:text-yellow-400 hover:underline">
+                            {{ $task->judul }}
+                        </a>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm {{ $task->deadline < now() && !$pengumpulan ? 'text-red-500 text-glow-red' : 'text-db-text' }}">
+                        {{ $task->deadline->format('d M Y, H:i') }}
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        @if($pengumpulan)
+                            @if($pengumpulan->status == 'done')
+                                <span class="status-badge bg-green-900/50 text-green-300 border border-green-400/50">
+                                    Selesai & Dinilai
+                                </span>
+                            @elseif($pengumpulan->status == 'approved')
+                                 <span class="status-badge bg-blue-900/50 text-blue-300 border border-blue-400/50">
+                                    Disetujui
+                                </span>
+                            @else
+                                <span class="status-badge bg-yellow-900/50 text-yellow-300 border border-yellow-400/50">
+                                    Sedang Direview
+                                </span>
+                            @endif
+                        @else
+                            @if($task->deadline < now())
+                                 <span class="status-badge bg-red-900/50 text-red-400 border border-red-500/50">
+                                    Terlewat
+                                </span>
+                            @else
+                                <span class="status-badge bg-gray-700 text-gray-400 border border-gray-600">
+                                    Belum Dikerjakan
+                                </span>
+                            @endif
+                        @endif
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-center">
+                        <a href="{{ route('mahasiswa.tugas.show', $task->id) }}" class="inline-flex items-center gap-2 px-4 py-2 text-sm font-bold rounded-md transition-all duration-300
+                            @if(!$pengumpulan && $task->deadline > now())
+                                bg-yellow-400 text-black hover:bg-yellow-300 transform hover:scale-105
+                            @elseif($pengumpulan && $pengumpulan->status != 'done')
+                                bg-cyan-500 text-black hover:bg-cyan-400
+                            @else
+                                bg-green-500 text-black hover:bg-green-400
+                            @endif
+                        ">
+                            @if(!$pengumpulan && $task->deadline > now())
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                                    <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
+                                </svg>
+                                <span>Kerjakan</span>
+                            @else
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                </svg>
+                                <span>Lihat</span>
+                            @endif
+                        </a>
+                    </td>
+                </tr>
+                @empty
+                <tr>
+                    <td colspan="4" class="px-6 py-8 text-center text-gray-500 italic">// Tidak ada misi aktif saat ini //</td>
+                </tr>
+                @endforelse
+            </tbody>
+        </table>
+    </div>
+</div>
+
 
         </div>
     </div>

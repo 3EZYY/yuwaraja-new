@@ -4,6 +4,9 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\MahasiswaDashboardController;
 use App\Http\Controllers\SpvDashboardController;
 use App\Http\Controllers\TugasController;
+use App\Http\Controllers\MahasiswaTugasController;
+use App\Http\Controllers\MahasiswaPengumumanController;
+use App\Http\Controllers\MahasiswaJadwalController;
 use App\Http\Controllers\Api\ValidationController;
 use App\Http\Controllers\SpvTugasController;
 use Illuminate\Support\Facades\Route;
@@ -49,11 +52,28 @@ Route::middleware(['auth', 'verified', 'role:spv'])->prefix('spv')->name('spv.')
 
 // Routes untuk MAHASISWA
 Route::middleware(['auth', 'verified', 'role:mahasiswa'])->prefix('mahasiswa')->name('mahasiswa.')->group(function () {
+    // Dashboard
     Route::get('/dashboard', [MahasiswaDashboardController::class, 'index'])->name('dashboard');
-    Route::get('/tugas/{tugas}', [MahasiswaDashboardController::class, 'showTugas'])->name('tugas.show');
-    Route::post('/tugas/{tugas}/submit', [MahasiswaDashboardController::class, 'submitTugas'])->name('tugas.submit');
-    Route::get('/pengumuman/{pengumuman}', [MahasiswaDashboardController::class, 'showPengumuman'])->name('pengumuman.detail');
-    Route::get('/jadwal/{jadwal}', [MahasiswaDashboardController::class, 'showJadwal'])->name('jadwal.detail');
+    
+    // Tugas Routes
+    Route::controller(MahasiswaTugasController::class)->group(function () {
+        Route::get('/tugas', 'index')->name('tugas.index');
+        Route::get('/tugas/{tugas}', 'show')->name('tugas.show');
+        Route::get('/tugas/{tugas}/kerjakan', 'kerjakan')->name('tugas.kerjakan');
+        Route::post('/tugas/{tugas}/submit', 'submit')->name('tugas.submit');
+    });
+    
+    // Pengumuman Routes
+    Route::controller(MahasiswaPengumumanController::class)->group(function () {
+        Route::get('/pengumuman', 'index')->name('pengumuman.index');
+        Route::get('/pengumuman/{pengumuman}', 'show')->name('pengumuman.detail');
+    });
+    
+    // Jadwal Routes
+    Route::controller(MahasiswaJadwalController::class)->group(function () {
+        Route::get('/jadwal', 'index')->name('jadwal.index');
+        Route::get('/jadwal/{jadwal}', 'show')->name('jadwal.detail');
+    });
 });
 
 Route::middleware('auth')->group(function () {

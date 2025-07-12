@@ -12,10 +12,10 @@ body {
 
 /* Efek Glow untuk Teks */
 .text-glow-yellow {
-    text-shadow: 0 0 5px theme('colors.yellow.400'), 0 0 10px theme('colors.yellow.300');
+    text-shadow: 0 0 0px theme('colors.yellow.400'), 0 0 1px theme('colors.yellow.300');
 }
 .text-glow-cyan {
-    text-shadow: 0 0 5px theme('colors.cyan.400'), 0 0 10px theme('colors.cyan.300');
+    text-shadow: 0 0 0px theme('colors.cyan.400'), 0 0 1px theme('colors.cyan.300');
 }
 
 /* Styling untuk Card/Container */
@@ -68,6 +68,7 @@ body {
     text-shadow: 1px 1px 2px rgba(0,0,0,0.4);
     position: relative;
     overflow: hidden;
+    font-size: 0.8rem;
 }
 
 .cyber-button::after {
@@ -96,3 +97,4 @@ input[type="file"].cyber-input::file-selector-button {
 input[type="file"].cyber-input:hover::file-selector-button {
     @apply bg-yellow-400 text-black;
 }
+

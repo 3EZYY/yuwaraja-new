@@ -16,24 +16,31 @@
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+        <!-- Alpine.js -->
+        <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
     </head>
     <body class="font-sans antialiased bg-black text-cyan-300">
         <div class="min-h-screen bg-gradient-to-br from-gray-900 via-black to-blue-900/30">
-            @include('layouts.navigation')
+            <!-- Sidebar -->
+            <x-sidebar :role="Auth::user()->role" />
 
-            <!-- Page Heading -->
-            @isset($header)
-                <header class="bg-black/50 backdrop-blur-sm border-b border-yellow-500/20 shadow-md shadow-yellow-500/5">
-                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                        {{ $header }}
-                    </div>
-                </header>
-            @endisset
+            <!-- Main Content -->
+            <div class="lg:pl-64">
+                <!-- Page Heading -->
+                @isset($header)
+                    <header class="sticky top-0 z-30 bg-black/50 backdrop-blur-sm border-b border-yellow-500/20 shadow-md shadow-yellow-500/5">
+                        <div class="max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8">
+                            {{ $header }}
+                        </div>
+                    </header>
+                @endisset
 
-            <!-- Page Content -->
-            <main>
-                {{ $slot }}
-            </main>
+                <!-- Page Content -->
+                <main class="pt-4">
+                    {{ $slot }}
+                </main>
+            </div>
         </div>
     </body>
 </html>

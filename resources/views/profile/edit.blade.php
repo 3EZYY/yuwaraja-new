@@ -12,17 +12,17 @@
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-8">
                 <div class="p-4 sm:p-8 cyber-card border-l-4 border-yellow-400">
-                    <div class="max-w-xl">
+                    <div class="">
                         @include('profile.partials.update-profile-information-form')
                     </div>
                 </div>
                 <div class="p-4 sm:p-8 cyber-card border-l-4 border-cyan-500">
-                    <div class="max-w-xl">
+                    <div class="">
                         @include('profile.partials.update-password-form')
                     </div>
                 </div>
                 <div class="p-4 sm:p-8 cyber-card border-l-4 border-red-500">
-                    <div class="max-w-xl">
+                    <div class="">
                         @include('profile.partials.delete-user-form')
                     </div>
                 </div>

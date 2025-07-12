@@ -1,0 +1,15 @@
+.fi-logo {
+    height: 2.5rem !important;
+}
+
+.fi-sidebar-header {
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+.fi-brand-name {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: rgb(255 191 0);
+    text-shadow: 0 0 10px rgba(255, 191, 0, 0.3);
+}
