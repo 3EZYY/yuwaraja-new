@@ -16,7 +16,7 @@ class MahasiswaTugasController extends Controller
             ->get()
             ->keyBy('tugas_id');
 
-        return view('mahasiswa.tugas.index', compact('tugas', 'pengumpulanTugas'));
+        return view('mahasiswa.tugas.list_penugasan', compact('tugas', 'pengumpulanTugas'));
     }
 
     public function show(Tugas $tugas)
@@ -25,7 +25,7 @@ class MahasiswaTugasController extends Controller
             ->where('tugas_id', $tugas->id)
             ->first();
 
-        return view('mahasiswa.tugas.show', compact('tugas', 'pengumpulan'));
+        return view('mahasiswa.tugas.penugasan', compact('tugas', 'pengumpulan'));
     }
 
     public function kerjakan(Tugas $tugas)

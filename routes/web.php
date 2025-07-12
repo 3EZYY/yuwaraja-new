@@ -54,7 +54,7 @@ Route::middleware(['auth', 'verified', 'role:spv'])->prefix('spv')->name('spv.')
 Route::middleware(['auth', 'verified', 'role:mahasiswa'])->prefix('mahasiswa')->name('mahasiswa.')->group(function () {
     // Dashboard
     Route::get('/dashboard', [MahasiswaDashboardController::class, 'index'])->name('dashboard');
-    
+
     // Tugas Routes
     Route::controller(MahasiswaTugasController::class)->group(function () {
         Route::get('/tugas', 'index')->name('tugas.index');
@@ -62,13 +62,13 @@ Route::middleware(['auth', 'verified', 'role:mahasiswa'])->prefix('mahasiswa')->
         Route::get('/tugas/{tugas}/kerjakan', 'kerjakan')->name('tugas.kerjakan');
         Route::post('/tugas/{tugas}/submit', 'submit')->name('tugas.submit');
     });
-    
+
     // Pengumuman Routes
     Route::controller(MahasiswaPengumumanController::class)->group(function () {
         Route::get('/pengumuman', 'index')->name('pengumuman.index');
         Route::get('/pengumuman/{pengumuman}', 'show')->name('pengumuman.detail');
     });
-    
+
     // Jadwal Routes
     Route::controller(MahasiswaJadwalController::class)->group(function () {
         Route::get('/jadwal', 'index')->name('jadwal.index');
