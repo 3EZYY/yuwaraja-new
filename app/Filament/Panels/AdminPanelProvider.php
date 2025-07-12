@@ -29,7 +29,7 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin/dashboard')
             ->authGuard('web')
-            ->login()
+            // Hapus login page Filament admin
             ->registration(false)
             ->passwordReset(false)
             ->emailVerification(false)
@@ -67,7 +67,7 @@ class AdminPanelProvider extends PanelProvider
     public function register(): void
     {
         parent::register();
-        
+
         // Override logout response untuk redirect ke halaman login utama
         $this->app->bind(LogoutResponse::class, function () {
             return new class implements LogoutResponse {
