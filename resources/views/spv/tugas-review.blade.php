@@ -10,7 +10,7 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6">
                     <h3 class="text-lg font-medium text-gray-900 mb-6">Pengumpulan Tugas</h3>
-                    
+
                     @forelse($pengumpulanTugas as $pengumpulan)
                         <div class="border border-gray-200 rounded-lg p-6 mb-4">
                             <div class="flex justify-between items-start">
@@ -24,32 +24,65 @@
                                             <p class="text-sm text-gray-600">{{ $pengumpulan->user->kelompok->nama_kelompok ?? 'Kelompok tidak ditemukan' }}</p>
                                         </div>
                                     </div>
-                                    
+
                                     <div class="ml-14">
                                         <h5 class="font-medium text-gray-900">{{ $pengumpulan->tugas->judul }}</h5>
                                         <p class="text-sm text-gray-600 mt-1">
-                                            Dikumpulkan: {{ $pengumpulan->tanggal_submit->format('d M Y, H:i') }}
+                                            <b>Dikumpulkan:</b>
+                                            @if($pengumpulan->tanggal_submit)
+                                                {{ $pengumpulan->tanggal_submit->format('d M Y, H:i') }}
+                                            @else
+                                                -
+                                            @endif
                                         </p>
+                                        <p class="text-sm text-gray-600 mt-1">
+                                            <b>Status:</b> <span class="font-semibold">{{ ucfirst($pengumpulan->status) }}</span>
+                                            @if($pengumpulan->nilai !== null)
+                                                | <b>Nilai:</b> <span class="font-semibold">{{ $pengumpulan->nilai }}</span>
+                                            @endif
+                                            @if($pengumpulan->keterangan)
+                                                | <b>Keterangan:</b> <span class="font-semibold">{{ $pengumpulan->keterangan }}</span>
+                                            @endif
+                                        </p>
+                                        {{-- File download di detail kiri dihilangkan --}}
                                     </div>
                                 </div>
-                                
+
                                 <div class="flex items-center space-x-3">
-                                    <a href="{{ Storage::url($pengumpulan->file_path) }}" 
-                                       target="_blank"
-                                       class="inline-flex items-center px-3 py-2 border border-gray-300 shadow-sm text-sm leading-4 font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-                                        <i class="fas fa-download mr-2"></i>
-                                        Download
-                                    </a>
-                                    
-                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium {{ 
-                                        $pengumpulan->tanggal_submit <= $pengumpulan->tugas->deadline 
-                                            ? 'bg-green-100 text-green-800' 
-                                            : 'bg-red-100 text-red-800' 
+                                    @if($pengumpulan->file_path)
+                                        <a href="{{ asset('storage/' . $pengumpulan->file_path) }}" target="_blank" class="inline-flex items-center px-3 py-1 bg-blue-500 text-white text-xs font-semibold rounded hover:bg-blue-600 transition">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M7 10l5 5m0 0l5-5m-5 5V4" /></svg>
+                                            Download
+                                        </a>
+                                    @endif
+                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium {{
+                                        $pengumpulan->tanggal_submit <= $pengumpulan->tugas->deadline
+                                            ? 'bg-green-100 text-green-800'
+                                            : 'bg-red-100 text-red-800'
                                     }}">
                                         {{ $pengumpulan->tanggal_submit <= $pengumpulan->tugas->deadline ? 'Tepat Waktu' : 'Terlambat' }}
                                     </span>
                                 </div>
                             </div>
+                            <form action="{{ route('spv.tugas-mahasiswa.approve', $pengumpulan->id) }}" method="POST" class="mt-4 flex flex-wrap gap-4 items-end">
+                                @csrf
+                                <div>
+                                    <label for="nilai-{{ $pengumpulan->id }}" class="block text-xs font-bold mb-1">Nilai</label>
+                                    <input type="number" name="nilai" id="nilai-{{ $pengumpulan->id }}" class="form-input w-24" value="{{ old('nilai', $pengumpulan->nilai) }}" min="0" max="100" required>
+                                </div>
+                                <div>
+                                    <label for="keterangan-{{ $pengumpulan->id }}" class="block text-xs font-bold mb-1">Keterangan</label>
+                                    <input type="text" name="keterangan" id="keterangan-{{ $pengumpulan->id }}" class="form-input w-48" value="{{ old('keterangan', $pengumpulan->keterangan) }}">
+                                </div>
+                                <div>
+                                    <label for="status-{{ $pengumpulan->id }}" class="block text-xs font-bold mb-1">Status</label>
+                                    <select name="status" id="status-{{ $pengumpulan->id }}" class="form-select">
+                                        <option value="reviewed" {{ $pengumpulan->status == 'reviewed' ? 'selected' : '' }}>Perlu Diteliti</option>
+                                        <option value="approved" {{ $pengumpulan->status == 'approved' ? 'selected' : '' }}>Approve</option>
+                                    </select>
+                                </div>
+                                <button type="submit" class="btn btn-success">Simpan</button>
+                            </form>
                         </div>
                     @empty
                         <div class="text-center py-8">

@@ -5,6 +5,7 @@ use App\Http\Controllers\MahasiswaDashboardController;
 use App\Http\Controllers\SpvDashboardController;
 use App\Http\Controllers\TugasController;
 use App\Http\Controllers\Api\ValidationController;
+use App\Http\Controllers\SpvTugasController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -19,11 +20,11 @@ Route::get('/', function () {
 // Redirect dashboard berdasarkan role
 Route::get('/dashboard', function () {
     $user = Auth::user();
-    
+
     if (!$user) {
         return redirect('/login');
     }
-    
+
     return match($user->role) {
         'admin' => redirect('/admin/dashboard'),  // Ke Filament admin panel
         'spv' => redirect('/spv/dashboard'),
@@ -37,6 +38,13 @@ Route::middleware(['auth', 'verified', 'role:spv'])->prefix('spv')->name('spv.')
     Route::get('/dashboard', [SpvDashboardController::class, 'index'])->name('dashboard');
     Route::get('/kelompok', [SpvDashboardController::class, 'kelompok'])->name('kelompok');
     Route::get('/tugas-review', [SpvDashboardController::class, 'tugasReview'])->name('tugas-review');
+    Route::get('/pengumuman/{pengumuman}', [SpvDashboardController::class, 'showPengumuman'])->name('pengumuman.detail');
+    Route::get('/jadwal/{jadwal}', [SpvDashboardController::class, 'showJadwal'])->name('jadwal.detail');
+
+    // Tambahan: fitur review tugas mahasiswa
+    Route::get('/tugas-mahasiswa', [SpvTugasController::class, 'index'])->name('tugas-mahasiswa.index');
+    Route::get('/tugas-mahasiswa/{id}', [SpvTugasController::class, 'show'])->name('tugas-mahasiswa.show');
+    Route::post('/tugas-mahasiswa/{id}/approve', [SpvTugasController::class, 'approve'])->name('tugas-mahasiswa.approve');
 });
 
 // Routes untuk MAHASISWA
@@ -44,6 +52,8 @@ Route::middleware(['auth', 'verified', 'role:mahasiswa'])->prefix('mahasiswa')->
     Route::get('/dashboard', [MahasiswaDashboardController::class, 'index'])->name('dashboard');
     Route::get('/tugas/{tugas}', [MahasiswaDashboardController::class, 'showTugas'])->name('tugas.show');
     Route::post('/tugas/{tugas}/submit', [MahasiswaDashboardController::class, 'submitTugas'])->name('tugas.submit');
+    Route::get('/pengumuman/{pengumuman}', [MahasiswaDashboardController::class, 'showPengumuman'])->name('pengumuman.detail');
+    Route::get('/jadwal/{jadwal}', [MahasiswaDashboardController::class, 'showJadwal'])->name('jadwal.detail');
 });
 
 Route::middleware('auth')->group(function () {

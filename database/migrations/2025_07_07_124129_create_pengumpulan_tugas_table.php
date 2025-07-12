@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('pengumpulan_tugas', function (Blueprint $table) {
             $table->id();
             $table->foreignId('tugas_id')->constrained('tugas')->onDelete('cascade');
-            $table->foreignId('kelompok_id')->constrained('kelompok')->onDelete('cascade');
+            $table->foreignId('kelompok_id')->constrained('kelompoks')->onDelete('cascade');
             $table->string('file_path')->nullable();
             $table->text('keterangan')->nullable();
             $table->enum('status', ['draft', 'submitted', 'reviewed', 'approved', 'rejected'])->default('draft');

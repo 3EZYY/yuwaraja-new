@@ -48,7 +48,7 @@ class PengumpulanTugasResource extends Resource
                     ->searchable()
                     ->preload()
                     ->required(),
-                Forms\Components\DateTimePicker::make('tanggal_submit')
+                Forms\Components\DateTimePicker::make('submitted_at')
                     ->label('Tanggal Submit')
                     ->required(),
                 Forms\Components\FileUpload::make('file_path')
@@ -76,7 +76,7 @@ class PengumpulanTugasResource extends Resource
                     ->label('Tugas')
                     ->searchable()
                     ->limit(30),
-                Tables\Columns\TextColumn::make('tanggal_submit')
+                Tables\Columns\TextColumn::make('submitted_at')
                     ->label('Tanggal Submit')
                     ->dateTime()
                     ->sortable(),

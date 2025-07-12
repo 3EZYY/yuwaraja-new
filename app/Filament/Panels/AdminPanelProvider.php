@@ -29,7 +29,6 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin/dashboard')
             ->authGuard('web')
-            // Hapus login page Filament admin
             ->registration(false)
             ->passwordReset(false)
             ->emailVerification(false)

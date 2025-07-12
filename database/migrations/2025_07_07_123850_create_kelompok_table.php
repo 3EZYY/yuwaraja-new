@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
 
 return new class extends Migration
 {
@@ -11,7 +12,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('kelompok', function (Blueprint $table) {
+        Schema::create('kelompoks', function (Blueprint $table) {
             $table->id();
             $table->string('nama_kelompok')->unique();
             // Relasi ke user yang menjadi SPV
@@ -25,6 +26,13 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('kelompok');
+        if (Schema::hasTable('kelompoks')) {
+            try {
+                DB::statement('ALTER TABLE kelompoks DROP FOREIGN KEY kelompoks_spv_id_foreign');
+            } catch (Exception $e) {
+                // Foreign key might not exist, ignore error
+            }
+            Schema::dropIfExists('kelompoks');
+        }
     }
 };

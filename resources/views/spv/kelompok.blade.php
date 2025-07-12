@@ -10,7 +10,18 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6">
                     <h3 class="text-lg font-medium text-gray-900 mb-6">Daftar Kelompok</h3>
-                    
+                    <!-- Filter Prodi -->
+                    <form method="GET" class="mb-6 flex items-center gap-2">
+                        <label for="prodi" class="font-medium text-gray-700">Filter Prodi:</label>
+                        <select name="prodi" id="prodi" class="form-select w-56">
+                            <option value="">Semua Prodi</option>
+                            @foreach($prodiList ?? [] as $prodi)
+                                <option value="{{ $prodi }}" {{ (isset($filterProdi) && $filterProdi == $prodi) ? 'selected' : '' }}>{{ $prodi }}</option>
+                            @endforeach
+                        </select>
+                        <button type="submit" class="btn btn-primary">Terapkan</button>
+                    </form>
+
                     @forelse($kelompokDibimbing as $kelompok)
                         <div class="border border-gray-200 rounded-lg p-6 mb-6">
                             <div class="flex justify-between items-start mb-4">

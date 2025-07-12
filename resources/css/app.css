@@ -1,3 +1,98 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* === CYBERPUNK THEME STYLES === */
+
+body {
+    font-family: 'Roboto Mono', monospace;
+    background-color: #000000;
+    color: theme('colors.cyan.300');
+}
+
+/* Efek Glow untuk Teks */
+.text-glow-yellow {
+    text-shadow: 0 0 5px theme('colors.yellow.400'), 0 0 10px theme('colors.yellow.300');
+}
+.text-glow-cyan {
+    text-shadow: 0 0 5px theme('colors.cyan.400'), 0 0 10px theme('colors.cyan.300');
+}
+
+/* Styling untuk Card/Container */
+.cyber-card {
+    @apply bg-gray-900/50 border border-cyan-500/30 rounded-lg shadow-lg shadow-cyan-500/5 backdrop-blur-sm;
+    position: relative;
+    overflow: hidden;
+}
+
+.cyber-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -10%;
+    width: 120%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 0, 0.05), transparent);
+    transform: skewX(-15deg);
+    animation: scanline 8s linear infinite;
+    pointer-events: none;
+}
+
+@keyframes scanline {
+    0% { transform: translateX(-100%) skewX(-15deg); }
+    100% { transform: translateX(100%) skewX(-15deg); }
+}
+
+/* Styling untuk Input, Select, Textarea */
+.cyber-input {
+    @apply w-full bg-gray-900/70 border-2 border-cyan-500/50 rounded-md;
+    @apply text-cyan-300 placeholder-gray-500;
+    @apply focus:border-yellow-400 focus:ring-0 focus:shadow-lg focus:shadow-yellow-400/30;
+    font-family: 'Roboto Mono', monospace;
+    transition: all 0.2s ease-in-out;
+}
+
+/* Styling untuk Select Dropdown */
+.cyber-select {
+    @apply cyber-input;
+}
+.cyber-select option {
+    @apply bg-gray-900 text-cyan-300;
+}
+
+/* Styling untuk Tombol Utama */
+.cyber-button {
+    @apply px-6 py-2 rounded-md font-bold text-black bg-yellow-400 border-2 border-yellow-400;
+    @apply hover:bg-transparent hover:text-yellow-400 transition-all duration-300;
+    font-family: 'Orbitron', sans-serif;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.4);
+    position: relative;
+    overflow: hidden;
+}
+
+.cyber-button::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(transparent, rgba(255, 255, 255, 0.2), transparent);
+    transform: rotate(30deg);
+    transition: transform 0.3s ease-out;
+}
+
+.cyber-button:hover::after {
+    transform: rotate(30deg) translate(50%, 50%);
+}
+
+/* Styling untuk Tombol File Upload */
+input[type="file"].cyber-input::file-selector-button {
+    @apply px-4 py-2 mr-4 bg-cyan-600 border-0 rounded-l-md cursor-pointer;
+    @apply text-white font-semibold hover:bg-cyan-500;
+    font-family: 'Roboto Mono', monospace;
+    transition: background-color 0.2s;
+}
+input[type="file"].cyber-input:hover::file-selector-button {
+    @apply bg-yellow-400 text-black;
+}

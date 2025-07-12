@@ -69,14 +69,26 @@
     </style>
 
     <x-slot name="header">
-        <h2 class="font-semibold text-2xl text-glow-cyan font-orbitron text-white leading-tight">
-            {{ __('MAHASISWA DASHBOARD') }}
-        </h2>
+        <div class="flex items-center justify-between">
+            <h2 class="font-semibold text-2xl text-glow-cyan font-orbitron text-white leading-tight">
+                {{ __('MAHASISWA DASHBOARD') }}
+            </h2>
+            <div class="flex items-center bg-black px-3 py-1 rounded-md border border-cyan-900/40">
+                @if(Auth::user()->photo)
+                    <img src="{{ asset('storage/profile/' . Auth::user()->photo) }}" alt="Profile Photo" class="w-8 h-8 rounded-full border-2 border-yellow-400 shadow mr-2">
+                @else
+                    <span class="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center text-yellow-400 font-bold mr-2">
+                        {{ strtoupper(substr(Auth::user()->name,0,1)) }}
+                    </span>
+                @endif
+                <span class="text-white font-semibold text-base">{{ Auth::user()->name }}</span>
+            </div>
+        </div>
     </x-slot>
 
     <div class="py-12 bg-black">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-8">
-            
+
             <!-- Welcome & Profile Card -->
             <div class="cyber-card p-6 md:p-8 flex flex-col md:flex-row md:items-center justify-between gap-6">
                 <div>
@@ -88,6 +100,9 @@
                     <p class="text-xl font-bold text-white">{{ $user->kelompok->nama_kelompok ?? 'Belum ada kelompok' }}</p>
                     <p class="text-sm text-gray-400 mt-2">Program Studi</p>
                     <p class="text-lg font-semibold text-cyan-400">{{ $user->program_studi ?? 'N/A' }}</p>
+                    <a href="{{ route('profile.edit') }}" class="inline-block mt-3 text-sm text-yellow-400 hover:underline">
+                        Edit My Profile >>
+                    </a>
                 </div>
             </div>
 
@@ -123,7 +138,7 @@
                     <p class="text-4xl font-bold text-cyan-400 my-2">{{ $jadwalHariIni->count() }}</p>
                     <p class="text-xs text-gray-500">Kegiatan menantimu</p>
                 </div>
-                
+
                 <!-- Tombol Absensi -->
                 <div class="bg-yellow-400 p-6 rounded-lg flex flex-col items-center justify-center text-center text-black hover:bg-yellow-300 transition-colors cursor-pointer">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 mb-2" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd" /></svg>
@@ -139,7 +154,9 @@
                         <div class="space-y-4">
                             @foreach($pengumuman as $announce)
                             <div class="border-l-4 border-yellow-400 pl-4 py-2 hover:bg-white/5 transition-colors">
-                                <h4 class="font-bold text-white">{{ $announce->judul }}</h4>
+                                <a href="{{ route('mahasiswa.pengumuman.detail', $announce->id) }}" class="hover:underline">
+                                    <h4 class="font-bold text-white">{{ $announce->judul }}</h4>
+                                </a>
                                 <p class="text-sm text-gray-400 mt-1">{{ Str::limit($announce->konten, 150) }}</p>
                                 <p class="text-xs text-gray-500 mt-2">{{ $announce->created_at->diffForHumans() }}</p>
                             </div>
@@ -158,7 +175,9 @@
                             @foreach($jadwal as $event)
                             <div class="border-l-4 border-cyan-400 pl-4 py-2">
                                 <p class="text-xs text-cyan-400">{{ $event->tanggal_mulai->format('d M, H:i') }}</p>
-                                <h4 class="font-semibold text-white">{{ $event->nama_acara }}</h4>
+                                <a href="{{ route('mahasiswa.jadwal.detail', $event->id) }}" class="hover:underline">
+                                    <h4 class="font-semibold text-white">{{ $event->nama_acara }}</h4>
+                                </a>
                                 <p class="text-sm text-gray-400">{{ $event->lokasi ?? 'Online' }}</p>
                             </div>
                             @endforeach
@@ -182,6 +201,7 @@
                                 <th class="px-6 py-3 text-left text-xs font-bold uppercase tracking-wider">Deadline</th>
                                 <th class="px-6 py-3 text-left text-xs font-bold uppercase tracking-wider">Tipe</th>
                                 <th class="px-6 py-3 text-left text-xs font-bold uppercase tracking-wider">Status</th>
+                                <th class="px-6 py-3 text-left text-xs font-bold uppercase tracking-wider">Notifikasi</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-800/50">
@@ -202,6 +222,27 @@
                                     <span class="status-badge {{ $task->is_active ? 'bg-yellow-900/50 text-yellow-300 border border-yellow-400/50' : 'bg-gray-700 text-gray-300 border border-gray-600' }}">
                                         {{ $task->is_active ? 'Aktif' : 'Selesai' }}
                                     </span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    @php $pt = $pengumpulanTugas[$task->id] ?? null; @endphp
+                                    @if($pt)
+                                        <span class="status-badge {{
+                                            $pt->status == 'done' ? 'bg-green-900/50 text-green-300 border border-green-400/50' :
+                                            ($pt->status == 'approved' ? 'bg-blue-900/50 text-blue-300 border border-blue-400/50' :
+                                            ($pt->status == 'reviewed' ? 'bg-yellow-900/50 text-yellow-300 border border-yellow-400/50' : 'bg-gray-700 text-gray-300 border border-gray-600'))
+                                        }}">
+                                            {{ ucfirst($pt->status) }}
+                                        </span>
+                                        @if($pt->status == 'done')
+                                            <span class="text-green-400 ml-2">Tugas kamu sudah selesai &amp; dinilai!</span>
+                                        @elseif($pt->status == 'approved')
+                                            <span class="text-blue-400 ml-2">Tugas kamu sudah di-approve SPV, menunggu finalisasi.</span>
+                                        @elseif($pt->status == 'reviewed')
+                                            <span class="text-yellow-400 ml-2">Tugas kamu sedang diteliti SPV.</span>
+                                        @endif
+                                    @else
+                                        <span class="text-gray-400">Belum ada pengumpulan</span>
+                                    @endif
                                 </td>
                             </tr>
                             @empty

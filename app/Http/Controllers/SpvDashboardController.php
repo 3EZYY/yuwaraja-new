@@ -13,28 +13,37 @@ use Illuminate\Support\Facades\Auth;
 
 class SpvDashboardController extends Controller
 {
+    public function showPengumuman(Pengumuman $pengumuman)
+    {
+        return view('spv.pengumuman-detail', compact('pengumuman'));
+    }
+
+    public function showJadwal(JadwalAcara $jadwal)
+    {
+        return view('spv.jadwal-detail', compact('jadwal'));
+    }
     public function index()
     {
         $user = Auth::user();
-        
+
         // Data untuk SPV
         $kelompokDibimbing = Kelompok::where('spv_id', $user->id)->get();
         $mahasiswaDibimbing = User::whereIn('kelompok_id', $kelompokDibimbing->pluck('id'))->get();
         $pengumuman = Pengumuman::latest()->take(5)->get();
         $jadwal = JadwalAcara::where('tanggal_mulai', '>=', now())->orderBy('tanggal_mulai')->get();
         $tugas = Tugas::all();
-        
+
         // Statistik
         $totalKelompok = $kelompokDibimbing->count();
         $totalMahasiswa = $mahasiswaDibimbing->count();
         $tugasSelesai = PengumpulanTugas::whereIn('kelompok_id', $kelompokDibimbing->pluck('id'))->count();
 
         return view('spv.dashboard', compact(
-            'user', 
-            'kelompokDibimbing', 
+            'user',
+            'kelompokDibimbing',
             'mahasiswaDibimbing',
-            'pengumuman', 
-            'jadwal', 
+            'pengumuman',
+            'jadwal',
             'tugas',
             'totalKelompok',
             'totalMahasiswa',
@@ -42,24 +51,36 @@ class SpvDashboardController extends Controller
         ));
     }
 
-    public function kelompok()
+    public function kelompok(Request $request)
     {
         $user = Auth::user();
-        $kelompokDibimbing = Kelompok::where('spv_id', $user->id)->with('mahasiswa')->get();
-        
-        return view('spv.kelompok', compact('kelompokDibimbing'));
+        // Ambil semua prodi unik dari mahasiswa yang dibimbing
+        $prodiList = User::whereIn('kelompok_id', function($q) use ($user) {
+            $q->select('id')->from('kelompoks')->where('spv_id', $user->id);
+        })->select('program_studi')->distinct()->pluck('program_studi');
+
+        $filterProdi = $request->input('prodi');
+        $kelompokDibimbing = Kelompok::where('spv_id', $user->id)
+            ->with(['mahasiswa' => function($q) use ($filterProdi) {
+                if ($filterProdi) {
+                    $q->where('program_studi', $filterProdi);
+                }
+            }])
+            ->get();
+
+        return view('spv.kelompok', compact('kelompokDibimbing', 'prodiList', 'filterProdi'));
     }
 
     public function tugasReview()
     {
         $user = Auth::user();
         $kelompokDibimbing = Kelompok::where('spv_id', $user->id)->get();
-        
+
         $pengumpulanTugas = PengumpulanTugas::whereIn('kelompok_id', $kelompokDibimbing->pluck('id'))
             ->with(['kelompok', 'tugas'])
             ->latest()
             ->get();
-        
+
         return view('spv.tugas-review', compact('pengumpulanTugas'));
     }
 }

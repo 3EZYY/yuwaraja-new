@@ -17,11 +17,11 @@ class UserResource extends Resource
     protected static ?string $model = User::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-users';
-    
+
     protected static ?string $navigationLabel = 'Manajemen User';
-    
+
     protected static ?string $modelLabel = 'User';
-    
+
     protected static ?string $pluralModelLabel = 'Users';
 
     public static function form(Form $form): Form
@@ -61,8 +61,6 @@ class UserResource extends Resource
                         'D3 Administrasi Bisnis' => 'D3 Administrasi Bisnis',
                         'D4 Desain Grafis' => 'D4 Desain Grafis',
                         'D3 Teknologi Informasi' => 'D3 Teknologi Informasi',
-                        'Sistem Informasi' => 'Sistem Informasi',
-                        'Teknik Informatika' => 'Teknik Informatika',
                     ])
                     ->required()
                     ->searchable(),

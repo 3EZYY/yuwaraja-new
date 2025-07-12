@@ -23,12 +23,14 @@ class User extends Authenticatable implements FilamentUser
         'name',
         'nim',
         'username',
-        'program_studi', 
+        'photo',
+        'program_studi',
         'angkatan',
         'nomor_telepon',
         'tanggal_lahir',
         'jenis_kelamin',
         'email',
+        'deskripsi',
         'password',
         'role', // Untuk admin panel, admin bisa mengubah role
         'kelompok_id', // Untuk admin panel, admin bisa assign kelompok

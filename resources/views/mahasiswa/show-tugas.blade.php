@@ -58,6 +58,27 @@
                                 <div>
                                     <h3 class="text-lg font-semibold text-green-800">Tugas Sudah Dikumpulkan</h3>
                                     <p class="text-green-600">Dikumpulkan pada: {{ \Carbon\Carbon::parse($pengumpulan->tanggal_submit)->format('d M Y, H:i') }}</p>
+                                    <span class="inline-block mt-2 px-3 py-1 rounded-full text-xs font-semibold
+                                        {{
+                                            $pengumpulan->status == 'done' ? 'bg-green-600 text-white' :
+                                            ($pengumpulan->status == 'approved' ? 'bg-blue-600 text-white' :
+                                            ($pengumpulan->status == 'reviewed' ? 'bg-yellow-400 text-black' : 'bg-gray-400 text-white'))
+                                        }}">
+                                        Status: {{ ucfirst($pengumpulan->status) }}
+                                    </span>
+                                    @if($pengumpulan->status == 'done')
+                                        <span class="block text-green-700 mt-1">Tugas kamu sudah selesai &amp; dinilai!</span>
+                                    @elseif($pengumpulan->status == 'approved')
+                                        <span class="block text-blue-700 mt-1">Tugas kamu sudah di-approve SPV, menunggu finalisasi.</span>
+                                    @elseif($pengumpulan->status == 'reviewed')
+                                        <span class="block text-yellow-700 mt-1">Tugas kamu sedang diteliti SPV.</span>
+                                    @endif
+                                    @if($pengumpulan->nilai !== null)
+                                        <span class="block mt-1">Nilai: <b>{{ $pengumpulan->nilai }}</b></span>
+                                    @endif
+                                    @if($pengumpulan->keterangan)
+                                        <span class="block mt-1">Catatan SPV: <i>{{ $pengumpulan->keterangan }}</i></span>
+                                    @endif
                                 </div>
                             </div>
                             <div class="bg-white border border-green-200 rounded p-4">
@@ -66,8 +87,8 @@
                                         <i class="fas fa-file-alt text-green-600 mr-2"></i>
                                         <span class="text-gray-700">File yang dikumpulkan:</span>
                                     </div>
-                                    <a href="{{ Storage::url($pengumpulan->file_path) }}" 
-                                       target="_blank" 
+                                    <a href="{{ Storage::url($pengumpulan->file_path) }}"
+                                       target="_blank"
                                        class="text-blue-600 hover:text-blue-800 underline">
                                         <i class="fas fa-download mr-1"></i>Download
                                     </a>
@@ -81,17 +102,17 @@
                                 <h3 class="text-lg font-semibold text-blue-800 mb-4">
                                     <i class="fas fa-upload text-blue-600 mr-2"></i>Upload Tugas
                                 </h3>
-                                
+
                                 <form action="{{ route('mahasiswa.tugas.submit', $tugas) }}" method="POST" enctype="multipart/form-data" class="space-y-4">
                                     @csrf
-                                    
+
                                     <div>
                                         <label for="file" class="block text-sm font-medium text-gray-700 mb-2">
                                             File Tugas <span class="text-red-500">*</span>
                                         </label>
-                                        <input type="file" 
-                                               id="file" 
-                                               name="file" 
+                                        <input type="file"
+                                               id="file"
+                                               name="file"
                                                accept=".pdf,.doc,.docx"
                                                class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 border border-gray-300 rounded-lg cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500">
                                         <p class="mt-2 text-sm text-gray-500">
@@ -104,7 +125,7 @@
                                     </div>
 
                                     <div class="pt-4">
-                                        <button type="submit" 
+                                        <button type="submit"
                                                 class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
                                             <i class="fas fa-upload mr-2"></i>
                                             Kumpulkan Tugas
@@ -147,13 +168,13 @@
             if (file) {
                 const fileSize = file.size / 1024 / 1024; // Convert to MB
                 const allowedTypes = ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
-                
+
                 if (fileSize > 5) {
                     alert('File terlalu besar! Maksimal 5MB.');
                     e.target.value = '';
                     return;
                 }
-                
+
                 if (!allowedTypes.includes(file.type)) {
                     alert('Format file tidak valid! Hanya PDF, DOC, dan DOCX yang diperbolehkan.');
                     e.target.value = '';

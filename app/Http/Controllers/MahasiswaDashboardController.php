@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -12,16 +11,29 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Log;
 
+
+
 class MahasiswaDashboardController extends Controller
 {
+    public function showPengumuman(Pengumuman $pengumuman)
+    {
+        return view('mahasiswa.pengumuman-detail', compact('pengumuman'));
+    }
+
+    public function showJadwal(JadwalAcara $jadwal)
+    {
+        return view('mahasiswa.jadwal-detail', compact('jadwal'));
+    }
     public function index()
     {
         $user = Auth::user();
         $pengumuman = Pengumuman::latest()->take(5)->get();
         $jadwal = JadwalAcara::where('tanggal_mulai', '>=', now())->orderBy('tanggal_mulai')->get();
         $tugas = Tugas::all();
+        // Ambil status pengumpulan tugas mahasiswa
+        $pengumpulanTugas = PengumpulanTugas::where('user_id', $user->id)->get()->keyBy('tugas_id');
 
-        return view('mahasiswa.dashboard', compact('user', 'pengumuman', 'jadwal', 'tugas'));
+        return view('mahasiswa.dashboard', compact('user', 'pengumuman', 'jadwal', 'tugas', 'pengumpulanTugas'));
     }
 
     public function showTugas(Tugas $tugas)

@@ -112,7 +112,9 @@
                         <div class="space-y-3">
                             @forelse($pengumuman as $item)
                                 <div class="border-l-4 border-blue-500 pl-4">
-                                    <p class="text-sm font-medium text-gray-900">{{ $item->judul }}</p>
+                                    <a href="{{ route('spv.pengumuman.detail', $item->id) }}" class="hover:underline">
+                                        <p class="text-sm font-medium text-gray-900">{{ $item->judul }}</p>
+                                    </a>
                                     <p class="text-xs text-gray-500">{{ $item->created_at->format('d M Y') }}</p>
                                 </div>
                             @empty
@@ -129,7 +131,9 @@
                         <div class="space-y-3">
                             @forelse($jadwal as $item)
                                 <div class="border-l-4 border-green-500 pl-4">
-                                    <p class="text-sm font-medium text-gray-900">{{ $item->nama_acara }}</p>
+                                    <a href="{{ route('spv.jadwal.detail', $item->id) }}" class="hover:underline">
+                                        <p class="text-sm font-medium text-gray-900">{{ $item->nama_acara }}</p>
+                                    </a>
                                     <p class="text-xs text-gray-500">{{ $item->tanggal_mulai->format('d M Y') }}</p>
                                 </div>
                             @empty
