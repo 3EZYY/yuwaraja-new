@@ -37,6 +37,26 @@ class KelompokResource extends Resource
                     ->searchable()
                     ->preload()
                     ->label('Penanggung Jawab'),
+                Forms\Components\TextInput::make('code')
+                    ->label('Kode Kelompok')
+                    ->required()
+                    ->maxLength(5)
+                    ->unique(ignoreRecord: true)
+                    ->default(fn () => strtoupper(\Illuminate\Support\Str::random(5)))
+                    ->reactive()
+                    ->afterStateHydrated(function ($component, $state) {
+                        if (!$state) {
+                            $component->state(strtoupper(\Illuminate\Support\Str::random(5)));
+                        }
+                    })
+                    ->suffixAction(
+                        \Filament\Forms\Components\Actions\Action::make('generate')
+                            ->icon('heroicon-o-arrow-path')
+                            ->tooltip('Generate Ulang')
+                            ->action(function ($state, $set) {
+                                $set('code', strtoupper(\Illuminate\Support\Str::random(5)));
+                            })
+                    ),
             ]);
     }
 
@@ -50,6 +70,11 @@ class KelompokResource extends Resource
                 Tables\Columns\TextColumn::make('spv.name')
                     ->label('Penanggung Jawab')
                     ->sortable(),
+                Tables\Columns\TextColumn::make('code')
+                    ->label('Kode Kelompok')
+                    ->copyable()
+                    ->copyMessage('Kode disalin!')
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

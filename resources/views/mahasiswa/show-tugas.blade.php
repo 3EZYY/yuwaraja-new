@@ -1,5 +1,6 @@
-<x-app-layout>
+@extends('layouts.app')
 
+@section('content')
     <div class="pt-20 max-w-4xl mx-auto sm:px-6 lg:px-8">
         <!-- Flash Messages -->
         @if(session('success'))
@@ -38,6 +39,7 @@
                 <div class="mb-8">
                     <h2 class="text-lg font-semibold text-gray-800 mb-4">
                         <i class="fas fa-info-circle text-blue-600 mr-2"></i>Deskripsi Tugas
+@endsection
                     </h2>
                     <div class="prose max-w-none text-gray-700">
                         {!! nl2br(e($tugas->deskripsi)) !!}
@@ -177,4 +179,3 @@
         });
     </script>
     @endpush
-</x-mahasiswa-layout>

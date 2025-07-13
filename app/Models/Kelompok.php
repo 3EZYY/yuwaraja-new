@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
+
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Str;
 
 class Kelompok extends Model
 {
@@ -11,10 +13,24 @@ class Kelompok extends Model
 
     protected $table = 'kelompoks';
 
+
     protected $fillable = [
         'nama_kelompok',
         'spv_id',
+        'code',
     ];
+
+    protected static function booted()
+    {
+        static::creating(function ($kelompok) {
+            if (!$kelompok->code) {
+                do {
+                    $code = strtoupper(Str::random(5));
+                } while (self::where('code', $code)->exists());
+                $kelompok->code = $code;
+            }
+        });
+    }
 
     // Relasi
     public function spv()

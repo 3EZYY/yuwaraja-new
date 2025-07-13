@@ -26,7 +26,7 @@
             <x-sidebar :role="Auth::user()->role" />
 
             <!-- Main Content -->
-            <div class="lg:pl-64">
+            <div class="lg:pl-72">
                 <!-- Page Heading -->
                 @isset($header)
                     <header class="sticky top-0 z-30 bg-black/50 backdrop-blur-sm border-b border-yellow-500/20 shadow-md shadow-yellow-500/5">
@@ -38,7 +38,7 @@
 
                 <!-- Page Content -->
                 <main class="pt-4">
-                    {{ $slot }}
+                    @yield('content')
                 </main>
             </div>
         </div>

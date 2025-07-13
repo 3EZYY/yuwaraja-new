@@ -1,4 +1,11 @@
+
 <?php
+
+// Join Kelompok untuk Mahasiswa
+Route::middleware(['auth', 'role:mahasiswa'])->group(function () {
+    Route::get('/mahasiswa/join-kelompok', [\App\Http\Controllers\JoinKelompokController::class, 'showForm'])->name('mahasiswa.join-kelompok');
+    Route::post('/mahasiswa/join-kelompok', [\App\Http\Controllers\JoinKelompokController::class, 'join'])->name('mahasiswa.join-kelompok.submit');
+});
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\MahasiswaDashboardController;
@@ -39,10 +46,6 @@ Route::get('/dashboard', function () {
 
 // Routes untuk ADMIN
 Route::middleware(['auth', 'verified', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
-    Route::get('/dashboard', function () {
-        // Ganti dengan controller jika ada
-        return view('admin.dashboard');
-    })->name('dashboard');
     // Route logout khusus admin
     Route::post('/logout', function () {
         Auth::logout();

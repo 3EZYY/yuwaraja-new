@@ -1,4 +1,6 @@
-<x-app-layout>
+@extends('layouts.app')
+
+@section('content')
     <div class="max-w-3xl mx-auto py-10">
         <div class="cyber-card p-8">
             <h1 class="text-3xl font-bold text-cyan-400 mb-4">{{ $jadwal->nama_acara }}</h1>
@@ -8,4 +10,4 @@
             <a href="{{ url()->previous() }}" class="text-cyan-400 hover:underline">&larr; Kembali</a>
         </div>
     </div>
-</x-app-layout>
+@endsection

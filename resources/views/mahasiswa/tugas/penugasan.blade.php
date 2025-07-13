@@ -1,5 +1,7 @@
 
-<x-app-layout>
+@extends('layouts.app')
+
+@section('content')
     <div class="py-12 min-h-screen bg-[#0a0a13]">
         <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-[#181825] shadow-xl rounded-2xl mb-8 border border-[#232347]">
@@ -226,4 +228,4 @@
             background: #00eaff;
         }
     </style>
-</x-app-layout>
+@endsection

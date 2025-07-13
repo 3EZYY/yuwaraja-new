@@ -73,6 +73,15 @@
                 Jadwal
             </x-sidebar.nav-link>
 
+            <x-sidebar.nav-link :href="route('mahasiswa.join-kelompok')" :active="request()->routeIs('mahasiswa.join-kelompok')">
+                <x-slot name="icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path d="M8.257 3.099c.366-.446.957-.532 1.403-.166l.094.083 7 7a1 1 0 01.083 1.32l-.083.094-7 7a1 1 0 01-1.497-1.32l.083-.094L13.584 11H3a1 1 0 01-.993-.883L2 10a1 1 0 01.883-.993L3 9h10.584l-5.327-5.293a1 1 0 01-.083-1.32l.083-.094z" />
+                    </svg>
+                </x-slot>
+                Join Kelompok
+            </x-sidebar.nav-link>
+
             @elseif($role === 'spv')
             <x-sidebar.nav-link :href="route('spv.dashboard')" :active="request()->routeIs('spv.dashboard')">
                 <x-slot name="icon">
