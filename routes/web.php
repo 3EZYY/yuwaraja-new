@@ -29,14 +29,26 @@ Route::get('/dashboard', function () {
     }
 
     return match($user->role) {
-        'admin' => redirect('/admin/dashboard'),  // Ke Filament admin panel
+        'admin' => redirect('/admin/dashboard'),
         'spv' => redirect('/spv/dashboard'),
         'mahasiswa' => redirect('/mahasiswa/dashboard'),
         default => redirect('/login')
     };
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-// Routes untuk SPV
+
+// Routes untuk ADMIN
+Route::middleware(['auth', 'verified', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/dashboard', function () {
+        // Ganti dengan controller jika ada
+        return view('admin.dashboard');
+    })->name('dashboard');
+    // Route logout khusus admin
+    Route::post('/logout', function () {
+        Auth::logout();
+        return redirect('/login');
+    })->name('logout');
+});
 Route::middleware(['auth', 'verified', 'role:spv'])->prefix('spv')->name('spv.')->group(function () {
     Route::get('/dashboard', [SpvDashboardController::class, 'index'])->name('dashboard');
     Route::get('/kelompok', [SpvDashboardController::class, 'kelompok'])->name('kelompok');
