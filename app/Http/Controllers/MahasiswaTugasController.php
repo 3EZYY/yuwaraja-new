@@ -6,6 +6,7 @@ use App\Models\Tugas;
 use App\Models\PengumpulanTugas;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class MahasiswaTugasController extends Controller
 {
@@ -39,37 +40,38 @@ class MahasiswaTugasController extends Controller
                 ->with('error', 'Tugas ini sudah selesai dan dinilai.');
         }
 
-        $kerjakanMode = true;
         return view('mahasiswa.tugas.penugasan', compact('tugas', 'pengumpulan', 'kerjakanMode'));
     }
 
     public function submit(Request $request, Tugas $tugas)
     {
         $request->validate([
-            'konten' => 'required|string',
-            'file' => 'nullable|file|max:10240' // max 10MB
+            'file' => 'required|file|mimes:pdf,doc,docx,zip,rar|max:10240', // Max 10MB
+            'keterangan' => 'nullable|string|max:2000',
         ]);
 
-        $pengumpulan = PengumpulanTugas::updateOrCreate(
+        $pengumpulan = PengumpulanTugas::firstOrNew(
             [
                 'user_id' => Auth::id(),
                 'tugas_id' => $tugas->id,
-            ],
-            [
-                'konten' => $request->konten,
-                'status' => 'submitted'
             ]
         );
 
         if ($request->hasFile('file')) {
-            $file = $request->file('file');
-            $filename = time() . '_' . $file->getClientOriginalName();
-            $file->storeAs('pengumpulan', $filename, 'public');
-            $pengumpulan->file = $filename;
-            $pengumpulan->save();
+            if ($pengumpulan->file_path) {
+                Storage::disk('public')->delete($pengumpulan->file_path);
+            }
+            $filePath = $request->file('file')->store('pengumpulan', 'public');
+            $pengumpulan->file_path = $filePath;
         }
 
+        $pengumpulan->keterangan = $request->keterangan;
+        $pengumpulan->status = 'submitted';
+        $pengumpulan->submitted_at = now();
+
+        $pengumpulan->save();
+
         return redirect()->route('mahasiswa.tugas.show', $tugas)
-            ->with('success', 'Tugas berhasil dikumpulkan dan menunggu review dari SPV.');
+            ->with('success', 'Tugas berhasil dikumpulkan!');
     }
 }
