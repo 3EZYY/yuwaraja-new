@@ -43,24 +43,6 @@
     }
 }
 
-/* Styling untuk Input, Select, Textarea */
-.cyber-input {
-    @apply w-full bg-gray-900/70 border-2 border-cyan-500/50 rounded-md;
-    @apply text-cyan-300 placeholder-gray-500;
-    @apply focus: border-yellow-400 focus:ring-0 focus:shadow-lg focus:shadow-yellow-400/30;
-    font-family: 'Roboto Mono', monospace;
-    transition: all 0.2s ease-in-out;
-}
-
-/* Styling untuk Select Dropdown */
-.cyber-select {
-    @apply cyber-input;
-}
-
-.cyber-select option {
-    @apply bg-gray-900 text-cyan-300;
-}
-
 /* Styling untuk Tombol Utama */
 .cyber-button {
     @apply px-6 py-2 rounded-md font-bold text-black bg-yellow-400 border-2 border-yellow-400;
