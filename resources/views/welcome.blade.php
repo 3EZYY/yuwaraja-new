@@ -487,17 +487,17 @@
         }
 
         .cyber-card {
-            background: var(--color-surface);
+            background: var(--color-surface, rgba(0, 14, 20, 0.5));
             backdrop-filter: blur(10px);
-            border: none;
-            transition: transform 0.4s ease, box-shadow 0.4s ease;
             border-radius: 1.5rem;
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
         }
 
         .cyber-card:hover {
             transform: translateY(-8px);
             box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2), 0 0 20px rgba(0, 209, 255, 0.1);
         }
+
 
         .explore-button {
             display: inline-flex;
@@ -727,8 +727,8 @@
 
                 <!-- Tombol Autentikasi Desktop -->
                 <div class="hidden lg:flex items-center space-x-6">
-                    <a href="#" class="login-button">LOG IN</a>
-                    <a href="#" class="register-button">REGISTER</a>
+                    <a href="/login" class="login-button">LOG IN</a>
+                    <a href="/register" class="register-button">REGISTER</a>
                 </div>
 
                 <!-- Tombol Hamburger (Mobile) -->
@@ -793,37 +793,49 @@
                     <p class="mt-4 text-lg text-[#3FEAE5] font-extralight reveal-up" style="transition-delay: 0.2s;">Update intel penting
                         langsung dari pusat komando.</p>
                 </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-center">
-                    <div class="cyber-card p-8 reveal-up hover:box-glow-cyan">
-                        <div class="mb-7">
-                            <img src="/images/date.svg" alt="rangakaian acara" class="w-12 h-w-12 mb-6">
-                            <h3 class="text-xl font-normal font-kanit text-white mb-2 text-glow-cyan">RANGKAIAN ACARA
-                            </h3>
-                            <p class="text-[#3FEAE5] font-extralight">Jadwal lengkap, peraturan pakaian, dan semua yang perlu kamu ketahui
-                                untuk orientasi. Jangan sampai salah kostum, Ksatria!</p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6 md:gap-8 lg:gap-10 items-center">
+                    <!-- Card 1 -->
+                    <div class="cyber-card p-6 sm:p-8 reveal-up hover:box-glow-cyan">
+                        <div class="mb-6">
+                            <img src="/images/date.svg" alt="rangkaian acara" class="w-10 sm:w-12 h-auto mb-4">
+                            <h3 class="text-lg sm:text-xl font-kanit text-white mb-2 text-glow-cyan">RANGKAIAN ACARA</h3>
+                            <p class="text-[#3FEAE5] text-sm sm:text-base font-extralight">
+                                Jadwal lengkap, peraturan pakaian, dan semua yang perlu kamu ketahui untuk orientasi.
+                                Jangan sampai salah kostum, Ksatria!
+                            </p>
                         </div>
-                        <a href="/" class="bg-[#E8AA1F] text-[#012633] rounded-full px-28 py-2 text-xl">Lihat Selengkapnya</a>
+                        <a href="/" class="block w-full text-center bg-[#E8AA1F] text-[#012633] rounded-full px-4 py-2 text-base sm:text-xl font-semibold">
+                            Lihat Selengkapnya
+                        </a>
                     </div>
-                    <div class="cyber-card p-8 reveal-up hover:box-glow-cyan" style="transition-delay: 0.15s;">
-                        <div class="mb-7">
-                            <img src="/images/misi.svg" alt="rangakaian acara" class="w-12 h-w-12 mb-6">
-                            <h3 class="text-xl font-normal font-kanit text-white mb-2 text-glow-cyan">MISI & PENUGASAN</h3>
-                            <p class="text-[#3FEAE5] font-extralight">Tugas awal telah di-deploy! Selesaikan misimu untuk membuktikan
-                                kemampuan dan mendapatkan poin pengalaman pertama.</p>
+
+                    <!-- Card 2 -->
+                    <div class="cyber-card p-6 sm:p-8 reveal-up hover:box-glow-cyan" style="transition-delay: 0.15s;">
+                        <div class="mb-6">
+                            <img src="/images/misi.svg" alt="misi" class="w-10 sm:w-12 h-auto mb-4">
+                            <h3 class="text-lg sm:text-xl font-kanit text-white mb-2 text-glow-cyan">MISI & PENUGASAN</h3>
+                            <p class="text-[#3FEAE5] text-sm sm:text-base font-extralight">
+                                Tugas awal telah di-deploy! Selesaikan misimu untuk membuktikan kemampuan dan mendapatkan poin pengalaman pertama.
+                            </p>
                         </div>
-                        <a href="/" class="bg-[#E8AA1F] text-[#012633] rounded-full px-28 py-2 text-xl">Lihat Selengkapnya</a>
+                        <a href="/" class="block w-full text-center bg-[#E8AA1F] text-[#012633] rounded-full px-4 py-2 text-base sm:text-xl font-semibold">
+                            Lihat Selengkapnya
+                        </a>
                     </div>
-                    <div class="cyber-card p-8 reveal-up hover:box-glow-cyan" style="transition-delay: 0.3s;">
-                        <div class="mb-7">
-                            <img src="/images/event.svg" alt="rangakaian acara" class="w-12 h-w-12 mb-6">
 
-                            <h3 class="text-xl font-normal font-kanit text-white mb-2 text-glow-cyan">EVENT KOMUNITAS
-                            </h3>
-                            <p class="text-gray-400">Jadwal meet & greet, workshop, dan webinar untuk memperluas jaringanmu.
-                                Saatnya terhubung dengan ksatria lain!</p>
+                    <!-- Card 3 -->
+                    <div class="cyber-card p-6 sm:p-8 reveal-up hover:box-glow-cyan" style="transition-delay: 0.3s;">
+                        <div class="mb-6">
+                            <img src="/images/event.svg" alt="event komunitas" class="w-10 sm:w-12 h-auto mb-4">
+                            <h3 class="text-lg sm:text-xl font-kanit text-white mb-2 text-glow-cyan">EVENT KOMUNITAS</h3>
+                            <p class="text-gray-400 text-sm sm:text-base">
+                                Jadwal meet & greet, workshop, dan webinar untuk memperluas jaringanmu.
+                                Saatnya terhubung dengan ksatria lain!
+                            </p>
                         </div>
-                        <a href="/" class="bg-[#E8AA1F] text-[#012633] rounded-full px-28 py-2 text-xl">Lihat Selengkapnya</a>
-
+                        <a href="/" class="block w-full text-center bg-[#E8AA1F] text-[#012633] rounded-full px-4 py-2 text-base sm:text-xl font-semibold">
+                            Lihat Selengkapnya
+                        </a>
                     </div>
                 </div>
             </div>
@@ -984,8 +996,8 @@
     </main>
 
     <!-- Footer -->
-    <footer class="bg-transparent pt-16 relative overflow-hidden">
-        <div class="container mx-auto px-6 lg:px-8 md:pb-24">
+    <footer class="bg-transparent pt-28 relative overflow-hidden">
+        <div class="container mx-auto px-6 lg:px-8 pb-44  md:pb-32">
             <div class="flex flex-col md:flex-row justify-between items-center gap-12">
 
                 <!-- Kolom Kiri: Logo -->
@@ -1020,7 +1032,7 @@
             </div>
         </div>
 
-        <div class="absolute bottom-0 left-0 right-0 h-20">
+        <div class="absolute bottom-0 left-0 right-0 h-20 flex items-center justify-center bg-gradient-to-t from-[#061a24] to-transparent">
             <img src="/images/footer.svg" alt="">
         </div>
     </footer>
