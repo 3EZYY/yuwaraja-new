@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 
 class Userdata_Seeder extends Seeder
@@ -26,7 +27,7 @@ class Userdata_Seeder extends Seeder
                 'jenis_kelamin' => 'Laki-laki',
                 'role' => 'admin',
                 'kelompok_id' => null,
-                'password' => '1',
+                'password' => Hash::make('1'),
                 'remember_token' => null,
                 'email_verified_at' => '2025-07-12 17:18:40',
                 'created_at' => '2025-07-12 17:18:40',
@@ -47,7 +48,7 @@ class Userdata_Seeder extends Seeder
                 'jenis_kelamin' => 'Perempuan',
                 'role' => 'spv',
                 'kelompok_id' => 1,
-                'password' => '1',
+                'password' => Hash::make('1'),
                 'remember_token' => null,
                 'email_verified_at' => '2025-07-14 04:32:29',
                 'created_at' => '2025-07-12 17:18:40',
@@ -68,7 +69,7 @@ class Userdata_Seeder extends Seeder
                 'jenis_kelamin' => 'Laki-laki',
                 'role' => 'mahasiswa',
                 'kelompok_id' => 1,
-                'password' => '1',
+                'password' => Hash::make('1'),
                 'remember_token' => null,
                 'email_verified_at' => '2025-07-14 04:32:29',
                 'created_at' => '2025-07-12 17:18:40',
@@ -89,7 +90,7 @@ class Userdata_Seeder extends Seeder
                 'jenis_kelamin' => 'Laki-laki',
                 'role' => 'spv',
                 'kelompok_id' => 2,
-                'password' => '1',
+                'password' => Hash::make('1'),
                 'remember_token' => null,
                 'email_verified_at' => '2025-07-14 04:32:29',
                 'created_at' => '2025-07-12 17:18:41',
@@ -110,7 +111,7 @@ class Userdata_Seeder extends Seeder
                 'jenis_kelamin' => 'Laki-laki',
                 'role' => 'mahasiswa',
                 'kelompok_id' => 2,
-                'password' => '1',
+                'password' => Hash::make('1'),
                 'remember_token' => null,
                 'email_verified_at' => '2025-07-14 04:32:29',
                 'created_at' => '2025-07-12 17:18:41',
