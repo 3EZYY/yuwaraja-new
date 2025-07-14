@@ -60,7 +60,6 @@ Route::middleware(['auth', 'verified', 'role:spv'])->prefix('spv')->name('spv.')
     Route::get('/pengumuman/{pengumuman}', [SpvDashboardController::class, 'showPengumuman'])->name('pengumuman.detail');
     Route::get('/jadwal/{jadwal}', [SpvDashboardController::class, 'showJadwal'])->name('jadwal.detail');
 
-    // Tambahan: fitur review tugas mahasiswa
     Route::get('/tugas-mahasiswa', [SpvTugasController::class, 'index'])->name('tugas-mahasiswa.index');
     Route::get('/tugas-mahasiswa/{id}', [SpvTugasController::class, 'show'])->name('tugas-mahasiswa.show');
     Route::post('/tugas-mahasiswa/{id}/approve', [SpvTugasController::class, 'approve'])->name('tugas-mahasiswa.approve');
