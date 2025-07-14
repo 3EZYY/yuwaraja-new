@@ -31,7 +31,7 @@
 
         body {
             font-family: 'Kanit', sans-serif;
-            background-color: var(--color-bg);
+            background-image: linear-gradient(to bottom, #012633, #030409);
             color: var(--color-text);
             overflow-x: hidden;
         }
@@ -208,11 +208,12 @@
             bottom: 0;
             z-index: 0;
             background-image:
-                linear-gradient(to bottom, transparent 40%, #012633 90%),
+                linear-gradient(to bottom, transparent 50%, #012633 100%),
                 url('/images/bg-img.svg');
+
             background-size: cover;
             background-position: center;
-            animation: slow-pan-zoom 40s infinite alternate ease-in-out;
+            animation: slow-pan-zoom 20s infinite alternate ease-in-out;
         }
 
         /* Posisikan konten hero di atas background-nya */
@@ -750,7 +751,6 @@
     <main class="relative z-10">
         <!-- Hero Section -->
         <section id="beranda" class="hero-background min-h-screen flex items-center justify-center text-center">
-            <!-- Pembungkus konten agar posisinya di atas background -->
             <div class="hero-content container mx-auto px-6" style="user-select: none;">
                 <div class="max-w-4xl mx-auto">
                     <h2
@@ -782,8 +782,10 @@
         </section>
 
         <!-- Informasi Terbaru Section -->
-        <section id="informasi" class="py-24 bg-[#012633]">
-            <div class="container mx-auto px-6">
+        <section id="informasi" class="relative py-24">
+            <div class="absolute -top-16 left-0 w-full h-32 z-10 pointer-events-none blur-[30px] bg-[#012633]"></div>
+
+            <div class="container mx-auto px-6 relative z-20">
                 <div class="text-center mb-16">
                     <h2
                         class="text-2xl md:text-5xl font-orbitron font-bold text-white text-glow-cyan relative">
@@ -828,7 +830,7 @@
         </section>
 
         <!-- Program Studi Section -->
-        <section id="prodi" class="py-24 bg-[#012633]">
+        <section id="prodi" class="py-24">
             <div class="container mx-auto px-6">
                 <div class="text-center mb-16">
                     <h2
@@ -915,7 +917,7 @@
         </section>
 
         <!-- FAQ Section -->
-        <section id="faq" class="relative py-24 bg-[#012633]">
+        <section id="faq" class="relative py-24">
             <div class="container mx-auto px-6">
                 <div class="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
 
@@ -982,22 +984,20 @@
     </main>
 
     <!-- Footer -->
-    <!-- GANTI SELURUH KODE FOOTER LAMA ANDA DENGAN INI -->
-
-    <footer class="bg-[#071218] pt-16 relative overflow-hidden">
-        <div class="container mx-auto px-6 lg:px-8">
+    <footer class="bg-transparent pt-16 relative overflow-hidden">
+        <div class="container mx-auto px-6 lg:px-8 md:pb-24">
             <div class="flex flex-col md:flex-row justify-between items-center gap-12">
 
                 <!-- Kolom Kiri: Logo -->
                 <div class="flex items-center gap-4">
                     <!-- Pastikan path logo sudah benar -->
-                    <img src="https://i.ibb.co/F8Dk1R6/logo-ub.png" alt="Logo Universitas Brawijaya" class="h-16 md:h-20">
-                    <img src="https://i.ibb.co/P9zP6y4/logo-vokasi-ub.png" alt="Logo Fakultas Vokasi Universitas Brawijaya" class="h-12 md:h-16">
+                    <img src="/images/logo-ub.svg" alt="Logo Universitas Brawijaya" class="h-16 md:h-20">
+                    <img src="/images/logo-vokasi.svg" alt="Logo Fakultas Vokasi Universitas Brawijaya" class="h-12 md:h-16">
                 </div>
 
                 <!-- Kolom Kanan: Informasi Kontak -->
                 <div class="flex flex-col items-center md:items-end text-center md:text-right">
-                    <div class="font-semibold text-white">
+                    <div class="font-light text-white">
                         <p>Website Resmi YUWARAJA XVII</p>
                         <p>Fakultas Vokasi | Universitas Brawijaya</p>
                     </div>
@@ -1010,7 +1010,7 @@
                             <circle cx="12" cy="12" r="3" />
                             <line x1="16.5" y1="7.5" x2="16.5" y2="7.501" />
                         </svg>
-                        <span class="font-semibold text-[#65e6d9]">@pkkmb_vokasiub</span>
+                        <span class="font-light text-white">@pkkmb_vokasiub</span>
                     </a>
 
                     <p class="mt-4 text-xs text-gray-400">
@@ -1020,14 +1020,8 @@
             </div>
         </div>
 
-        <!-- Elemen Dekoratif Bawah -->
         <div class="absolute bottom-0 left-0 right-0 h-20">
-            <!-- Bentuk utama berwarna teal -->
-            <div class="absolute bottom-0 left-0 right-0 h-12 bg-[#114b5a]" style="clip-path: polygon(0 0, 100% 0, 100% 100%, 25% 100%, 25% 60%, 15% 60%, 15% 100%, 0 100%)"></div>
-            <!-- Aksen Kuning -->
-            <div class="absolute bottom-0 h-12 w-4 bg-[#e0a325]" style="left: 17%; clip-path: polygon(0 0, 100% 30%, 100% 100%, 0 100%)"></div>
-            <div class="absolute bottom-0 h-12 w-4 bg-[#e0a325]" style="left: 19%; clip-path: polygon(0 0, 100% 30%, 100% 100%, 0 100%)"></div>
-            <div class="absolute bottom-3 left-[12%] h-2 w-8 bg-[#e0a325]"></div>
+            <img src="/images/footer.svg" alt="">
         </div>
     </footer>
 
