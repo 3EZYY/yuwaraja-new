@@ -9,27 +9,21 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@800&family=Rajdhani:wght@500;700&family=Exo+2:wght@400;500&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Orbitron:wght@400..900&display=swap" rel="stylesheet">
 
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
 
-    <!-- Kustomisasi CSS - VERSI FINAL: DYNAMIC & SMOOTH SCROLL -->
     <style>
         :root {
             --color-bg: #02040a;
             --color-primary: #00d1ff;
-            /* Biru Neon */
             --color-secondary: #ffc900;
-            /* Kuning Emas */
             --color-text: #c0c8d6;
             --color-heading: #ffffff;
             --color-surface: rgba(10, 15, 29, 0.6);
         }
 
-        /* Hapus default smooth scroll browser agar JS bisa mengambil alih */
         html {
             scroll-behavior: auto;
         }
@@ -45,8 +39,8 @@
             font-family: 'Orbitron', sans-serif;
         }
 
-        .font-rajdhani {
-            font-family: 'Rajdhani', sans-serif;
+        .font-kanit {
+            font-family: 'Kanit', sans-serif;
         }
 
         /* === BACKGROUND & ANIMASI === */
