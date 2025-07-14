@@ -984,7 +984,7 @@
                     <a href="https://www.ub.ac.id">
                         <img src="/images/logo-ub.svg" alt="Logo Universitas Brawijaya" class="h-16 md:h-20">
                     </a>
-                    <a href="https://vokasi.ub.ac.id/">
+                    <a href="https://vokasi.ub.ac.id">
                         <img src="/images/logo-vokasi.svg" alt="Logo Fakultas Vokasi Universitas Brawijaya" class="h-12 md:h-16">
                     </a>
                 </div>
