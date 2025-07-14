@@ -83,7 +83,7 @@
                 </div>
                 <div class="text-left md:text-right border-t md:border-t-0 md:border-l border-cyan-400/20 pt-4 md:pt-0 md:pl-6">
                     <p class="text-sm text-gray-400">Kelompok</p>
-                    <p class="text-xl font-bold text-white">{{ $user->kelompok->nama_kelompok ?? 'Belum ada kelompok' }}</p>
+                    <p class="text-xl font-bold text-white capitalize">{{ $user->kelompok->nama_kelompok ?? 'Belum ada kelompok' }}</p>
                     <p class="text-sm text-gray-400 mt-2">Program Studi</p>
                     <p class="text-lg font-semibold text-cyan-400">{{ $user->program_studi ?? 'N/A' }}</p>
                     <a href="{{ route('profile.edit') }}" class="inline-block mt-3 text-sm text-yellow-400 hover:underline">
