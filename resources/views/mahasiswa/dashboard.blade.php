@@ -104,7 +104,7 @@
                         @php
                             $progress = $tugas->count() > 0 ? ($tugas->where('is_active', false)->count() / $tugas->count()) * 100 : 0;
                         @endphp
-                        <div class="progress-bar h-full" style="width: {{ $progress }}%;"></div>
+                        <div class="progress-bar h-full" style="width: 50;"></div>
                     </div>
                 </div>
 

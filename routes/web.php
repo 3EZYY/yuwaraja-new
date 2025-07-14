@@ -1,11 +1,6 @@
 
 <?php
 
-// Join Kelompok untuk Mahasiswa
-Route::middleware(['auth', 'role:mahasiswa'])->group(function () {
-    Route::get('/mahasiswa/join-kelompok', [\App\Http\Controllers\JoinKelompokController::class, 'showForm'])->name('mahasiswa.join-kelompok');
-    Route::post('/mahasiswa/join-kelompok', [\App\Http\Controllers\JoinKelompokController::class, 'join'])->name('mahasiswa.join-kelompok.submit');
-});
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\MahasiswaDashboardController;
@@ -18,6 +13,12 @@ use App\Http\Controllers\Api\ValidationController;
 use App\Http\Controllers\SpvTugasController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+
+// Join Kelompok untuk Mahasiswa
+Route::middleware(['auth', 'role:mahasiswa'])->group(function () {
+    Route::get('/mahasiswa/join-kelompok', [\App\Http\Controllers\JoinKelompokController::class, 'showForm'])->name('mahasiswa.join-kelompok');
+    Route::post('/mahasiswa/join-kelompok', [\App\Http\Controllers\JoinKelompokController::class, 'join'])->name('mahasiswa.join-kelompok.submit');
+});
 
 // API Routes untuk validasi real-time
 Route::get('/api/check-username', [ValidationController::class, 'checkUsername']);

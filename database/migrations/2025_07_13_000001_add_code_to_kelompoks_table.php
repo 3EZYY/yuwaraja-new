@@ -8,7 +8,9 @@ return new class extends Migration
 {
     public function up(): void
     {
-        // Sudah ditambahkan manual, tidak perlu apa-apa di sini
+        Schema::table('kelompoks', function (Blueprint $table) {
+            $table->string('code')->nullable()->after('spv_id');
+        });
     }
 
     public function down(): void
