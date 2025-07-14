@@ -461,7 +461,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
             <!-- Logo -->
             <a href="#" class="flex items-center gap-4" style="user-select: none;">
-                <img src="/images/logo.svg" alt="Logo Yuwaraja 2025" class="h-10 md:h-12 w-auto object-contain">
+                <img src="/images/Secondary-Logo.svg" alt="Logo Yuwaraja 2025" class="h-10 md:h-12 w-auto object-contain">
                 <span class="text-xl md:text-2xl font-orbitron font-extrabold text-white tracking-wider">
                     YUWARAJA<span class="text-cyan-400">25</span>
                 </span>
