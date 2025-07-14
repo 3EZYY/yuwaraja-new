@@ -981,8 +981,12 @@
                 <!-- Kolom Kiri: Logo -->
                 <div class="flex items-center gap-4">
                     <!-- Pastikan path logo sudah benar -->
-                    <img src="/images/logo-ub.svg" alt="Logo Universitas Brawijaya" class="h-16 md:h-20">
-                    <img src="/images/logo-vokasi.svg" alt="Logo Fakultas Vokasi Universitas Brawijaya" class="h-12 md:h-16">
+                    <a href="https://www.ub.ac.id">
+                        <img src="/images/logo-ub.svg" alt="Logo Universitas Brawijaya" class="h-16 md:h-20">
+                    </a>
+                    <a href="https://vokasi.ub.ac.id/">
+                        <img src="/images/logo-vokasi.svg" alt="Logo Fakultas Vokasi Universitas Brawijaya" class="h-12 md:h-16">
+                    </a>
                 </div>
 
                 <!-- Kolom Kanan: Informasi Kontak -->
@@ -993,7 +997,7 @@
                     </div>
 
                     <!-- Tombol Instagram -->
-                    <a href="#" class="mt-4 inline-flex items-center gap-3 px-6 py-2 bg-[#092c3a] rounded-full border border-[#e0a325]/80 hover:bg-[#0f3c4f] transition-colors">
+                    <a href="https://www.instagram.com/pkkmb_vokasiub" class="mt-4 inline-flex items-center gap-3 px-6 py-2 bg-[#092c3a] rounded-full border border-[#e0a325]/80 hover:bg-[#0f3c4f] transition-colors">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" stroke-width="2" stroke="#e0a325" fill="none" stroke-linecap="round" stroke-linejoin="round">
                             <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                             <rect x="4" y="4" width="16" height="16" rx="4" />
