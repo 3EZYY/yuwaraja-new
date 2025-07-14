@@ -462,9 +462,6 @@
             <!-- Logo -->
             <a href="#" class="flex items-center gap-4" style="user-select: none;">
                 <img src="/images/Secondary-Logo.svg" alt="Logo Yuwaraja 2025" class="h-10 md:h-12 w-auto object-contain">
-                <span class="text-xl md:text-2xl font-orbitron font-extrabold text-white tracking-wider">
-                    YUWARAJA<span class="text-cyan-400">25</span>
-                </span>
             </a>
 
             <!-- Desktop Navigation -->
