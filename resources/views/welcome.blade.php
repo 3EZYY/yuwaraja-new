@@ -17,19 +17,20 @@
     <style>
         :root {
             --color-bg: #02040a;
-            --color-primary: #00d1ff;
-            --color-secondary: #ffc900;
+            --color-primary: #183A4A;
+            --color-secondary: #E8AA1F;
             --color-text: #c0c8d6;
             --color-heading: #ffffff;
             --color-surface: rgba(10, 15, 29, 0.6);
+            --header-bg: #02050C;
         }
 
         html {
-            scroll-behavior: auto;
+            scroll-behavior: smooth;
         }
 
         body {
-            font-family: 'Exo 2', sans-serif;
+            font-family: 'Kanit', sans-serif;
             background-color: var(--color-bg);
             color: var(--color-text);
             overflow-x: hidden;
@@ -41,6 +42,193 @@
 
         .font-kanit {
             font-family: 'Kanit', sans-serif;
+        }
+
+        /* === HEADER STYLES === */
+        .header-container {
+            background-color: var(--header-bg);
+            border: none;
+        }
+
+        .nav-link.active span {
+            display: block;
+        }
+
+        .nav-link span {
+            display: none;
+        }
+
+        .nav-link:hover span {
+            display: block;
+        }
+
+        /* tombol header */
+        .login-button {
+            color: var(--color-secondary);
+            font-size: 17px;
+            letter-spacing: 0.05em;
+            transition: filter 0.3s;
+        }
+
+        .login-button:hover {
+            filter: brightness(1.2);
+        }
+
+        .register-button {
+            background-color: #002837;
+            color: var(--color-heading);
+            font-weight: 500;
+            font-size: 16px;
+            letter-spacing: 0.05em;
+            border-radius: 0.8rem;
+            padding: 10px 20px;
+            border: 1px solid #fff;
+            transition: background-color 0.3s;
+        }
+
+        .register-button:hover {
+            background-color: #204a5d;
+        }
+
+        .background-wrapper {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        @keyframes pan-grid {
+            from {
+                background-position: 0 0;
+            }
+
+            to {
+                background-position: 1000px 1000px;
+            }
+        }
+
+        .reveal-up {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 1s cubic-bezier(0.19, 1, 0.22, 1), transform 1s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+
+        .reveal-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .glitch-text {
+            position: relative;
+            color: var(--color-heading);
+            z-index: 1;
+        }
+
+        .glitch-text::before,
+        .glitch-text::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--color-bg);
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        .glitch-text::before {
+            left: 2px;
+            text-shadow: -2px 0 var(--color-secondary);
+            animation: glitch-anim-1 2.5s infinite linear reverse;
+        }
+
+        .glitch-text::after {
+            left: -2px;
+            text-shadow: -2px 0 var(--color-primary);
+            animation: glitch-anim-2 2s infinite linear reverse;
+        }
+
+        @keyframes glitch-anim-1 {
+
+            0%,
+            100% {
+                clip-path: inset(45% 0 50% 0);
+            }
+
+            25% {
+                clip-path: inset(0 0 100% 0);
+            }
+
+            50% {
+                clip-path: inset(80% 0 15% 0);
+            }
+
+            75% {
+                clip-path: inset(40% 0 33% 0);
+            }
+        }
+
+        @keyframes glitch-anim-2 {
+
+            0%,
+            100% {
+                clip-path: inset(65% 0 30% 0);
+            }
+
+            25% {
+                clip-path: inset(20% 0 75% 0);
+            }
+
+            50% {
+                clip-path: inset(50% 0 45% 0);
+            }
+
+            75% {
+                clip-path: inset(10% 0 85% 0);
+            }
+        }
+
+        /* === Hero Section === */
+
+        .hero-background {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-background::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 0;
+            background-image:
+                linear-gradient(to bottom, transparent 40%, #012633 90%),
+                url('/images/bg-img.svg');
+            background-size: cover;
+            background-position: center;
+            animation: slow-pan-zoom 40s infinite alternate ease-in-out;
+        }
+
+        /* Posisikan konten hero di atas background-nya */
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        @keyframes slow-pan-zoom {
+            from {
+                transform: scale(1.05) translateX(0%);
+            }
+
+            to {
+                transform: scale(1.15) translateX(-2%);
+            }
         }
 
         /* === BACKGROUND & ANIMASI === */
@@ -82,15 +270,6 @@
             }
         }
 
-        .grid-lines {
-            position: absolute;
-            inset: 0;
-            background-image:
-                linear-gradient(rgba(0, 209, 255, 0.05) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255, 201, 0, 0.05) 1px, transparent 1px);
-            background-size: 50px 50px;
-            animation: pan-grid 60s linear infinite;
-        }
 
         @keyframes pan-grid {
             from {
@@ -309,61 +488,35 @@
         .cyber-card {
             background: var(--color-surface);
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(0, 209, 255, 0.1);
+            border: none;
             transition: transform 0.4s ease, box-shadow 0.4s ease;
-            border-radius: 0.5rem;
+            border-radius: 1.5rem;
         }
 
         .cyber-card:hover {
             transform: translateY(-8px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2), 0 0 20px rgba(255, 201, 0, 0.15);
-        }
-
-        header.scrolled {
-            background-color: rgba(5, 6, 11, 0.8);
-            backdrop-filter: blur(10px);
-            border-bottom-color: rgba(255, 201, 0, 0.1);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2), 0 0 20px rgba(0, 209, 255, 0.1);
         }
 
         .explore-button {
             display: inline-flex;
             align-items: center;
             border: 2px solid var(--color-secondary);
-            font-weight: 700;
+            font-weight: 500;
             position: relative;
             transition: all 0.3s ease;
         }
 
         .explore-button .text-part {
-            background-color: var(--color-bg);
-            color: var(--color-secondary);
-            padding: 0.75rem 1.5rem;
+            color: var(--color-heading);
             transition: all 0.3s ease;
+            padding: 12px 36px;
         }
 
         .explore-button .color-part {
-            background-color: var(--color-secondary);
-            padding: 0.75rem;
             display: flex;
             align-items: center;
             justify-content: center;
-        }
-
-        .explore-button:hover .text-part {
-            background-color: transparent;
-        }
-
-        .header-button {
-            background: rgba(0, 209, 255, 0.1);
-            border: 1px solid rgba(0, 209, 255, 0.3);
-            color: #fff;
-            transition: all 0.3s ease;
-        }
-
-        .header-button:hover {
-            background: var(--color-primary);
-            color: var(--color-bg);
-            box-shadow: 0 0 15px var(--color-primary);
         }
 
         details {
@@ -438,6 +591,92 @@
         .hamburger-button.open .line-3 {
             transform: rotate(-45deg) translate(6px, -6px);
         }
+
+        /* FAQ Styles */
+        .faq-item {
+            background-color: #061a24;
+            border: 1px solid rgba(63, 234, 229, 0.25);
+            border-radius: 1.25rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .faq-item:hover {
+            border-color: rgba(63, 234, 229, 0.6);
+            box-shadow: 0 0 25px rgba(63, 234, 229, 0.1);
+        }
+
+        .faq-item summary {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.25rem;
+            list-style: none;
+            font-weight: 600;
+            color: white;
+            font-size: 1rem;
+        }
+
+        .faq-item summary::-webkit-details-marker {
+            display: none;
+        }
+
+        .faq-icon {
+            position: relative;
+            width: 20px;
+            height: 20px;
+            flex-shrink: 0;
+        }
+
+        .faq-icon::before,
+        .faq-icon::after {
+            content: '';
+            position: absolute;
+            background-color: #3FEAE5;
+            border-radius: 2px;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .faq-icon::before {
+            top: 50%;
+            left: 0;
+            width: 100%;
+            height: 2.5px;
+            transform: translateY(-50%);
+        }
+
+        .faq-icon::after {
+            top: 0;
+            left: 50%;
+            width: 2.5px;
+            height: 100%;
+            transform: translateX(-50%);
+        }
+
+        .faq-item[open]>summary .faq-icon::after {
+            transform: translateX(-50%) rotate(90deg);
+        }
+
+        .faq-content-wrapper {
+            display: grid;
+            grid-template-rows: 0fr;
+            transition: grid-template-rows 0.4s ease-in-out;
+        }
+
+        .faq-item[open] .faq-content-wrapper {
+            grid-template-rows: 1fr;
+        }
+
+        .faq-content-inner {
+            overflow: hidden;
+        }
+
+        .faq-content-inner p {
+            padding: 0 1.25rem 1.25rem;
+            /* Padding untuk teks jawaban */
+            color: #cbd5e1;
+            line-height: 1.6;
+        }
     </style>
 </head>
 
@@ -457,76 +696,83 @@
     </div>
 
     <!-- Header -->
-    <header class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 border-b border-transparent bg-transparent">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
-            <!-- Logo -->
-            <a href="#" class="flex items-center gap-4" style="user-select: none;">
-                <img src="/images/Secondary-Logo.svg" alt="Logo Yuwaraja 2025" class="h-10 md:h-12 w-auto object-contain">
-            </a>
+    <header class="p-4 z-50 fixed top-0 w-full">
+        <div class="header-container max-w-7xl mx-auto rounded-full px-6 py-3">
+            <div class="flex items-center justify-between">
+                <!-- Logo -->
+                <a href="#">
+                    <img src="/images/Secondary-Logo.svg" alt="Adaptive Yuwaraja XVII Logo" class="h-12 md:h-14">
+                </a>
 
-            <!-- Desktop Navigation -->
-            <nav id="main-nav"
-                class="hidden md:flex items-center space-x-6 lg:space-x-8 font-rajdhani font-bold text-sm lg:text-base text-gray-300" style="user-select: none;">
-                <a href="#beranda" class="nav-link hover:text-yellow-400 transition-colors">BERANDA</a>
-                <a href="#informasi" class="nav-link hover:text-yellow-400 transition-colors">INFORMASI</a>
-                <a href="#prodi" class="nav-link hover:text-yellow-400 transition-colors">PRODI</a>
-                <a href="#faq" class="nav-link hover:text-yellow-400 transition-colors">FAQ</a>
-            </nav>
+                <!-- Navigasi Desktop -->
+                <nav class="hidden lg:flex items-center space-x-10 text-white font-normal">
+                    <a href="#beranda" class="nav-link active relative text-base text-white">
+                        Beranda
+                        <span class="absolute left-1/2 transform -translate-x-1/2 -bottom-3 h-[3px] w-8 bg-yellow-500 rounded-full"></span>
+                    </a>
+                    <a href="#informasi" class="nav-link relative text-base text-gray-300 hover:text-white transition-colors">
+                        Informasi
+                        <span class="absolute left-1/2 transform -translate-x-1/2 -bottom-3 h-[3px] w-8 bg-yellow-500 rounded-full"></span>
+                    </a>
+                    <a href="#prodi" class="nav-link relative text-base text-gray-300 hover:text-white transition-colors">
+                        Prodi
+                        <span class="absolute left-1/2 transform -translate-x-1/2 -bottom-3 h-[3px] w-8 bg-yellow-500 rounded-full"></span>
+                    </a>
+                    <a href="#faq" class="nav-link relative text-base text-gray-300 hover:text-white transition-colors">
+                        FAQ
+                        <span class="absolute left-1/2 transform -translate-x-1/2 -bottom-3 h-[3px] w-8 bg-yellow-500 rounded-full"></span>
+                    </a>
+                </nav>
 
-            <!-- Auth buttons & Hamburger -->
-            <div class="flex items-center gap-4">
-                <!-- Desktop Auth Buttons -->
-                <div class="hidden md:flex items-center gap-2">
-                    @if (Route::has('login'))
-                    @auth
-                    <a href="{{ url('/dashboard') }}"
-                        class="header-button px-5 py-2 text-sm font-bold rounded-md">DASHBOARD</a>
-                    @else
-                    <a href="{{ route('login') }}"
-                        class="text-sm font-semibold text-gray-300 hover:text-white px-4 py-2 transition-colors">Log In</a>
-                    @if (Route::has('register'))
-                    <a href="{{ route('register') }}"
-                        class="header-button px-5 py-2 text-sm font-bold rounded-md">REGISTER</a>
-                    @endif
-                    @endauth
-                    @endif
+                <!-- Tombol Autentikasi Desktop -->
+                <div class="hidden lg:flex items-center space-x-6">
+                    <a href="#" class="login-button">LOG IN</a>
+                    <a href="#" class="register-button">REGISTER</a>
                 </div>
 
-                <!-- Mobile Hamburger Button -->
-                <button id="hamburger-button"
-                    class="hamburger-button flex flex-col justify-center items-center space-y-1.5 md:hidden z-50">
-                    <span class="line line-1 w-7 h-0.5 bg-white transition-all duration-300 ease-in-out"></span>
-                    <span class="line line-2 w-7 h-0.5 bg-white transition-all duration-300 ease-in-out"></span>
-                    <span class="line line-3 w-7 h-0.5 bg-white transition-all duration-300 ease-in-out"></span>
-                </button>
+                <!-- Tombol Hamburger (Mobile) -->
+                <div class="lg:hidden">
+                    <button id="hamburger-button" class="text-white">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+                        </svg>
+                    </button>
+                </div>
             </div>
         </div>
     </header>
 
+    <!-- Mobile Navigation -->
+    <div id="mobile-nav" class="hidden">
+        <!-- Struktur menu mobile bisa ditambahkan di sini -->
+    </div>
+
     <main class="relative z-10">
         <!-- Hero Section -->
-        <section id="beranda" class="min-h-screen flex items-center justify-center text-center overflow-hidden">
-            <div class="container mx-auto px-6" style="user-select: none;">
+        <section id="beranda" class="hero-background min-h-screen flex items-center justify-center text-center">
+            <!-- Pembungkus konten agar posisinya di atas background -->
+            <div class="hero-content container mx-auto px-6" style="user-select: none;">
                 <div class="max-w-4xl mx-auto">
                     <h2
-                        class="font-rajdhani text-2xl md:text-3xl text-cyan-400 tracking-[0.3em] uppercase reveal-up text-glow-cyan">
+                        class="font-kanit text-2xl md:text-3xl text-white tracking-[0.3em] uppercase reveal-up">
                         PKKMB VOKASI UB</h2>
-                    <h1 class="font-orbitron text-5xl md:text-7xl lg:text-8xl text-white mt-4 reveal-up glitch-text"
+                    <h1 class="font-orbitron text-5xl md:text-7xl lg:text-8xl text-[#3FEAE5] text-glow-cyan mt-4 text-shadow-xl font-bold"
                         style="transition-delay: 0.2s;" data-text="YUWARAJA 2025">
-                        YUWARAJA 2025
+                        YUWARAJA
+                        <span class="font-orbitron text-5xl md:text-7xl lg:text-8xl text-[#E8AA1F] text-glow-yellow mt-4 text-shadow-xl font-bold"
+                            style="transition-delay: 0.2s;" data-text="YUWARAJA 2025">
+                            XVII 2025
+                        </span>
                     </h1>
-                    <p class="mt-8 text-lg md:text-xl text-gray-400 leading-relaxed reveal-up"
+                    <p class="mt-8 text-lg md:text-2xl text-white font-light leading-relaxed reveal-up"
                         style="transition-delay: 0.4s;">
-                        Sebuah era baru telah tiba. Sambungkan potensimu, bentuk masa depan. Selamat datang, Ksatria
-                        Yuwaraja, di gerbang inovasi Fakultas Vokasi Universitas Brawijaya.
+                        Sebuah Era baru telah tiba. Sambungkan potensimu, bentuk masa depan. Selamat datang, Ksatria Yuwaraja, di gerbang Inovasi Fakultas Vokasi Universitas Brawijaya
                     </p>
                     <div class="mt-12 reveal-up" style="transition-delay: 0.6s;">
                         <a href="#informasi" class="explore-button">
                             <span class="color-part">
-                                <svg class="w-6 h-6 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-                                </svg>
+                                <img src="/images/logo-explore.svg" alt="logo explore"
+                                    class="w-8 h-10 md:w-14 md:h-14">
                             </span>
                             <span class="text-part text-lg">MULAI EKSPLORASI</span>
                         </a>
@@ -536,82 +782,131 @@
         </section>
 
         <!-- Informasi Terbaru Section -->
-        <section id="informasi" class="py-24">
+        <section id="informasi" class="py-24 bg-[#012633]">
             <div class="container mx-auto px-6">
                 <div class="text-center mb-16">
                     <h2
-                        class="section-title reveal-up text-4xl md:text-5xl font-orbitron font-bold text-white text-glow-yellow relative">
-                        LATEST <span class="text-yellow-400">TRANSMISSIONS</span></h2>
-                    <p class="mt-4 text-lg text-gray-400 reveal-up" style="transition-delay: 0.2s;">Update intel penting
+                        class="text-2xl md:text-5xl font-orbitron font-bold text-white text-glow-cyan relative">
+                        LATEST TRANSMISSIONS</h2>
+                    <p class="mt-4 text-lg text-[#3FEAE5] font-extralight reveal-up" style="transition-delay: 0.2s;">Update intel penting
                         langsung dari pusat komando.</p>
                 </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <div class="cyber-card p-8 reveal-up box-glow-yellow">
-                        <h3 class="text-xl font-bold font-rajdhani text-white mb-2 text-glow-yellow">RANGKAIAN ACARA
-                        </h3>
-                        <p class="text-gray-400">Jadwal lengkap, peraturan pakaian, dan semua yang perlu kamu ketahui
-                            untuk orientasi. Jangan sampai salah kostum, Ksatria!</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-center">
+                    <div class="cyber-card p-8 reveal-up hover:box-glow-cyan">
+                        <div class="mb-7">
+                            <img src="/images/date.svg" alt="rangakaian acara" class="w-12 h-w-12 mb-6">
+                            <h3 class="text-xl font-normal font-kanit text-white mb-2 text-glow-cyan">RANGKAIAN ACARA
+                            </h3>
+                            <p class="text-[#3FEAE5] font-extralight">Jadwal lengkap, peraturan pakaian, dan semua yang perlu kamu ketahui
+                                untuk orientasi. Jangan sampai salah kostum, Ksatria!</p>
+                        </div>
+                        <a href="/" class="bg-[#E8AA1F] text-[#012633] rounded-full px-28 py-2 text-xl">Lihat Selengkapnya</a>
                     </div>
-                    <div class="cyber-card p-8 reveal-up box-glow-cyan" style="transition-delay: 0.15s;">
-                        <h3 class="text-xl font-bold font-rajdhani text-white mb-2 text-glow-cyan">MISI & PENUGASAN</h3>
-                        <p class="text-gray-400">Tugas awal telah di-deploy! Selesaikan misimu untuk membuktikan
-                            kemampuan dan mendapatkan poin pengalaman pertama.</p>
+                    <div class="cyber-card p-8 reveal-up hover:box-glow-cyan" style="transition-delay: 0.15s;">
+                        <div class="mb-7">
+                            <img src="/images/misi.svg" alt="rangakaian acara" class="w-12 h-w-12 mb-6">
+                            <h3 class="text-xl font-normal font-kanit text-white mb-2 text-glow-cyan">MISI & PENUGASAN</h3>
+                            <p class="text-[#3FEAE5] font-extralight">Tugas awal telah di-deploy! Selesaikan misimu untuk membuktikan
+                                kemampuan dan mendapatkan poin pengalaman pertama.</p>
+                        </div>
+                        <a href="/" class="bg-[#E8AA1F] text-[#012633] rounded-full px-28 py-2 text-xl">Lihat Selengkapnya</a>
                     </div>
-                    <div class="cyber-card p-8 reveal-up box-glow-yellow" style="transition-delay: 0.3s;">
-                        <h3 class="text-xl font-bold font-rajdhani text-white mb-2 text-glow-yellow">EVENT KOMUNITAS
-                        </h3>
-                        <p class="text-gray-400">Jadwal meet & greet, workshop, dan webinar untuk memperluas jaringanmu.
-                            Saatnya terhubung dengan ksatria lain!</p>
+                    <div class="cyber-card p-8 reveal-up hover:box-glow-cyan" style="transition-delay: 0.3s;">
+                        <div class="mb-7">
+                            <img src="/images/event.svg" alt="rangakaian acara" class="w-12 h-w-12 mb-6">
+
+                            <h3 class="text-xl font-normal font-kanit text-white mb-2 text-glow-cyan">EVENT KOMUNITAS
+                            </h3>
+                            <p class="text-gray-400">Jadwal meet & greet, workshop, dan webinar untuk memperluas jaringanmu.
+                                Saatnya terhubung dengan ksatria lain!</p>
+                        </div>
+                        <a href="/" class="bg-[#E8AA1F] text-[#012633] rounded-full px-28 py-2 text-xl">Lihat Selengkapnya</a>
+
                     </div>
                 </div>
             </div>
         </section>
 
         <!-- Program Studi Section -->
-        <section id="prodi" class="py-24 bg-black/20">
+        <section id="prodi" class="py-24 bg-[#012633]">
             <div class="container mx-auto px-6">
                 <div class="text-center mb-16">
                     <h2
-                        class="section-title reveal-up text-4xl md:text-5xl font-orbitron font-bold text-white text-glow-cyan relative">
-                        PILIH <span class="text-cyan-400">SPESIALISASIMU</span></h2>
-                    <p class="mt-4 text-lg text-gray-400 reveal-up" style="transition-delay: 0.2s;">Dua departemen,
-                        berbagai jalur untuk mendominasi masa depan.</p>
+                        class="text-2xl md:text-5xl font-orbitron font-bold text-white text-glow-cyan relative">
+                        PILIH SPESIALISASIMU</h2>
+                    <p class="mt-4 text-lg text-[#3FEAE5] font-extralight reveal-up" style="transition-delay: 0.2s;">Update intel penting
+                        Dua Departement, Berbagai Jalur untuk mendominasi Masa Depan</p>
                 </div>
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
-                    <div class="reveal-up">
-                        <h3
-                            class="text-3xl font-orbitron font-bold text-cyan-400 mb-6 border-b-2 border-cyan-400/30 pb-4 text-glow-cyan">
-                            DEPT. BISNIS & HOSPITALITY</h3>
-                        <ul class="space-y-6">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start">
+                    <!-- KARTU 1: BISNIS & HOSPITALITY -->
+                    <div class="department-card bg-[#061a24] rounded-2xl p-8 border border-cyan-500/20 shadow-lg shadow-cyan-500/10">
+                        <!-- Judul Departemen -->
+                        <h3 class="font-orbitron text-2xl text-[#3FEAE5] uppercase text-glow-cyan font-bold">
+                            Bisnis & Hospitality
+                        </h3>
+                        <!-- Garis Pemisah -->
+                        <div class="mt-4 mb-8 h-px w-full bg-[#E8AA1F]/50"></div>
+
+                        <!-- Daftar Program Studi -->
+                        <ul class="space-y-4">
                             <li>
-                                <h4 class="text-xl font-rajdhani font-bold text-white">D4 MANAJEMEN PERHOTELAN</h4>
-                                <p class="text-gray-400">Mencetak pemimpin visioner di industri perhotelan global.</p>
+                                <a href="#" class="flex items-center justify-between group p-3 -m-3 rounded-lg transition-colors hover:bg-white/5">
+                                    <div>
+                                        <h4 class="font-kanit text-lg font-semibold text-white">D4 Manajemen Perhotelan</h4>
+                                        <p class="text-gray-400 text-sm mt-1">Mencetak pemimpin visioner di Industri Perhotelan Global.</p>
+                                    </div>
+                                    <img src="images/arrow.svg" alt="arrow" class="w-5 h-5">
+                                </a>
                             </li>
                             <li>
-                                <h4 class="text-xl font-rajdhani font-bold text-white">D3 KEUANGAN & PERBANKAN</h4>
-                                <p class="text-gray-400">Menguasai arus finansial dengan presisi dan teknologi terkini.
-                                </p>
+                                <a href="#" class="flex items-center justify-between group p-3 -m-3 rounded-lg transition-colors hover:bg-white/5">
+                                    <div>
+                                        <h4 class="font-kanit text-lg font-semibold text-white">D4 Keuangan & Perbankan</h4>
+                                        <p class="text-gray-400 text-sm mt-1">Menguasai arus finansial dengan presisi dan teknologi terkini.</p>
+                                    </div>
+                                    <img src="images/arrow.svg" alt="arrow" class="w-5 h-5">
+                                </a>
                             </li>
                             <li>
-                                <h4 class="text-xl font-rajdhani font-bold text-white">D3 ADMINISTRASI BISNIS</h4>
-                                <p class="text-gray-400">Menjadi ahli strategi dalam manajemen dan operasional bisnis
-                                    modern.</p>
+                                <a href="#" class="flex items-center justify-between group p-3 -m-3 rounded-lg transition-colors hover:bg-white/5">
+                                    <div>
+                                        <h4 class="font-kanit text-lg font-semibold text-white">D3 Administrasi Bisnis</h4>
+                                        <p class="text-gray-400 text-sm mt-1">Menjadi ahli strategi dalam manajemen dan operasional bisnis modern.</p>
+                                    </div>
+                                    <img src="images/arrow.svg" alt="arrow" class="w-5 h-5">
+                                </a>
                             </li>
                         </ul>
                     </div>
-                    <div class="reveal-up" style="transition-delay: 0.2s;">
-                        <h3
-                            class="text-3xl font-orbitron font-bold text-yellow-400 mb-6 border-b-2 border-yellow-400/30 pb-4 text-glow-yellow">
-                            DEPT. INDUSTRI KREATIF & DIGITAL</h3>
-                        <ul class="space-y-6">
+
+                    <!-- KARTU 2: INDUSTRI KREATIF & DIGITAL -->
+                    <div class="department-card bg-[#061a24] rounded-2xl p-8 border border-cyan-500/20 shadow-lg shadow-cyan-500/10">
+                        <!-- Judul Departemen -->
+                        <h3 class="font-orbitron text-2xl text-[#3FEAE5] uppercase text-glow-cyan font-bold">
+                            Industri Kreatif & Digital
+                        </h3>
+                        <!-- Garis Pemisah -->
+                        <div class="mt-4 mb-8 h-px w-full bg-[#E8AA1F]/50"></div>
+
+                        <!-- Daftar Program Studi -->
+                        <ul class="space-y-4">
                             <li>
-                                <h4 class="text-xl font-rajdhani font-bold text-white">D4 DESAIN GRAFIS</h4>
-                                <p class="text-gray-400">Mengubah imajinasi menjadi karya visual yang mendefinisikan
-                                    zaman.</p>
+                                <a href="#" class="flex items-center justify-between group p-3 -m-3 rounded-lg transition-colors hover:bg-white/5">
+                                    <div>
+                                        <h4 class="font-kanit text-lg font-semibold text-white">D4 Desain Grafis</h4>
+                                        <p class="text-gray-400 text-sm mt-1">Mengubah Imajinasi Menjadi Karya Visual yang mendefinisikan zaman.</p>
+                                    </div>
+                                    <img src="images/arrow.svg" alt="arrow" class="w-5 h-5">
+                                </a>
                             </li>
                             <li>
-                                <h4 class="text-xl font-rajdhani font-bold text-white">D3 TEKNOLOGI INFORMASI</h4>
-                                <p class="text-gray-400">Membangun dan mengamankan infrastruktur digital masa depan.</p>
+                                <a href="#" class="flex items-center justify-between group p-3 -m-3 rounded-lg transition-colors hover:bg-white/5">
+                                    <div>
+                                        <h4 class="font-kanit text-lg font-semibold text-white">D3 Teknik Informatika</h4>
+                                        <p class="text-gray-400 text-sm mt-1">Membangun dan Mengamankan Infrastruktur Digital Masa Depan.</p>
+                                    </div>
+                                    <img src="images/arrow.svg" alt="arrow" class="w-5 h-5">
+                                </a>
                             </li>
                         </ul>
                     </div>
@@ -620,80 +915,119 @@
         </section>
 
         <!-- FAQ Section -->
-        <section id="faq" class="py-24">
+        <section id="faq" class="relative py-24 bg-[#012633]">
             <div class="container mx-auto px-6">
-                <div class="text-center mb-16">
-                    <h2
-                        class="section-title reveal-up text-4xl md:text-5xl font-orbitron font-bold text-white text-glow-yellow relative">
-                        KNOWLEDGE <span class="text-yellow-400">BASE</span></h2>
-                    <p class="mt-4 text-lg text-gray-400 reveal-up" style="transition-delay: 0.2s;">Pertanyaan yang
-                        sering muncul di transmisi para Ksatria.</p>
-                </div>
-                <div class="max-w-3xl mx-auto space-y-4">
-                    <details class="bg-transparent rounded-lg p-5 cursor-pointer reveal-up">
-                        <summary class="flex justify-between items-center font-bold text-lg text-white">Apa itu PKKMB
-                            YUWARAJA?<svg class="h-6 w-6 text-cyan-400 transition-transform duration-300 arrow-down"
-                                fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M19 9l-7 7-7-7" />
-                            </svg></summary>
-                        <p class="mt-4 text-gray-300 border-t border-gray-700 pt-4">PKKMB Yuwaraja adalah serangkaian
-                            kegiatan orientasi untuk memperkenalkan dunia perkuliahan, budaya, dan nilai-nilai inovasi
-                            di Fakultas Vokasi Universitas Brawijaya.</p>
-                    </details>
-                    <details class="bg-transparent rounded-lg p-5 cursor-pointer reveal-up"
-                        style="transition-delay: 0.1s;">
-                        <summary class="flex justify-between items-center font-bold text-lg text-white">Bagaimana cara
-                            mendapatkan KTM?<svg
-                                class="h-6 w-6 text-cyan-400 transition-transform duration-300 arrow-down" fill="none"
-                                viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M19 9l-7 7-7-7" />
-                            </svg></summary>
-                        <p class="mt-4 text-gray-300 border-t border-gray-700 pt-4">Informasi pengambilan KTM akan
-                            diumumkan secara resmi melalui SIAM dan website ini. Pastikan untuk selalu memeriksa
-                            pembaruan.</p>
-                    </details>
-                    <details class="bg-transparent rounded-lg p-5 cursor-pointer reveal-up"
-                        style="transition-delay: 0.2s;">
-                        <summary class="flex justify-between items-center font-bold text-lg text-white">Di mana saya
-                            bisa menemukan info UKM?<svg
-                                class="h-6 w-6 text-cyan-400 transition-transform duration-300 arrow-down" fill="none"
-                                viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M19 9l-7 7-7-7" />
-                            </svg></summary>
-                        <p class="mt-4 text-gray-300 border-t border-gray-700 pt-4">Akan ada "Expo UKM" yang jadwalnya
-                            akan diumumkan di bagian Informasi. Kamu bisa bertanya, mencoba, dan mendaftar langsung
-                            untuk mengasah skill di luar akademik.</p>
-                    </details>
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
+
+                    <div class="lg:col-span-5 flex justify-center">
+                        <img src="/images/logo-yuwarajaxvii.svg" alt="logo yuwaraja" class="w-64 md:w-72 lg:w-full max-w-sm reveal-up">
+                    </div>
+
+                    <div class="lg:col-span-7">
+                        <div class="text-center lg:text-left mb-12">
+                            <h2 class="text-2xl md:text-5xl font-orbitron font-bold text-white text-glow-cyan relative reveal-up">
+                                KNOWLEDGE BASE
+                            </h2>
+                            <p class="mt-4 text-lg text-[#3FEAE5] font-extralight reveal-up" style="transition-delay: 0.1s;">
+                                Pertanyaan yang sering muncul di Transisi Ksatria
+                            </p>
+                        </div>
+
+                        <!-- Accordion FAQ -->
+                        <div class="max-w-3xl mx-auto lg:mx-0 space-y-5">
+                            <!-- Item FAQ 1 -->
+                            <details class="faq-item reveal-up" style="transition-delay: 0.2s;">
+                                <summary>
+                                    <span>Apa itu PKKMB Yuwaraja</span>
+                                    <div class="faq-icon"></div>
+                                </summary>
+                                <div class="faq-content-wrapper">
+                                    <div class="faq-content-inner">
+                                        <p>PKKMB Yuwaraja adalah serangkaian kegiatan orientasi untuk memperkenalkan dunia perkuliahan, budaya, dan nilai-nilai inovasi di Fakultas Vokasi Universitas Brawijaya.</p>
+                                    </div>
+                                </div>
+                            </details>
+
+                            <!-- Item FAQ 2 -->
+                            <details class="faq-item reveal-up" style="transition-delay: 0.3s;">
+                                <summary>
+                                    <span>Bagaimana Cara Mendapatkan KTM</span>
+                                    <div class="faq-icon"></div>
+                                </summary>
+                                <div class="faq-content-wrapper">
+                                    <div class="faq-content-inner">
+                                        <p>Informasi pengambilan KTM akan diumumkan secara resmi melalui SIAM dan website ini. Pastikan untuk selalu memeriksa pembaruan.</p>
+                                    </div>
+                                </div>
+                            </details>
+
+                            <!-- Item FAQ 3 -->
+                            <details class="faq-item reveal-up" style="transition-delay: 0.4s;">
+                                <summary>
+                                    <span>Di mana saya mendapatkan info tentang UKM</span>
+                                    <div class="faq-icon"></div>
+                                </summary>
+                                <div class="faq-content-wrapper">
+                                    <div class="faq-content-inner">
+                                        <p>Akan ada "Expo UKM" yang jadwalnya akan diumumkan di bagian Informasi. Kamu bisa bertanya, mencoba, dan mendaftar langsung untuk mengasah skill di luar akademik.</p>
+                                    </div>
+                                </div>
+                            </details>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </section>
     </main>
 
     <!-- Footer -->
-    <footer class="bg-black/30 border-t border-cyan-500/10 py-8 mt-12">
-        <div class="container mx-auto px-6 text-center text-gray-500">
-            <p class="font-orbitron text-lg text-gray-300">PKKMB YUWARAJA 2025</p>
-            <p class="mt-2 text-sm">© {{ date('Y') }} Divisi Informasi & Teknologi. All systems operational.</p>
-            <div class="mt-4 flex justify-center space-x-6"><a href="#"
-                    class="text-gray-400 hover:text-yellow-400 transition-colors" title="Instagram"><svg class="h-6 w-6"
-                        fill="currentColor" viewBox="0 0 24 24">
-                        <path
-                            d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.85s-.011 3.584-.069 4.85c-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07s-3.584-.012-4.85-.07c-3.252-.148-4.771-1.691-4.919-4.919-.058-1.265-.069-1.645-.069-4.85s.011-3.584.069-4.85c.149-3.225 1.664-4.771 4.919-4.919C8.416 2.175 8.796 2.163 12 2.163zm0 1.802c-3.552 0-3.957.014-5.336.077-2.587.118-3.901 1.436-4.02 4.02C2.617 9.423 2.603 9.81 2.603 12s.014 2.577.077 3.957c.118 2.587 1.436 3.901 4.02 4.02 1.379.063 1.784.077 5.336.077s3.957-.014 5.336-.077c2.587-.118 3.901-1.436 4.02-4.02.063-1.379.077-1.784.077-5.336s-.014-3.957-.077-5.336c-.118-2.587-1.436-3.901-4.02-4.02C15.957 3.979 15.552 3.965 12 3.965zM12 6.873c-2.841 0-5.127 2.286-5.127 5.127s2.286 5.127 5.127 5.127 5.127-2.286 5.127-5.127-2.286-5.127-5.127-5.127zm0 8.418c-1.815 0-3.291-1.476-3.291-3.291s1.476-3.291 3.291-3.291 3.291 1.476 3.291 3.291-1.476 3.291-3.291 3.291zm4.868-8.52c-.781 0-1.414.633-1.414 1.414s.633 1.414 1.414 1.414 1.414-.633 1.414-1.414-.633-1.414-1.414-1.414z" />
-                    </svg></a>
-                <a href="#" class="text-gray-400 hover:text-cyan-400 transition-colors" title="Twitter/X"><svg
-                        class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
-                        <path
-                            d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-.424.727-.666 1.58-.666 2.474 0 1.71.87 3.213 2.188 4.094-.807-.026-1.566-.247-2.229-.616v.054c0 2.38 1.693 4.37 3.946 4.827-.413.111-.849.171-1.296.171-.314 0-.615-.03-.916-.086.631 1.953 2.445 3.377 4.604 3.417-1.68 1.31-3.81 2.09-6.115 2.09-.398 0-.79-.023-1.175-.068 2.179 1.397 4.768 2.212 7.548 2.212 9.058 0 14.01-7.502 14.01-14.01 0-.213-.005-.425-.014-.636A10.024 10.024 0 0024 4.557z" />
-                    </svg></a>
-                <a href="#" class="text-gray-400 hover:text-yellow-400 transition-colors" title="TikTok"><svg
-                        class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
-                        <path
-                            d="M12.525.02c1.31-.02 2.61-.01 3.91.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.38 1.92-3.54 2.96-5.94 3.04-1.9.06-3.78-.23-5.31-1.42-1.24-.97-2.03-2.34-2.26-3.88-.06-.43-.04-.86-.04-1.3 0-2.01 0-4.02-.01-6.03-.01-1.49.34-2.97 1.14-4.28.98-1.58 2.54-2.6 4.35-2.95.75-.14 1.5-.22 2.25-.21.01 2.19-.01 4.38-.01 6.57 0 .4-.03.8-.08 1.19-.24 1.56-1.3 2.92-2.81 3.42-1.3.42-2.71.32-3.9-.29-.4-.19-.75-.43-1.07-.72-.13-.12-.26-.25-.39-.39v-3.17c.13.13.26.25.39.38.48.42 1.04.74 1.65.94 1.18.39 2.47.33 3.59-.14 1.55-.67 2.59-2.06 2.82-3.66.07-.47.05-.95.05-1.43-.01-2.2-.01-4.4 0-6.6.01-.15.02-.3.04-.45z" />
-                    </svg></a>
+    <!-- GANTI SELURUH KODE FOOTER LAMA ANDA DENGAN INI -->
+
+    <footer class="bg-[#071218] pt-16 relative overflow-hidden">
+        <div class="container mx-auto px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-12">
+
+                <!-- Kolom Kiri: Logo -->
+                <div class="flex items-center gap-4">
+                    <!-- Pastikan path logo sudah benar -->
+                    <img src="https://i.ibb.co/F8Dk1R6/logo-ub.png" alt="Logo Universitas Brawijaya" class="h-16 md:h-20">
+                    <img src="https://i.ibb.co/P9zP6y4/logo-vokasi-ub.png" alt="Logo Fakultas Vokasi Universitas Brawijaya" class="h-12 md:h-16">
+                </div>
+
+                <!-- Kolom Kanan: Informasi Kontak -->
+                <div class="flex flex-col items-center md:items-end text-center md:text-right">
+                    <div class="font-semibold text-white">
+                        <p>Website Resmi YUWARAJA XVII</p>
+                        <p>Fakultas Vokasi | Universitas Brawijaya</p>
+                    </div>
+
+                    <!-- Tombol Instagram -->
+                    <a href="#" class="mt-4 inline-flex items-center gap-3 px-6 py-2 bg-[#092c3a] rounded-full border border-[#e0a325]/80 hover:bg-[#0f3c4f] transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" stroke-width="2" stroke="#e0a325" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                            <rect x="4" y="4" width="16" height="16" rx="4" />
+                            <circle cx="12" cy="12" r="3" />
+                            <line x1="16.5" y1="7.5" x2="16.5" y2="7.501" />
+                        </svg>
+                        <span class="font-semibold text-[#65e6d9]">@pkkmb_vokasiub</span>
+                    </a>
+
+                    <p class="mt-4 text-xs text-gray-400">
+                        ©Copyright 2025, IT Division & Operation Yuwaraja
+                    </p>
+                </div>
             </div>
+        </div>
+
+        <!-- Elemen Dekoratif Bawah -->
+        <div class="absolute bottom-0 left-0 right-0 h-20">
+            <!-- Bentuk utama berwarna teal -->
+            <div class="absolute bottom-0 left-0 right-0 h-12 bg-[#114b5a]" style="clip-path: polygon(0 0, 100% 0, 100% 100%, 25% 100%, 25% 60%, 15% 60%, 15% 100%, 0 100%)"></div>
+            <!-- Aksen Kuning -->
+            <div class="absolute bottom-0 h-12 w-4 bg-[#e0a325]" style="left: 17%; clip-path: polygon(0 0, 100% 30%, 100% 100%, 0 100%)"></div>
+            <div class="absolute bottom-0 h-12 w-4 bg-[#e0a325]" style="left: 19%; clip-path: polygon(0 0, 100% 30%, 100% 100%, 0 100%)"></div>
+            <div class="absolute bottom-3 left-[12%] h-2 w-8 bg-[#e0a325]"></div>
         </div>
     </footer>
 
@@ -701,25 +1035,6 @@
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             // Smooth Scroll Handler
-            document.querySelectorAll('#main-nav a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const targetId = this.getAttribute('href');
-                    const targetElement = document.querySelector(targetId);
-                    if (targetElement) {
-                        const headerOffset = document.querySelector('header').offsetHeight;
-                        const elementPosition = targetElement.getBoundingClientRect().top;
-                        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-
-                        window.scrollTo({
-                            top: offsetPosition,
-                            behavior: 'smooth'
-                        });
-                    }
-                });
-            });
-
-            // Reveal on Scroll
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
@@ -731,27 +1046,26 @@
             });
             document.querySelectorAll('.reveal-up').forEach(el => observer.observe(el));
 
-            // Header Scroll Effect
+            // Navigasi aktif berdasarkan scroll (contoh sederhana)
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('.nav-link');
+
             window.addEventListener('scroll', () => {
-                document.querySelector('header')?.classList.toggle('scrolled', window.scrollY > 20);
-            }, {
-                passive: true
-            });
+                let current = '';
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    if (pageYOffset >= sectionTop - 150) {
+                        current = section.getAttribute('id');
+                    }
+                });
 
-            // Hamburger Menu Toggle
-            const hamburgerBtn = document.getElementById('hamburger-button');
-            const mobileNav = document.getElementById('mobile-nav');
-            const mobileNavLinks = document.querySelectorAll('.nav-link-mobile');
-
-            hamburgerBtn.addEventListener('click', () => {
-                hamburgerBtn.classList.toggle('open');
-                mobileNav.classList.toggle('open');
-            });
-
-            mobileNavLinks.forEach(link => {
-                link.addEventListener('click', () => {
-                    hamburgerBtn.classList.remove('open');
-                    mobileNav.classList.remove('open');
+                navLinks.forEach(link => {
+                    link.classList.remove('active', 'text-white');
+                    link.classList.add('text-gray-300');
+                    if (link.getAttribute('href').includes(current)) {
+                        link.classList.add('active', 'text-white');
+                        link.classList.remove('text-gray-300');
+                    }
                 });
             });
         });
