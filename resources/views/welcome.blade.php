@@ -498,28 +498,6 @@
             box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2), 0 0 20px rgba(0, 209, 255, 0.1);
         }
 
-
-        .explore-button {
-            display: inline-flex;
-            align-items: center;
-            border: 2px solid var(--color-secondary);
-            font-weight: 500;
-            position: relative;
-            transition: all 0.3s ease;
-        }
-
-        .explore-button .text-part {
-            color: var(--color-heading);
-            transition: all 0.3s ease;
-            padding: 12px 36px;
-        }
-
-        .explore-button .color-part {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
         details {
             border: 1px solid rgba(0, 209, 255, 0.15);
             transition: background-color 0.3s, border-color 0.3s;
@@ -546,7 +524,6 @@
             position: fixed;
             top: 0;
             right: -100%;
-            /* Mulai dari luar layar */
             width: 70%;
             max-width: 300px;
             height: 100vh;
@@ -565,7 +542,6 @@
         .hamburger-button {
             z-index: 999;
             display: none;
-            /* Hanya muncul di mobile */
         }
 
         @media (max-width: 767px) {
@@ -705,7 +681,6 @@
                     <img src="/images/Secondary-Logo.svg" alt="Adaptive Yuwaraja XVII Logo" class="h-12 md:h-14">
                 </a>
 
-                <!-- Navigasi Desktop -->
                 <nav class="hidden lg:flex items-center space-x-10 text-white font-normal">
                     <a href="#beranda" class="nav-link active relative text-base text-white">
                         Beranda
@@ -725,56 +700,59 @@
                     </a>
                 </nav>
 
-                <!-- Tombol Autentikasi Desktop -->
                 <div class="hidden lg:flex items-center space-x-6">
                     <a href="/login" class="login-button">LOG IN</a>
                     <a href="/register" class="register-button">REGISTER</a>
                 </div>
 
-                <!-- Tombol Hamburger (Mobile) -->
-                <div class="lg:hidden">
-                    <button id="hamburger-button" class="text-white">
-                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
-                        </svg>
-                    </button>
-                </div>
+                <button id="hamburger-button" class="hamburger-button flex flex-col justify-center items-center space-y-1.5 lg:hidden z-50">
+                    <span class="line line-1 w-7 h-0.5 bg-white transition-all duration-300 ease-in-out"></span>
+                    <span class="line line-2 w-7 h-0.5 bg-white transition-all duration-300 ease-in-out"></span>
+                    <span class="line line-3 w-7 h-0.5 bg-white transition-all duration-300 ease-in-out"></span>
+                </button>
             </div>
         </div>
     </header>
 
-    <!-- Mobile Navigation -->
-    <div id="mobile-nav" class="hidden">
-        <!-- Struktur menu mobile bisa ditambahkan di sini -->
-    </div>
+    <nav id="mobile-nav" class="mobile-nav flex flex-col items-center justify-center p-8 space-y-6">
+        <a href="#beranda" class="nav-link-mobile font-kanit text-2xl text-white">Beranda</a>
+        <a href="#informasi" class="nav-link-mobile font-kanit text-2xl text-white">Informasi</a>
+        <a href="#prodi" class="nav-link-mobile font-kanit text-2xl text-white">Prodi</a>
+        <a href="#faq" class="nav-link-mobile font-kanit text-2xl text-white">FAQ</a>
+        <div class="mt-8 pt-8 border-t border-gray-700 w-full flex flex-col items-center gap-4">
+            <a href="/login" class="login-button text-2xl">LOG IN</a>
+            <a href="/register" class="register-button text-lg w-full max-w-xs text-center">REGISTER</a>
+        </div>
+    </nav>
 
     <main class="relative z-10">
         <!-- Hero Section -->
         <section id="beranda" class="hero-background min-h-screen flex items-center justify-center text-center">
             <div class="hero-content container mx-auto px-6" style="user-select: none;">
-                <div class="max-w-4xl mx-auto">
-                    <h2
-                        class="font-kanit text-2xl md:text-3xl text-white tracking-[0.3em] uppercase reveal-up">
-                        PKKMB VOKASI UB</h2>
-                    <h1 class="font-orbitron text-5xl md:text-7xl lg:text-8xl text-[#3FEAE5] text-glow-cyan mt-4 text-shadow-xl font-bold"
-                        style="transition-delay: 0.2s;" data-text="YUWARAJA 2025">
+                <div class="max-w-4xl mx-auto text-center">
+                    <h2 class="font-kanit text-lg sm:text-xl md:text-3xl text-white tracking-[0.2em] md:tracking-[0.3em] uppercase reveal-up">
+                        PKKMB VOKASI UB
+                    </h2>
+
+                    <h1 class="font-orbitron text-4xl sm:text-5xl md:text-7xl lg:text-8xl text-[#3FEAE5] text-glow-cyan mt-4 font-bold reveal-up" style="transition-delay: 0.1s;">
                         YUWARAJA
-                        <span class="font-orbitron text-5xl md:text-7xl lg:text-8xl text-[#E8AA1F] text-glow-yellow mt-4 text-shadow-xl font-bold"
-                            style="transition-delay: 0.2s;" data-text="YUWARAJA 2025">
+                        <span class="block text-[#E8AA1F] text-glow-yellow">
                             XVII 2025
                         </span>
                     </h1>
-                    <p class="mt-8 text-lg md:text-2xl text-white font-light leading-relaxed reveal-up"
-                        style="transition-delay: 0.4s;">
-                        Sebuah Era baru telah tiba. Sambungkan potensimu, bentuk masa depan. Selamat datang, Ksatria Yuwaraja, di gerbang Inovasi Fakultas Vokasi Universitas Brawijaya
+
+                    <p class="mt-6 md:mt-8 text-base md:text-xl text-white font-light max-w-2xl mx-auto leading-relaxed reveal-up" style="transition-delay: 0.2s;">
+                        Sebuah Era baru telah tiba. Sambungkan potensimu, bentuk masa depan. Selamat datang, Ksatria Yuwaraja, di gerbang Inovasi Fakultas Vokasi Universitas Brawijaya.
                     </p>
-                    <div class="mt-12 reveal-up" style="transition-delay: 0.6s;">
-                        <a href="#informasi" class="explore-button">
-                            <span class="color-part">
-                                <img src="/images/logo-explore.svg" alt="logo explore"
-                                    class="w-8 h-10 md:w-14 md:h-14">
+
+                    <div class="mt-10 md:mt-12 reveal-up" style="transition-delay: 0.3s;">
+                        <a href="#informasi" class="inline-flex items-center justify-center border-2 border-[#E8AA1F] rounded-md overflow-hidden transition-all duration-300 group hover:shadow-lg hover:shadow-yellow-500/20">
+                            <span class="bg-[#E8AA1F] p-3">
+                                <img src="/images/logo-explore.svg" alt="logo explore" class="h-6 w-6 sm:h-8 sm:w-8" />
                             </span>
-                            <span class="text-part text-lg">MULAI EKSPLORASI</span>
+                            <span class="px-5 sm:px-6 text-base sm:text-lg font-medium text-white">
+                                MULAI EKSPLORASI
+                            </span>
                         </a>
                     </div>
                 </div>
@@ -1003,8 +981,12 @@
                 <!-- Kolom Kiri: Logo -->
                 <div class="flex items-center gap-4">
                     <!-- Pastikan path logo sudah benar -->
-                    <img src="/images/logo-ub.svg" alt="Logo Universitas Brawijaya" class="h-16 md:h-20">
-                    <img src="/images/logo-vokasi.svg" alt="Logo Fakultas Vokasi Universitas Brawijaya" class="h-12 md:h-16">
+                    <a href="https://www.ub.ac.id">
+                        <img src="/images/logo-ub.svg" alt="Logo Universitas Brawijaya" class="h-16 md:h-20">
+                    </a>
+                    <a href="https://vokasi.ub.ac.id">
+                        <img src="/images/logo-vokasi.svg" alt="Logo Fakultas Vokasi Universitas Brawijaya" class="h-12 md:h-16">
+                    </a>
                 </div>
 
                 <!-- Kolom Kanan: Informasi Kontak -->
@@ -1015,7 +997,7 @@
                     </div>
 
                     <!-- Tombol Instagram -->
-                    <a href="#" class="mt-4 inline-flex items-center gap-3 px-6 py-2 bg-[#092c3a] rounded-full border border-[#e0a325]/80 hover:bg-[#0f3c4f] transition-colors">
+                    <a href="https://www.instagram.com/pkkmb_vokasiub" class="mt-4 inline-flex items-center gap-3 px-6 py-2 bg-[#092c3a] rounded-full border border-[#e0a325]/80 hover:bg-[#0f3c4f] transition-colors">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" stroke-width="2" stroke="#e0a325" fill="none" stroke-linecap="round" stroke-linejoin="round">
                             <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                             <rect x="4" y="4" width="16" height="16" rx="4" />
@@ -1037,10 +1019,51 @@
         </div>
     </footer>
 
-    <!-- Scripts untuk Animasi -->
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            // Smooth Scroll Handler
+            // --- KODE HAMBURGER MENU YANG SUDAH DIPERBAIKI TOTAL ---
+            const hamburgerBtn = document.getElementById('hamburger-button');
+            const mobileNav = document.getElementById('mobile-nav');
+            const mobileNavLinks = mobileNav.querySelectorAll('a');
+
+            // Fungsi bantuan agar kode tidak berulang
+            function closeMobileMenu() {
+                hamburgerBtn.classList.remove('open');
+                mobileNav.classList.remove('open');
+            }
+
+            // 1. Logika untuk membuka/menutup dengan tombol
+            hamburgerBtn.addEventListener('click', (event) => {
+                // Menghentikan event agar tidak langsung memicu listener 'document'
+                event.stopPropagation();
+                // Toggle kelas untuk animasi tombol dan menu
+                hamburgerBtn.classList.toggle('open');
+                mobileNav.classList.toggle('open');
+            });
+
+            // 2. Menutup saat salah satu link di dalam menu diklik
+            mobileNavLinks.forEach(link => {
+                link.addEventListener('click', closeMobileMenu);
+            });
+
+            // 3. Menutup saat klik di luar area menu (area gelap)
+            document.addEventListener('click', function(event) {
+                // Cek apakah menu sedang terbuka DAN klik BUKAN pada menu itu sendiri
+                if (mobileNav.classList.contains('open') && !mobileNav.contains(event.target)) {
+                    closeMobileMenu();
+                }
+            });
+
+            // 4. Menutup saat menekan tombol 'Escape' di keyboard
+            document.addEventListener('keydown', function(event) {
+                if (event.key === 'Escape' && mobileNav.classList.contains('open')) {
+                    closeMobileMenu();
+                }
+            });
+            // --- AKHIR DARI KODE HAMBURGER MENU ---
+
+
+            // --- Kode Lainnya yang Sudah Ada (Animasi Reveal dan Navigasi Aktif) ---
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
@@ -1052,15 +1075,14 @@
             });
             document.querySelectorAll('.reveal-up').forEach(el => observer.observe(el));
 
-            // Navigasi aktif berdasarkan scroll (contoh sederhana)
             const sections = document.querySelectorAll('section');
-            const navLinks = document.querySelectorAll('.nav-link');
+            const navLinks = document.querySelectorAll('nav.hidden.lg\\:flex .nav-link'); // Selector lebih spesifik
 
             window.addEventListener('scroll', () => {
                 let current = '';
                 sections.forEach(section => {
                     const sectionTop = section.offsetTop;
-                    if (pageYOffset >= sectionTop - 150) {
+                    if (window.pageYOffset >= sectionTop - 150) {
                         current = section.getAttribute('id');
                     }
                 });
@@ -1068,7 +1090,8 @@
                 navLinks.forEach(link => {
                     link.classList.remove('active', 'text-white');
                     link.classList.add('text-gray-300');
-                    if (link.getAttribute('href').includes(current)) {
+                    const navLinkHref = link.getAttribute('href');
+                    if (navLinkHref && navLinkHref.includes(current)) {
                         link.classList.add('active', 'text-white');
                         link.classList.remove('text-gray-300');
                     }
