@@ -9,6 +9,7 @@ class Kelompok_Seeder extends Seeder
 {
     public function run(): void
     {
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
         DB::table('kelompoks')->insert([
             [
                 'id' => 1,
@@ -27,5 +28,6 @@ class Kelompok_Seeder extends Seeder
                 'updated_at' => '2025-07-13 12:36:29',
             ],
         ]);
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }
 }

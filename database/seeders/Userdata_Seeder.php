@@ -9,6 +9,7 @@ class Userdata_Seeder extends Seeder
 {
     public function run(): void
     {
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
         DB::table('users')->insert([
             [
                 'id' => 1,
@@ -116,5 +117,6 @@ class Userdata_Seeder extends Seeder
                 'updated_at' => '2025-07-14 04:32:29',
             ],
         ]);
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }
 }
