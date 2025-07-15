@@ -27,7 +27,7 @@ class Userdata_Seeder extends Seeder
                 'jenis_kelamin' => 'Laki-laki',
                 'role' => 'admin',
                 'kelompok_id' => null,
-                'password' => Hash::make('1'),
+                'password' => Hash::make('alamak24!*'),
                 'remember_token' => null,
                 'email_verified_at' => '2025-07-12 17:18:40',
                 'created_at' => '2025-07-12 17:18:40',
