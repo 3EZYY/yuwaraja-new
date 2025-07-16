@@ -38,7 +38,22 @@ class Kelompok extends Model
         return $this->belongsTo(User::class, 'spv_id');
     }
 
+    public function supervisor()
+    {
+        return $this->belongsTo(User::class, 'spv_id');
+    }
+
     public function mahasiswa()
+    {
+        return $this->hasMany(User::class, 'kelompok_id');
+    }
+
+    public function anggota()
+    {
+        return $this->hasMany(User::class, 'kelompok_id')->where('role', 'mahasiswa');
+    }
+
+    public function users()
     {
         return $this->hasMany(User::class, 'kelompok_id');
     }

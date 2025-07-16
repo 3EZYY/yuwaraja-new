@@ -92,6 +92,35 @@
                 </div>
             </div>
 
+            <!-- Informasi Kelompok -->
+            @if($user->kelompok)
+            <div class="cyber-card p-6">
+                <h3 class="text-lg font-bold text-white mb-4 text-glow-cyan">👥 INFORMASI KELOMPOK</h3>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <!-- Detail Kelompok -->
+                    <div class="space-y-4">
+                        <div class="border-l-4 border-cyan-400 pl-4">
+                            <p class="text-sm text-gray-400">Nama Kelompok</p>
+                            <p class="text-xl font-bold text-white">{{ $user->kelompok->nama_kelompok }}</p>
+                        </div>
+                        <div class="border-l-4 border-yellow-400 pl-4">
+                            <p class="text-sm text-gray-400">Kode Kelompok</p>
+                            <p class="text-lg font-mono font-bold text-yellow-400">{{ $user->kelompok->code }}</p>
+                        </div>
+                        @if($user->kelompok->supervisor)
+                        <div class="border-l-4 border-green-400 pl-4">
+                            <p class="text-sm text-gray-400">Supervisor</p>
+                            <p class="text-lg font-semibold text-green-400">{{ $user->kelompok->supervisor->name }}</p>
+                            <p class="text-sm text-gray-500">{{ $user->kelompok->supervisor->email }}</p>
+                        </div>
+                        @endif
+                    </div>
+                    
+
+                </div>
+            </div>
+            @endif
+
             <!-- Stats & Progress Cards -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 <!-- Tugas Selesai -->

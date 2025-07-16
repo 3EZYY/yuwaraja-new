@@ -21,7 +21,6 @@ class MahasiswaJadwalController extends Controller
         if ($jadwal->status !== 'published') {
             abort(404);
         }
-        $detailMode = true;
-        return view('mahasiswa.jadwal.jadwal', compact('jadwal', 'detailMode'));
+        return view('mahasiswa.jadwal-detail', compact('jadwal'));
     }
 }

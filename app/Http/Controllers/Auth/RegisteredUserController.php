@@ -31,8 +31,19 @@ class RegisteredUserController extends Controller
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'nim' => ['required', 'string', 'unique:'.User::class], // Wajib diisi saat register
-            'username' => ['required', 'string', 'max:255', 'unique:'.User::class],
+            'nim' => [
+                'required', 
+                'string', 
+                'size:15',
+                'regex:/^(23|24|25)\d{13}$/',
+                'unique:'.User::class
+            ], // Wajib diisi saat register
+            'username' => [
+                'required', 
+                'string', 
+                'max:255', 
+                'unique:'.User::class
+            ],
             'email' => [
                 'required',
                 'string',
@@ -48,7 +59,7 @@ class RegisteredUserController extends Controller
                 }
             ],
             'program_studi' => ['required', 'string', 'max:255'],
-            'angkatan' => ['required', 'string', 'max:255'],
+            'angkatan' => ['required', 'string', 'in:2023,2024,2025'],
             'nomor_telepon' => ['required', 'string', 'max:255'], // Tambahan 'required'
             'tanggal_lahir' => ['required', 'date'], // Tambahan 'required'
             'jenis_kelamin' => ['required', 'string', 'in:Laki-laki,Perempuan'], // Tambahan 'required'
@@ -57,6 +68,8 @@ class RegisteredUserController extends Controller
             // Custom error messages
             'name.required' => 'Nama lengkap wajib diisi!',
             'nim.required' => 'NIM wajib diisi!',
+            'nim.size' => 'NIM harus terdiri dari 15 digit.',
+            'nim.regex' => 'NIM harus dimulai dengan 23, 24, atau 25 dan terdiri dari 15 digit.',
             'nim.unique' => 'NIM sudah terdaftar!',
             'username.required' => 'Username wajib diisi!',
             'username.unique' => 'Username sudah dipakai nih!',
@@ -64,6 +77,7 @@ class RegisteredUserController extends Controller
             'email.unique' => 'Email sudah dipakai nih!',
             'program_studi.required' => 'Program studi wajib dipilih!',
             'angkatan.required' => 'Angkatan wajib diisi!',
+            'angkatan.in' => 'Angkatan hanya boleh 2023, 2024, atau 2025.',
             'nomor_telepon.required' => 'Nomor telepon wajib diisi!',
             'tanggal_lahir.required' => 'Tanggal lahir wajib diisi!',
             'jenis_kelamin.required' => 'Jenis kelamin wajib dipilih!',

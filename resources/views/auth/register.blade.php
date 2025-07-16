@@ -21,7 +21,11 @@
             <!-- NIM -->
             <div class="form-field" style="animation-delay: 1.0s;">
                 <x-input-label for="nim" value="NIM" class="mb-1 text-sm text-cyan-300 tracking-wide" />
-                <x-text-input id="nim" class="cyber-input" type="text" name="nim" :value="old('nim')" required placeholder="Masukan NIM"
+                <x-text-input id="nim" class="cyber-input" type="text" name="nim" :value="old('nim')" 
+                    pattern="^(23|24|25)\d{13}$" 
+                    title="NIM harus 15 digit dan dimulai dengan 23, 24, atau 25"
+                    maxlength="15" minlength="15"
+                    required placeholder="Masukan NIM (15 digit, dimulai 23/24/25)"
                     autocomplete="nim" />
                 <x-input-error :messages="$errors->get('nim')" class="mt-2 text-yellow-400 text-xs" />
             </div>
@@ -64,11 +68,12 @@
             <div class="form-field" style="animation-delay: 1.2s;">
                 <x-input-label for="angkatan" value="Angkatan"
                     class="mb-1 text-sm text-cyan-300 tracking-wide" />
-                <x-text-input id="angkatan" class="cyber-input" type="text" name="angkatan" :value="old('angkatan')"
-                    pattern="\d{4}" title="Angkatan harus berupa 4 digit angka"
-                    autocomplete="off" minlength="4" maxlength="4"
-                    placeholder="Masukan Angkatan"
-                    required />
+                <select id="angkatan" name="angkatan" class="cyber-input cyber-select" required>
+                    <option value="" disabled {{ old('angkatan') ? '' : 'selected' }}>Pilih Angkatan</option>
+                    <option value="2023" {{ old('angkatan') == '2023' ? 'selected' : '' }}>2023</option>
+                    <option value="2024" {{ old('angkatan') == '2024' ? 'selected' : '' }}>2024</option>
+                    <option value="2025" {{ old('angkatan') == '2025' ? 'selected' : '' }}>2025</option>
+                </select>
                 <x-input-error :messages="$errors->get('angkatan')" class="mt-2 text-yellow-400 text-xs" />
             </div>
 
@@ -95,9 +100,9 @@
                 <x-input-label for="jenis_kelamin" value="Jenis Kelamin" class="mb-1 text-sm text-cyan-300 tracking-wide" />
                 <select id="jenis_kelamin" name="jenis_kelamin" class="cyber-input cyber-select" required>
                     <option value="" disabled {{ old('jenis_kelamin') ? '' : 'selected' }}>Pilih Jenis Kelamin</option>
-                    <option value="Laki-laki" {{ old('jenis_kelamin') == 'Laki-laki' ? 'selected' : '' }}>Model L
+                    <option value="Laki-laki" {{ old('jenis_kelamin') == 'Laki-laki' ? 'selected' : '' }}>Laki-laki
                     </option>
-                    <option value="Perempuan" {{ old('jenis_kelamin') == 'Perempuan' ? 'selected' : '' }}>Model P
+                    <option value="Perempuan" {{ old('jenis_kelamin') == 'Perempuan' ? 'selected' : '' }}>Perempuan
                     </option>
                 </select>
                 <x-input-error :messages="$errors->get('jenis_kelamin')" class="mt-2 text-yellow-400 text-xs" />

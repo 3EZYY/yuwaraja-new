@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Auth;
 Route::middleware(['auth', 'role:mahasiswa'])->group(function () {
     Route::get('/mahasiswa/join-kelompok', [\App\Http\Controllers\JoinKelompokController::class, 'showForm'])->name('mahasiswa.join-kelompok');
     Route::post('/mahasiswa/join-kelompok', [\App\Http\Controllers\JoinKelompokController::class, 'join'])->name('mahasiswa.join-kelompok.submit');
+    Route::post('/mahasiswa/leave-kelompok', [\App\Http\Controllers\JoinKelompokController::class, 'leave'])->name('mahasiswa.leave-kelompok');
 });
 
 // API Routes untuk validasi real-time

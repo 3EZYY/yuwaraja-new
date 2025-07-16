@@ -17,7 +17,6 @@ class MahasiswaPengumumanController extends Controller
 
     public function show(Pengumuman $pengumuman)
     {
-        $detailMode = true;
-        return view('mahasiswa.pengumuman.pengumuman', compact('pengumuman', 'detailMode'));
+        return view('mahasiswa.pengumuman-detail', compact('pengumuman'));
     }
 }

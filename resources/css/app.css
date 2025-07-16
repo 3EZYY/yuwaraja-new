@@ -2,14 +2,207 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Efek Glow untuk Teks */
 .text-glow-cyan {
-    text-shadow: 0 0 8px rgba(63, 234, 229, 0.6),
-        0 0 20px rgba(63, 234, 229, 0.4);
+    text-shadow: 0 0 10px #00eaff, 0 0 20px #00eaff, 0 0 30px #00eaff;
 }
 
 .text-glow-yellow {
-    text-shadow: 0 0 8px rgba(232, 170, 31, 0.6),
-        0 0 20px rgba(232, 170, 31, 0.4);
+    text-shadow: 0 0 10px #ffe066, 0 0 20px #ffe066, 0 0 30px #ffe066;
+}
+
+/* Cyberpunk Grid Background */
+.cyber-grid {
+    background-image: 
+        linear-gradient(rgba(0, 234, 255, 0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 234, 255, 0.1) 1px, transparent 1px);
+    background-size: 50px 50px;
+    animation: grid-move 20s linear infinite;
+}
+
+@keyframes grid-move {
+    0% { transform: translate(0, 0); }
+    100% { transform: translate(50px, 50px); }
+}
+
+/* Floating Particles */
+.floating-particles {
+    position: relative;
+    overflow: hidden;
+}
+
+.floating-particles::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        radial-gradient(2px 2px at 20px 30px, rgba(255, 224, 102, 0.3), transparent),
+        radial-gradient(2px 2px at 40px 70px, rgba(0, 234, 255, 0.3), transparent),
+        radial-gradient(1px 1px at 90px 40px, rgba(255, 224, 102, 0.2), transparent),
+        radial-gradient(1px 1px at 130px 80px, rgba(0, 234, 255, 0.2), transparent);
+    background-repeat: repeat;
+    background-size: 200px 100px;
+    animation: particles-float 15s linear infinite;
+    pointer-events: none;
+}
+
+@keyframes particles-float {
+    0% { transform: translateY(0px) rotate(0deg); }
+    100% { transform: translateY(-100px) rotate(360deg); }
+}
+
+/* Mission Card Animations */
+.cyber-mission-card {
+    position: relative;
+    overflow: hidden;
+}
+
+.cyber-mission-card::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, transparent, rgba(0, 234, 255, 0.1), transparent);
+    border-radius: inherit;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: -1;
+}
+
+.cyber-mission-card:hover::before {
+    opacity: 1;
+    animation: border-glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes border-glow {
+    0% { background: linear-gradient(45deg, transparent, rgba(0, 234, 255, 0.1), transparent); }
+    100% { background: linear-gradient(45deg, transparent, rgba(255, 224, 102, 0.1), transparent); }
+}
+
+/* Animated Line */
+.animated-line {
+    position: relative;
+    overflow: hidden;
+}
+
+.animated-line::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: -100%;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #00eaff, transparent);
+    animation: line-scan 3s ease-in-out infinite;
+}
+
+@keyframes line-scan {
+    0% { left: -100%; }
+    50% { left: 100%; }
+    100% { left: -100%; }
+}
+
+/* Glitch Effect */
+.glitch {
+    position: relative;
+    display: inline-block;
+}
+
+.glitch::before,
+.glitch::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+}
+
+.glitch::before {
+    animation: glitch-1 0.5s infinite;
+    color: #ff0040;
+    z-index: -1;
+}
+
+.glitch::after {
+    animation: glitch-2 0.5s infinite;
+    color: #00eaff;
+    z-index: -2;
+}
+
+@keyframes glitch-1 {
+    0%, 14%, 15%, 49%, 50%, 99%, 100% {
+        opacity: 0;
+        transform: translateX(0);
+    }
+    15%, 49% {
+        opacity: 1;
+        transform: translateX(-2px);
+    }
+}
+
+@keyframes glitch-2 {
+    0%, 19%, 20%, 44%, 45%, 99%, 100% {
+        opacity: 0;
+        transform: translateX(0);
+    }
+    20%, 44% {
+        opacity: 1;
+        transform: translateX(2px);
+    }
+}
+
+/* Pulse Animation */
+.pulse-glow {
+    animation: pulse-glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes pulse-glow {
+    from {
+        box-shadow: 0 0 20px rgba(0, 234, 255, 0.3);
+    }
+    to {
+        box-shadow: 0 0 30px rgba(0, 234, 255, 0.6), 0 0 40px rgba(255, 224, 102, 0.3);
+    }
+}
+
+/* Announcement Card Animations */
+.cyber-announcement-card {
+    position: relative;
+    overflow: hidden;
+}
+
+.cyber-announcement-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 1rem;
+    padding: 2px;
+    background: linear-gradient(45deg, #06b6d4, #3b82f6, #8b5cf6, #06b6d4);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite: exclude;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.cyber-announcement-card:hover::before {
+    opacity: 1;
+}
+
+@keyframes announcement-glow {
+    0%, 100% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
 }
 

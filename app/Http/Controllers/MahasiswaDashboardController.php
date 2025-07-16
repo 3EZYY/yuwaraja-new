@@ -26,7 +26,16 @@ class MahasiswaDashboardController extends Controller
     }
     public function index()
     {
-        $user = Auth::user();
+        $user = Auth::user()->load(['kelompok.users', 'kelompok.anggota']);
+        
+        // Cek apakah mahasiswa sudah bergabung dengan kelompok
+        if (!$user->kelompok_id) {
+            // Jika belum bergabung, redirect ke halaman join kelompok
+            return redirect()->route('mahasiswa.join-kelompok')
+                ->with('info', 'Silakan bergabung dengan kelompok terlebih dahulu untuk mengakses dashboard.');
+        }
+        
+        // Jika sudah bergabung, tampilkan dashboard lengkap
         $pengumuman = Pengumuman::latest()->take(5)->get();
         $jadwal = JadwalAcara::where('tanggal_mulai', '>=', now())->orderBy('tanggal_mulai')->get();
         $tugas = Tugas::all();

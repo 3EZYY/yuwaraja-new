@@ -37,7 +37,16 @@ class PengumpulanTugasResource extends Resource
                     })
                     ->searchable()
                     ->preload()
-                    ->required(),
+                    ->required()
+                    ->reactive()
+                    ->afterStateUpdated(function ($state, callable $set) {
+                        if ($state) {
+                            $user = \App\Models\User::find($state);
+                            if ($user && $user->kelompok_id) {
+                                $set('kelompok_id', $user->kelompok_id);
+                            }
+                        }
+                    }),
                 Forms\Components\Select::make('tugas_id')
                     ->label('Tugas')
                     ->relationship('tugas', 'judul')
@@ -48,8 +57,7 @@ class PengumpulanTugasResource extends Resource
                     ->label('Kelompok')
                     ->relationship('kelompok', 'nama_kelompok')
                     ->searchable()
-                    ->preload()
-                    ->required(),
+                    ->preload(),
                 Forms\Components\DateTimePicker::make('submitted_at')
                     ->label('Tanggal Submit')
                     ->required(),
@@ -60,6 +68,12 @@ class PengumpulanTugasResource extends Resource
                     ->acceptedFileTypes(['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'])
                     ->maxSize(5120) // 5MB
                     ->required(),
+                Forms\Components\Textarea::make('keterangan')
+                    ->label('Keterangan')
+                    ->placeholder('Masukkan keterangan tambahan (opsional)')
+                    ->maxLength(2000)
+                    ->rows(4)
+                    ->columnSpanFull(),
             ]);
     }
 
@@ -74,6 +88,10 @@ class PengumpulanTugasResource extends Resource
                 Tables\Columns\TextColumn::make('user.nim')
                     ->label('NIM')
                     ->searchable(),
+                Tables\Columns\TextColumn::make('kelompok.nama_kelompok')
+                    ->label('Kelompok')
+                    ->searchable()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('tugas.judul')
                     ->label('Tugas')
                     ->searchable()
@@ -94,6 +112,14 @@ class PengumpulanTugasResource extends Resource
                         return $record->file_path ? Storage::url($record->file_path) : null;
                     })
                     ->openUrlInNewTab(),
+                Tables\Columns\TextColumn::make('keterangan')
+                    ->label('Keterangan')
+                    ->limit(50)
+                    ->tooltip(function ($record) {
+                        return $record->keterangan;
+                    })
+                    ->placeholder('Tidak ada keterangan')
+                    ->toggleable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('Dibuat')
                     ->dateTime()
@@ -105,6 +131,9 @@ class PengumpulanTugasResource extends Resource
                     ->relationship('tugas', 'judul'),
                 Tables\Filters\SelectFilter::make('user')
                     ->relationship('user', 'name')
+                    ->searchable(),
+                Tables\Filters\SelectFilter::make('kelompok')
+                    ->relationship('kelompok', 'nama_kelompok')
                     ->searchable(),
             ])
             ->actions([
