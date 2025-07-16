@@ -84,4 +84,38 @@ class User extends Authenticatable implements FilamentUser
     {
         return $this->hasMany(\App\Models\User::class, 'kelompok_id');
     }
+
+    // Friendship relationships
+    public function friendships()
+    {
+        return $this->hasMany(Friendship::class, 'user_id');
+    }
+
+    public function receivedFriendships()
+    {
+        return $this->hasMany(Friendship::class, 'friend_id');
+    }
+
+    // Get all friends (accepted friendships)
+    public function friends()
+    {
+        $sentFriends = $this->friendships()->accepted()->with('friend')->get()->pluck('friend');
+        $receivedFriends = $this->receivedFriendships()->accepted()->with('user')->get()->pluck('user');
+        
+        return $sentFriends->merge($receivedFriends);
+    }
+
+    // Check if user is friend with another user
+    public function isFriendWith($userId)
+    {
+        return $this->friendships()->where('friend_id', $userId)->where('status', 'accepted')->exists() ||
+               $this->receivedFriendships()->where('user_id', $userId)->where('status', 'accepted')->exists();
+    }
+
+    // Check if friendship request exists
+    public function hasFriendshipRequestWith($userId)
+    {
+        return $this->friendships()->where('friend_id', $userId)->exists() ||
+               $this->receivedFriendships()->where('user_id', $userId)->exists();
+    }
 }

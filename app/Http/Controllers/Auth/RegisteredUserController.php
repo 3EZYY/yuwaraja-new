@@ -34,14 +34,16 @@ class RegisteredUserController extends Controller
             'nim' => [
                 'required', 
                 'string', 
-                'size:15',
-                'regex:/^(23|24|25)\d{13}$/',
+                'min:15',
+                'max:16',
+                'regex:/^(23|24|25)\d{13,14}$/',
                 'unique:'.User::class
             ], // Wajib diisi saat register
             'username' => [
                 'required', 
                 'string', 
                 'max:255', 
+                'regex:/^[a-zA-Z0-9]+$/',
                 'unique:'.User::class
             ],
             'email' => [
@@ -68,10 +70,12 @@ class RegisteredUserController extends Controller
             // Custom error messages
             'name.required' => 'Nama lengkap wajib diisi!',
             'nim.required' => 'NIM wajib diisi!',
-            'nim.size' => 'NIM harus terdiri dari 15 digit.',
-            'nim.regex' => 'NIM harus dimulai dengan 23, 24, atau 25 dan terdiri dari 15 digit.',
+            'nim.min' => 'NIM minimal 15 digit.',
+            'nim.max' => 'NIM maksimal 16 digit.',
+            'nim.regex' => 'NIM harus dimulai dengan 23, 24, atau 25 dan terdiri dari 15-16 digit.',
             'nim.unique' => 'NIM sudah terdaftar!',
             'username.required' => 'Username wajib diisi!',
+            'username.regex' => 'Username hanya boleh menggunakan huruf dan angka (tanpa simbol)!',
             'username.unique' => 'Username sudah dipakai nih!',
             'email.required' => 'Email wajib diisi!',
             'email.unique' => 'Email sudah dipakai nih!',

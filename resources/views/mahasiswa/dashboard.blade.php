@@ -82,6 +82,25 @@
                     <p class="text-gray-400 mt-2">Status: <span class="font-semibold text-green-400">AKTIF</span> // PKKMB YUWARAJA 2025</p>
                 </div>
                 <div class="text-left md:text-right border-t md:border-t-0 md:border-l border-cyan-400/20 pt-4 md:pt-0 md:pl-6">
+                    <!-- Clickable Profile Area -->
+                    <div class="flex items-center justify-end mb-4">
+                        <a href="{{ route('mahasiswa.friendship.index') }}" class="group flex items-center space-x-3 hover:bg-cyan-400/10 p-2 rounded-lg transition-all">
+                            @if($user->photo)
+                                <img src="{{ asset('storage/profile/' . $user->photo) }}" 
+                                     alt="{{ $user->name }}" 
+                                     class="w-12 h-12 rounded-full border-2 border-cyan-400 group-hover:border-yellow-400 transition-colors">
+                            @else
+                                <div class="w-12 h-12 rounded-full bg-cyan-400 group-hover:bg-yellow-400 flex items-center justify-center text-black font-bold text-lg transition-colors">
+                                    {{ strtoupper(substr($user->name, 0, 1)) }}
+                                </div>
+                            @endif
+                            <div class="text-right">
+                                <p class="text-sm text-gray-400 group-hover:text-cyan-400">Lihat Kelompok</p>
+                                <p class="text-xs text-yellow-400">👥 Klik untuk berteman</p>
+                            </div>
+                        </a>
+                    </div>
+                    
                     <p class="text-sm text-gray-400">Kelompok</p>
                     <p class="text-xl font-bold text-white capitalize">{{ $user->kelompok->nama_kelompok ?? 'Belum ada kelompok' }}</p>
                     <p class="text-sm text-gray-400 mt-2">Program Studi</p>
@@ -116,6 +135,41 @@
                         @endif
                     </div>
                     
+                    <!-- Daftar Teman -->
+                    <div class="space-y-4">
+                        <div class="border-l-4 border-pink-400 pl-4">
+                            <p class="text-sm text-gray-400">KAMU BERTEMAN DENGAN:</p>
+                            @php
+                                try {
+                                    $friends = $user->friends();
+                                    $friendsCount = $friends->count();
+                                } catch (\Exception $e) {
+                                    $friends = collect();
+                                    $friendsCount = 0;
+                                }
+                            @endphp
+                            @if($friendsCount > 0)
+                                <div class="mt-2 space-y-1">
+                                    @foreach($friends->take(3) as $index => $friend)
+                                    <p class="text-white font-semibold">
+                                        {{ $index + 1 }}. {{ $friend->name }}
+                                        <span class="text-pink-400 text-sm">({{ $friend->nim }})</span>
+                                    </p>
+                                    @endforeach
+                                    @if($friendsCount > 3)
+                                    <p class="text-gray-400 text-sm">
+                                        dan {{ $friendsCount - 3 }} teman lainnya...
+                                    </p>
+                                    @endif
+                                </div>
+                                <a href="{{ route('mahasiswa.friendship.index') }}" class="inline-block mt-2 text-sm text-pink-400 hover:text-pink-300 hover:underline">
+                                    Lihat semua teman >>
+                                </a>
+                            @else
+                                <p class="text-gray-500 italic mt-2">Belum ada teman. <a href="{{ route('mahasiswa.friendship.index') }}" class="text-pink-400 hover:underline">Cari teman di kelompokmu!</a></p>
+                            @endif
+                        </div>
+                    </div>
 
                 </div>
             </div>
@@ -161,46 +215,24 @@
                 </div>
             </div>
 
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                <!-- Pengumuman Terbaru (Kolom Utama) -->
-                <div class="lg:col-span-2 cyber-card p-6">
-                    <h3 class="text-lg font-bold text-white mb-4 text-glow-yellow">📢 PENGUMUMAN TERBARU</h3>
-                    @if($pengumuman->count() > 0)
-                        <div class="space-y-4">
-                            @foreach($pengumuman as $announce)
-                            <div class="border-l-4 border-yellow-400 pl-4 py-2 hover:bg-white/5 transition-colors">
-                                <a href="{{ route('mahasiswa.pengumuman.detail', $announce->id) }}" class="hover:underline">
-                                    <h4 class="font-bold text-white">{{ $announce->judul }}</h4>
-                                </a>
-                                <p class="text-sm text-gray-400 mt-1">{{ Str::limit($announce->konten, 150) }}</p>
-                                <p class="text-xs text-gray-500 mt-2">{{ $announce->created_at->diffForHumans() }}</p>
-                            </div>
-                            @endforeach
+            <!-- Pengumuman Terbaru -->
+            <div class="cyber-card p-6">
+                <h3 class="text-lg font-bold text-white mb-4 text-glow-yellow">📢 PENGUMUMAN TERBARU</h3>
+                @if($pengumuman->count() > 0)
+                    <div class="space-y-4">
+                        @foreach($pengumuman as $announce)
+                        <div class="border-l-4 border-yellow-400 pl-4 py-2 hover:bg-white/5 transition-colors">
+                            <a href="{{ route('mahasiswa.pengumuman.detail', $announce->id) }}" class="hover:underline">
+                                <h4 class="font-bold text-white">{{ $announce->judul }}</h4>
+                            </a>
+                            <p class="text-sm text-gray-400 mt-1">{{ Str::limit($announce->konten, 150) }}</p>
+                            <p class="text-xs text-gray-500 mt-2">{{ $announce->created_at->diffForHumans() }}</p>
                         </div>
-                    @else
-                        <p class="text-gray-500 italic">// Belum ada transmisi terbaru //</p>
-                    @endif
-                </div>
-
-                <!-- Jadwal Acara (Kolom Samping) -->
-                <div class="cyber-card p-6">
-                    <h3 class="text-lg font-bold text-white mb-4 text-glow-cyan">📅 JADWAL MENDATANG</h3>
-                    @if($jadwal->count() > 0)
-                        <div class="space-y-4">
-                            @foreach($jadwal as $event)
-                            <div class="border-l-4 border-cyan-400 pl-4 py-2">
-                                <p class="text-xs text-cyan-400">{{ $event->tanggal_mulai->format('d M, H:i') }}</p>
-                                <a href="{{ route('mahasiswa.jadwal.detail', $event->id) }}" class="hover:underline">
-                                    <h4 class="font-semibold text-white">{{ $event->nama_acara }}</h4>
-                                </a>
-                                <p class="text-sm text-gray-400">{{ $event->lokasi ?? 'Online' }}</p>
-                            </div>
-                            @endforeach
-                        </div>
-                    @else
-                        <p class="text-gray-500 italic">// Jadwal belum di-deploy //</p>
-                    @endif
-                </div>
+                        @endforeach
+                    </div>
+                @else
+                    <p class="text-gray-500 italic">// Belum ada transmisi terbaru //</p>
+                @endif
             </div>
 
             <!-- Daftar Tugas -->

@@ -6,6 +6,7 @@ use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
+use Filament\Http\Responses\Auth\Contracts\LogoutResponse;
 use Filament\Pages;
 use Filament\Panel;
 use Filament\PanelProvider;
@@ -54,7 +55,15 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->authMiddleware([
                 Authenticate::class,
-            ]);
-            
+            ])
+            ->authGuard('web');
+    }
+    
+    public function register(): void
+    {
+        parent::register();
+        
+        // Bind custom logout response
+        $this->app->bind(LogoutResponse::class, \App\Http\Responses\LogoutResponse::class);
     }
 }

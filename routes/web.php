@@ -11,6 +11,7 @@ use App\Http\Controllers\MahasiswaPengumumanController;
 use App\Http\Controllers\MahasiswaJadwalController;
 use App\Http\Controllers\Api\ValidationController;
 use App\Http\Controllers\SpvTugasController;
+use App\Http\Controllers\FriendshipController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -89,6 +90,15 @@ Route::middleware(['auth', 'verified', 'role:mahasiswa'])->prefix('mahasiswa')->
     Route::controller(MahasiswaJadwalController::class)->group(function () {
         Route::get('/jadwal', 'index')->name('jadwal.index');
         Route::get('/jadwal/{jadwal}', 'show')->name('jadwal.detail');
+    });
+
+    // Friendship Routes
+    Route::controller(FriendshipController::class)->prefix('friendship')->name('friendship.')->group(function () {
+        Route::get('/', 'index')->name('index');
+        Route::post('/send', 'sendRequest')->name('send');
+        Route::post('/accept/{id}', 'acceptRequest')->name('accept');
+        Route::post('/reject/{id}', 'rejectRequest')->name('reject');
+        Route::delete('/remove/{id}', 'removeFriend')->name('remove');
     });
 });
 

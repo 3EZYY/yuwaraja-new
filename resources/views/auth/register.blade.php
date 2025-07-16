@@ -22,10 +22,10 @@
             <div class="form-field" style="animation-delay: 1.0s;">
                 <x-input-label for="nim" value="NIM" class="mb-1 text-sm text-cyan-300 tracking-wide" />
                 <x-text-input id="nim" class="cyber-input" type="text" name="nim" :value="old('nim')" 
-                    pattern="^(23|24|25)\d{13}$" 
-                    title="NIM harus 15 digit dan dimulai dengan 23, 24, atau 25"
-                    maxlength="15" minlength="15"
-                    required placeholder="Masukan NIM (15 digit, dimulai 23/24/25)"
+                    pattern="^(23|24|25)\d{13,14}$" 
+                    title="NIM harus 15-16 digit dan dimulai dengan 23, 24, atau 25"
+                    maxlength="16" minlength="15"
+                    required placeholder="Masukan NIM (15-16 digit, dimulai 23/24/25)"
                     autocomplete="nim" />
                 <x-input-error :messages="$errors->get('nim')" class="mt-2 text-yellow-400 text-xs" />
             </div>
@@ -34,7 +34,10 @@
             <div class="form-field" style="animation-delay: 1.1s;">
                 <x-input-label for="username" value="Username"
                     class="mb-1 text-sm text-cyan-300 tracking-wide" />
-                <x-text-input id="username" class="cyber-input" type="text" name="username" :value="old('username')" placeholder="Masukan Username"
+                <x-text-input id="username" class="cyber-input" type="text" name="username" :value="old('username')" 
+                    pattern="^[a-zA-Z0-9]+$"
+                    title="Username hanya boleh menggunakan huruf dan angka (tanpa simbol)"
+                    placeholder="Masukan Username (huruf dan angka saja)"
                     required autocomplete="username" />
                 <x-input-error :messages="$errors->get('username')" class="mt-2 text-yellow-400 text-xs" />
             </div>
@@ -158,6 +161,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const form = document.querySelector('form');
     const usernameInput = document.getElementById('username');
     const emailInput = document.getElementById('email');
+    const nimInput = document.getElementById('nim');
     
     // Create validation message elements
     function createValidationMessage(inputId) {
@@ -171,6 +175,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     const usernameMessage = createValidationMessage('username');
     const emailMessage = createValidationMessage('email');
+    const nimMessage = createValidationMessage('nim');
     
     // Debounce function
     function debounce(func, wait) {
@@ -185,10 +190,57 @@ document.addEventListener('DOMContentLoaded', function() {
         };
     }
     
+    // Validate NIM format
+    function validateNIM(nim) {
+        if (nim.length === 0) {
+            nimMessage.textContent = '';
+            return;
+        }
+        
+        if (nim.length < 15 || nim.length > 16) {
+            nimMessage.textContent = '✗ NIM harus 15-16 digit';
+            nimMessage.className = 'mt-1 text-xs text-red-400';
+            return false;
+        }
+        
+        if (!/^(23|24|25)\d{13,14}$/.test(nim)) {
+            nimMessage.textContent = '✗ NIM harus dimulai dengan 23, 24, atau 25';
+            nimMessage.className = 'mt-1 text-xs text-red-400';
+            return false;
+        }
+        
+        nimMessage.textContent = '✓ Format NIM valid';
+        nimMessage.className = 'mt-1 text-xs text-green-400';
+        return true;
+    }
+    
+    // Validate username format
+    function validateUsername(username) {
+        if (username.length === 0) {
+            usernameMessage.textContent = '';
+            return;
+        }
+        
+        if (!/^[a-zA-Z0-9]+$/.test(username)) {
+            usernameMessage.textContent = '✗ Username hanya boleh huruf dan angka (tanpa simbol)';
+            usernameMessage.className = 'mt-1 text-xs text-red-400';
+            return false;
+        }
+        
+        if (username.length < 3) {
+            usernameMessage.textContent = '✗ Username minimal 3 karakter';
+            usernameMessage.className = 'mt-1 text-xs text-red-400';
+            return false;
+        }
+        
+        // Check availability
+        checkUsername(username);
+        return true;
+    }
+    
     // Check username availability
     const checkUsername = debounce(async function(username) {
         if (username.length < 3) {
-            usernameMessage.textContent = '';
             return;
         }
         
@@ -232,8 +284,16 @@ document.addEventListener('DOMContentLoaded', function() {
     }, 500);
     
     // Add event listeners
+    nimInput.addEventListener('input', function() {
+        // Only allow numbers
+        this.value = this.value.replace(/[^0-9]/g, '');
+        validateNIM(this.value);
+    });
+    
     usernameInput.addEventListener('input', function() {
-        checkUsername(this.value);
+        // Remove invalid characters in real-time
+        this.value = this.value.replace(/[^a-zA-Z0-9]/g, '');
+        validateUsername(this.value);
     });
     
     emailInput.addEventListener('input', function() {
@@ -262,6 +322,20 @@ document.addEventListener('DOMContentLoaded', function() {
         if (hasEmptyFields) {
             e.preventDefault();
             alert('Hayoo jangan lupa semua di isi yaa.. Yang masih kosong: ' + emptyFieldNames.join(', '));
+            return false;
+        }
+        
+        // Validate NIM format
+        if (!validateNIM(nimInput.value)) {
+            e.preventDefault();
+            alert('Format NIM tidak valid! NIM harus 15-16 digit dan dimulai dengan 23, 24, atau 25.');
+            return false;
+        }
+        
+        // Validate username format
+        if (!/^[a-zA-Z0-9]+$/.test(usernameInput.value)) {
+            e.preventDefault();
+            alert('Username hanya boleh menggunakan huruf dan angka (tanpa simbol)!');
             return false;
         }
         
