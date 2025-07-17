@@ -10,7 +10,10 @@ class MahasiswaPengumumanController extends Controller
 
     public function index()
     {
-        $pengumuman = Pengumuman::latest()->paginate(10);
+        $pengumuman = Pengumuman::where('is_published', true)
+                                ->orderByRaw('COALESCE(published_at, updated_at) DESC')
+                                ->paginate(10);
+        
         $listMode = true;
         return view('mahasiswa.pengumuman.pengumuman', compact('pengumuman', 'listMode'));
     }

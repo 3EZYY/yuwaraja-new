@@ -122,6 +122,31 @@
                     </div>
                 </div>
 
+                <!-- Task File Download -->
+                @if($tugas->file_path)
+                    <div class="mb-8">
+                        <h3 class="text-xl font-semibold text-glow-cyan mb-4">
+                            <i class="fas fa-file-download mr-2"></i>File Tugas
+                        </h3>
+                        <div class="bg-gray-900/50 rounded-lg p-4 border border-cyan-500/30">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center">
+                                    <i class="fas fa-file-alt text-cyan-400 mr-3 text-xl"></i>
+                                    <div>
+                                        <p class="text-gray-300 font-medium">File tugas tersedia untuk diunduh</p>
+                                        <p class="text-gray-400 text-sm">Unduh file ini untuk melihat detail lengkap tugas</p>
+                                    </div>
+                                </div>
+                                <a href="{{ asset('storage/' . $tugas->file_path) }}" 
+                                   target="_blank"
+                                   class="cyber-btn px-6 py-3">
+                                    <i class="fas fa-download mr-2"></i>Download File
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                @endif
+
                 <!-- Submission Status -->
                 @if($pengumpulan)
                     <div class="cyber-card p-6 mb-6">

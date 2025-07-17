@@ -22,7 +22,17 @@
                         </svg>
                     </div>
                 @endif
-                <input id="photo" name="photo" type="file" accept="image/*" class="block w-full text-sm text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-teal-500/10 file:text-teal-300 hover:file:bg-teal-500/20 transition-colors cursor-pointer"/>
+                <div class="flex flex-col gap-2">
+                    <input id="photo" name="photo" type="file" accept="image/*" class="block w-full text-sm text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-teal-500/10 file:text-teal-300 hover:file:bg-teal-500/20 transition-colors cursor-pointer"/>
+                    @if($user->photo)
+                        <a href="{{ route('profile.crop-photo') }}" class="inline-flex items-center px-3 py-1 bg-amber-500/10 hover:bg-amber-500/20 text-amber-300 text-xs rounded-lg transition-colors">
+                            <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                            </svg>
+                            Crop Foto
+                        </a>
+                    @endif
+                </div>
             </div>
             <div class="sm:col-start-2 sm:col-span-2">
                 <x-input-error class="mt-1 text-red-400" :messages="$errors->get('photo')" />

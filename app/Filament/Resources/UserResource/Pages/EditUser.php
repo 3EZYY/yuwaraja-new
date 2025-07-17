@@ -16,4 +16,10 @@ class EditUser extends EditRecord
             Actions\DeleteAction::make(),
         ];
     }
+
+    protected function mutateFormDataBeforeSave(array $data): array
+    {
+        // Foto akan dikelola melalui AdminProfileController
+        return $data;
+    }
 }

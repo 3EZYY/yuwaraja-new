@@ -16,4 +16,14 @@ class EditPengumuman extends EditRecord
             Actions\DeleteAction::make(),
         ];
     }
+
+    protected function mutateFormDataBeforeSave(array $data): array
+    {
+        // Update published_at ketika pengumuman diedit dan is_published = true
+        if ($data['is_published'] && !$this->record->published_at) {
+            $data['published_at'] = now();
+        }
+        
+        return $data;
+    }
 }

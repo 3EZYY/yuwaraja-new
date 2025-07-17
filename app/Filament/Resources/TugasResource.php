@@ -42,6 +42,16 @@ class TugasResource extends Resource
                     ])
                     ->required()
                     ->default('kelompok'),
+                Forms\Components\FileUpload::make('file_path')
+                    ->label('File Tugas')
+                    ->directory('tugas-files')
+                    ->acceptedFileTypes(['.pdf', '.doc', '.docx', '.txt', '.zip', '.rar'])
+                    ->maxSize(10240) // 10MB
+                    ->downloadable()
+                    ->openable()
+                    ->columnSpanFull()
+                    ->helperText('Upload file tugas yang dapat diunduh oleh mahasiswa. Format yang didukung: PDF, DOC, DOCX, TXT, ZIP, RAR. Maksimal 10MB.')
+                    ->nullable(),
                 Forms\Components\Toggle::make('is_active')
                     ->required(),
             ]);
@@ -57,6 +67,11 @@ class TugasResource extends Resource
                     ->date()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('tipe'),
+                Tables\Columns\TextColumn::make('file_path')
+                    ->label('File')
+                    ->formatStateUsing(fn ($state) => $state ? 'Ada File' : 'Tidak Ada File')
+                    ->badge()
+                    ->color(fn ($state) => $state ? 'success' : 'gray'),
                 Tables\Columns\IconColumn::make('is_active')
                     ->boolean(),
                 Tables\Columns\TextColumn::make('created_at')
@@ -73,6 +88,12 @@ class TugasResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\Action::make('download')
+                    ->label('Download File')
+                    ->icon('heroicon-o-arrow-down-tray')
+                    ->url(fn ($record) => $record->file_path ? asset('storage/' . $record->file_path) : null)
+                    ->openUrlInNewTab()
+                    ->visible(fn ($record) => $record->file_path !== null),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

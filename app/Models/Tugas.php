@@ -17,6 +17,7 @@ class Tugas extends Model
         'deadline',
         'tipe',
         'is_active',
+        'file_path',
     ];
 
     protected $casts = [

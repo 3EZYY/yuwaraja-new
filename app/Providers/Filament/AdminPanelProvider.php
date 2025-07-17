@@ -56,7 +56,11 @@ class AdminPanelProvider extends PanelProvider
             ->authMiddleware([
                 Authenticate::class,
             ])
-            ->authGuard('web');
+            ->authGuard('web')
+            ->renderHook(
+                'panels::user-menu.before',
+                fn () => view('vendor.filament.components.user-menu'),
+            );
     }
     
     public function register(): void
