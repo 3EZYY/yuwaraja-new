@@ -1,417 +1,233 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="py-12 min-h-screen relative overflow-hidden" style="background: linear-gradient(135deg, #0b101a 0%, #1a1f2e 50%, #0f1419 100%);">
-    <!-- Enhanced Background Elements -->
-    <div class="absolute inset-0 opacity-10">
-        <div class="cyber-grid"></div>
-        <div class="floating-particles"></div>
-    </div>
-    
-    <div class="max-w-6xl mx-auto sm:px-6 lg:px-8 relative z-10">
-        <!-- Header Section with Modern Design -->
-        <div class="text-center mb-12">
-            <h1 class="text-5xl font-orbitron font-bold text-transparent bg-gradient-to-r from-cyan-400 via-yellow-400 to-pink-400 bg-clip-text mb-4 animate-pulse-glow">
+{{-- CSS Kustom Minimal untuk Font dan Efek Khusus --}}
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600&family=Poppins:wght@600;700;900&display=swap');
+
+    .font-display {
+        font-family: 'Poppins', sans-serif;
+    }
+
+    .font-body {
+        font-family: 'Kanit', sans-serif;
+    }
+
+    .text-glow-teal {
+        text-shadow: 0 0 12px theme('colors.teal.500 / 0.5');
+    }
+
+    .text-glow-amber {
+        text-shadow: 0 0 12px theme('colors.amber.400 / 0.5');
+    }
+
+    .gradient-border {
+        border: 1px solid transparent;
+        background: linear-gradient(to right, theme('colors.gray.900'), theme('colors.gray.900')) padding-box,
+            linear-gradient(135deg, theme('colors.teal.400'), theme('colors.amber.400')) border-box;
+    }
+</style>
+
+<div class="font-body bg-[#050a0e] min-h-screen py-12 sm:py-16" style="background-image: radial-gradient(circle, #1a202c, #050a0e);">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        <!-- Header -->
+        <header class="text-center mb-12">
+            <h1 class="font-display text-4xl sm:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-teal-300 to-amber-300 mb-2 text-glow-teal">
                 MISSION CONTROL
             </h1>
-            <p class="text-cyan-300 font-mono text-lg opacity-80">// Access your assigned tasks and submit your work</p>
-            <div class="w-32 h-1 bg-gradient-to-r from-cyan-400 to-yellow-400 mx-auto mt-4 rounded-full animate-pulse"></div>
-        </div>
-        
-        <div class="bg-gray-900/80 backdrop-blur-lg shadow-2xl rounded-3xl mb-8 border border-cyan-500/30 hover:border-cyan-400/50 transition-all duration-500 cyber-card-modern">
-            <div class="p-8 md:p-12">
+            <p class="text-teal-200/60 text-base sm:text-lg">Akses & kumpulkan semua misi yang ditugaskan.</p>
+        </header>
+
+        <!-- Kontainer Utama -->
+        <main class="bg-black/50 backdrop-blur-xl shadow-2xl rounded-2xl border border-teal-500/10">
+            <div class="p-6 sm:p-8 md:p-10">
+
                 @if(isset($listMode) && $listMode && isset($tugas))
-                {{-- LIST PENUGASAN --}}
-                <div class="flex items-center justify-between mb-8">
-                    <h2 class="text-3xl font-orbitron font-bold text-yellow-400 text-glow-yellow flex items-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 mr-3 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                {{-- =================== TAMPILAN DAFTAR TUGAS =================== --}}
+                <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-8">
+                    <h2 class="font-display text-2xl sm:text-3xl font-bold text-teal-300 flex items-center gap-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
                         </svg>
-                        ACTIVE MISSIONS
+                        Misi Aktif
                     </h2>
-                    <div class="text-cyan-400 font-mono text-sm">
-                        <span class="animate-pulse">●</span> {{ $tugas->count() }} tasks available
-                    </div>
+                    <p class="text-teal-200/70 text-sm mt-2 sm:mt-0">Ditemukan: <span class="font-bold text-amber-300">{{ $tugas->count() }}</span> misi</p>
                 </div>
+
                 @if($tugas->isEmpty())
                 <div class="text-center py-16">
-                    <div class="w-24 h-24 mx-auto mb-6 rounded-full bg-gradient-to-br from-gray-700 to-gray-800 flex items-center justify-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2 2v-5m16 0h-2M4 13h2" />
+                    <div class="w-24 h-24 mx-auto mb-6 rounded-full bg-gray-900 flex items-center justify-center border-2 border-gray-800">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4" />
                         </svg>
                     </div>
-                    <p class="text-gray-400 text-xl font-mono">No active missions found</p>
-                    <p class="text-gray-500 text-sm mt-2">Check back later for new assignments</p>
+                    <p class="font-display text-xl text-gray-400">Tidak Ada Misi Aktif</p>
+                    <p class="text-gray-500 text-sm mt-2">Semua misi telah selesai atau belum ada yang ditugaskan.</p>
                 </div>
                 @else
-                <div class="grid gap-8 md:grid-cols-1 lg:grid-cols-2">
+                <div class="grid gap-6 md:grid-cols-1 lg:grid-cols-2">
                     @foreach($tugas as $item)
-                    <div class="group relative cyber-card-item p-6 floating-animation cursor-pointer" style="animation-delay: {{ $loop->index * 0.1 }}s;" onclick="window.location.href='{{ route('mahasiswa.tugas.show', $item->id) }}'">
-                        <!-- Enhanced Card Glow Effect -->
-                        <div class="absolute inset-0 bg-gradient-to-r from-cyan-500/10 to-yellow-500/10 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                        
-                        <!-- Mission Header -->
-                        <div class="relative z-10">
-                            <div class="flex items-start justify-between mb-4">
-                                <div class="flex-1">
-                                    <a href="{{ route('mahasiswa.tugas.show', $item->id) }}" class="block group-hover:scale-105 transition-transform duration-300">
-                                        <h3 class="text-xl font-orbitron font-bold text-cyan-400 group-hover:text-yellow-400 transition-colors duration-300 mb-2 text-glow-cyan hover:animate-pulse-glow">
-                                            {{ $item->judul }}
-                                        </h3>
-                                    </a>
-                                    
-                                    <!-- Mission Type Badge -->
-                                    <div class="flex items-center space-x-3 mb-3">
-                                        <span class="inline-flex items-center px-3 py-1 text-xs font-bold rounded-full border transition-all duration-300
-                                            {{ $item->tipe == 'kelompok'
-                                                ? 'bg-cyan-500/20 text-cyan-400 border-cyan-400/50 group-hover:bg-cyan-500/30'
-                                                : 'bg-yellow-500/20 text-yellow-400 border-yellow-400/50 group-hover:bg-yellow-500/30' }}">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                @if($item->tipe == 'kelompok')
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                                                @else
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                                                @endif
-                                            </svg>
-                                            {{ strtoupper($item->tipe) }}
-                                        </span>
-                                    </div>
-                                    
-                                    <!-- Deadline Info -->
-                                    <div class="flex items-center text-sm text-gray-400 font-mono">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                        </svg>
-                                        <span>Due: <span class="text-yellow-400 font-bold">{{ \Carbon\Carbon::parse($item->deadline)->format('d M Y') }}</span></span>
-                                    </div>
-                                </div>
-                                
-                                <!-- Status Badge -->
-                                <div class="ml-4">
-                                    @php $pengumpulan = $pengumpulanTugas[$item->id] ?? null; @endphp
-                                    @if($pengumpulan)
-                                    <span class="inline-flex items-center px-3 py-2 text-xs font-bold rounded-full border transition-all duration-300
-                                        @if($pengumpulan->status == 'submitted') bg-yellow-500/20 text-yellow-400 border-yellow-400/50 hover:bg-yellow-500/30
-                                        @elseif($pengumpulan->status == 'approved') bg-green-500/20 text-green-400 border-green-400/50 hover:bg-green-500/30
-                                        @elseif($pengumpulan->status == 'rejected') bg-red-500/20 text-red-400 border-red-400/50 hover:bg-red-500/30
-                                        @else bg-gray-500/20 text-gray-400 border-gray-400/50 hover:bg-gray-500/30
-                                        @endif">
-                                        @if($pengumpulan->status == 'submitted')
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                            </svg>
-                                            SUBMITTED
-                                        @elseif($pengumpulan->status == 'approved')
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                                            </svg>
-                                            APPROVED
-                                        @elseif($pengumpulan->status == 'rejected')
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                                            </svg>
-                                            REJECTED
+                    <a href="{{ route('mahasiswa.tugas.show', $item->id) }}" class="group block">
+                        <div class="bg-gray-900/80 h-full p-6 rounded-xl border border-gray-700/50 hover:border-teal-400/50 hover:bg-gray-900 transition-all duration-300 shadow-lg hover:shadow-teal-500/10">
+                            <div class="flex flex-col h-full">
+                                <div class="flex-grow">
+                                    <div class="flex items-start justify-between mb-3">
+                                        <h3 class="font-display text-xl font-bold text-teal-200 group-hover:text-amber-300 transition-colors duration-300">{{ $item->judul }}</h3>
+                                        @php $pengumpulan = $pengumpulanTugas[$item->id] ?? null; @endphp
+                                        @if($pengumpulan)
+                                        @if($pengumpulan->status == 'approved')
+                                        <span class="text-xs font-bold py-1 px-3 rounded-full bg-green-500/10 text-green-400 border border-green-500/20">DISETUJUI</span>
                                         @else
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                                            </svg>
-                                            DRAFT
+                                        <span class="text-xs font-bold py-1 px-3 rounded-full bg-yellow-500/10 text-amber-300 border border-amber-500/20">DIKUMPULKAN</span>
                                         @endif
-                                    </span>
-                                    @else
-                                    <span class="inline-flex items-center px-3 py-2 text-xs font-bold rounded-full border bg-red-500/20 text-red-400 border-red-400/50 hover:bg-red-500/30 transition-all duration-300">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z" />
-                                        </svg>
-                                        PENDING
-                                    </span>
-                                    @endif
+                                        @else
+                                        <span class="text-xs font-bold py-1 px-3 rounded-full bg-red-500/10 text-red-400 border border-red-500/20">PENDING</span>
+                                        @endif
+                                    </div>
+                                    <div class="flex items-center space-x-4 mb-5 text-sm">
+                                        <div class="flex items-center gap-2 text-gray-400">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                            </svg>
+                                            <span>Deadline: <span class="font-semibold text-amber-300">{{ \Carbon\Carbon::parse($item->deadline)->format('d M Y') }}</span></span>
+                                        </div>
+                                        <div class="flex items-center gap-2 text-gray-400">
+                                            @if($item->tipe == 'kelompok')
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
+                                            </svg>
+                                            @else
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                                            </svg>
+                                            @endif
+                                            <span class="capitalize">{{ $item->tipe }}</span>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                            
-                            <!-- Action Button -->
-                            <div class="mt-4 pt-4 border-t border-gray-700/50">
-                                <a href="{{ route('mahasiswa.tugas.show', $item->id) }}" class="cyber-btn inline-flex items-center px-4 py-2 bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-400 hover:to-blue-400 text-white font-bold rounded-lg transition-all duration-300 hover:shadow-lg hover:shadow-cyan-500/25 group-hover:scale-105">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                                    </svg>
-                                    ACCESS MISSION
-                                </a>
+                                <div class="mt-auto text-right text-teal-300/70 text-sm font-semibold group-hover:text-amber-300 transition-colors">
+                                    Buka Misi →
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    </a>
                     @endforeach
                 </div>
                 @endif
+
                 @elseif(isset($detailMode) && $detailMode && isset($tugas))
-                {{-- DETAIL PENUGASAN --}}
-                <h1 class="text-3xl font-bold mb-6 text-cyan-400 tracking-wide">Detail Tugas</h1>
-                <div class="mb-6 space-y-2">
-                    <div class="flex flex-col md:flex-row md:items-center md:space-x-4">
-                        <span class="font-bold text-cyan-300">Judul:</span>
-                        <span class="text-white text-lg">{{ $tugas->judul }}</span>
+                {{-- =================== TAMPILAN DETAIL TUGAS (REVISI) =================== --}}
+                <div class="mb-8">
+                    <a href="{{ route('mahasiswa.tugas.index') }}" class="inline-flex items-center gap-2 text-teal-300 hover:text-amber-300 transition-colors mb-6 group">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 transform group-hover:-translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M11 17l-5-5m0 0l5-5m-5 5h12" />
+                        </svg>
+                        Kembali ke Daftar Misi
+                    </a>
+                    <h1 class="font-display text-3xl md:text-4xl font-bold text-teal-200 text-glow-teal">{{ $tugas->judul }}</h1>
+                    <div class="flex items-center gap-2 text-sm text-amber-300 mt-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.414-1.415L11 9.586V6z" clip-rule="evenodd" />
+                        </svg>
+                        <span>Deadline: {{ $tugas->deadline->format('d F Y, Pukul H:i') }} WIB</span>
                     </div>
-                    <div class="flex flex-col md:flex-row md:items-center md:space-x-4">
-                        <span class="font-bold text-cyan-300">Deskripsi:</span>
-                        <span class="bg-gray-900 text-gray-200 rounded px-3 py-2 w-full">{!! nl2br(e($tugas->deskripsi)) !!}</span>
-                    </div>
-                    <div class="flex flex-col md:flex-row md:items-center md:space-x-4">
-                        <span class="font-bold text-cyan-300">Deadline:</span>
-                        <span class="text-yellow-300">{{ $tugas->deadline->format('d M Y, H:i') }}</span>
+                </div>
+
+                {{-- Kolom Kiri: Detail Misi --}}
+                <div class="lg:col-span-3 space-y-6">
+                    <div class="mb-5">
+                        <h3 class="font-display text-lg font-bold text-white mb-3 flex items-center gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-teal-300" viewBox="0 0 20 20" fill="currentColor">
+                                <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" />
+                                <path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3z" clip-rule="evenodd" />
+                            </svg>
+                            Deskripsi Misi
+                        </h3>
+                        <div class="prose prose-invert prose-sm max-w-none text-gray-300 bg-gray-950/70 p-4 rounded-lg border border-gray-800">{!! nl2br(e($tugas->deskripsi)) !!}</div>
                     </div>
                     @if($tugas->file_path)
-                    <div class="flex flex-col md:flex-row md:items-center md:space-x-4">
-                        <span class="font-bold text-cyan-300">File Tugas:</span>
-                        <a href="{{ Storage::url($tugas->file_path) }}" target="_blank" class="text-blue-400 underline hover:text-blue-200 transition">Download</a>
+                    <div>
+                        <h3 class="font-display text-lg font-bold text-white mb-3 flex items-center gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-teal-300" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M8 4a3 3 0 00-3 3v4a5 5 0 0010 0V7a3 3 0 10-6 0v4a3 3 0 11-6 0V7a1 1 0 011-1h1V4a1 1 0 112 0v1h1a1 1 0 112 0v1h1a1 1 0 011 1v2a1 1 0 11-2 0V7a3 3 0 00-3-3z" clip-rule="evenodd" />
+                            </svg>
+                            Lampiran
+                        </h3>
+                        <a href="{{ Storage::url($tugas->file_path) }}" target="_blank" class="inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold bg-gray-700 hover:bg-gray-600 text-teal-200 rounded-lg transition-colors">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                            </svg>
+                            Download File Tugas
+                        </a>
                     </div>
                     @endif
                 </div>
-                <hr class="my-8 border-cyan-800/40">
-                <h2 class="text-2xl font-semibold mb-4 text-cyan-400">Upload Tugas Anda</h2>
-                @if(session('success'))
-                <div class="bg-green-900/80 border border-green-400 text-green-200 px-4 py-3 rounded mb-4">
-                    {{ session('success') }}
-                </div>
-                @endif
-                @if(session('error'))
-                <div class="bg-red-900/80 border border-red-400 text-red-200 px-4 py-3 rounded mb-4">
-                    {{ session('error') }}
-                </div>
-                @endif
-                @if(isset($pengumpulan) && $pengumpulan->file_path)
-                <div class="mb-4">
-                    <span class="font-semibold text-cyan-300">File yang sudah dikumpulkan:</span>
-                    <a href="{{ Storage::url($pengumpulan->file_path) }}" target="_blank" class="text-blue-400 underline hover:text-blue-200">Download File</a>
-                    <p class="text-xs text-gray-400 mt-1">Dikumpulkan pada: {{ $pengumpulan->submitted_at ? $pengumpulan->submitted_at->format('d M Y, H:i') : '-' }}</p>
-                </div>
-                @endif
-                @if(now() <= $tugas->deadline)
-                    <form action="{{ route('mahasiswa.tugas.submit', $tugas) }}" method="POST" enctype="multipart/form-data" class="space-y-6">
-                        @csrf
-                        <div>
-                            <label for="file" class="block text-sm font-medium text-cyan-200 mb-2">File Tugas <span class="text-red-400">*</span></label>
-                            <input type="file" id="file" name="file" class="block w-full border border-cyan-700 bg-gray-900 text-white rounded px-3 py-2 focus:ring-2 focus:ring-cyan-400 focus:border-cyan-400 transition" accept=".pdf,.doc,.docx,.zip,.rar" required>
-                            <p class="mt-1 text-xs text-cyan-400">Format: PDF, DOC, DOCX, ZIP, RAR (Max: 10MB)</p>
-                            @error('file')
-                            <p class="text-sm text-red-400">{{ $message }}</p>
-                            @enderror
-                        </div>
-                        <div>
-                            <label for="keterangan" class="block text-sm font-medium text-cyan-200 mb-2">Keterangan (Opsional)</label>
-                            <textarea id="keterangan" name="keterangan" rows="3" class="block w-full border border-cyan-700 bg-gray-900 text-white rounded px-3 py-2 focus:ring-2 focus:ring-cyan-400 focus:border-cyan-400 transition" placeholder="Catatan untuk tugas...">{{ old('keterangan', $pengumpulan->keterangan ?? '') }}</textarea>
-                            @error('keterangan')
-                            <p class="text-sm text-red-400">{{ $message }}</p>
-                            @enderror
-                        </div>
-                        <button type="submit" class="px-8 py-3 bg-cyan-500 hover:bg-cyan-400 text-black font-bold rounded shadow transition">Kumpulkan Tugas</button>
-                    </form>
-                    @else
-                    <div class="bg-red-900/80 border border-red-400 rounded p-4 mt-4">
-                        <p class="text-red-200 font-semibold">Deadline tugas sudah berakhir. Anda tidak dapat mengumpulkan tugas ini.</p>
+
+                {{-- Kolom Kanan: Panel Pengumpulan --}}
+                <div class="lg:col-span-2 bg-gray-900/80 p-6 rounded-xl border border-gray-700/50">
+                    <h2 class="font-display text-xl font-bold mb-5 text-white flex items-center gap-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-teal-300" viewBox="0 0 20 20" fill="currentColor">
+                            <path d="M5.5 13a3.5 3.5 0 01-.369-6.98 4 4 0 117.753-1.977A4.5 4.5 0 1113.5 13H11V9.414l-1.293 1.293a1 1 0 01-1.414-1.414l3-3a1 1 0 011.414 0l3 3a1 1 0 01-1.414 1.414L13 9.414V13H5.5z" />
+                            <path d="M9 13h2v5a1 1 0 11-2 0v-5z" />
+                        </svg>
+                        Status & Pengumpulan
+                    </h2>
+                    @if(session('success')) <div class="bg-green-500/10 border border-green-500/30 text-green-300 text-sm p-3 rounded-lg mb-4 flex items-center gap-3"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg><span>{{ session('success') }}</span></div> @endif
+                    @if(session('error')) <div class="bg-red-500/10 border border-red-500/30 text-red-300 text-sm p-3 rounded-lg mb-4 flex items-center gap-3"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg><span>{{ session('error') }}</span></div> @endif
+
+                    @if(isset($pengumpulan) && $pengumpulan->file_path)
+                    <div class="bg-gray-800 p-4 rounded-lg border border-gray-700 mb-4">
+                        <p class="text-sm font-semibold text-teal-200 flex items-center gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                            </svg>
+                            File Terkumpul
+                        </p>
+                        <a href="{{ Storage::url($pengumpulan->file_path) }}" target="_blank" class="text-amber-300 hover:underline text-sm truncate block mt-1 ml-7">{{ basename($pengumpulan->file_path) }}</a>
                     </div>
                     @endif
 
-                    @else
-                    <div class="text-center text-gray-500">Tidak ada data tugas.</div>
-                    @endif
+                    @if(now() <= $tugas->deadline)
+                        <form action="{{ route('mahasiswa.tugas.submit', $tugas) }}" method="POST" enctype="multipart/form-data" class="space-y-4">
+                            @csrf
+                            <div>
+                                <label for="file" class="block text-sm font-semibold text-gray-300 mb-1">Upload File <span class="text-red-400">*</span></label>
+                                <input type="file" id="file" name="file" class="block w-full text-sm text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-teal-500/10 file:text-teal-300 hover:file:bg-teal-500/20 transition-colors cursor-pointer" accept=".pdf,.doc,.docx,.zip,.rar" required>
+                                <p class="mt-1 text-xs text-gray-500">Maks: 10MB (PDF, DOC, ZIP, RAR)</p>
+                                @error('file') <p class="text-sm text-red-400 mt-1">{{ $message }}</p> @enderror
+                            </div>
+                            <div>
+                                <label for="keterangan" class="block text-sm font-semibold text-gray-300 mb-1">Keterangan (Opsional)</label>
+                                <textarea id="keterangan" name="keterangan" rows="3" class="block w-full border border-gray-700 bg-gray-800 text-white rounded-lg p-2 focus:ring-1 focus:ring-teal-400 focus:border-teal-400 transition" placeholder="Tinggalkan catatan jika perlu...">{{ old('keterangan', $pengumpulan->keterangan ?? '') }}</textarea>
+                                @error('keterangan') <p class="text-sm text-red-400 mt-1">{{ $message }}</p> @enderror
+                            </div>
+                            <button type="submit" class="w-full px-6 py-3 bg-teal-500 hover:bg-teal-600 text-black font-bold rounded-lg transition-all duration-300 hover:shadow-lg hover:shadow-teal-500/20 font-display focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-900 focus:ring-teal-400">
+                                {{ (isset($pengumpulan) && $pengumpulan->file_path) ? 'Kirim Versi Baru' : 'Kirim Misi' }}
+                            </button>
+                        </form>
+                        @else
+                        <div class="bg-red-900/30 border border-red-500/30 rounded-lg p-6 text-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 mx-auto text-red-400 mb-2" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd" />
+                            </svg>
+                            <p class="text-red-300 font-semibold font-display">Waktu Habis</p>
+                            <p class="text-red-300/80 text-sm">Deadline telah berakhir. Pengumpulan ditutup.</p>
+                        </div>
+                        @endif
+                </div>
+                @else
+                <div class="text-center text-gray-500 py-10">
+                    <p>Mode tidak valid atau tidak ada data yang dapat ditampilkan.</p>
+                </div>
+                @endif
             </div>
-        </div>
+        </main>
+
     </div>
 </div>
-<style>
-    :root {
-        --db-bg: #0b101a;
-        --db-surface: rgba(24, 24, 37, 0.8);
-        --db-primary: #00d1ff;
-        --db-secondary: #ffc900;
-        --db-text: #c0c8d6;
-        --db-heading: #ffffff;
-        --db-border: rgba(0, 209, 255, 0.15);
-        --db-glow: rgba(0, 209, 255, 0.4);
-    }
-    
-    body {
-        background: linear-gradient(135deg, #0b101a 0%, #1a1f2e 50%, #0f1419 100%) !important;
-        min-height: 100vh;
-    }
-    
-    .text-glow-cyan {
-        text-shadow: 0 0 12px rgba(0, 209, 255, 0.8), 0 0 24px rgba(0, 209, 255, 0.4);
-    }
-    
-    .text-glow-yellow {
-        text-shadow: 0 0 12px rgba(255, 201, 0, 0.8), 0 0 24px rgba(255, 201, 0, 0.4);
-    }
-    
-    .cyber-card {
-        background: linear-gradient(135deg, rgba(24, 24, 37, 0.9) 0%, rgba(31, 41, 55, 0.8) 100%);
-        backdrop-filter: blur(20px);
-        border: 1px solid var(--db-border);
-        border-radius: 1rem;
-        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        position: relative;
-        overflow: hidden;
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-    }
-    
-    .cyber-card::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: linear-gradient(135deg, 
-            rgba(0, 209, 255, 0.1) 0%, 
-            rgba(255, 201, 0, 0.05) 50%, 
-            rgba(0, 209, 255, 0.1) 100%);
-        opacity: 0;
-        transition: all 0.4s ease;
-        border-radius: 1rem;
-    }
-    
-    .cyber-card::after {
-        content: '';
-        position: absolute;
-        top: -2px;
-        left: -2px;
-        right: -2px;
-        bottom: -2px;
-        background: linear-gradient(45deg, var(--db-primary), var(--db-secondary), var(--db-primary));
-        border-radius: 1rem;
-        z-index: -1;
-        opacity: 0;
-        transition: all 0.4s ease;
-    }
-    
-    .cyber-card:hover {
-        transform: translateY(-8px) scale(1.02);
-        border-color: var(--db-primary);
-        box-shadow: 
-            0 20px 40px rgba(0, 0, 0, 0.4),
-            0 0 40px rgba(0, 209, 255, 0.2),
-            inset 0 1px 0 rgba(255, 255, 255, 0.1);
-    }
-    
-    .cyber-card:hover::before {
-        opacity: 1;
-    }
-    
-    .cyber-card:hover::after {
-        opacity: 0.6;
-    }
-    
-    .cyber-card-item {
-        background: linear-gradient(135deg, rgba(24, 24, 37, 0.95) 0%, rgba(31, 41, 55, 0.9) 100%);
-        backdrop-filter: blur(15px);
-        border: 1px solid rgba(0, 209, 255, 0.2);
-        border-radius: 0.75rem;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        position: relative;
-        overflow: hidden;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
-    }
-    
-    .cyber-card-item:hover {
-        transform: translateY(-6px);
-        border-color: rgba(0, 209, 255, 0.6);
-        box-shadow: 
-            0 12px 30px rgba(0, 0, 0, 0.4),
-            0 0 30px rgba(0, 209, 255, 0.15);
-    }
-    
-    .cyber-card-modern {
-        background: linear-gradient(135deg, rgba(24, 24, 37, 0.9) 0%, rgba(31, 41, 55, 0.8) 100%);
-        backdrop-filter: blur(20px);
-        border: 1px solid rgba(0, 209, 255, 0.3);
-        border-radius: 1.5rem;
-        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        position: relative;
-        overflow: hidden;
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-    }
-    
-    .cyber-card-modern:hover {
-        transform: translateY(-4px);
-        border-color: rgba(0, 209, 255, 0.6);
-        box-shadow: 
-            0 16px 40px rgba(0, 0, 0, 0.4),
-            0 0 40px rgba(0, 209, 255, 0.2);
-    }
-    
-    @keyframes float {
-        0%, 100% { transform: translateY(0px); }
-        50% { transform: translateY(-10px); }
-    }
-    
-    .floating-animation {
-        animation: float 6s ease-in-out infinite;
-    }
-    
-    @keyframes pulse-glow {
-        0%, 100% { text-shadow: 0 0 12px rgba(0, 209, 255, 0.8), 0 0 24px rgba(0, 209, 255, 0.4); }
-        50% { text-shadow: 0 0 20px rgba(0, 209, 255, 1), 0 0 40px rgba(0, 209, 255, 0.6); }
-    }
-    
-    .animate-pulse-glow {
-        animation: pulse-glow 2s ease-in-out infinite;
-    }
-    
-    .bg-dashboard-card {
-        background: rgba(24, 24, 37, 0.8);
-        backdrop-filter: blur(10px);
-    }
-    
-    .text-dashboard-yellow {
-        color: #ffc900;
-    }
-    
-    .text-dashboard-cyan {
-        color: #00d1ff;
-    }
-    
-    .border-dashboard-cyan {
-        border-color: #00d1ff;
-    }
-    
-    .border-dashboard-yellow {
-        border-color: #ffc900;
-    }
-    
-    .bg-dashboard-yellow {
-        background: #ffc900;
-    }
-    
-    .bg-dashboard-cyan {
-        background: #00d1ff;
-    }
-    
-    .cyber-btn {
-        position: relative;
-        overflow: hidden;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-    
-    .cyber-btn::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: -100%;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-        transition: left 0.5s;
-    }
-    
-    .cyber-btn:hover::before {
-        left: 100%;
-    }
-    
-    .cyber-btn:hover {
-        box-shadow: 
-            0 0 20px rgba(0, 209, 255, 0.5),
-            0 0 40px rgba(0, 209, 255, 0.3),
-            0 0 60px rgba(0, 209, 255, 0.1);
-    }
-</style>
 @endsection
