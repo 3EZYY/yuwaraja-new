@@ -10,10 +10,24 @@ class ListKelompoks extends ListRecords
 {
     protected static string $resource = KelompokResource::class;
 
+    public function getTitle(): string
+    {
+        return 'Cluster';
+    }
+
+    public function getBreadcrumbs(): array
+    {
+        return [
+            '/admin' => 'Dashboard',
+            '' => 'Cluster',
+        ];
+    }
+
     protected function getHeaderActions(): array
     {
         return [
-            Actions\CreateAction::make(),
+            Actions\CreateAction::make()
+                ->label('Buat Cluster'),
         ];
     }
 }

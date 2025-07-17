@@ -24,7 +24,7 @@ class PengumpulanTugasResource extends Resource
 
     protected static ?string $pluralModelLabel = 'Pengumpulan Tugas';
 
-    protected static ?string $navigationGroup = 'Manajemen Tugas';
+    protected static ?string $navigationGroup = 'Manajemen Penugasan';
 
     public static function form(Form $form): Form
     {

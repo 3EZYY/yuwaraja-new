@@ -20,8 +20,8 @@ class StatsDashboard extends BaseWidget
                 ->descriptionIcon('heroicon-m-academic-cap')
                 ->color('success'),
             
-            Stat::make('Total Kelompok', Kelompok::count())
-                ->description('Kelompok Terdaftar')
+            Stat::make('Total Cluster', Kelompok::count())
+                ->description('Cluster Terdaftar')
                 ->descriptionIcon('heroicon-m-user-group')
                 ->color('primary'),
 

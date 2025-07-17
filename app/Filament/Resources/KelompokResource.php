@@ -20,7 +20,9 @@ class KelompokResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-users';
 
-    protected static ?string $navigationLabel = 'Kelompok';
+    protected static ?string $navigationLabel = 'Cluster';
+
+    protected static ?string $slug = 'cluster';
 
     protected static ?string $navigationGroup = 'User Management';
 
@@ -28,17 +30,27 @@ class KelompokResource extends Resource
     {
         return $form
             ->schema([
+                Forms\Components\FileUpload::make('photo')
+                    ->label('Foto Cluster')
+                    ->image()
+                    ->disk('public')
+                    ->directory('cluster-photos')
+                    ->maxSize(2048)
+                    ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
+                    ->imageEditor()
+                    ->imageEditorAspectRatios(['1:1'])
+                    ->helperText('Upload foto untuk cluster (maksimal 2MB, format: JPG, PNG, WEBP)'),
                 Forms\Components\TextInput::make('nama_kelompok')
                     ->required()
                     ->maxLength(255)
-                    ->label('Nama Kelompok'),
+                    ->label('Nama Cluster'),
                 Forms\Components\Select::make('spv_id')
                     ->relationship('spv', 'name', fn ($query) => $query->where('role', 'spv'))
                     ->searchable()
                     ->preload()
                     ->label('Penanggung Jawab'),
                 Forms\Components\TextInput::make('code')
-                    ->label('Kode Kelompok')
+                    ->label('Kode Cluster')
                     ->required()
                     ->maxLength(5)
                     ->unique(ignoreRecord: true)
@@ -64,14 +76,20 @@ class KelompokResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\ImageColumn::make('photo')
+                    ->label('Foto Cluster')
+                    ->disk('public')
+                    ->size(50)
+                    ->circular()
+                    ->defaultImageUrl(url('/images/default-avatar.svg')),
                 Tables\Columns\TextColumn::make('nama_kelompok')
                     ->searchable()
-                    ->label('Nama Kelompok'),
+                    ->label('Nama Cluster'),
                 Tables\Columns\TextColumn::make('spv.name')
                     ->label('Penanggung Jawab')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('code')
-                    ->label('Kode Kelompok')
+                    ->label('Kode Cluster')
                     ->copyable()
                     ->copyMessage('Kode disalin!')
                     ->searchable(),

@@ -69,6 +69,13 @@ class MahasiswaResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\ImageColumn::make('photo')
+                    ->label('Foto Profil')
+                    ->disk('public')
+                    ->size(50)
+                    ->circular()
+                    ->defaultImageUrl(url('/images/default-avatar.svg'))
+                    ->toggleable(),
                 Tables\Columns\TextColumn::make('name')
                     ->label('Nama')
                     ->searchable(),

@@ -10,6 +10,20 @@ class EditKelompok extends EditRecord
 {
     protected static string $resource = KelompokResource::class;
 
+    public function getTitle(): string
+    {
+        return 'Edit Cluster';
+    }
+
+    public function getBreadcrumbs(): array
+    {
+        return [
+            '/admin' => 'Dashboard',
+            '/admin/cluster' => 'Cluster',
+            '' => 'Edit',
+        ];
+    }
+
     protected function getHeaderActions(): array
     {
         return [

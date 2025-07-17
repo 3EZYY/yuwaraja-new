@@ -39,6 +39,20 @@ class UserResource extends Resource
                     ->unique(ignoreRecord: true)
                     ->maxLength(255),
 
+                Forms\Components\FileUpload::make('photo')
+                    ->label('Foto Profil')
+                    ->image()
+                    ->directory('profile-pictures')
+                    ->disk('public')
+                    ->imageEditor()
+                    ->imageEditorAspectRatios([
+                        '1:1',
+                    ])
+                    ->maxSize(2048)
+                    ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/jpg'])
+                    ->helperText('Upload foto profil (maksimal 2MB, format: JPG, PNG)')
+                    ->columnSpanFull(),
+
                 Forms\Components\TextInput::make('username')
                     ->label('Username')
                     ->required()
@@ -119,6 +133,14 @@ class UserResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\ImageColumn::make('photo')
+                    ->label('Foto Profil')
+                    ->disk('public')
+                    ->size(50)
+                    ->circular()
+                    ->defaultImageUrl(url('/images/default-avatar.svg'))
+                    ->toggleable(),
+
                 Tables\Columns\TextColumn::make('name')
                     ->label('Nama Lengkap')
                     ->searchable()

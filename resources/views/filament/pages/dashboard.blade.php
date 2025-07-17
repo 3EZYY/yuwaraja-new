@@ -20,7 +20,7 @@
                     </div>
                 </div>
 
-                <!-- Total Kelompok -->
+                <!-- Total Cluster -->
                 <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm">
                     <div class="p-6">
                         <div class="flex items-center gap-4">
@@ -28,7 +28,7 @@
                                 <x-heroicon-o-user-group class="w-6 h-6 text-success-700"/>
                             </div>
                             <div>
-                                <p class="text-sm font-medium text-gray-600 dark:text-gray-400">Total Kelompok</p>
+                                <p class="text-sm font-medium text-gray-600 dark:text-gray-400">Total Cluster</p>
                                 <h3 class="text-2xl font-semibold text-gray-900 dark:text-white">
                                     {{ \App\Models\Kelompok::count() }}
                                 </h3>
@@ -37,7 +37,7 @@
                     </div>
                 </div>
 
-                <!-- Total Tugas -->
+                <!-- Total Penugasan -->
                 <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm">
                     <div class="p-6">
                         <div class="flex items-center gap-4">
@@ -45,7 +45,7 @@
                                 <x-heroicon-o-clipboard-document-list class="w-6 h-6 text-warning-700"/>
                             </div>
                             <div>
-                                <p class="text-sm font-medium text-gray-600 dark:text-gray-400">Total Tugas</p>
+                                <p class="text-sm font-medium text-gray-600 dark:text-gray-400">Total Penugasan</p>
                                 <h3 class="text-2xl font-semibold text-gray-900 dark:text-white">
                                     {{ \App\Models\Tugas::count() }}
                                 </h3>
@@ -94,15 +94,15 @@
                             <x-heroicon-o-users class="w-6 h-6 text-primary-700 mb-2"/>
                             <span class="text-sm font-medium text-gray-900 dark:text-white">Mahasiswa</span>
                         </a>
-                        <a href="{{ route('filament.admin.resources.kelompok.index') }}"
+                        <a href="{{ route('filament.admin.resources.cluster.index') }}"
                            class="flex flex-col items-center p-4 bg-gray-50 dark:bg-gray-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors">
                             <x-heroicon-o-user-group class="w-6 h-6 text-success-700 mb-2"/>
-                            <span class="text-sm font-medium text-gray-900 dark:text-white">Kelompok</span>
+                            <span class="text-sm font-medium text-gray-900 dark:text-white">Cluster</span>
                         </a>
                         <a href="{{ route('filament.admin.resources.tugas.index') }}"
                            class="flex flex-col items-center p-4 bg-gray-50 dark:bg-gray-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors">
                             <x-heroicon-o-clipboard-document-list class="w-6 h-6 text-warning-700 mb-2"/>
-                            <span class="text-sm font-medium text-gray-900 dark:text-white">Tugas</span>
+                            <span class="text-sm font-medium text-gray-900 dark:text-white">Penugasan</span>
                         </a>
                         <a href="{{ route('filament.admin.resources.pengumuman.index') }}"
                            class="flex flex-col items-center p-4 bg-gray-50 dark:bg-gray-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors">

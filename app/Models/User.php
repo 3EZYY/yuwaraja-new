@@ -96,7 +96,10 @@ class User extends Authenticatable implements FilamentUser
         return $this->hasMany(Friendship::class, 'friend_id');
     }
 
-    // Get all friends (accepted friendships)
+    /**
+     * Get all friends (accepted friendships)
+     * @return \Illuminate\Support\Collection
+     */
     public function friends()
     {
         $sentFriends = $this->friendships()->accepted()->with('friend')->get()->pluck('friend');
@@ -105,15 +108,23 @@ class User extends Authenticatable implements FilamentUser
         return $sentFriends->merge($receivedFriends);
     }
 
-    // Check if user is friend with another user
-    public function isFriendWith($userId)
+    /**
+     * Check if user is friend with another user
+     * @param int $userId
+     * @return bool
+     */
+    public function isFriendWith($userId): bool
     {
         return $this->friendships()->where('friend_id', $userId)->where('status', 'accepted')->exists() ||
                $this->receivedFriendships()->where('user_id', $userId)->where('status', 'accepted')->exists();
     }
 
-    // Check if friendship request exists
-    public function hasFriendshipRequestWith($userId)
+    /**
+     * Check if friendship request exists
+     * @param int $userId
+     * @return bool
+     */
+    public function hasFriendshipRequestWith($userId): bool
     {
         return $this->friendships()->where('friend_id', $userId)->exists() ||
                $this->receivedFriendships()->where('user_id', $userId)->exists();

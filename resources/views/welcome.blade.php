@@ -782,7 +782,7 @@
                                 Jangan sampai salah kostum, Ksatria!
                             </p>
                         </div>
-                        <a href="/" class="block w-full text-center bg-[#E8AA1F] text-[#012633] rounded-full px-4 py-2 text-base sm:text-xl font-semibold">
+                        <a href="/login" class="block w-full text-center bg-[#E8AA1F] text-[#012633] rounded-full px-4 py-2 text-base sm:text-xl font-semibold">
                             Lihat Selengkapnya
                         </a>
                     </div>
@@ -796,7 +796,7 @@
                                 Tugas awal telah di-deploy! Selesaikan misimu untuk membuktikan kemampuan dan mendapatkan poin pengalaman pertama.
                             </p>
                         </div>
-                        <a href="/" class="block w-full text-center bg-[#E8AA1F] text-[#012633] rounded-full px-4 py-2 text-base sm:text-xl font-semibold">
+                        <a href="/login" class="block w-full text-center bg-[#E8AA1F] text-[#012633] rounded-full px-4 py-2 text-base sm:text-xl font-semibold">
                             Lihat Selengkapnya
                         </a>
                     </div>
@@ -811,7 +811,7 @@
                                 Saatnya terhubung dengan ksatria lain!
                             </p>
                         </div>
-                        <a href="/" class="block w-full text-center bg-[#E8AA1F] text-[#012633] rounded-full px-4 py-2 text-base sm:text-xl font-semibold">
+                        <a href="/login" class="block w-full text-center bg-[#E8AA1F] text-[#012633] rounded-full px-4 py-2 text-base sm:text-xl font-semibold">
                             Lihat Selengkapnya
                         </a>
                     </div>
@@ -842,7 +842,7 @@
                         <!-- Daftar Program Studi -->
                         <ul class="space-y-4">
                             <li>
-                                <a href="#" class="flex items-center justify-between group p-3 -m-3 rounded-lg transition-colors hover:bg-white/5">
+                                <a href="https://vokasi.ub.ac.id/manajemen-perhotelan/" target="_blank" class="flex items-center justify-between group p-3 -m-3 rounded-lg transition-colors hover:bg-white/5">
                                     <div>
                                         <h4 class="font-kanit text-lg font-semibold text-white">D4 Manajemen Perhotelan</h4>
                                         <p class="text-gray-400 text-sm mt-1">Mencetak pemimpin visioner di Industri Perhotelan Global.</p>
@@ -851,16 +851,16 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="#" class="flex items-center justify-between group p-3 -m-3 rounded-lg transition-colors hover:bg-white/5">
+                                <a href="https://vokasi.ub.ac.id/keubank/" target="_blank" class="flex items-center justify-between group p-3 -m-3 rounded-lg transition-colors hover:bg-white/5">
                                     <div>
-                                        <h4 class="font-kanit text-lg font-semibold text-white">D4 Keuangan & Perbankan</h4>
+                                        <h4 class="font-kanit text-lg font-semibold text-white">D3 Keuangan & Perbankan</h4>
                                         <p class="text-gray-400 text-sm mt-1">Menguasai arus finansial dengan presisi dan teknologi terkini.</p>
                                     </div>
                                     <img src="images/arrow.svg" alt="arrow" class="w-5 h-5">
                                 </a>
                             </li>
                             <li>
-                                <a href="#" class="flex items-center justify-between group p-3 -m-3 rounded-lg transition-colors hover:bg-white/5">
+                                <a href="https://vokasi.ub.ac.id/adbis/" target="_blank" class="flex items-center justify-between group p-3 -m-3 rounded-lg transition-colors hover:bg-white/5">
                                     <div>
                                         <h4 class="font-kanit text-lg font-semibold text-white">D3 Administrasi Bisnis</h4>
                                         <p class="text-gray-400 text-sm mt-1">Menjadi ahli strategi dalam manajemen dan operasional bisnis modern.</p>
@@ -883,7 +883,7 @@
                         <!-- Daftar Program Studi -->
                         <ul class="space-y-4">
                             <li>
-                                <a href="#" class="flex items-center justify-between group p-3 -m-3 rounded-lg transition-colors hover:bg-white/5">
+                                <a href="https://vokasi.ub.ac.id/desaingrafis/" target="_blank" class="flex items-center justify-between group p-3 -m-3 rounded-lg transition-colors hover:bg-white/5">
                                     <div>
                                         <h4 class="font-kanit text-lg font-semibold text-white">D4 Desain Grafis</h4>
                                         <p class="text-gray-400 text-sm mt-1">Mengubah Imajinasi Menjadi Karya Visual yang mendefinisikan zaman.</p>
@@ -892,7 +892,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="#" class="flex items-center justify-between group p-3 -m-3 rounded-lg transition-colors hover:bg-white/5">
+                                <a href="https://vokasi.ub.ac.id/ti/" target="_blank" class="flex items-center justify-between group p-3 -m-3 rounded-lg transition-colors hover:bg-white/5">
                                     <div>
                                         <h4 class="font-kanit text-lg font-semibold text-white">D3 Teknik Informatika</h4>
                                         <p class="text-gray-400 text-sm mt-1">Membangun dan Mengamankan Infrastruktur Digital Masa Depan.</p>

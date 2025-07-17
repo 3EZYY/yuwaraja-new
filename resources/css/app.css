@@ -10,6 +10,10 @@
     text-shadow: 0 0 10px #ffe066, 0 0 20px #ffe066, 0 0 30px #ffe066;
 }
 
+.text-glow-red {
+    text-shadow: 0 0 10px #ef4444, 0 0 20px #ef4444, 0 0 30px #ef4444;
+}
+
 /* Cyberpunk Grid Background */
 .cyber-grid {
     background-image: 

@@ -1,17 +1,4 @@
 <section class="space-y-6">
-    <header>
-        <h2 class="text-2xl font-orbitron font-bold text-red-400 text-glow-red">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 inline mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-            {{ __('Danger Zone') }}
-        </h2>
-
-        <p class="mt-1 text-sm text-red-300 font-mono">
-            {{ __('WARNING: This action will permanently erase all your data from the system. Backup any important information before proceeding.') }}
-        </p>
-    </header>
-
     <button
         x-data=""
         x-on:click.prevent="$dispatch('open-modal', 'confirm-user-deletion')"
