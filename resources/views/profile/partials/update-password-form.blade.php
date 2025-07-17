@@ -3,30 +3,34 @@
         @csrf
         @method('put')
 
+        {{-- Input Kata Sandi Saat Ini --}}
         <div>
-            <x-input-label for="update_password_current_password" :value="__('Current Password')" class="text-cyan-400" />
-            <x-text-input id="update_password_current_password" name="current_password" type="password" class="mt-1 block w-full cyber-input" autocomplete="current-password" placeholder="Enter current access key..." />
-            <x-input-error :messages="$errors->updatePassword->get('current_password')" class="mt-2 text-red-400" />
+            <x-input-label for="update_password_current_password" value="Kata Sandi Saat Ini" class="font-semibold text-gray-300" />
+            <x-text-input id="update_password_current_password" name="current_password" type="password" class="mt-1 block w-full bg-gray-800/50 border-gray-700 text-white rounded-lg focus:border-teal-400 focus:ring-1 focus:ring-teal-400 transition" autocomplete="current-password" placeholder="Masukkan kata sandi Anda sekarang" />
+            <x-input-error :messages="$errors->updatePassword->get('current_password')" class="mt-2" />
         </div>
 
+        {{-- Input Kata Sandi Baru --}}
         <div>
-            <x-input-label for="update_password_password" :value="__('New Password')" class="text-cyan-400" />
-            <x-text-input id="update_password_password" name="password" type="password" class="mt-1 block w-full cyber-input" autocomplete="new-password" placeholder="Generate new access key..." />
-            <x-input-error :messages="$errors->updatePassword->get('password')" class="mt-2 text-red-400" />
+            <x-input-label for="update_password_password" value="Kata Sandi Baru" class="font-semibold text-gray-300" />
+            <x-text-input id="update_password_password" name="password" type="password" class="mt-1 block w-full bg-gray-800/50 border-gray-700 text-white rounded-lg focus:border-teal-400 focus:ring-1 focus:ring-teal-400 transition" autocomplete="new-password" placeholder="Buat kata sandi yang kuat" />
+            <x-input-error :messages="$errors->updatePassword->get('password')" class="mt-2" />
         </div>
 
+        {{-- Input Konfirmasi Kata Sandi Baru --}}
         <div>
-            <x-input-label for="update_password_password_confirmation" :value="__('Confirm Password')" class="text-cyan-400" />
-            <x-text-input id="update_password_password_confirmation" name="password_confirmation" type="password" class="mt-1 block w-full cyber-input" autocomplete="new-password" placeholder="Verify new access key..." />
-            <x-input-error :messages="$errors->updatePassword->get('password_confirmation')" class="mt-2 text-red-400" />
+            <x-input-label for="update_password_password_confirmation" value="Konfirmasi Kata Sandi Baru" class="font-semibold text-gray-300" />
+            <x-text-input id="update_password_password_confirmation" name="password_confirmation" type="password" class="mt-1 block w-full bg-gray-800/50 border-gray-700 text-white rounded-lg focus:border-teal-400 focus:ring-1 focus:ring-teal-400 transition" autocomplete="new-password" placeholder="Ulangi kata sandi baru Anda" />
+            <x-input-error :messages="$errors->updatePassword->get('password_confirmation')" class="mt-2" />
         </div>
 
-        <div class="flex items-center gap-4 pt-4">
-            <button type="submit" class="cyber-button bg-gradient-to-r from-cyan-500 to-cyan-400 hover:from-cyan-400 hover:to-cyan-300">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 inline mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+        {{-- Tombol Aksi & Pesan Sukses --}}
+        <div class="flex items-center gap-4 pt-2">
+            <button type="submit" class="inline-flex items-center gap-2 px-6 py-2.5 bg-teal-500 hover:bg-teal-600 text-black font-bold font-display rounded-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-900 focus:ring-teal-400">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                    <path d="M7.707 10.293a1 1 0 10-1.414 1.414l3 3a1 1 0 001.414 0l3-3a1 1 0 00-1.414-1.414L11 11.586V6h5a2 2 0 012 2v7a2 2 0 01-2 2H4a2 2 0 01-2-2V8a2 2 0 012-2h5v5.586l-1.293-1.293zM9 4a1 1 0 012 0v2H9V4z" />
                 </svg>
-                {{ __('Update Security') }}
+                {{ __('Simpan') }}
             </button>
 
             @if (session('status') === 'password-updated')
@@ -35,8 +39,11 @@
                     x-show="show"
                     x-transition
                     x-init="setTimeout(() => show = false, 3000)"
-                    class="text-sm font-mono text-cyan-400"
-                > >> Security_Protocol_Updated</p>
+                    class="text-sm text-green-400 flex items-center gap-2"
+                > 
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" /></svg>
+                Berhasil diperbarui.
+                </p>
             @endif
         </div>
     </form>
