@@ -1,58 +1,57 @@
 <section class="space-y-6">
+    {{-- Tombol untuk memicu modal --}}
     <button
         x-data=""
         x-on:click.prevent="$dispatch('open-modal', 'confirm-user-deletion')"
-        class="cyber-button bg-gradient-to-r from-red-600 to-red-500 hover:from-red-500 hover:to-red-400 border-red-500"
+        class="inline-flex items-center gap-2 px-6 py-2.5 bg-red-600/90 hover:bg-red-700/90 text-white font-bold font-display rounded-lg border border-red-500/50 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-900 focus:ring-red-500"
     >
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 inline mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd" />
         </svg>
-        {{ __('Terminate Account') }}
+        {{ __('Hapus Akun') }}
     </button>
 
+    {{-- Modal Konfirmasi Penghapusan --}}
     <x-modal name="confirm-user-deletion" :show="$errors->userDeletion->isNotEmpty()" focusable>
         <form method="post" action="{{ route('profile.destroy') }}" class="p-6 bg-gray-900 border border-red-500/30 rounded-lg">
             @csrf
             @method('delete')
 
-            <h2 class="text-xl font-orbitron font-bold text-red-400 text-glow-red mb-4">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 inline mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z" />
+            <h2 class="text-lg font-bold font-display text-red-400 flex items-center gap-3">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z" />
                 </svg>
-                {{ __('CRITICAL WARNING') }}
+                Konfirmasi Penghapusan Akun
             </h2>
 
-            <p class="mt-1 text-sm text-red-300 font-mono mb-6">
-                {{ __('This operation will permanently delete your account and all associated data. This action cannot be undone. Enter your password to authorize termination.') }}
+            <p class="mt-2 text-sm text-red-300/80">
+                Apakah Anda yakin ingin menghapus akun Anda? Semua data akan hilang secara permanen. Tindakan ini tidak dapat dibatalkan.
             </p>
 
             <div class="mt-6">
-                <x-input-label for="password" value="{{ __('Authorization Password') }}" class="text-red-400 font-bold" />
+                <x-input-label for="password" value="Kata Sandi Anda" class="sr-only" />
 
                 <x-text-input
                     id="password"
                     name="password"
                     type="password"
-                    class="mt-1 block w-full cyber-input border-red-500/50 focus:border-red-400"
-                    placeholder="Enter password to confirm termination..."
+                    class="mt-1 block w-full bg-gray-800/50 border-red-700/50 text-white rounded-lg focus:border-red-400 focus:ring-1 focus:ring-red-400 transition"
+                    placeholder="Masukkan kata sandi untuk konfirmasi"
                 />
 
-                <x-input-error :messages="$errors->userDeletion->get('password')" class="mt-2 text-red-400" />
+                <x-input-error :messages="$errors->userDeletion->get('password')" class="mt-2" />
             </div>
 
             <div class="mt-6 flex justify-end gap-3">
-                <button type="button" x-on:click="$dispatch('close')" class="cyber-button bg-gray-700 hover:bg-gray-600 text-gray-300">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 inline mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                    {{ __('Abort') }}
+                <button type="button" x-on:click="$dispatch('close')" class="px-4 py-2 text-sm font-semibold bg-gray-700 hover:bg-gray-600 text-gray-300 rounded-lg transition-colors">
+                    {{ __('Batal') }}
                 </button>
 
-                <button type="submit" class="cyber-button bg-gradient-to-r from-red-600 to-red-500 hover:from-red-500 hover:to-red-400 border-red-500">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 inline mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                <button type="submit" class="inline-flex items-center gap-2 px-4 py-2 text-sm font-bold bg-red-600 hover:bg-red-700 text-white rounded-lg transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd" />
                     </svg>
-                    {{ __('TERMINATE ACCOUNT') }}
+                    {{ __('Ya, Hapus Akun Saya') }}
                 </button>
             </div>
         </form>
