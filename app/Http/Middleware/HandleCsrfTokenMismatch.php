@@ -56,9 +56,7 @@ class HandleCsrfTokenMismatch
             }
 
             // For regular requests, redirect with user-friendly message
-            return redirect($safeRedirectUrl)
-                ->with('error', 'Sesi Anda telah berakhir. Silakan coba lagi.')
-                ->with('csrf_error', true);
+            return response()->view('errors.419', [], 419);
         }
     }
 

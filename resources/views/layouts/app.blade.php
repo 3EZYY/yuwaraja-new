@@ -21,6 +21,52 @@
         <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
     </head>
     <body class="font-sans antialiased bg-black text-cyan-300">
+        <!-- Session Expired Alert -->
+        @if(session('show_alert') && session('error'))
+            <div id="session-alert" 
+                 class="fixed top-4 right-4 z-50 bg-red-600 text-white px-6 py-4 rounded-lg shadow-lg border border-red-500"
+                 x-data="{ show: true }" 
+                 x-show="show" 
+                 x-transition:enter="transition ease-out duration-300"
+                 x-transition:enter-start="opacity-0 transform translate-x-full"
+                 x-transition:enter-end="opacity-100 transform translate-x-0"
+                 x-transition:leave="transition ease-in duration-300"
+                 x-transition:leave-start="opacity-100 transform translate-x-0"
+                 x-transition:leave-end="opacity-0 transform translate-x-full">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center">
+                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"></path>
+                        </svg>
+                        <span class="font-medium">{{ session('error') }}</span>
+                    </div>
+                    <button @click="show = false" class="ml-4 text-white hover:text-gray-200">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </button>
+                </div>
+                <div class="mt-2">
+                    <button onclick="location.reload()" 
+                            class="bg-red-700 hover:bg-red-800 text-white px-3 py-1 rounded text-sm transition-colors">
+                        Refresh Halaman
+                    </button>
+                </div>
+            </div>
+            
+            <script>
+                // Auto hide alert after 10 seconds
+                setTimeout(() => {
+                    const alert = document.getElementById('session-alert');
+                    if (alert) {
+                        alert.style.opacity = '0';
+                        alert.style.transform = 'translateX(100%)';
+                        setTimeout(() => alert.remove(), 300);
+                    }
+                }, 10000);
+            </script>
+        @endif
+
         <div class="min-h-screen bg-gradient-to-br from-gray-900 via-black to-blue-900/30">
             <!-- Sidebar -->
             <x-sidebar :role="Auth::user()->role" />

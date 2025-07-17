@@ -13,6 +13,12 @@ use Illuminate\Support\Facades\Auth;
 
 class SpvDashboardController extends Controller
 {
+    public function pengumuman()
+    {
+        $pengumuman = Pengumuman::latest()->paginate(10);
+        return view('spv.pengumuman.index', compact('pengumuman'));
+    }
+
     public function showPengumuman(Pengumuman $pengumuman)
     {
         return view('spv.pengumuman-detail', compact('pengumuman'));
@@ -69,18 +75,5 @@ class SpvDashboardController extends Controller
             ->get();
 
         return view('spv.kelompok', compact('kelompokDibimbing', 'prodiList', 'filterProdi'));
-    }
-
-    public function tugasReview()
-    {
-        $user = Auth::user();
-        $kelompokDibimbing = Kelompok::where('spv_id', $user->id)->get();
-
-        $pengumpulanTugas = PengumpulanTugas::whereIn('kelompok_id', $kelompokDibimbing->pluck('id'))
-            ->with(['kelompok', 'tugas'])
-            ->latest()
-            ->get();
-
-        return view('spv.tugas-review', compact('pengumpulanTugas'));
     }
 }

@@ -57,14 +57,14 @@ Route::middleware(['auth', 'verified', 'role:admin'])->prefix('admin')->name('ad
 });
 Route::middleware(['auth', 'verified', 'role:spv'])->prefix('spv')->name('spv.')->group(function () {
     Route::get('/dashboard', [SpvDashboardController::class, 'index'])->name('dashboard');
-    Route::get('/kelompok', [SpvDashboardController::class, 'kelompok'])->name('kelompok');
-    Route::get('/tugas-review', [SpvDashboardController::class, 'tugasReview'])->name('tugas-review');
+    Route::get('/kelompok', [SpvDashboardController::class, 'kelompok'])->name('kelompok.index');
+    Route::get('/tugas', [SpvTugasController::class, 'index'])->name('tugas.index');
+    Route::get('/tugas/{id}', [SpvTugasController::class, 'show'])->name('tugas.show');
+    Route::post('/tugas/{id}/approve', [SpvTugasController::class, 'approve'])->name('tugas.approve');
+    Route::get('/pengumpulan', [SpvTugasController::class, 'pengumpulan'])->name('pengumpulan.index');
+    Route::get('/pengumuman', [SpvDashboardController::class, 'pengumuman'])->name('pengumuman.index');
     Route::get('/pengumuman/{pengumuman}', [SpvDashboardController::class, 'showPengumuman'])->name('pengumuman.detail');
     Route::get('/jadwal/{jadwal}', [SpvDashboardController::class, 'showJadwal'])->name('jadwal.detail');
-
-    Route::get('/tugas-mahasiswa', [SpvTugasController::class, 'index'])->name('tugas-mahasiswa.index');
-    Route::get('/tugas-mahasiswa/{id}', [SpvTugasController::class, 'show'])->name('tugas-mahasiswa.show');
-    Route::post('/tugas-mahasiswa/{id}/approve', [SpvTugasController::class, 'approve'])->name('tugas-mahasiswa.approve');
 });
 
 // Routes untuk MAHASISWA

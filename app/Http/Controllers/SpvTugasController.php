@@ -11,8 +11,15 @@ class SpvTugasController extends Controller
     // Daftar semua pengumpulan tugas mahasiswa
     public function index()
     {
-        $pengumpulans = PengumpulanTugas::with(['user', 'tugas'])->get();
-        return view('spv.tugas.index', compact('pengumpulans'));
+        $tugas = Tugas::latest()->paginate(10);
+        return view('spv.tugas.index', compact('tugas'));
+    }
+
+    // Daftar pengumpulan tugas mahasiswa
+    public function pengumpulan()
+    {
+        $pengumpulans = PengumpulanTugas::with(['user', 'tugas'])->latest()->paginate(10);
+        return view('spv.pengumpulan.index', compact('pengumpulans'));
     }
 
     // Detail pengumpulan tugas mahasiswa

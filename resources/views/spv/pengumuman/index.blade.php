@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Daftar Tugas')
+@section('title', 'Pengumuman')
 
 @section('content')
 <style>
@@ -89,22 +89,19 @@
         transform: translateY(0);
     }
     
-    .difficulty-easy {
-        background: linear-gradient(145deg, rgba(16, 185, 129, 0.2), rgba(5, 150, 105, 0.1));
-        border-color: rgba(16, 185, 129, 0.5);
-        color: #10b981;
+    .priority-high {
+        border-left: 4px solid #ef4444;
+        background: linear-gradient(145deg, rgba(239, 68, 68, 0.1), rgba(220, 38, 38, 0.05));
     }
     
-    .difficulty-medium {
-        background: linear-gradient(145deg, rgba(245, 158, 11, 0.2), rgba(217, 119, 6, 0.1));
-        border-color: rgba(245, 158, 11, 0.5);
-        color: #f59e0b;
+    .priority-medium {
+        border-left: 4px solid #f59e0b;
+        background: linear-gradient(145deg, rgba(245, 158, 11, 0.1), rgba(217, 119, 6, 0.05));
     }
     
-    .difficulty-hard {
-        background: linear-gradient(145deg, rgba(239, 68, 68, 0.2), rgba(220, 38, 38, 0.1));
-        border-color: rgba(239, 68, 68, 0.5);
-        color: #ef4444;
+    .priority-low {
+        border-left: 4px solid #10b981;
+        background: linear-gradient(145deg, rgba(16, 185, 129, 0.1), rgba(5, 150, 105, 0.05));
     }
 </style>
 
@@ -114,87 +111,63 @@
         <div class="flex items-center justify-between">
             <div>
                 <h1 class="text-3xl font-bold text-white font-orbitron glow-text mb-2">
-                    📋 DAFTAR TUGAS
+                    📢 PENGUMUMAN
                 </h1>
-                <p class="text-cyan-400/70">Kelola dan pantau semua tugas untuk mahasiswa</p>
+                <p class="text-cyan-400/70">Kelola dan pantau semua pengumuman untuk mahasiswa</p>
             </div>
             <div class="text-right">
-                <div class="text-2xl font-bold text-cyan-400 font-orbitron">{{ $tugas->total() }}</div>
-                <div class="text-sm text-cyan-400/70">Total Tugas</div>
+                <div class="text-2xl font-bold text-cyan-400 font-orbitron">{{ $pengumuman->total() }}</div>
+                <div class="text-sm text-cyan-400/70">Total Pengumuman</div>
             </div>
         </div>
     </div>
 
-    <!-- Tugas List -->
+    <!-- Pengumuman List -->
     <div class="space-y-6">
-        @forelse($tugas as $index => $item)
+        @forelse($pengumuman as $index => $item)
         <div class="cyber-card rounded-xl p-6 scroll-reveal hover:scale-[1.02] transition-all duration-300" 
              style="animation-delay: {{ $index * 0.1 }}s">
-            <div class="flex items-start justify-between">
+            <div class="flex items-start justify-between mb-4">
                 <div class="flex-1">
                     <div class="flex items-center gap-3 mb-3">
                         <h3 class="text-xl font-bold text-white font-orbitron">{{ $item->judul }}</h3>
-                        @if($item->tingkat_kesulitan === 'mudah')
-                            <span class="difficulty-easy px-3 py-1 text-xs font-semibold rounded-full border">
-                                🟢 MUDAH
+                        @if($item->prioritas === 'tinggi')
+                            <span class="px-3 py-1 bg-red-500/20 text-red-400 text-xs font-semibold rounded-full border border-red-500/30">
+                                🔥 PRIORITAS TINGGI
                             </span>
-                        @elseif($item->tingkat_kesulitan === 'sedang')
-                            <span class="difficulty-medium px-3 py-1 text-xs font-semibold rounded-full border">
-                                🟡 SEDANG
+                        @elseif($item->prioritas === 'sedang')
+                            <span class="px-3 py-1 bg-yellow-500/20 text-yellow-400 text-xs font-semibold rounded-full border border-yellow-500/30">
+                                ⚡ PRIORITAS SEDANG
                             </span>
                         @else
-                            <span class="difficulty-hard px-3 py-1 text-xs font-semibold rounded-full border">
-                                🔴 SULIT
+                            <span class="px-3 py-1 bg-green-500/20 text-green-400 text-xs font-semibold rounded-full border border-green-500/30">
+                                ✅ PRIORITAS RENDAH
                             </span>
                         @endif
                     </div>
                     
                     <p class="text-gray-300 mb-4 leading-relaxed">
-                        {{ Str::limit($item->deskripsi, 200) }}
+                        {{ Str::limit($item->konten, 200) }}
                     </p>
-                    
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-                        <div class="bg-slate-800/30 rounded-lg p-3">
-                            <div class="text-sm text-cyan-400/70 mb-1">Deadline</div>
-                            <div class="text-white font-semibold">{{ \Carbon\Carbon::parse($item->deadline)->format('d M Y') }}</div>
-                            <div class="text-xs text-gray-400">{{ \Carbon\Carbon::parse($item->deadline)->format('H:i') }}</div>
-                        </div>
-                        
-                        <div class="bg-slate-800/30 rounded-lg p-3">
-                            <div class="text-sm text-cyan-400/70 mb-1">Poin</div>
-                            <div class="text-white font-semibold">{{ $item->poin ?? 100 }} Poin</div>
-                        </div>
-                        
-                        <div class="bg-slate-800/30 rounded-lg p-3">
-                            <div class="text-sm text-cyan-400/70 mb-1">Status</div>
-                            <div class="text-white font-semibold">
-                                @if(\Carbon\Carbon::parse($item->deadline)->isPast())
-                                    <span class="text-red-400">Berakhir</span>
-                                @else
-                                    <span class="text-green-400">Aktif</span>
-                                @endif
-                            </div>
-                        </div>
-                    </div>
                     
                     <div class="flex items-center gap-6 text-sm text-cyan-400/70">
                         <div class="flex items-center gap-2">
                             <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 20 20" fill="currentColor">
                                 <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd" />
                             </svg>
-                            Dibuat: {{ $item->created_at->format('d M Y') }}
+                            {{ $item->created_at->format('d M Y, H:i') }}
                         </div>
                         <div class="flex items-center gap-2">
                             <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 20 20" fill="currentColor">
-                                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
+                                <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
                             </svg>
-                            Sisa: {{ \Carbon\Carbon::parse($item->deadline)->diffForHumans() }}
+                            {{ $item->penulis ?? 'Admin' }}
                         </div>
                     </div>
                 </div>
                 
                 <div class="flex flex-col gap-2 ml-6">
-                    <a href="{{ route('mahasiswa.tugas.show', $item) }}" 
+                    <a href="{{ route('spv.pengumuman.detail', $item) }}" 
                        class="cyber-button px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-300 hover:scale-105">
                         <span class="relative z-10 flex items-center gap-2">
                             <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 20 20" fill="currentColor">
@@ -209,18 +182,18 @@
         </div>
         @empty
         <div class="cyber-card rounded-xl p-12 text-center scroll-reveal">
-            <div class="text-6xl mb-4">📋</div>
-            <h3 class="text-xl font-bold text-white font-orbitron mb-2">Belum Ada Tugas</h3>
-            <p class="text-gray-400">Tugas akan muncul di sini ketika tersedia</p>
+            <div class="text-6xl mb-4">📭</div>
+            <h3 class="text-xl font-bold text-white font-orbitron mb-2">Belum Ada Pengumuman</h3>
+            <p class="text-gray-400">Pengumuman akan muncul di sini ketika tersedia</p>
         </div>
         @endforelse
     </div>
 
     <!-- Pagination -->
-    @if($tugas->hasPages())
+    @if($pengumuman->hasPages())
     <div class="mt-8 flex justify-center">
         <div class="cyber-card rounded-xl p-4">
-            {{ $tugas->links() }}
+            {{ $pengumuman->links() }}
         </div>
     </div>
     @endif
