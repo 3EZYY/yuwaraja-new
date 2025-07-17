@@ -1,48 +1,34 @@
 @extends('layouts.app')
 
 @section('content')
-    {{-- CSS Kustom untuk tema Cyberpunk --}}
+    {{-- CSS Kustom Minimal untuk Font dan Efek Khusus --}}
     <style>
-        :root {
-            --db-bg: #0b101a;
-            --db-surface: #181825;
-            --db-primary: #00d1ff;
-            --db-secondary: #ffc900;
-            --db-text: #c0c8d6;
-            --db-heading: #ffffff;
-            --db-border: rgba(0, 209, 255, 0.15);
+        @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600&family=Poppins:wght@600;700;900&display=swap');
+        
+        .font-display { font-family: 'Poppins', sans-serif; }
+        .font-body { font-family: 'Kanit', sans-serif; }
+        
+        /* Efek Glow untuk Teks */
+        .text-glow-teal {
+            text-shadow: 0 0 15px theme('colors.teal.500 / 0.5');
         }
-        body { background-color: var(--db-bg) !important; }
-        .cyber-card {
-            background-color: var(--db-surface);
-            border: 1px solid var(--db-border);
-            border-radius: 0.5rem;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-        .cyber-card:hover {
-            border-color: var(--db-primary);
-            box-shadow: 0 0 20px rgba(0, 209, 255, 0.1);
-        }
-        .text-glow-yellow { text-shadow: 0 0 8px rgba(255, 201, 0, 0.6); }
-        .text-glow-cyan { text-shadow: 0 0 8px rgba(0, 209, 255, 0.6); }
     </style>
 
-    <div class="py-12" style="background-color: #0b101a; min-height: 100vh;">
-        <div class="max-w-md mx-auto px-6">
-            <!-- Welcome Card -->
-            <div class="cyber-card p-8 mb-8 text-center">
-                <div class="mb-6">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mx-auto text-yellow-400 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                    </svg>
-                </div>
-                <h2 class="text-3xl font-bold text-white text-glow-yellow mb-4">BERGABUNG DENGAN KELOMPOK</h2>
-                <p class="text-gray-400 mb-6">Masukkan kode kelompok untuk mengakses dashboard dan fitur lengkap PKKMB YUWARAJA XVII</p>
-                
-                <!-- Info Box -->
-                <div class="bg-cyan-900/20 border border-cyan-400/30 rounded-lg p-4 mb-6">
+<div class="font-body bg-gray-900 min-h-screen flex items-center justify-center px-4 py-12 sm:py-16" style="background-image: radial-gradient(circle at top, #1a202c, #0a0f14);">
+    <main class="w-full max-w-lg">
+        
+        {{-- Kartu Utama --}}
+        <div class="bg-gray-950/70 backdrop-blur-xl shadow-2xl rounded-2xl border border-teal-500/20 p-6 sm:p-8 md:p-10">
+
+            {{-- Header --}}
+            <header class="text-center mb-8">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mx-auto text-teal-300 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+                <h1 class="font-display text-3xl font-bold text-white text-glow-teal">Gabung Kelompok</h1>
+                <p class="text-teal-200/60 mt-2">Masukkan kode unik untuk mengakses dashboard Anda.</p>
+                  <!-- Info Box -->
+                <div class="bg-cyan-900/20 border border-cyan-400/30 rounded-lg p-4 my-6">
                     <div class="flex items-start gap-3">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-cyan-400 mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -58,81 +44,61 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </header>
 
-            <!-- Form Card -->
-            <div class="cyber-card p-8">
-                @if(session('success'))
-                    <div class="bg-green-900/20 border border-green-400/30 rounded-lg p-4 mb-6">
-                        <div class="flex items-center gap-3">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                            </svg>
-                            <p class="text-green-300 font-medium">{{ session('success') }}</p>
-                        </div>
-                    </div>
-                @endif
+            {{-- Alert Messages --}}
+            @if(session('success')) <div class="bg-green-500/10 border border-green-500/30 text-green-300 text-sm p-3 rounded-lg mb-6 flex items-center gap-3"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg><span>{{ session('success') }}</span></div> @endif
+            @if(session('info')) <div class="bg-blue-500/10 border border-blue-500/30 text-blue-300 text-sm p-3 rounded-lg mb-6 flex items-center gap-3"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg><span>{{ session('info') }}</span></div> @endif
 
-                @if(session('info'))
-                    <div class="bg-blue-900/20 border border-blue-400/30 rounded-lg p-4 mb-6">
-                        <div class="flex items-center gap-3">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                            </svg>
-                            <p class="text-blue-300 font-medium">{{ session('info') }}</p>
+            {{-- Form Penggabungan --}}
+            <form method="POST" action="{{ route('mahasiswa.join-kelompok.submit') }}" class="space-y-6">
+                @csrf
+                <div>
+                    <label for="code" class="text-sm font-semibold text-gray-300 mb-2 flex items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-teal-300" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M18 8a6 6 0 11-12 0 6 6 0 0112 0zM7 8a3 3 0 116 0 3 3 0 01-6 0z" clip-rule="evenodd" /><path d="M5.424 14.576a4 4 0 016.536 2.398A6.985 6.985 0 0110 18a6.985 6.985 0 01-3.06-1.026 4 4 0 012.484-2.398z" /><path fill-rule="evenodd" d="M12.293 18.293a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414zM18 19.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z" clip-rule="evenodd" /></svg>
+                        Kode Kelompok
+                    </label>
+                    <input type="text" 
+                           name="code" 
+                           id="code" 
+                           maxlength="5" 
+                           required 
+                           placeholder="_ _ _ _ _"
+                           class="w-full text-center px-4 py-3 bg-gray-900/50 border-2 border-gray-700 rounded-lg text-white placeholder-gray-500 focus:border-amber-400 focus:ring-2 focus:ring-amber-400/50 focus:outline-none transition-all duration-300 font-mono text-3xl tracking-[0.5em]"
+                           style="text-transform: uppercase;">
+                    @error('code')
+                        <div class="mt-2 flex items-center gap-2 text-red-400">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                            <span class="text-sm">{{ $message }}</span>
                         </div>
-                    </div>
-                @endif
-
-                <form method="POST" action="{{ route('mahasiswa.join-kelompok.submit') }}" class="space-y-6">
-                    @csrf
-                    <div>
-                        <label for="code" class="block text-sm font-bold text-cyan-400 mb-3 text-glow-cyan">KODE KELOMPOK</label>
-                        <input type="text" 
-                               name="code" 
-                               id="code" 
-                               maxlength="5" 
-                               required 
-                               placeholder="Masukkan 5 digit kode"
-                               class="w-full px-4 py-3 bg-gray-900/50 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20 focus:outline-none transition-all duration-300"
-                               style="text-transform: uppercase; letter-spacing: 2px; font-family: monospace;">
-                        @error('code')
-                            <div class="mt-2 flex items-center gap-2 text-red-400">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                </svg>
-                                <span class="text-sm">{{ $message }}</span>
-                            </div>
-                        @enderror
-                    </div>
-                    
-                    <button type="submit" 
-                            class="w-full bg-gradient-to-r from-yellow-400 to-yellow-500 text-black font-bold py-3 px-6 rounded-lg hover:from-yellow-300 hover:to-yellow-400 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-yellow-400/25">
-                        <div class="flex items-center justify-center gap-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                            </svg>
-                            <span>BERGABUNG SEKARANG</span>
-                        </div>
-                    </button>
-                </form>
-                
-                <!-- Help Section -->
-                <div class="mt-8 pt-6 border-t border-gray-700">
-                    <p class="text-gray-400 text-sm text-center mb-3">Butuh bantuan?</p>
-                    <div class="text-center space-y-2">
-                        <p class="text-gray-500 text-xs">Hubungi panitia PKKMB atau supervisor kelompok Anda</p>
-                        <p class="text-gray-500 text-xs">untuk mendapatkan kode kelompok yang valid</p>
-                    </div>
+                    @enderror
                 </div>
+                
+                <button type="submit" 
+                        class="w-full bg-amber-400 text-black font-bold font-display py-3 px-6 rounded-lg hover:bg-amber-500 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-amber-400/25 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-950 focus:ring-amber-400">
+                    <div class="flex items-center justify-center gap-2">
+                        <span>Masuk ke Kelompok</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 -scale-x-100" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M3 3a1 1 0 011 1v12a1 1 0 11-2 0V4a1 1 0 011-1zm7.707 3.293a1 1 0 010 1.414L9.414 9H17a1 1 0 110 2H9.414l1.293 1.293a1 1 0 01-1.414 1.414l-3-3a1 1 0 010-1.414l3-3a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+                    </div>
+                </button>
+            </form>
+            
+            <!-- Help Section -->
+            <div class="mt-8 pt-6 border-t border-gray-800 text-center">
+                <p class="text-gray-400 text-sm flex items-center justify-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                    Tidak tahu kodenya?
+                </p>
+                <p class="text-gray-500 text-xs mt-1">Hubungi panitia atau supervisor kelompok Anda untuk bantuan.</p>
             </div>
         </div>
-    </div>
+    </main>
+</div>
 
     <script>
         // Auto uppercase dan format kode
         document.getElementById('code').addEventListener('input', function(e) {
-            e.target.value = e.target.value.toUpperCase();
+            e.target.value = e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, '');
         });
     </script>
 @endsection
