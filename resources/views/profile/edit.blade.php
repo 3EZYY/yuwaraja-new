@@ -21,7 +21,7 @@
                 <div class="absolute -inset-1 bg-gradient-to-r from-teal-400 to-amber-400 rounded-full blur-md opacity-60 group-hover:opacity-80 transition duration-500"></div>
                 
                 @if(Auth::user()->photo)
-                <img src="{{ asset('storage/profile/'.Auth::user()->photo) }}" alt="Foto Profil" class="relative h-24 w-24 sm:h-28 sm:w-28 rounded-full object-cover border-2 border-gray-800">
+                <img src="{{ asset('profile-pictures/'.Auth::user()->photo) }}" alt="Foto Profil" class="relative h-24 w-24 sm:h-28 sm:w-28 rounded-full object-cover border-2 border-gray-800">
                 @else
                 <div class="relative h-24 w-24 sm:h-28 sm:w-28 rounded-full bg-gray-800 flex items-center justify-center border-2 border-gray-700">
                     <span class="font-display text-4xl font-bold text-teal-300">{{ strtoupper(substr(Auth::user()->name, 0, 1)) }}</span>

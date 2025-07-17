@@ -24,7 +24,7 @@
                     <x-slot name="trigger">
                         <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-200 bg-black hover:text-yellow-400 focus:outline-none transition ease-in-out duration-150">
                             @if(Auth::user()->photo)
-                                <img src="{{ asset('storage/profile/' . Auth::user()->photo) }}" alt="Profile Photo" class="w-8 h-8 rounded-full border-2 border-yellow-400 shadow mr-2">
+                                <img src="{{ asset('profile-pictures/' . Auth::user()->photo) }}" alt="Profile Photo" class="w-8 h-8 rounded-full border-2 border-yellow-400 shadow mr-2">
                             @else
                                 <span class="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center text-yellow-400 font-bold mr-2">
                                     {{ strtoupper(substr(Auth::user()->name,0,1)) }}

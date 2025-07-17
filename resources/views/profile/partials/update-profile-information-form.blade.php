@@ -14,7 +14,7 @@
             <label for="photo" class="font-semibold text-gray-300 sm:col-span-1">Foto Profil</label>
             <div class="sm:col-span-2 flex items-center gap-x-4">
                 @if($user->photo)
-                    <img src="{{ asset('storage/profile/'.$user->photo) }}" alt="Foto Profil Saat Ini" class="h-16 w-16 rounded-full object-cover border-2 border-teal-400">
+                    <img src="{{ asset('profile-pictures/'.$user->photo) }}" alt="Foto Profil Saat Ini" class="h-16 w-16 rounded-full object-cover border-2 border-teal-400">
                 @else
                     <div class="h-16 w-16 rounded-full bg-gray-800 flex items-center justify-center border-2 border-gray-700">
                         <svg class="h-8 w-8 text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">

@@ -32,19 +32,55 @@ class ProfileController extends Controller
 
         // Handle photo upload
         if ($request->hasFile('photo')) {
-            // Delete old photo file if exists
+            \Log::info('Photo upload started for user: ' . $user->id);
+            
+            // Delete old photo if exists
             if ($user->photo) {
-                Storage::delete('public/profile/' . $user->photo);
+                $oldPhotoPath = public_path('profile-pictures/' . $user->photo);
+                if (file_exists($oldPhotoPath)) {
+                    unlink($oldPhotoPath);
+                    \Log::info('Deleting old photo: ' . $user->photo);
+                }
             }
 
             $photo = $request->file('photo');
             $filename = 'profile_' . $user->id . '_' . time() . '.' . $photo->getClientOriginalExtension();
+            \Log::info('Generated filename: ' . $filename);
 
-            // Store the photo in the public/storage/profile directory
-            $photo->storeAs('public/profile', $filename);
+            // Debug file info
+            \Log::info('File original name: ' . $photo->getClientOriginalName());
+            \Log::info('File size: ' . $photo->getSize());
+            \Log::info('File mime type: ' . $photo->getMimeType());
+            \Log::info('File is valid: ' . ($photo->isValid() ? 'true' : 'false'));
+
+            // Create directory if it doesn't exist
+            $uploadPath = public_path('profile-pictures');
+            if (!file_exists($uploadPath)) {
+                mkdir($uploadPath, 0755, true);
+                \Log::info('Created directory: ' . $uploadPath);
+            }
+
+            // Store the new photo using move() method
+            try {
+                $photo->move($uploadPath, $filename);
+                \Log::info('Photo moved to: ' . $uploadPath . '/' . $filename);
+                
+                // Check if file actually exists
+                $fullPath = $uploadPath . '/' . $filename;
+                \Log::info('Full path: ' . $fullPath);
+                \Log::info('File exists after move: ' . (file_exists($fullPath) ? 'true' : 'false'));
+                
+                if (file_exists($fullPath)) {
+                    \Log::info('File size after move: ' . filesize($fullPath));
+                }
+            } catch (\Exception $e) {
+                \Log::error('Error moving file: ' . $e->getMessage());
+                throw $e;
+            }
 
             // Update the photo field in the user data
             $data['photo'] = $filename;
+            \Log::info('Photo upload completed successfully');
         }
 
         // Check if NIM is being changed and verify it's unique
@@ -82,7 +118,7 @@ class ProfileController extends Controller
 
         // Clean up user's profile photo if it exists
         if ($user->photo) {
-            Storage::delete('public/profile/' . $user->photo);
+            Storage::delete('public/profile-pictures/' . $user->photo);
         }
 
         Auth::logout();

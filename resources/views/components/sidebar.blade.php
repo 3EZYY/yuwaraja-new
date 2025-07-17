@@ -170,7 +170,7 @@
 
                 <div class="flex items-center gap-3 px-2 py-2 mb-2 rounded-lg bg-cyan-400/5">
                     @if(Auth::user()->photo)
-                    <img src="{{ asset('storage/profile/' . Auth::user()->photo) }}" alt="Profile" class="w-10 h-10 rounded-full border-2 border-cyan-400/50">
+                    <img src="{{ asset('profile-pictures/' . Auth::user()->photo) }}" alt="Profile" class="w-10 h-10 rounded-full border-2 border-cyan-400/50">
                     @else
                     <div class="w-10 h-10 rounded-full bg-cyan-400/10 border-2 border-cyan-400/50 flex items-center justify-center">
                         <span class="text-lg font-semibold text-cyan-400">{{ substr(Auth::user()->name, 0, 1) }}</span>

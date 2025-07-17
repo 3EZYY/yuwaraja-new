@@ -47,7 +47,7 @@
                 </h2>
                 <div class="bg-gray-900/50 p-6 rounded-xl border border-gray-700/50 flex items-center space-x-6">
                     @if($supervisor->photo)
-                        <img src="{{ asset('storage/profile/' . $supervisor->photo) }}" alt="{{ $supervisor->name }}" class="w-16 h-16 rounded-full border-2 border-cyan-400 flex-shrink-0">
+                        <img src="{{ asset('profile-pictures/' . $supervisor->photo) }}" alt="{{ $supervisor->name }}" class="w-16 h-16 rounded-full border-2 border-cyan-400 flex-shrink-0">
                     @else
                         <div class="w-16 h-16 rounded-full bg-cyan-400 flex-shrink-0 flex items-center justify-center text-black font-bold text-2xl font-display">{{ strtoupper(substr($supervisor->name, 0, 1)) }}</div>
                     @endif
@@ -71,7 +71,7 @@
                         @foreach($kelompokMembers as $member)
                         <div class="bg-gray-900/50 text-center p-6 rounded-xl border border-gray-700/50 hover:border-amber-400/50 hover:bg-gray-900 transition-all duration-300 transform hover:-translate-y-1">
                             @if($member->photo)
-                                <img src="{{ asset('storage/profile/' . $member->photo) }}" alt="{{ $member->name }}" class="w-20 h-20 rounded-full border-2 border-amber-400/50 mx-auto mb-4">
+                                <img src="{{ asset('profile-pictures/' . $member->photo) }}" alt="{{ $member->name }}" class="w-20 h-20 rounded-full border-2 border-amber-400/50 mx-auto mb-4">
                             @else
                                 <div class="w-20 h-20 rounded-full bg-amber-400/20 flex items-center justify-center text-amber-300 font-bold text-3xl font-display mx-auto mb-4 border-2 border-amber-400/50">{{ strtoupper(substr($member->name, 0, 1)) }}</div>
                             @endif
@@ -121,7 +121,7 @@
                         @foreach($friends as $friend)
                         <div class="flex items-center space-x-3 p-3 bg-green-500/10 rounded-lg border border-green-500/20">
                             @if($friend->photo)
-                                <img src="{{ asset('storage/profile/' . $friend->photo) }}" alt="{{ $friend->name }}" class="w-10 h-10 rounded-full border border-green-400/50 flex-shrink-0">
+                                <img src="{{ asset('profile-pictures/' . $friend->photo) }}" alt="{{ $friend->name }}" class="w-10 h-10 rounded-full border border-green-400/50 flex-shrink-0">
                             @else
                                 <div class="w-10 h-10 rounded-full bg-green-400/20 flex-shrink-0 flex items-center justify-center text-green-300 font-bold font-display">{{ strtoupper(substr($friend->name, 0, 1)) }}</div>
                             @endif
