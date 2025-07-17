@@ -12,6 +12,8 @@ use App\Http\Controllers\MahasiswaJadwalController;
 use App\Http\Controllers\Api\ValidationController;
 use App\Http\Controllers\SpvTugasController;
 use App\Http\Controllers\FriendshipController;
+use App\Http\Controllers\FaqController;
+use App\Models\Faq;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -27,7 +29,8 @@ Route::get('/api/check-username', [ValidationController::class, 'checkUsername']
 Route::get('/api/check-email', [ValidationController::class, 'checkEmail']);
 
 Route::get('/', function () {
-    return view('welcome');
+    $faqs = Faq::active()->ordered()->get();
+    return view('welcome', compact('faqs'));
 });
 
 // Redirect dashboard berdasarkan role

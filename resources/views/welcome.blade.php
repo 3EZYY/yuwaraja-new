@@ -927,44 +927,57 @@
 
                         <!-- Accordion FAQ -->
                         <div class="max-w-3xl mx-auto lg:mx-0 space-y-5">
-                            <!-- Item FAQ 1 -->
-                            <details class="faq-item reveal-up" style="transition-delay: 0.2s;">
-                                <summary>
-                                    <span>Apa itu PKKMB Yuwaraja</span>
-                                    <div class="faq-icon"></div>
-                                </summary>
-                                <div class="faq-content-wrapper">
-                                    <div class="faq-content-inner">
-                                        <p>PKKMB Yuwaraja adalah serangkaian kegiatan orientasi untuk memperkenalkan dunia perkuliahan, budaya, dan nilai-nilai inovasi di Fakultas Vokasi Universitas Brawijaya.</p>
+                            @forelse($faqs as $index => $faq)
+                                <!-- Item FAQ {{ $index + 1 }} -->
+                                <details class="faq-item reveal-up" style="transition-delay: {{ 0.2 + ($index * 0.1) }}s;">
+                                    <summary>
+                                        <span>{{ $faq->question }}</span>
+                                        <div class="faq-icon"></div>
+                                    </summary>
+                                    <div class="faq-content-wrapper">
+                                        <div class="faq-content-inner">
+                                            <p>{{ $faq->answer }}</p>
+                                        </div>
                                     </div>
-                                </div>
-                            </details>
+                                </details>
+                            @empty
+                                <!-- Default FAQ jika tidak ada data di database -->
+                                <details class="faq-item reveal-up" style="transition-delay: 0.2s;">
+                                    <summary>
+                                        <span>Apa itu PKKMB Yuwaraja</span>
+                                        <div class="faq-icon"></div>
+                                    </summary>
+                                    <div class="faq-content-wrapper">
+                                        <div class="faq-content-inner">
+                                            <p>PKKMB Yuwaraja adalah serangkaian kegiatan orientasi untuk memperkenalkan dunia perkuliahan, budaya, dan nilai-nilai inovasi di Fakultas Vokasi Universitas Brawijaya.</p>
+                                        </div>
+                                    </div>
+                                </details>
 
-                            <!-- Item FAQ 2 -->
-                            <details class="faq-item reveal-up" style="transition-delay: 0.3s;">
-                                <summary>
-                                    <span>Bagaimana Cara Mendapatkan KTM</span>
-                                    <div class="faq-icon"></div>
-                                </summary>
-                                <div class="faq-content-wrapper">
-                                    <div class="faq-content-inner">
-                                        <p>Informasi pengambilan KTM akan diumumkan secara resmi melalui SIAM dan website ini. Pastikan untuk selalu memeriksa pembaruan.</p>
+                                <details class="faq-item reveal-up" style="transition-delay: 0.3s;">
+                                    <summary>
+                                        <span>Bagaimana Cara Mendapatkan KTM</span>
+                                        <div class="faq-icon"></div>
+                                    </summary>
+                                    <div class="faq-content-wrapper">
+                                        <div class="faq-content-inner">
+                                            <p>Informasi pengambilan KTM akan diumumkan secara resmi melalui SIAM dan website ini. Pastikan untuk selalu memeriksa pembaruan.</p>
+                                        </div>
                                     </div>
-                                </div>
-                            </details>
+                                </details>
 
-                            <!-- Item FAQ 3 -->
-                            <details class="faq-item reveal-up" style="transition-delay: 0.4s;">
-                                <summary>
-                                    <span>Di mana saya mendapatkan info tentang UKM</span>
-                                    <div class="faq-icon"></div>
-                                </summary>
-                                <div class="faq-content-wrapper">
-                                    <div class="faq-content-inner">
-                                        <p>Akan ada "Expo UKM" yang jadwalnya akan diumumkan di bagian Informasi. Kamu bisa bertanya, mencoba, dan mendaftar langsung untuk mengasah skill di luar akademik.</p>
+                                <details class="faq-item reveal-up" style="transition-delay: 0.4s;">
+                                    <summary>
+                                        <span>Di mana saya mendapatkan info tentang UKM</span>
+                                        <div class="faq-icon"></div>
+                                    </summary>
+                                    <div class="faq-content-wrapper">
+                                        <div class="faq-content-inner">
+                                            <p>Akan ada "Expo UKM" yang jadwalnya akan diumumkan di bagian Informasi. Kamu bisa bertanya, mencoba, dan mendaftar langsung untuk mengasah skill di luar akademik.</p>
+                                        </div>
                                     </div>
-                                </div>
-                            </details>
+                                </details>
+                            @endforelse
                         </div>
                     </div>
 
