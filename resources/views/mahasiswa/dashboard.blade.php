@@ -1,331 +1,257 @@
 @extends('layouts.app')
 
 @section('content')
-    {{-- CSS Kustom untuk tema Cyberpunk Dashboard --}}
     <style>
-        :root {
-            --db-bg: #0b101a;
-            --db-surface: #181825;
-            --db-primary: #00d1ff;
-            --db-secondary: #ffc900;
-            --db-text: #c0c8d6;
-            --db-heading: #ffffff;
-            --db-border: rgba(0, 209, 255, 0.15);
-        }
-        /* Mengubah warna background dasar dari layout Breeze */
-        body { background-color: var(--db-bg) !important; }
-        .text-glow-yellow { text-shadow: 0 0 8px rgba(255, 201, 0, 0.6); }
-        .text-glow-cyan { text-shadow: 0 0 8px rgba(0, 209, 255, 0.6); }
+        @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600&family=Poppins:wght@600;700;900&display=swap');
 
-        .cyber-card {
-            background-color: var(--db-surface);
-            border: 1px solid var(--db-border);
-            border-radius: 0.5rem;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
+        :root {
+            --bg-main: #0a0a0a;
+            --surface-card: #111827;
+            --border-color: rgba(20, 184, 166, 0.25); 
+            --brand-teal: #14b8a6;
+            --brand-gold: #f59e0b;
+            --text-primary: #d1d5db;
+            --text-secondary: #6b7280;
         }
-        .cyber-card:hover {
-            transform: translateY(-4px);
-            border-color: var(--db-primary);
-            box-shadow: 0 0 20px rgba(0, 209, 255, 0.1);
+
+        body {
+            background-color: var(--bg-main) !important;
+            font-family: 'Kanit', sans-serif;
+            color: var(--text-primary);
         }
-        .cyber-card::before {
-            content: '';
-            position: absolute;
-            top: 0; right: 0;
-            width: 50px; height: 50px;
-            background: radial-gradient(circle at top right, var(--db-primary), transparent 70%);
-            opacity: 0.1;
-            transition: all 0.3s ease;
+        
+        .font-display {
+            font-family: 'Poppins', sans-serif;
         }
-        .cyber-card:hover::before {
-            opacity: 0.2;
-            transform: scale(1.5);
+
+        .text-glow-gold-subtle {
+            text-shadow: 0 0 8px rgba(245, 158, 11, 0.5);
         }
-        .progress-bar-container {
-            background-color: rgba(255, 255, 255, 0.1);
-            border-radius: 999px;
-            overflow: hidden;
+        .text-glow-teal-subtle {
+            text-shadow: 0 0 8px rgba(20, 184, 166, 0.6);
         }
-        .progress-bar {
-            background: linear-gradient(90deg, var(--db-primary), var(--db-secondary));
-            transition: width 0.5s ease-in-out;
+
+        .themed-card {
+            background-color: var(--surface-card);
+            border: 1px solid var(--border-color);
+            border-radius: 0.75rem; /* 12px */
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
         }
-        .cyber-table th {
-            color: var(--db-primary);
-            font-family: 'Rajdhani', sans-serif;
+        .themed-card:hover {
+            border-color: var(--brand-gold);
+            box-shadow: 0 0 20px rgba(245, 158, 11, 0.15);
         }
-        .cyber-table td {
-            color: var(--db-text);
+
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
         }
-        .cyber-table tr:hover td {
-            background-color: rgba(0, 209, 255, 0.05);
-        }
-        .status-badge {
-            padding: 0.25rem 0.75rem;
-            border-radius: 999px;
-            font-weight: 600;
-            font-size: 0.75rem;
+        .animate-on-scroll.is-visible {
+            opacity: 1;
+            transform: translateY(0);
         }
     </style>
 
+    <div class="py-12">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-10">
 
-
-    <div class="py-12" style="background-color: #0b101a;">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-8">
-
-            <!-- Welcome & Profile Card -->
-            <div class="cyber-card p-6 md:p-8 flex flex-col md:flex-row md:items-center justify-between gap-6">
-                <div>
-                    <h3 class="text-3xl font-bold font-orbitron text-white">Selamat Datang, <span class="text-yellow-400">{{ $user->name }}</span>!</h3>
-                    <p class="text-gray-400 mt-2">Status: <span class="font-semibold text-green-400">AKTIF</span> // PKKMB YUWARAJA 2025</p>
-                </div>
-                <div class="text-left md:text-right border-t md:border-t-0 md:border-l border-cyan-400/20 pt-4 md:pt-0 md:pl-6">
-                    <!-- Clickable Profile Area -->
-                    <div class="flex items-center justify-end mb-4">
-                        <a href="{{ route('mahasiswa.friendship.index') }}" class="group flex items-center space-x-3 hover:bg-cyan-400/10 p-2 rounded-lg transition-all">
+            <div class="themed-card p-6 md:p-8 animate-on-scroll">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+                    <div class="flex items-center gap-4">
+                        <span class="text-4xl">👋</span>
+                        <div>
+                            <h2 class="font-display text-3xl font-bold text-white uppercase">Selamat Datang, <span class="text-amber-500 text-glow-gold-subtle">{{ $user->name }}</span>!</h2>
+                            <p class="font-kanit text-gray-400 mt-1 text-sm tracking-wider">STATUS: <span class="font-semibold text-teal-400">AKTIF</span></p>
+                        </div>
+                    </div>
+                    <div class="flex-shrink-0 flex items-center gap-4 border-t md:border-t-0 md:border-l border-gray-700 pt-4 md:pt-0 md:pl-6 w-full md:w-auto">
+                        <a href="{{ route('profile.edit') }}" aria-label="Edit profil Anda">
                             @if($user->photo)
-                                <img src="{{ asset('storage/profile/' . $user->photo) }}" 
-                                     alt="{{ $user->name }}" 
-                                     class="w-12 h-12 rounded-full border-2 border-cyan-400 group-hover:border-yellow-400 transition-colors">
+                                <img src="{{ asset('storage/profile/' . $user->photo) }}" alt="Foto profil {{ $user->name }}" class="w-16 h-16 rounded-full border-2 border-gray-600 hover:border-amber-500 transition-colors">
                             @else
-                                <div class="w-12 h-12 rounded-full bg-cyan-400 group-hover:bg-yellow-400 flex items-center justify-center text-black font-bold text-lg transition-colors">
-                                    {{ strtoupper(substr($user->name, 0, 1)) }}
+                                <div class="w-16 h-16 rounded-full bg-gray-800 flex items-center justify-center text-gray-500 border-2 border-gray-600 hover:border-amber-500 transition-colors">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
+                                    </svg>
                                 </div>
                             @endif
-                            <div class="text-right">
-                                <p class="text-sm text-gray-400 group-hover:text-cyan-400">Lihat Kelompok</p>
-                                <p class="text-xs text-yellow-400">👥 Klik untuk berteman</p>
-                            </div>
                         </a>
+                        <div class="text-left">
+                            <p class="font-semibold text-white capitalize leading-tight">{{ $user->kelompok->nama_kelompok ?? 'Belum ada kelompok' }}</p>
+                            <p class="text-sm text-gray-400 leading-tight">{{ $user->program_studi ?? 'N/A' }}</p>
+                            <a href="{{ route('profile.edit') }}" class="text-xs text-gray-400 hover:text-amber-400 transition-colors mt-1 inline-block">
+                                Edit Profil »
+                            </a>
+                        </div>
                     </div>
-                    
-                    <p class="text-sm text-gray-400">Kelompok</p>
-                    <p class="text-xl font-bold text-white capitalize">{{ $user->kelompok->nama_kelompok ?? 'Belum ada kelompok' }}</p>
-                    <p class="text-sm text-gray-400 mt-2">Program Studi</p>
-                    <p class="text-lg font-semibold text-cyan-400">{{ $user->program_studi ?? 'N/A' }}</p>
-                    <a href="{{ route('profile.edit') }}" class="inline-block mt-3 text-sm text-yellow-400 hover:underline">
-                        Edit My Profile >>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <div class="lg:col-span-1 themed-card p-6 space-y-6 animate-on-scroll" style="animation-delay: 100ms;">
+                    <div class="flex items-center gap-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-teal-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
+                        <h3 class="font-display text-xl font-bold text-white">Informasi Kelompok</h3>
+                    </div>
+                    @if($user->kelompok)
+                    <div class="space-y-4 text-sm pl-9">
+                        <div>
+                            <p class="text-gray-400">Nama Kelompok</p>
+                            <p class="font-semibold text-lg text-white">{{ $user->kelompok->nama_kelompok }}</p>
+                        </div>
+                        @if($user->kelompok->supervisor)
+                        <div>
+                            <p class="text-gray-400">Supervisor</p>
+                            <p class="font-semibold text-teal-400">{{ $user->kelompok->supervisor->name }}</p>
+                        </div>
+                        @endif
+                        <div>
+                            <h4 class="font-semibold text-gray-300 mt-4 mb-1">Pertemanan</h4>
+                             @php try { $friends = $user->friends(); $friendsCount = $friends->count(); } catch (\Exception $e) { $friends = collect(); $friendsCount = 0; } @endphp
+                            @if($friendsCount > 0)
+                               <a href="{{ route('mahasiswa.friendship.index') }}" class="text-amber-400 hover:text-amber-300 transition-colors">
+                                    Kamu memiliki <span class="font-bold">{{ $friendsCount }}</span> teman. Lihat »
+                                </a>
+                            @else
+                                <a href="{{ route('mahasiswa.friendship.index') }}" class="text-amber-400 hover:text-amber-300 transition-colors">
+                                    Cari teman di kelompokmu »
+                                </a>
+                            @endif
+                        </div>
+                    </div>
+                    @else
+                    <p class="text-gray-500 italic pl-9">Anda belum terdaftar di kelompok manapun.</p>
+                    @endif
+                </div>
+
+                <div class="lg:col-span-2 grid grid-cols-1 sm:grid-cols-3 gap-6">
+                    <div class="themed-card p-6 flex flex-col gap-2 animate-on-scroll" style="animation-delay: 200ms;">
+                        <div class="flex items-center gap-2 font-display text-sm text-gray-400">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                            <span>MISI SELESAI</span>
+                        </div>
+                        <p class="text-5xl font-display font-bold text-white">{{ $tugas->where('is_active', false)->count() }}<span class="text-3xl text-gray-600">/{{ $tugas->count() }}</span></p>
+                        @php $progress = $tugas->count() > 0 ? ($tugas->where('is_active', false)->count() / $tugas->count()) * 100 : 0; @endphp
+                        <div class="w-full bg-gray-700 rounded-full h-1.5 mt-1"><div class="bg-teal-500 h-1.5 rounded-full" style="width: {{ $progress }}%"></div></div>
+                    </div>
+                    <div class="themed-card p-6 flex flex-col gap-2 animate-on-scroll" style="animation-delay: 300ms;">
+                        <div class="flex items-center gap-2 font-display text-sm text-gray-400">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.636 5.636a9 9 0 0112.728 0M18 9a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+                            <span>PENGUMUMAN</span>
+                        </div>
+                        <p class="text-5xl font-display font-bold text-amber-500 text-glow-gold-subtle">{{ $pengumuman->count() }}</p>
+                        <p class="text-xs text-gray-500 mt-auto">Pesan baru diterima</p>
+                    </div>
+                    <a href="#" class="bg-teal-600 p-6 rounded-xl flex flex-col items-center justify-center text-center text-white hover:bg-teal-500 transition-colors group animate-on-scroll" style="animation-delay: 400ms;">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 mb-2 transition-transform group-hover:scale-110" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd" /></svg>
+                        <p class="font-display font-bold text-lg uppercase">Absensi</p>
                     </a>
                 </div>
             </div>
 
-            <!-- Informasi Kelompok -->
-            @if($user->kelompok)
-            <div class="cyber-card p-6">
-                <h3 class="text-lg font-bold text-white mb-4 text-glow-cyan">👥 INFORMASI KELOMPOK</h3>
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                    <!-- Detail Kelompok -->
-                    <div class="space-y-4">
-                        <div class="border-l-4 border-cyan-400 pl-4">
-                            <p class="text-sm text-gray-400">Nama Kelompok</p>
-                            <p class="text-xl font-bold text-white">{{ $user->kelompok->nama_kelompok }}</p>
-                        </div>
-                        <div class="border-l-4 border-yellow-400 pl-4">
-                            <p class="text-sm text-gray-400">Kode Kelompok</p>
-                            <p class="text-lg font-mono font-bold text-yellow-400">{{ $user->kelompok->code }}</p>
-                        </div>
-                        @if($user->kelompok->supervisor)
-                        <div class="border-l-4 border-green-400 pl-4">
-                            <p class="text-sm text-gray-400">Supervisor</p>
-                            <p class="text-lg font-semibold text-green-400">{{ $user->kelompok->supervisor->name }}</p>
-                            <p class="text-sm text-gray-500">{{ $user->kelompok->supervisor->email }}</p>
-                        </div>
-                        @endif
+            <div class="grid grid-cols-1 lg:grid-cols-5 gap-8">
+                <div class="lg:col-span-2 themed-card p-6 animate-on-scroll">
+                    <div class="flex items-center gap-3 border-b border-gray-700 pb-3 mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-2.236 9.168-5.514M15 13a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+                        <h3 class="font-display text-xl font-bold text-white">Pengumuman Terbaru</h3>
                     </div>
-                    
-                    <!-- Daftar Teman -->
-                    <div class="space-y-4">
-                        <div class="border-l-4 border-pink-400 pl-4">
-                            <p class="text-sm text-gray-400">KAMU BERTEMAN DENGAN:</p>
-                            @php
-                                try {
-                                    $friends = $user->friends();
-                                    $friendsCount = $friends->count();
-                                } catch (\Exception $e) {
-                                    $friends = collect();
-                                    $friendsCount = 0;
-                                }
-                            @endphp
-                            @if($friendsCount > 0)
-                                <div class="mt-2 space-y-1">
-                                    @foreach($friends->take(3) as $index => $friend)
-                                    <p class="text-white font-semibold">
-                                        {{ $index + 1 }}. {{ $friend->name }}
-                                        <span class="text-pink-400 text-sm">({{ $friend->nim }})</span>
-                                    </p>
-                                    @endforeach
-                                    @if($friendsCount > 3)
-                                    <p class="text-gray-400 text-sm">
-                                        dan {{ $friendsCount - 3 }} teman lainnya...
-                                    </p>
-                                    @endif
-                                </div>
-                                <a href="{{ route('mahasiswa.friendship.index') }}" class="inline-block mt-2 text-sm text-pink-400 hover:text-pink-300 hover:underline">
-                                    Lihat semua teman >>
-                                </a>
-                            @else
-                                <p class="text-gray-500 italic mt-2">Belum ada teman. <a href="{{ route('mahasiswa.friendship.index') }}" class="text-pink-400 hover:underline">Cari teman di kelompokmu!</a></p>
-                            @endif
+                    @if($pengumuman->count() > 0)
+                        <div class="space-y-5">
+                            @foreach($pengumuman->take(3) as $announce)
+                            <div>
+                                <a href="{{ route('mahasiswa.pengumuman.detail', $announce->id) }}" class="font-semibold text-base text-white hover:text-amber-400 transition-colors">{{ $announce->judul }}</a>
+                                <p class="text-sm text-gray-400 mt-1 line-clamp-2">{{ Str::limit(strip_tags($announce->konten), 120) }}</p>
+                                <p class="text-xs text-gray-500 mt-2">{{ $announce->created_at->diffForHumans() }}</p>
+                            </div>
+                            @endforeach
                         </div>
-                    </div>
+                    @else
+                        <p class="text-gray-500 italic py-4">// Tidak ada pengumuman terbaru //</p>
+                    @endif
+                </div>
 
+                <div class="lg:col-span-3 themed-card animate-on-scroll">
+                    <div class="p-6 flex items-center gap-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-teal-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" /></svg>
+                        <h3 class="font-display text-xl font-bold text-white">Daftar Misi (Tugas)</h3>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full">
+                            <thead class="bg-gray-950/50">
+                                <tr>
+                                    <th class="px-6 py-3 text-left text-xs font-semibold font-display text-gray-400 uppercase tracking-wider">Misi</th>
+                                    <th class="px-6 py-3 text-left text-xs font-semibold font-display text-gray-400 uppercase tracking-wider">Deadline</th>
+                                    <th class="px-6 py-3 text-left text-xs font-semibold font-display text-gray-400 uppercase tracking-wider">Status</th>
+                                    <th class="px-6 py-3 text-center text-xs font-semibold font-display text-gray-400 uppercase tracking-wider">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-800">
+                                @forelse($tugas as $task)
+                                @php $pengumpulan = $pengumpulanTugas->get($task->id); @endphp
+                                <tr class="hover:bg-gray-800/60 transition-colors duration-200">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-semibold">
+                                        <a href="{{ route('mahasiswa.tugas.show', $task->id) }}" class="text-white hover:text-teal-300 transition-colors">{{ $task->judul }}</a>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm {{ $task->deadline < now() && !$pengumpulan ? 'text-red-500' : 'text-gray-300' }}">
+                                        {{ $task->deadline->format('d M Y, H:i') }}
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-xs">
+                                        @if($pengumpulan)
+                                            @if($pengumpulan->status == 'done')
+                                                <span class="px-2.5 py-1 font-semibold rounded bg-green-500/10 text-green-400">Selesai & Dinilai</span>
+                                            @elseif($pengumpulan->status == 'approved')
+                                                <span class="px-2.5 py-1 font-semibold rounded bg-sky-500/10 text-sky-400">Disetujui</span>
+                                            @else
+                                                <span class="px-2.5 py-1 font-semibold rounded bg-yellow-500/10 text-yellow-400">Direview</span>
+                                            @endif
+                                        @else
+                                            @if($task->deadline < now())
+                                                <span class="px-2.5 py-1 font-semibold rounded bg-red-500/10 text-red-400">Terlewat</span>
+                                            @else
+                                                <span class="px-2.5 py-1 font-semibold rounded bg-gray-500/10 text-gray-400">Belum Dikerjakan</span>
+                                            @endif
+                                        @endif
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-center">
+                                        <a href="{{ route('mahasiswa.tugas.show', $task->id) }}" class="inline-block px-4 py-2 text-xs font-bold font-display rounded-md transition-all duration-300 transform hover:scale-105
+                                            @if(!$pengumpulan && $task->deadline > now())
+                                                bg-teal-500 text-black hover:bg-teal-400
+                                            @else
+                                                bg-gray-700 text-gray-300 hover:bg-gray-600
+                                            @endif">
+                                            @if(!$pengumpulan && $task->deadline > now())
+                                                KERJAKAN
+                                            @else
+                                                LIHAT
+                                            @endif
+                                        </a>
+                                    </td>
+                                </tr>
+                                @empty
+                                <tr>
+                                    <td colspan="4" class="px-6 py-10 text-center text-gray-500 italic">// Tidak ada misi aktif saat ini //</td>
+                                </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
-            @endif
-
-            <!-- Stats & Progress Cards -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <!-- Tugas Selesai -->
-                <div class="cyber-card p-6">
-                    <p class="text-sm text-gray-400">Tugas Selesai</p>
-                    <p class="text-4xl font-bold text-white my-2">
-                        {{ $tugas->where('is_active', false)->count() }}<span class="text-2xl text-gray-500">/{{ $tugas->count() }}</span>
-                    </p>
-                    <div class="progress-bar-container h-2 w-full">
-                        @php
-                            $progress = $tugas->count() > 0 ? ($tugas->where('is_active', false)->count() / $tugas->count()) * 100 : 0;
-                        @endphp
-                        <div class="progress-bar h-full" style="width: 50;"></div>
-                    </div>
-                </div>
-
-                <!-- Pengumuman Baru -->
-                <div class="cyber-card p-6">
-                    <p class="text-sm text-gray-400">Pengumuman Baru</p>
-                    <p class="text-4xl font-bold text-yellow-400 my-2">{{ $pengumuman->count() }}</p>
-                    <p class="text-xs text-gray-500">Cek secara berkala!</p>
-                </div>
-
-                <!-- Jadwal Hari Ini -->
-                <div class="cyber-card p-6">
-                    <p class="text-sm text-gray-400">Jadwal Hari Ini</p>
-                    @php
-                        $jadwalHariIni = $jadwal->where('tanggal_mulai', '>=', now()->startOfDay())->where('tanggal_mulai', '<=', now()->endOfDay());
-                    @endphp
-                    <p class="text-4xl font-bold text-cyan-400 my-2">{{ $jadwalHariIni->count() }}</p>
-                    <p class="text-xs text-gray-500">Kegiatan menantimu</p>
-                </div>
-
-                <!-- Tombol Absensi -->
-                <div class="bg-yellow-400 p-6 rounded-lg flex flex-col items-center justify-center text-center text-black hover:bg-yellow-300 transition-colors cursor-pointer">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 mb-2" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd" /></svg>
-                    <p class="font-bold font-rajdhani text-lg uppercase">Absensi Kehadiran</p>
-                </div>
-            </div>
-
-            <!-- Pengumuman Terbaru -->
-            <div class="cyber-card p-6">
-                <h3 class="text-lg font-bold text-white mb-4 text-glow-yellow">📢 PENGUMUMAN TERBARU</h3>
-                @if($pengumuman->count() > 0)
-                    <div class="space-y-4">
-                        @foreach($pengumuman as $announce)
-                        <div class="border-l-4 border-yellow-400 pl-4 py-2 hover:bg-white/5 transition-colors">
-                            <a href="{{ route('mahasiswa.pengumuman.detail', $announce->id) }}" class="hover:underline">
-                                <h4 class="font-bold text-white">{{ $announce->judul }}</h4>
-                            </a>
-                            <p class="text-sm text-gray-400 mt-1">{{ Str::limit($announce->konten, 150) }}</p>
-                            <p class="text-xs text-gray-500 mt-2">{{ $announce->created_at->diffForHumans() }}</p>
-                        </div>
-                        @endforeach
-                    </div>
-                @else
-                    <p class="text-gray-500 italic">// Belum ada transmisi terbaru //</p>
-                @endif
-            </div>
-
-            <!-- Daftar Tugas -->
-            <div class="cyber-card">
-    <div class="p-6">
-        <h3 class="text-lg font-bold text-white text-glow-cyan mb-4">📝 DAFTAR MISI (TUGAS)</h3>
+        </div>
     </div>
-    <div class="overflow-x-auto">
-        <table class="min-w-full cyber-table">
-            <thead class="border-b border-t border-db-border">
-                <tr>
-                    <th class="px-6 py-3 text-left text-xs font-bold uppercase tracking-wider">Judul Misi</th>
-                    <th class="px-6 py-3 text-left text-xs font-bold uppercase tracking-wider">Deadline</th>
-                    <th class="px-6 py-3 text-left text-xs font-bold uppercase tracking-wider">Status</th>
-                    <th class="px-6 py-3 text-center text-xs font-bold uppercase tracking-wider">Aksi</th>
-                </tr>
-            </thead>
-            <tbody class="divide-y divide-gray-800/50">
-                @forelse($tugas as $task)
-                @php
-                    // Ambil data pengumpulan untuk tugas ini, jika ada.
-                    $pengumpulan = $pengumpulanTugas->get($task->id);
-                @endphp
-                <tr class="hover:bg-cyan-400/5">
-                    <td class="px-6 py-4 whitespace-nowrap text-sm font-semibold">
-                        <a href="{{ route('mahasiswa.tugas.show', $task->id) }}" class="text-white hover:text-yellow-400 hover:underline">
-                            {{ $task->judul }}
-                        </a>
-                    </td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm {{ $task->deadline < now() && !$pengumpulan ? 'text-red-500 text-glow-red' : 'text-db-text' }}">
-                        {{ $task->deadline->format('d M Y, H:i') }}
-                    </td>
-                    <td class="px-6 py-4 whitespace-nowrap">
-                        @if($pengumpulan)
-                            @if($pengumpulan->status == 'done')
-                                <span class="status-badge bg-green-900/50 text-green-300 border border-green-400/50">
-                                    Selesai & Dinilai
-                                </span>
-                            @elseif($pengumpulan->status == 'approved')
-                                 <span class="status-badge bg-blue-900/50 text-blue-300 border border-blue-400/50">
-                                    Disetujui
-                                </span>
-                            @else
-                                <span class="status-badge bg-yellow-900/50 text-yellow-300 border border-yellow-400/50">
-                                    Sedang Direview
-                                </span>
-                            @endif
-                        @else
-                            @if($task->deadline < now())
-                                 <span class="status-badge bg-red-900/50 text-red-400 border border-red-500/50">
-                                    Terlewat
-                                </span>
-                            @else
-                                <span class="status-badge bg-gray-700 text-gray-400 border border-gray-600">
-                                    Belum Dikerjakan
-                                </span>
-                            @endif
-                        @endif
-                    </td>
-                    <td class="px-6 py-4 whitespace-nowrap text-center">
-                        <a href="{{ route('mahasiswa.tugas.show', $task->id) }}" class="inline-flex items-center gap-2 px-4 py-2 text-sm font-bold rounded-md transition-all duration-300
-                            @if(!$pengumpulan && $task->deadline > now())
-                                bg-yellow-400 text-black hover:bg-yellow-300 transform hover:scale-105
-                            @elseif($pengumpulan && $pengumpulan->status != 'done')
-                                bg-cyan-500 text-black hover:bg-cyan-400
-                            @else
-                                bg-green-500 text-black hover:bg-green-400
-                            @endif
-                        ">
-                            @if(!$pengumpulan && $task->deadline > now())
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-                                    <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
-                                </svg>
-                                <span>Kerjakan</span>
-                            @else
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                                </svg>
-                                <span>Lihat</span>
-                            @endif
-                        </a>
-                    </td>
-                </tr>
-                @empty
-                <tr>
-                    <td colspan="4" class="px-6 py-8 text-center text-gray-500 italic">// Tidak ada misi aktif saat ini //</td>
-                </tr>
-                @endforelse
-            </tbody>
-        </table>
-    </div>
-</div>
 
-
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const observer = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                    }
+                });
+            }, { threshold: 0.1 });
+            const elements = document.querySelectorAll('.animate-on-scroll');
+            elements.forEach(el => observer.observe(el));
+        });
+    </script>
 @endsection
