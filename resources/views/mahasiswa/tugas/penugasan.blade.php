@@ -33,10 +33,10 @@
 
         <!-- Header -->
         <header class="text-center mb-12">
-            <h1 class="font-display text-4xl sm:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-teal-300 to-amber-300 mb-2 text-glow-teal">
+            <h1 class="font-display text-4xl sm:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-b from-teal-600 to-amber-300 mb-2 text-glow-teal">
                 MISSION CONTROL
             </h1>
-            <p class="text-teal-200/60 text-base sm:text-lg">Akses & kumpulkan semua misi yang ditugaskan.</p>
+            <p class="text-gray-100 text-base sm:text-lg">Akses & kumpulkan semua misi yang ditugaskan.</p>
         </header>
 
         <!-- Kontainer Utama -->
@@ -46,7 +46,7 @@
                 @if(isset($listMode) && $listMode && isset($tugas))
                 {{-- =================== TAMPILAN DAFTAR TUGAS =================== --}}
                 <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-8">
-                    <h2 class="font-display text-2xl sm:text-3xl font-bold text-teal-300 flex items-center gap-3">
+                    <h2 class="font-display text-2xl sm:text-3xl font-bold text-gray-50 flex items-center gap-3">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
                         </svg>
@@ -69,17 +69,17 @@
                 <div class="grid gap-6 md:grid-cols-1 lg:grid-cols-2">
                     @foreach($tugas as $item)
                     <a href="{{ route('mahasiswa.tugas.show', $item->id) }}" class="group block">
-                        <div class="bg-gray-900/80 h-full p-6 rounded-xl border border-gray-700/50 hover:border-teal-400/50 hover:bg-gray-900 transition-all duration-300 shadow-lg hover:shadow-teal-500/10">
+                        <div class="bg-gray-900/80 h-full p-6 rounded-xl border border-teal-500/50 hover:border-gray-700/50 hover:bg-gray-900 transition-all duration-300 shadow-lg hover:shadow-teal-500/10">
                             <div class="flex flex-col h-full">
                                 <div class="flex-grow">
                                     <div class="flex items-start justify-between mb-3">
-                                        <h3 class="font-display text-xl font-bold text-teal-200 group-hover:text-amber-300 transition-colors duration-300">{{ $item->judul }}</h3>
+                                        <h3 class="font-display text-xl font-bold text-gray-50 group-hover:text-teal-500 transition-colors duration-300">{{ $item->judul }}</h3>
                                         @php $pengumpulan = $pengumpulanTugas[$item->id] ?? null; @endphp
                                         @if($pengumpulan)
                                         @if($pengumpulan->status == 'approved')
                                         <span class="text-xs font-bold py-1 px-3 rounded-full bg-green-500/10 text-green-400 border border-green-500/20">DISETUJUI</span>
                                         @else
-                                        <span class="text-xs font-bold py-1 px-3 rounded-full bg-yellow-500/10 text-amber-300 border border-amber-500/20">DIKUMPULKAN</span>
+                                        <span class="text-xs font-bold py-1 px-3 rounded-full bg-yellow-500/10 text-teal-500 border border-amber-500/20">DIKUMPULKAN</span>
                                         @endif
                                         @else
                                         <span class="text-xs font-bold py-1 px-3 rounded-full bg-red-500/10 text-red-400 border border-red-500/20">PENDING</span>
@@ -106,7 +106,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="mt-auto text-right text-teal-300/70 text-sm font-semibold group-hover:text-amber-300 transition-colors">
+                                <div class="mt-auto text-right text-white/70 text-sm font-semibold group-hover:text-amber-300 transition-colors">
                                     Buka Misi →
                                 </div>
                             </div>
@@ -119,7 +119,7 @@
                 @elseif(isset($detailMode) && $detailMode && isset($tugas))
                 {{-- =================== TAMPILAN DETAIL TUGAS (REVISI) =================== --}}
                 <div class="mb-8">
-                    <a href="{{ route('mahasiswa.tugas.index') }}" class="inline-flex items-center gap-2 text-teal-300 hover:text-amber-300 transition-colors mb-6 group">
+                    <a href="{{ route('mahasiswa.tugas.index') }}" class="inline-flex items-center gap-2 text-white hover:text-amber-300 transition-colors mb-6 group">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 transform group-hover:-translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M11 17l-5-5m0 0l5-5m-5 5h12" />
                         </svg>
@@ -137,19 +137,19 @@
                 {{-- Kolom Kiri: Detail Misi --}}
                 <div class="lg:col-span-3 space-y-6">
                     <div class="mb-5">
-                        <h3 class="font-display text-lg font-bold text-white mb-3 flex items-center gap-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-teal-300" viewBox="0 0 20 20" fill="currentColor">
+                        <h3 class="font-display text-lg font-bold text-gray-50 mb-3 flex items-center gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white" viewBox="0 0 20 20" fill="currentColor">
                                 <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" />
                                 <path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3z" clip-rule="evenodd" />
                             </svg>
                             Deskripsi Misi
                         </h3>
-                        <div class="prose prose-invert prose-sm max-w-none text-gray-300 bg-gray-950/70 p-4 rounded-lg border border-gray-800">{!! nl2br(e($tugas->deskripsi)) !!}</div>
+                        <div class="prose prose-invert prose-sm max-w-none text-gray-300 bg-gray-950/70 p-4 rounded-lg border border-gray-800 normal-case">{!! nl2br(e($tugas->deskripsi)) !!}</div>
                     </div>
                     @if($tugas->file_path)
                     <div>
-                        <h3 class="font-display text-lg font-bold text-white mb-3 flex items-center gap-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-teal-300" viewBox="0 0 20 20" fill="currentColor">
+                        <h3 class="font-display text-lg font-bold text-gray-50 mb-3 flex items-center gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white" viewBox="0 0 20 20" fill="currentColor">
                                 <path fill-rule="evenodd" d="M8 4a3 3 0 00-3 3v4a5 5 0 0010 0V7a3 3 0 10-6 0v4a3 3 0 11-6 0V7a1 1 0 011-1h1V4a1 1 0 112 0v1h1a1 1 0 112 0v1h1a1 1 0 011 1v2a1 1 0 11-2 0V7a3 3 0 00-3-3z" clip-rule="evenodd" />
                             </svg>
                             Lampiran
@@ -167,7 +167,7 @@
                 {{-- Kolom Kanan: Panel Pengumpulan --}}
                 <div class="lg:col-span-2 bg-gray-900/80 p-6 rounded-xl border border-gray-700/50">
                     <h2 class="font-display text-xl font-bold mb-5 text-white flex items-center gap-3">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-teal-300" viewBox="0 0 20 20" fill="currentColor">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" viewBox="0 0 20 20" fill="currentColor">
                             <path d="M5.5 13a3.5 3.5 0 01-.369-6.98 4 4 0 117.753-1.977A4.5 4.5 0 1113.5 13H11V9.414l-1.293 1.293a1 1 0 01-1.414-1.414l3-3a1 1 0 011.414 0l3 3a1 1 0 01-1.414 1.414L13 9.414V13H5.5z" />
                             <path d="M9 13h2v5a1 1 0 11-2 0v-5z" />
                         </svg>
@@ -197,7 +197,7 @@
                             @csrf
                             <div>
                                 <label for="file" class="block text-sm font-semibold text-gray-300 mb-1">Upload File <span class="text-red-400">*</span></label>
-                                <input type="file" id="file" name="file" class="block w-full text-sm text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-teal-500/10 file:text-teal-300 hover:file:bg-teal-500/20 transition-colors cursor-pointer" accept=".pdf,.doc,.docx,.zip,.rar" required>
+                                <input type="file" id="file" name="file" class="block w-full text-sm text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-teal-500/10 file:text-white hover:file:bg-teal-500/20 transition-colors cursor-pointer" accept=".pdf,.doc,.docx,.zip,.rar" required>
                                 <p class="mt-1 text-xs text-gray-500">Maks: 10MB (PDF, DOC, ZIP, RAR)</p>
                                 @error('file') <p class="text-sm text-red-400 mt-1">{{ $message }}</p> @enderror
                             </div>
