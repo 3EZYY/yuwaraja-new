@@ -22,11 +22,23 @@ class SpvTugasController extends Controller
         return view('spv.pengumpulan.index', compact('pengumpulans'));
     }
 
-    // Detail pengumpulan tugas mahasiswa
+    // Detail tugas dan semua pengumpulannya
     public function show($id)
     {
-        $pengumpulan = PengumpulanTugas::with(['user', 'tugas'])->findOrFail($id);
-        return view('spv.tugas.show', compact('pengumpulan'));
+        $tugas = Tugas::findOrFail($id);
+        $pengumpulans = PengumpulanTugas::with(['user', 'kelompok'])
+            ->where('tugas_id', $id)
+            ->latest()
+            ->paginate(10);
+        
+        return view('spv.tugas.show', compact('tugas', 'pengumpulans'));
+    }
+
+    // Detail pengumpulan tugas mahasiswa tertentu
+    public function showPengumpulan($id)
+    {
+        $pengumpulan = PengumpulanTugas::with(['user', 'tugas', 'kelompok'])->findOrFail($id);
+        return view('spv.tugas.detail-pengumpulan', compact('pengumpulan'));
     }
 
     // Approve tugas dan beri nilai/keterangan

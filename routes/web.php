@@ -64,6 +64,7 @@ Route::middleware(['auth', 'verified', 'role:spv'])->prefix('spv')->name('spv.')
     Route::get('/cluster', [SpvDashboardController::class, 'cluster'])->name('cluster.index');
     Route::get('/tugas', [SpvTugasController::class, 'index'])->name('tugas.index');
     Route::get('/tugas/{id}', [SpvTugasController::class, 'show'])->name('tugas.show');
+    Route::get('/tugas/pengumpulan/{id}', [SpvTugasController::class, 'showPengumpulan'])->name('tugas.pengumpulan.show');
     Route::post('/tugas/{id}/approve', [SpvTugasController::class, 'approve'])->name('tugas.approve');
     Route::get('/pengumpulan', [SpvTugasController::class, 'pengumpulan'])->name('pengumpulan.index');
     Route::get('/pengumuman', [SpvDashboardController::class, 'pengumuman'])->name('pengumuman.index');
