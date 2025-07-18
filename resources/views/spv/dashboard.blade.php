@@ -59,7 +59,7 @@
             <div class="themed-card p-6 md:p-8 animate-on-scroll">
                 <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
                     <div class="flex items-center gap-4">
-                        <span class="text-4xl">👨‍💼</span>
+                        <span class="text-4xl">👋</span>
                         <div>
                             <h2 class="font-display text-3xl font-bold text-white uppercase">Selamat Datang, <span class="text-amber-500 text-glow-gold-subtle">{{ $user->name }}</span>!</h2>
                             <p class="font-kanit text-gray-400 mt-1 text-sm tracking-wider">STATUS: <span class="font-semibold text-teal-400">SUPERVISOR AKTIF</span></p>
