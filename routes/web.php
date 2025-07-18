@@ -12,6 +12,7 @@ use App\Http\Controllers\MahasiswaPengumumanController;
 use App\Http\Controllers\MahasiswaJadwalController;
 use App\Http\Controllers\Api\ValidationController;
 use App\Http\Controllers\SpvTugasController;
+use App\Http\Controllers\SpvClusterController;
 use App\Http\Controllers\FriendshipController;
 use App\Http\Controllers\FaqController;
 use App\Models\Faq;
@@ -61,7 +62,9 @@ Route::middleware(['auth', 'verified', 'role:admin'])->prefix('admin')->name('ad
 });
 Route::middleware(['auth', 'verified', 'role:spv'])->prefix('spv')->name('spv.')->group(function () {
     Route::get('/dashboard', [SpvDashboardController::class, 'index'])->name('dashboard');
-    Route::get('/cluster', [SpvDashboardController::class, 'cluster'])->name('cluster.index');
+    Route::get('/cluster', [SpvClusterController::class, 'index'])->name('cluster.index');
+    Route::post('/cluster/upload-photo', [SpvClusterController::class, 'uploadPhoto'])->name('cluster.upload-photo');
+    Route::delete('/cluster/delete-photo', [SpvClusterController::class, 'deletePhoto'])->name('cluster.delete-photo');
     Route::get('/tugas', [SpvTugasController::class, 'index'])->name('tugas.index');
     Route::get('/tugas/{id}', [SpvTugasController::class, 'show'])->name('tugas.show');
     Route::get('/tugas/pengumpulan/{id}', [SpvTugasController::class, 'showPengumpulan'])->name('tugas.pengumpulan.show');
@@ -104,7 +107,7 @@ Route::middleware(['auth', 'verified', 'role:mahasiswa'])->prefix('mahasiswa')->
     });
 
     // Friendship Routes
-    Route::controller(FriendshipController::class)->prefix('friendship')->name('friendship.')->group(function () {
+    Route::controller(FriendshipController::class)->prefix('cluster')->name('friendship.')->group(function () {
         Route::get('/', 'index')->name('index');
         Route::post('/send', 'sendRequest')->name('send');
         Route::post('/accept/{id}', 'acceptRequest')->name('accept');
