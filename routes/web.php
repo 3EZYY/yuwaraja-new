@@ -73,6 +73,8 @@ Route::middleware(['auth', 'verified', 'role:spv'])->prefix('spv')->name('spv.')
     // Profile Routes untuk SPV
     Route::get('/profile', [SpvProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [SpvProfileController::class, 'update'])->name('profile.update');
+    Route::get('/profile/crop-photo', [ProfileController::class, 'cropPhoto'])->name('profile.crop-photo');
+    Route::post('/profile/crop-photo', [ProfileController::class, 'saveCroppedPhoto'])->name('profile.save-cropped-photo');
 });
 
 // Routes untuk MAHASISWA
@@ -114,6 +116,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::get('/profile/crop-photo', [ProfileController::class, 'cropPhoto'])->name('profile.crop-photo');
+    Route::post('/profile/crop-photo', [ProfileController::class, 'saveCroppedPhoto'])->name('profile.save-cropped-photo');
 });
 
 // API validation routes

@@ -119,7 +119,11 @@ class ProfileController extends Controller
         
         // Check if user has a photo
         if (!$user->photo) {
-            return redirect()->route('profile.edit')->with('error', 'Tidak ada foto untuk di-crop.');
+            if ($user->role === 'spv') {
+                return redirect()->route('spv.profile.edit')->with('error', 'Tidak ada foto untuk di-crop.');
+            } else {
+                return redirect()->route('profile.edit')->with('error', 'Tidak ada foto untuk di-crop.');
+            }
         }
         
         return view('profile.crop-photo', [
@@ -183,7 +187,12 @@ class ProfileController extends Controller
             $user->photo = $filename;
             $user->save();
 
-            return redirect()->route('profile.edit')->with('status', 'profile-photo-updated');
+            // Redirect berdasarkan role
+            if ($user->role === 'spv') {
+                return redirect()->route('spv.profile.edit')->with('status', 'profile-photo-updated');
+            } else {
+                return redirect()->route('profile.edit')->with('status', 'profile-photo-updated');
+            }
 
         } catch (\Exception $e) {
             \Log::error('Error saving cropped photo: ' . $e->getMessage());

@@ -60,12 +60,21 @@
         <!-- Header -->
         <header class="mb-8">
             <div class="flex items-center gap-4 mb-4">
+                @if(Auth::user()->role === 'spv')
+                <a href="{{ route('spv.profile.edit') }}" class="inline-flex items-center px-4 py-2 bg-gray-800 hover:bg-gray-700 text-gray-300 rounded-lg transition-colors">
+                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                    </svg>
+                    Kembali ke Profile
+                </a>
+                @else
                 <a href="{{ route('profile.edit') }}" class="inline-flex items-center px-4 py-2 bg-gray-800 hover:bg-gray-700 text-gray-300 rounded-lg transition-colors">
                     <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
                     </svg>
                     Kembali ke Profile
                 </a>
+                @endif
             </div>
             <div class="text-center">
                 <h1 class="font-display text-3xl font-bold text-white mb-2">
@@ -128,7 +137,11 @@
             </div>
 
             <!-- Form untuk menyimpan -->
+            @if(Auth::user()->role === 'spv')
             <form id="crop-form" method="POST" action="{{ route('profile.save-cropped-photo') }}">
+            @else
+            <form id="crop-form" method="POST" action="{{ route('profile.save-cropped-photo') }}">
+            @endif
                 @csrf
                 <input type="hidden" id="cropped-image" name="cropped_image">
                 <input type="hidden" name="original_photo" value="{{ $user->photo }}">
