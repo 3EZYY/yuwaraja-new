@@ -2,247 +2,170 @@
 
 @section('title', 'Daftar Tugas')
 
-@section('content')
+@push('styles')
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap');
-    
-    * {
-        font-family: 'Rajdhani', sans-serif;
-    }
-    
-    .font-orbitron {
-        font-family: 'Orbitron', monospace;
-    }
-    
     body {
-        background: linear-gradient(135deg, #0A0F1A 0%, #1A1F2E 50%, #0A0F1A 100%);
-        min-height: 100vh;
+        font-family: 'Poppins', sans-serif;
+        background-color: #0D1117;
     }
-    
-    .cyber-card {
-        background: linear-gradient(145deg, rgba(15, 23, 42, 0.8), rgba(30, 41, 59, 0.6));
-        border: 1px solid rgba(34, 211, 238, 0.3);
-        backdrop-filter: blur(10px);
-        position: relative;
-        overflow: hidden;
+    .font-kanit {
+        font-family: 'Kanit', sans-serif;
     }
-    
-    .cyber-card::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: -100%;
-        width: 100%;
-        height: 2px;
-        background: linear-gradient(90deg, transparent, #22d3ee, transparent);
-        animation: scan 3s infinite;
+    ::-webkit-scrollbar {
+        width: 8px;
     }
-    
-    @keyframes scan {
-        0% { left: -100%; }
-        100% { left: 100%; }
+    ::-webkit-scrollbar-track {
+        background: #0D1117;
     }
-    
-    .cyber-button {
-        background: linear-gradient(145deg, rgba(34, 211, 238, 0.1), rgba(6, 182, 212, 0.2));
-        border: 1px solid rgba(34, 211, 238, 0.5);
-        color: #22d3ee;
-        transition: all 0.3s ease;
-        position: relative;
-        overflow: hidden;
+    ::-webkit-scrollbar-thumb {
+        background-color: #164e63;
+        border-radius: 10px;
+        border: 2px solid #0D1117;
     }
-    
-    .cyber-button:hover {
-        background: linear-gradient(145deg, rgba(34, 211, 238, 0.2), rgba(6, 182, 212, 0.3));
-        border-color: #22d3ee;
-        box-shadow: 0 0 20px rgba(34, 211, 238, 0.3);
-        transform: translateY(-2px);
-    }
-    
-    .cyber-button::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: -100%;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(90deg, transparent, rgba(34, 211, 238, 0.2), transparent);
-        transition: left 0.5s;
-    }
-    
-    .cyber-button:hover::before {
-        left: 100%;
-    }
-    
-    .glow-text {
-        text-shadow: 0 0 10px rgba(34, 211, 238, 0.5);
-    }
-    
-    .scroll-reveal {
-        opacity: 0;
-        transform: translateY(30px);
-        transition: all 0.6s ease;
-    }
-    
-    .scroll-reveal.revealed {
-        opacity: 1;
-        transform: translateY(0);
-    }
-    
-    .difficulty-easy {
-        background: linear-gradient(145deg, rgba(16, 185, 129, 0.2), rgba(5, 150, 105, 0.1));
-        border-color: rgba(16, 185, 129, 0.5);
-        color: #10b981;
-    }
-    
-    .difficulty-medium {
-        background: linear-gradient(145deg, rgba(245, 158, 11, 0.2), rgba(217, 119, 6, 0.1));
-        border-color: rgba(245, 158, 11, 0.5);
-        color: #f59e0b;
-    }
-    
-    .difficulty-hard {
-        background: linear-gradient(145deg, rgba(239, 68, 68, 0.2), rgba(220, 38, 38, 0.1));
-        border-color: rgba(239, 68, 68, 0.5);
-        color: #ef4444;
+    ::-webkit-scrollbar-thumb:hover {
+        background-color: #0e7490;
     }
 </style>
+@endpush
 
-<div class="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 p-6">
-    <!-- Header Section -->
-    <div class="cyber-card rounded-xl p-6 mb-8 scroll-reveal">
-        <div class="flex items-center justify-between">
-            <div>
-                <h1 class="text-3xl font-bold text-white font-orbitron glow-text mb-2">
-                    📋 DAFTAR TUGAS
-                </h1>
-                <p class="text-cyan-400/70">Kelola dan pantau semua tugas untuk mahasiswa</p>
-            </div>
-            <div class="text-right">
-                <div class="text-2xl font-bold text-cyan-400 font-orbitron">{{ $tugas->total() }}</div>
-                <div class="text-sm text-cyan-400/70">Total Tugas</div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Tugas List -->
-    <div class="space-y-6">
-        @forelse($tugas as $index => $item)
-        <div class="cyber-card rounded-xl p-6 scroll-reveal hover:scale-[1.02] transition-all duration-300" 
-             style="animation-delay: {{ $index * 0.1 }}s">
-            <div class="flex items-start justify-between">
-                <div class="flex-1">
-                    <div class="flex items-center gap-3 mb-3">
-                        <h3 class="text-xl font-bold text-white font-orbitron">{{ $item->judul }}</h3>
-                        @if($item->tingkat_kesulitan === 'mudah')
-                            <span class="difficulty-easy px-3 py-1 text-xs font-semibold rounded-full border">
-                                🟢 MUDAH
-                            </span>
-                        @elseif($item->tingkat_kesulitan === 'sedang')
-                            <span class="difficulty-medium px-3 py-1 text-xs font-semibold rounded-full border">
-                                🟡 SEDANG
-                            </span>
-                        @else
-                            <span class="difficulty-hard px-3 py-1 text-xs font-semibold rounded-full border">
-                                🔴 SULIT
-                            </span>
-                        @endif
-                    </div>
-                    
-                    <p class="text-gray-300 mb-4 leading-relaxed">
-                        {{ Str::limit($item->deskripsi, 200) }}
+@section('content')
+<div class="min-h-screen bg-gradient-to-br from-[#0D1117] to-[#111827] text-white p-4 sm:p-6 lg:p-8">
+    <div class="max-w-7xl mx-auto">
+        
+        <header class="mb-8 scroll-reveal">
+            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                <div>
+                    <h1 class="font-kanit text-3xl sm:text-4xl font-bold text-teal-400 tracking-wide">
+                        Tugas Mahasiswa
+                    </h1>
+                    <p class="font-poppins text-gray-400 mt-1">
+                        Kelola dan pantau semua tugas Anda di sini.
                     </p>
-                    
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-                        <div class="bg-slate-800/30 rounded-lg p-3">
-                            <div class="text-sm text-cyan-400/70 mb-1">Deadline</div>
-                            <div class="text-white font-semibold">{{ \Carbon\Carbon::parse($item->deadline)->format('d M Y') }}</div>
-                            <div class="text-xs text-gray-400">{{ \Carbon\Carbon::parse($item->deadline)->format('H:i') }}</div>
-                        </div>
-                        
-                        <div class="bg-slate-800/30 rounded-lg p-3">
-                            <div class="text-sm text-cyan-400/70 mb-1">Poin</div>
-                            <div class="text-white font-semibold">{{ $item->poin ?? 100 }} Poin</div>
-                        </div>
-                        
-                        <div class="bg-slate-800/30 rounded-lg p-3">
-                            <div class="text-sm text-cyan-400/70 mb-1">Status</div>
-                            <div class="text-white font-semibold">
-                                @if(\Carbon\Carbon::parse($item->deadline)->isPast())
-                                    <span class="text-red-400">Berakhir</span>
+                </div>
+                <div class="bg-gray-800/50 border border-gray-700 rounded-lg p-3 text-center w-full sm:w-auto">
+                    <div class="font-kanit text-3xl font-bold text-yellow-400">{{ $tugas->total() }}</div>
+                    <div class="text-sm text-gray-400">Total Tugas</div>
+                </div>
+            </div>
+            <div class="h-px bg-gray-700/50 mt-6"></div>
+        </header>
+
+        <div class="grid grid-cols-1 gap-6">
+            @forelse($tugas as $index => $item)
+            <div class="scroll-reveal bg-gray-800/60 border border-gray-700 rounded-lg shadow-lg overflow-hidden transition-all duration-300 hover:border-teal-400/50 hover:shadow-teal-500/10 hover:-translate-y-1"
+                 style="transition-delay: {{ $index * 100 }}ms;">
+                <div class="p-6">
+                    <div class="flex flex-col md:flex-row justify-between md:items-start gap-4">
+                        <div class="flex-grow">
+                            <div class="flex flex-wrap items-center gap-x-4 gap-y-2 mb-3">
+                                <h2 class="font-kanit text-xl lg:text-2xl font-semibold text-white">
+                                    {{ $item->judul }}
+                                </h2>
+                                @if($item->tingkat_kesulitan === 'mudah')
+                                    <span class="text-xs font-medium text-green-300 bg-green-900/50 ring-1 ring-green-300/30 px-3 py-1 rounded-full">Mudah</span>
+                                @elseif($item->tingkat_kesulitan === 'sedang')
+                                    <span class="text-xs font-medium text-yellow-300 bg-yellow-900/50 ring-1 ring-yellow-300/30 px-3 py-1 rounded-full">Sedang</span>
                                 @else
-                                    <span class="text-green-400">Aktif</span>
+                                    <span class="text-xs font-medium text-red-300 bg-red-900/50 ring-1 ring-red-300/30 px-3 py-1 rounded-full">Sulit</span>
                                 @endif
                             </div>
+                            
+                            <p class="font-poppins text-gray-300 text-sm leading-relaxed mb-6">
+                                {{ Str::limit($item->deskripsi, 250) }}
+                            </p>
+
+                            <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 text-sm">
+                                <div class="flex items-center gap-3">
+                                    <svg class="w-6 h-6 text-teal-400/70 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                                    <div>
+                                        <div class="text-gray-400">Deadline</div>
+                                        <div class="font-semibold text-white">{{ \Carbon\Carbon::parse($item->deadline)->format('d M Y, H:i') }}</div>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-3">
+                                    <svg class="w-6 h-6 text-teal-400/70 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8v5m0 0v2.5m0-2.5h2.5m-2.5 0H9.5m7.5-6.5c-1.583-1.583-3.75-2.5-6-2.5S7.083 4.917 5.5 6.5M18.5 6.5c1.583 1.583 2.5 3.75 2.5 6s-.917 4.417-2.5 6M12 21a9 9 0 110-18 9 9 0 010 18z"></path></svg>
+                                    <div>
+                                        <div class="text-gray-400">Poin</div>
+                                        <div class="font-semibold text-white">{{ $item->poin ?? 100 }} Poin</div>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-3">
+                                     @if(\Carbon\Carbon::parse($item->deadline)->isPast())
+                                        <svg class="w-6 h-6 text-red-400/70 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                        <div>
+                                            <div class="text-gray-400">Status</div>
+                                            <div class="font-semibold text-red-400">Berakhir</div>
+                                        </div>
+                                    @else
+                                        <svg class="w-6 h-6 text-green-400/70 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                        <div>
+                                            <div class="text-gray-400">Status</div>
+                                            <div class="font-semibold text-green-400">Aktif</div>
+                                        </div>
+                                    @endif
+                                </div>
+                                <div class="flex items-center gap-3">
+                                    <svg class="w-6 h-6 text-teal-400/70 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                    <div>
+                                        <div class="text-gray-400">Sisa Waktu</div>
+                                        <div class="font-semibold text-white">{{ \Carbon\Carbon::parse($item->deadline)->diffForHumans() }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flex-shrink-0 mt-4 md:mt-0 md:ml-6">
+                             <a href="{{ route('mahasiswa.tugas.show', $item) }}" 
+                                class="inline-flex items-center justify-center gap-2 w-full md:w-auto bg-teal-500 text-gray-900 font-semibold text-sm px-5 py-3 rounded-lg shadow-md transition-all duration-300 hover:bg-teal-400 hover:shadow-lg hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-900 focus:ring-teal-500">
+                                <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path d="M10 12a2 2 0 100-4 2 2 0 000 4z" /><path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd" /></svg>
+                                Lihat Detail
+                            </a>
                         </div>
                     </div>
-                    
-                    <div class="flex items-center gap-6 text-sm text-cyan-400/70">
-                        <div class="flex items-center gap-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 20 20" fill="currentColor">
-                                <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd" />
-                            </svg>
-                            Dibuat: {{ $item->created_at->format('d M Y') }}
-                        </div>
-                        <div class="flex items-center gap-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 20 20" fill="currentColor">
-                                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
-                            </svg>
-                            Sisa: {{ \Carbon\Carbon::parse($item->deadline)->diffForHumans() }}
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="flex flex-col gap-2 ml-6">
-                    <a href="{{ route('mahasiswa.tugas.show', $item) }}" 
-                       class="cyber-button px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-300 hover:scale-105">
-                        <span class="relative z-10 flex items-center gap-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 20 20" fill="currentColor">
-                                <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
-                                <path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd" />
-                            </svg>
-                            Lihat Detail
-                        </span>
-                    </a>
                 </div>
             </div>
+            @empty
+            <div class="scroll-reveal bg-gray-800/60 border border-dashed border-gray-700 rounded-lg p-12 text-center">
+                <svg class="w-20 h-20 mx-auto text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                <h3 class="font-kanit text-2xl font-semibold text-white mt-4">Belum Ada Tugas</h3>
+                <p class="text-gray-400 mt-2">Saat ada tugas baru, tugas tersebut akan ditampilkan di sini.</p>
+            </div>
+            @endforelse
         </div>
-        @empty
-        <div class="cyber-card rounded-xl p-12 text-center scroll-reveal">
-            <div class="text-6xl mb-4">📋</div>
-            <h3 class="text-xl font-bold text-white font-orbitron mb-2">Belum Ada Tugas</h3>
-            <p class="text-gray-400">Tugas akan muncul di sini ketika tersedia</p>
-        </div>
-        @endforelse
-    </div>
 
-    <!-- Pagination -->
-    @if($tugas->hasPages())
-    <div class="mt-8 flex justify-center">
-        <div class="cyber-card rounded-xl p-4">
+        @if($tugas->hasPages())
+        <div class="mt-10 flex justify-center">
             {{ $tugas->links() }}
         </div>
+        @endif
     </div>
-    @endif
 </div>
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    // Scroll reveal animation
-    const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
-    };
+    const revealElements = document.querySelectorAll('.scroll-reveal');
+    
+    revealElements.forEach(el => {
+        el.classList.add('opacity-0', 'transform', 'translate-y-5');
+        el.classList.add('transition-all', 'duration-700', 'ease-out');
+    });
 
-    const observer = new IntersectionObserver(function(entries) {
+    const observer = new IntersectionObserver((entries, observer) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                entry.target.classList.add('revealed');
+                entry.target.classList.remove('opacity-0', 'translate-y-5');
+                observer.unobserve(entry.target);
             }
         });
-    }, observerOptions);
+    }, {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    });
 
-    document.querySelectorAll('.scroll-reveal').forEach(el => {
+    revealElements.forEach(el => {
         observer.observe(el);
     });
 });
