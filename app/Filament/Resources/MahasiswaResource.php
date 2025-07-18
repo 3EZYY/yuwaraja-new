@@ -36,6 +36,18 @@ class MahasiswaResource extends Resource
     {
         return $form
             ->schema([
+                Forms\Components\FileUpload::make('photo')
+                    ->label('Foto Profil')
+                    ->image()
+                    ->disk('public')
+                    ->directory('profile-photos')
+                    ->imageEditor()
+                    ->imageEditorAspectRatios([
+                        '1:1',
+                    ])
+                    ->maxSize(2048)
+                    ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
+                    ->columnSpanFull(),
                 Forms\Components\TextInput::make('name')
                     ->label('Nama')
                     ->required()
@@ -49,6 +61,9 @@ class MahasiswaResource extends Resource
                     ->label('NIM')
                     ->required()
                     ->maxLength(20),
+                Forms\Components\TextInput::make('jurusan')
+                    ->label('Jurusan')
+                    ->maxLength(255),
                 Forms\Components\Select::make('kelompok_id')
                     ->label('Kelompok')
                     ->relationship('kelompok', 'nama_kelompok')
@@ -85,6 +100,10 @@ class MahasiswaResource extends Resource
                 Tables\Columns\TextColumn::make('nim')
                     ->label('NIM')
                     ->searchable(),
+                Tables\Columns\TextColumn::make('jurusan')
+                    ->label('Jurusan')
+                    ->searchable()
+                    ->toggleable(),
                 Tables\Columns\TextColumn::make('kelompok.nama_kelompok')
                     ->label('Kelompok')
                     ->sortable(),

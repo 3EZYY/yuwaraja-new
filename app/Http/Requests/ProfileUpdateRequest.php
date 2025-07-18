@@ -32,6 +32,7 @@ class ProfileUpdateRequest extends FormRequest
                 Rule::unique(User::class)->ignore($this->user()->id),
             ],
             'nomor_telepon' => ['nullable', 'string', 'max:20'],
+            'address' => ['nullable', 'string', 'max:500'],
             'program_studi' => ['required', 'string', 'in:D3 Teknologi Informasi,D3 Keuangan Dan Perbankan,D4 Desain Grafis,D4 Manajemen Perhotelan'],
             'deskripsi' => ['nullable', 'string', 'max:1000'],
             'photo' => ['nullable', 'image', 'max:2048', 'mimes:jpeg,png,jpg,gif'],

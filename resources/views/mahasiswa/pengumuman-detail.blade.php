@@ -56,7 +56,19 @@
                 </header>
 
                 {{-- Isi Konten --}}
-                <div class="prose prose-invert prose-sm sm:prose-base max-w-none text-gray-300 prose-headings:text-teal-300 prose-a:text-amber-300 hover:prose-a:text-amber-200 prose-strong:text-white">
+                <div class="prose prose-invert prose-lg max-w-none text-gray-300 
+                           prose-headings:text-teal-300 prose-headings:font-bold prose-headings:mb-4 prose-headings:mt-6
+                           prose-p:text-gray-300 prose-p:leading-relaxed prose-p:mb-4
+                           prose-a:text-amber-300 hover:prose-a:text-amber-200 prose-a:underline
+                           prose-strong:text-white prose-strong:font-semibold
+                           prose-em:text-gray-200 prose-em:italic
+                           prose-ul:text-gray-300 prose-ol:text-gray-300
+                           prose-li:mb-2 prose-li:leading-relaxed
+                           prose-blockquote:border-l-4 prose-blockquote:border-teal-400 prose-blockquote:pl-4 prose-blockquote:italic prose-blockquote:text-gray-400
+                           prose-code:bg-gray-800 prose-code:text-teal-300 prose-code:px-2 prose-code:py-1 prose-code:rounded
+                           prose-pre:bg-gray-800 prose-pre:border prose-pre:border-gray-700
+                           prose-img:rounded-lg prose-img:shadow-lg
+                           prose-hr:border-gray-600">
                     {!! $pengumuman->konten !!}
                 </div>
             </div>

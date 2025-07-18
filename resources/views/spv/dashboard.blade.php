@@ -106,7 +106,7 @@
                         <div>
                             <h4 class="font-semibold text-gray-300 mt-4 mb-1">Kelompok yang Dibimbing</h4>
                             @if($kelompokDibimbing->count() > 0)
-                                <a href="{{ route('spv.kelompok.index') }}" class="text-amber-400 hover:text-amber-300 transition-colors">
+                                <a href="{{ route('spv.cluster.index') }}" class="text-amber-400 hover:text-amber-300 transition-colors">
                                     Lihat <span class="font-bold">{{ $kelompokDibimbing->count() }}</span> kelompok »
                                 </a>
                             @else

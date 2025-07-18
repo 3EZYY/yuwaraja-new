@@ -3,6 +3,7 @@
 
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SpvProfileController;
 use App\Http\Controllers\MahasiswaDashboardController;
 use App\Http\Controllers\SpvDashboardController;
 use App\Http\Controllers\TugasController;
@@ -60,7 +61,7 @@ Route::middleware(['auth', 'verified', 'role:admin'])->prefix('admin')->name('ad
 });
 Route::middleware(['auth', 'verified', 'role:spv'])->prefix('spv')->name('spv.')->group(function () {
     Route::get('/dashboard', [SpvDashboardController::class, 'index'])->name('dashboard');
-    Route::get('/kelompok', [SpvDashboardController::class, 'kelompok'])->name('kelompok.index');
+    Route::get('/cluster', [SpvDashboardController::class, 'cluster'])->name('cluster.index');
     Route::get('/tugas', [SpvTugasController::class, 'index'])->name('tugas.index');
     Route::get('/tugas/{id}', [SpvTugasController::class, 'show'])->name('tugas.show');
     Route::post('/tugas/{id}/approve', [SpvTugasController::class, 'approve'])->name('tugas.approve');
@@ -68,6 +69,10 @@ Route::middleware(['auth', 'verified', 'role:spv'])->prefix('spv')->name('spv.')
     Route::get('/pengumuman', [SpvDashboardController::class, 'pengumuman'])->name('pengumuman.index');
     Route::get('/pengumuman/{pengumuman}', [SpvDashboardController::class, 'showPengumuman'])->name('pengumuman.detail');
     Route::get('/jadwal/{jadwal}', [SpvDashboardController::class, 'showJadwal'])->name('jadwal.detail');
+    
+    // Profile Routes untuk SPV
+    Route::get('/profile', [SpvProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [SpvProfileController::class, 'update'])->name('profile.update');
 });
 
 // Routes untuk MAHASISWA

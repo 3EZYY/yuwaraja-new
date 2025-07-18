@@ -11,7 +11,8 @@ class MahasiswaPengumumanController extends Controller
     public function index()
     {
         $pengumuman = Pengumuman::where('is_published', true)
-                                ->orderByRaw('COALESCE(published_at, updated_at) DESC')
+                                ->orderBy('published_at', 'desc')
+                                ->orderBy('created_at', 'desc')
                                 ->paginate(10);
         
         $listMode = true;

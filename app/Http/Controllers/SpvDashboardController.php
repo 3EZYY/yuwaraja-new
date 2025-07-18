@@ -57,7 +57,7 @@ class SpvDashboardController extends Controller
         ));
     }
 
-    public function kelompok(Request $request)
+    public function cluster(Request $request)
     {
         $user = Auth::user();
         // Ambil semua prodi unik dari mahasiswa yang dibimbing
@@ -74,6 +74,6 @@ class SpvDashboardController extends Controller
             }])
             ->get();
 
-        return view('spv.kelompok', compact('kelompokDibimbing', 'prodiList', 'filterProdi'));
+        return view('spv.cluster', compact('kelompokDibimbing', 'prodiList', 'filterProdi'));
     }
 }
