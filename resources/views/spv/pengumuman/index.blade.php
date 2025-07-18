@@ -3,221 +3,122 @@
 @section('title', 'Pengumuman')
 
 @section('content')
+{{-- Mengimpor Google Fonts untuk Poppins dan Kanit --}}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@500;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap');
-    
-    * {
-        font-family: 'Rajdhani', sans-serif;
-    }
-    
-    .font-orbitron {
-        font-family: 'Orbitron', monospace;
-    }
-    
-    body {
-        background: linear-gradient(135deg, #0A0F1A 0%, #1A1F2E 50%, #0A0F1A 100%);
-        min-height: 100vh;
-    }
-    
-    .cyber-card {
-        background: linear-gradient(145deg, rgba(15, 23, 42, 0.8), rgba(30, 41, 59, 0.6));
-        border: 1px solid rgba(34, 211, 238, 0.3);
-        backdrop-filter: blur(10px);
-        position: relative;
-        overflow: hidden;
-    }
-    
-    .cyber-card::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: -100%;
-        width: 100%;
-        height: 2px;
-        background: linear-gradient(90deg, transparent, #22d3ee, transparent);
-        animation: scan 3s infinite;
-    }
-    
-    @keyframes scan {
-        0% { left: -100%; }
-        100% { left: 100%; }
-    }
-    
-    .cyber-button {
-        background: linear-gradient(145deg, rgba(34, 211, 238, 0.1), rgba(6, 182, 212, 0.2));
-        border: 1px solid rgba(34, 211, 238, 0.5);
-        color: #22d3ee;
-        transition: all 0.3s ease;
-        position: relative;
-        overflow: hidden;
-    }
-    
-    .cyber-button:hover {
-        background: linear-gradient(145deg, rgba(34, 211, 238, 0.2), rgba(6, 182, 212, 0.3));
-        border-color: #22d3ee;
-        box-shadow: 0 0 20px rgba(34, 211, 238, 0.3);
-        transform: translateY(-2px);
-    }
-    
-    .cyber-button::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: -100%;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(90deg, transparent, rgba(34, 211, 238, 0.2), transparent);
-        transition: left 0.5s;
-    }
-    
-    .cyber-button:hover::before {
-        left: 100%;
-    }
-    
-    .glow-text {
-        text-shadow: 0 0 10px rgba(34, 211, 238, 0.5);
-    }
-    
-    .scroll-reveal {
-        opacity: 0;
-        transform: translateY(30px);
-        transition: all 0.6s ease;
-    }
-    
-    .scroll-reveal.revealed {
-        opacity: 1;
-        transform: translateY(0);
-    }
-    
-    .priority-high {
-        border-left: 4px solid #ef4444;
-        background: linear-gradient(145deg, rgba(239, 68, 68, 0.1), rgba(220, 38, 38, 0.05));
-    }
-    
-    .priority-medium {
-        border-left: 4px solid #f59e0b;
-        background: linear-gradient(145deg, rgba(245, 158, 11, 0.1), rgba(217, 119, 6, 0.05));
-    }
-    
-    .priority-low {
-        border-left: 4px solid #10b981;
-        background: linear-gradient(145deg, rgba(16, 185, 129, 0.1), rgba(5, 150, 105, 0.05));
-    }
+    .font-poppins { font-family: 'Poppins', sans-serif; }
+    .font-kanit { font-family: 'Kanit', sans-serif; }
 </style>
 
-<div class="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 p-6">
-    <!-- Header Section -->
-    <div class="cyber-card rounded-xl p-6 mb-8 scroll-reveal">
-        <div class="flex items-center justify-between">
-            <div>
-                <h1 class="text-3xl font-bold text-white font-orbitron glow-text mb-2">
-                    📢 PENGUMUMAN
-                </h1>
-                <p class="text-cyan-400/70">Kelola dan pantau semua pengumuman untuk mahasiswa</p>
+<body class="bg-black text-gray-200 font-poppins">
+
+<div class="container mx-auto p-4 md:p-6 lg:p-8">
+    
+    <header class="mb-8 md:mb-10">
+        <div class="bg-gradient-to-br from-gray-900 to-black border border-teal-500 rounded-xl p-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+            <div class="flex items-center gap-4">
+                {{-- SVG Ikon Megaphone yang Lebih Stylish --}}
+                <div class="bg-yellow-500/10 p-3 rounded-lg border border-yellow-500/20">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-yellow-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-2.236 9.168-5.514C18.332 12.836 20 14.86 20 17c0 .828-.336 1.58-.878 2.121l-1.927-1.927A3.001 3.001 0 0017 15a3 3 0 10-3 3h.008v.008h-.008a3 3 0 00-3-3h-1.414l-2.136-6.133L5.436 13.683z" />
+                    </svg>
+                </div>
+                <div>
+                    <h1 class="text-2xl sm:text-3xl font-bold font-kanit text-white">
+                        PAPAN PENGUMUMAN
+                    </h1>
+                    <p class="text-gray-400 text-sm sm:text-base">Informasi penting dan terkini untuk seluruh mahasiswa.</p>
+                </div>
             </div>
-            <div class="text-right">
-                <div class="text-2xl font-bold text-cyan-400 font-orbitron">{{ $pengumuman->total() }}</div>
-                <div class="text-sm text-cyan-400/70">Total Pengumuman</div>
+            <div class="bg-gray-900/50 border border-gray-700 rounded-lg p-4 text-center w-full md:w-auto">
+                <div class="text-4xl font-bold font-kanit text-yellow-400">{{ $pengumuman->total() }}</div>
+                <div class="text-sm text-gray-400 mt-1">Total Pengumuman</div>
             </div>
         </div>
-    </div>
+    </header>
 
-    <!-- Pengumuman List -->
-    <div class="space-y-6">
-        @forelse($pengumuman as $index => $item)
-        <div class="cyber-card rounded-xl p-6 scroll-reveal hover:scale-[1.02] transition-all duration-300" 
-             style="animation-delay: {{ $index * 0.1 }}s">
-            <div class="flex items-start justify-between mb-4">
+    <!-- Daftar Pengumuman -->
+    <main class="space-y-6">
+        @forelse($pengumuman as $item)
+        <div class="bg-gradient-to-br from-gray-900 to-black rounded-xl border-l-4 
+            @if($item->prioritas === 'tinggi') border-yellow-500 
+            @elseif($item->prioritas === 'sedang') border-teal-600 
+            @else border-teal-300  @endif
+            p-6 transition-all duration-300 hover:shadow-xl hover:shadow-yellow-500/10 hover:border-yellow-500 transform hover:-translate-y-1">
+            
+            <div class="flex flex-col md:flex-row items-start justify-between gap-6">
                 <div class="flex-1">
-                    <div class="flex items-center gap-3 mb-3">
-                        <h3 class="text-xl font-bold text-white font-orbitron">{{ $item->judul }}</h3>
+                    <div class="mb-3">
+                        <h3 class="text-xl font-bold font-kanit text-white mb-2">{{ $item->judul }}</h3>
                         @if($item->prioritas === 'tinggi')
-                            <span class="px-3 py-1 bg-red-500/20 text-red-400 text-xs font-semibold rounded-full border border-red-500/30">
-                                🔥 PRIORITAS TINGGI
+                            <span class="inline-flex items-center gap-2 px-3 py-1 bg-yellow-500/10 text-yellow-500 text-xs font-semibold rounded-full border border-teal-900    ">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.21 3.03-1.742 3.03H4.42c-1.532 0-2.492-1.696-1.742-3.03l5.58-9.92zM10 13a1 1 0 110-2 1 1 0 010 2zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd" /></svg>
+                                PRIORITAS TINGGI
                             </span>
                         @elseif($item->prioritas === 'sedang')
-                            <span class="px-3 py-1 bg-yellow-500/20 text-yellow-400 text-xs font-semibold rounded-full border border-yellow-500/30">
-                                ⚡ PRIORITAS SEDANG
+                            <span class="inline-flex items-center gap-2 px-3 py-1 bg-teal-400/10 text-teal-400 text-xs font-semibold rounded-full border border-teal-400/20">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" /></svg>
+                                PRIORITAS SEDANG
                             </span>
                         @else
-                            <span class="px-3 py-1 bg-green-500/20 text-green-400 text-xs font-semibold rounded-full border border-green-500/30">
-                                ✅ PRIORITAS RENDAH
+                            <span class="inline-flex items-center gap-2 px-3 py-1 bg-gray-500/10 text-gray-400 text-xs font-semibold rounded-full border border-gray-500/20">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" /></svg>
+                                PRIORITAS RENDAH
                             </span>
                         @endif
                     </div>
                     
-                    <p class="text-gray-300 mb-4 leading-relaxed">
-                        {{ Str::limit($item->konten, 200) }}
+                    <p class="text-gray-300 mb-5 leading-relaxed">
+                        {{ Str::limit($item->konten, 180) }}
                     </p>
                     
-                    <div class="flex items-center gap-6 text-sm text-cyan-400/70">
+                    {{-- Metadata dengan ikon dan layout yang rapi --}}
+                    <div class="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6 text-sm text-gray-400 border-t border-gray-500 pt-4">
                         <div class="flex items-center gap-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 20 20" fill="currentColor">
-                                <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd" />
-                            </svg>
-                            {{ $item->created_at->format('d M Y, H:i') }}
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd" /></svg>
+                            <span>{{ $item->created_at->format('d M Y, H:i') }}</span>
                         </div>
                         <div class="flex items-center gap-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 20 20" fill="currentColor">
-                                <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
-                            </svg>
-                            {{ $item->penulis ?? 'Admin' }}
+                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" /></svg>
+                            <span>{{ $item->penulis ?? 'Admin' }}</span>
                         </div>
                     </div>
                 </div>
                 
-                <div class="flex flex-col gap-2 ml-6">
+                {{-- Tombol Aksi Utama dengan warna Kuning --}}
+                <div class="flex-shrink-0 w-full md:w-auto">
                     <a href="{{ route('spv.pengumuman.detail', $item) }}" 
-                       class="cyber-button px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-300 hover:scale-105">
-                        <span class="relative z-10 flex items-center gap-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 20 20" fill="currentColor">
-                                <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
-                                <path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd" />
-                            </svg>
-                            Lihat Detail
-                        </span>
+                       class="w-full inline-flex items-center justify-center gap-2 bg-yellow-500 text-black font-poppins font-bold px-5 py-2.5 rounded-lg transition-all duration-300 hover:bg-yellow-400 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-yellow-500/50">
+                        <span>Lihat Detail</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" /></svg>
                     </a>
                 </div>
             </div>
         </div>
         @empty
-        <div class="cyber-card rounded-xl p-12 text-center scroll-reveal">
-            <div class="text-6xl mb-4">📭</div>
-            <h3 class="text-xl font-bold text-white font-orbitron mb-2">Belum Ada Pengumuman</h3>
-            <p class="text-gray-400">Pengumuman akan muncul di sini ketika tersedia</p>
+        <div class="bg-gray-900/50 border-2 border-dashed border-gray-700 rounded-xl p-12 text-center flex flex-col items-center">
+             <div class="text-gray-700 mb-4">
+                 <svg xmlns="http://www.w3.org/2000/svg" class="h-20 w-20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                     <path stroke-linecap="round" stroke-linejoin="round" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 12h6m-1-5h.01" />
+                 </svg>
+             </div>
+            <h3 class="text-xl font-bold font-kanit text-white mb-2">Belum Ada Pengumuman</h3>
+            <p class="text-gray-500 max-w-xs">Saat informasi baru tersedia, semua akan ditampilkan lengkap di halaman ini.</p>
         </div>
         @endforelse
-    </div>
+    </main>
 
     <!-- Pagination -->
     @if($pengumuman->hasPages())
-    <div class="mt-8 flex justify-center">
-        <div class="cyber-card rounded-xl p-4">
+    <footer class="mt-10 flex justify-center">
+        <div class="bg-gray-900 border border-gray-500 rounded-lg p-2">
             {{ $pengumuman->links() }}
         </div>
-    </div>
+    </footer>
     @endif
 </div>
 
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Scroll reveal animation
-    const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
-    };
-
-    const observer = new IntersectionObserver(function(entries) {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('revealed');
-            }
-        });
-    }, observerOptions);
-
-    document.querySelectorAll('.scroll-reveal').forEach(el => {
-        observer.observe(el);
-    });
-});
-</script>
 @endsection
