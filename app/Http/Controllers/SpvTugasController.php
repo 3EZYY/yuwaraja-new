@@ -64,7 +64,6 @@ class SpvTugasController extends Controller
         $kelompokIds = \App\Models\Kelompok::where('spv_id', $spv->id)->pluck('id');
         
         // Ambil pengumpulan tugas dengan eager loading yang benar
-        // Menggunakan user.kelompok untuk mendapatkan data kelompok terbaru dari user
         $pengumpulan = PengumpulanTugas::with([
                 'user.kelompok', // Relasi kelompok melalui user (data terbaru)
                 'tugas',
@@ -74,6 +73,16 @@ class SpvTugasController extends Controller
                 $query->whereIn('kelompok_id', $kelompokIds);
             })
             ->findOrFail($id);
+        
+        // Sinkronkan kelompok_id jika tidak sesuai dengan user
+        if ($pengumpulan->user && $pengumpulan->user->kelompok_id && 
+            $pengumpulan->kelompok_id !== $pengumpulan->user->kelompok_id) {
+            $pengumpulan->kelompok_id = $pengumpulan->user->kelompok_id;
+            $pengumpulan->save();
+            
+            // Reload relasi kelompok setelah update
+            $pengumpulan->load('kelompok');
+        }
             
         return view('spv.tugas.detail-pengumpulan', compact('pengumpulan'));
     }

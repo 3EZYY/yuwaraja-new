@@ -125,7 +125,15 @@
                         </svg>
                         <div>
                             <p class="text-sm text-gray-400">Cluster</p>
-                            <p class="text-white font-semibold">{{ $pengumpulan->user->kelompok->nama ?? 'Belum ada kelompok' }}</p>
+                            <p class="text-white font-semibold">
+                                @if($pengumpulan->user && $pengumpulan->user->kelompok)
+                                    {{ $pengumpulan->user->kelompok->nama_kelompok }}
+                                @elseif($pengumpulan->kelompok)
+                                    {{ $pengumpulan->kelompok->nama_kelompok }}
+                                @else
+                                    <span class="text-gray-500">Belum ada kelompok</span>
+                                @endif
+                            </p>
                         </div>
                     </div>
                     <div class="flex items-center gap-3">

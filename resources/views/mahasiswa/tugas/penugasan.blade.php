@@ -74,7 +74,10 @@
                                 <div class="flex-grow">
                                     <div class="flex items-start justify-between mb-3">
                                         <h3 class="font-display text-xl font-bold text-gray-50 group-hover:text-teal-500 transition-colors duration-300">{{ $item->judul }}</h3>
-                                        @php $pengumpulan = $pengumpulanTugas[$item->id] ?? null; @endphp
+                                        @php 
+                                            $pengumpulan = $pengumpulanTugas[$item->id] ?? null; 
+                                            $isExpired = now() > $item->deadline;
+                                        @endphp
                                         @if($pengumpulan)
                                         @if($pengumpulan->status == 'done')
                                         <span class="text-xs font-bold py-1 px-3 rounded-full bg-purple-500/10 text-purple-400 border border-purple-500/20">SELESAI</span>
@@ -88,7 +91,11 @@
                                         <span class="text-xs font-bold py-1 px-3 rounded-full bg-yellow-500/10 text-yellow-400 border border-yellow-500/20">DIKUMPULKAN</span>
                                         @endif
                                         @else
-                                        <span class="text-xs font-bold py-1 px-3 rounded-full bg-red-500/10 text-red-400 border border-red-500/20">PENDING</span>
+                                        @if($isExpired)
+                                        <span class="text-xs font-bold py-1 px-3 rounded-full bg-red-500/10 text-red-400 border border-red-500/20">TERLEWAT</span>
+                                        @else
+                                        <span class="text-xs font-bold py-1 px-3 rounded-full bg-gray-500/10 text-gray-400 border border-gray-500/20">BELUM DIKERJAKAN</span>
+                                        @endif
                                         @endif
                                     </div>
                                     <div class="flex items-center space-x-4 mb-5 text-sm">
