@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreignId('kelompok_id')->constrained('kelompoks')->onDelete('cascade');
             $table->string('file_path')->nullable();
             $table->text('keterangan')->nullable();
-            $table->enum('status', ['draft', 'submitted', 'reviewed', 'approved', 'rejected'])->default('draft');
+            $table->enum('status', ['draft', 'submitted', 'reviewed', 'approved', 'rejected', 'done'])->default('draft');
             $table->integer('nilai')->nullable();
             $table->text('feedback')->nullable();
             $table->timestamp('submitted_at')->nullable();
