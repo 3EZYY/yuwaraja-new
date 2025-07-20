@@ -76,11 +76,22 @@ class SpvTugasController extends Controller
     // Approve tugas dan beri nilai/keterangan
     public function approve(Request $request, $id)
     {
-        $request->validate([
-            'nilai' => 'required|numeric|min:0|max:100',
-            'keterangan' => 'nullable|string',
-            'status' => 'required|in:reviewed,rejected,done',
+        // Validate input
+        $validated = $request->validate([
+            'nilai' => 'nullable|integer|min:0|max:100',
+            'keterangan' => 'nullable|string|max:1000',
+            'status' => 'required|in:reviewed,approved,done,rejected'
         ]);
+
+        // Additional validation: nilai is required when status is 'done'
+        if ($validated['status'] === 'done' && empty($validated['nilai'])) {
+            return back()->withErrors(['nilai' => 'Nilai wajib diisi ketika status adalah "Tugas Selesai".']);
+        }
+
+        // Additional validation: keterangan is required when status is 'rejected'
+        if ($validated['status'] === 'rejected' && empty($validated['keterangan'])) {
+            return back()->withErrors(['keterangan' => 'Keterangan wajib diisi ketika status adalah "Butuh Perbaikan".']);
+        }
         
         $spv = auth()->user();
         
@@ -92,24 +103,27 @@ class SpvTugasController extends Controller
             $query->whereIn('kelompok_id', $kelompokIds);
         })->findOrFail($id);
         
-        // Validasi khusus untuk status rejected
-        if ($request->input('status') === 'rejected' && empty($request->input('keterangan'))) {
-            return redirect()->back()->withErrors(['keterangan' => 'Feedback wajib diisi ketika tugas membutuhkan perbaikan.']);
+        $pengumpulan->status = $validated['status'];
+        
+        // Only set nilai when status is 'done', otherwise reset to null
+        if ($validated['status'] === 'done') {
+            $pengumpulan->nilai = $validated['nilai'];
+        } else {
+            $pengumpulan->nilai = null;
         }
         
-        $pengumpulan->status = $request->input('status');
-        $pengumpulan->nilai = $request->input('nilai');
-        $pengumpulan->keterangan = $request->input('keterangan');
+        $pengumpulan->keterangan = $validated['keterangan'];
         $pengumpulan->save();
         
         // Pesan sukses berdasarkan status
         $messages = [
             'reviewed' => 'Tugas telah ditandai sedang direview.',
+            'approved' => 'Tugas telah disetujui.',
             'rejected' => 'Tugas telah ditolak dan mahasiswa dapat mengumpulkan kembali.',
             'done' => 'Tugas telah diselesaikan dan dinilai.'
         ];
         
-        $message = $messages[$request->input('status')] ?? 'Status tugas berhasil diperbarui.';
+        $message = $messages[$validated['status']] ?? 'Status tugas berhasil diperbarui.';
         
         // TODO: Trigger notifikasi ke mahasiswa jika status berubah
         return redirect()->back()->with('success', $message);

@@ -175,7 +175,10 @@
                                     @endif
                                 </span>
                                 @if($pengumpulan->status == 'done')
-                                    <span class="block text-purple-400 mt-2">✨ Tugas kamu sudah selesai & dinilai!</span>
+                                    <span class="block text-green-400 mt-2">✅ Tugas Selesai</span>
+                                    @if($pengumpulan->nilai !== null)
+                                        <span class="block mt-2 text-cyan-400">📊 Nilai: <b class="text-glow-cyan">{{ $pengumpulan->nilai }}</b></span>
+                                    @endif
                                 @elseif($pengumpulan->status == 'approved')
                                     <span class="block text-green-400 mt-2">✅ Tugas kamu sudah di-approve SPV.</span>
                                 @elseif($pengumpulan->status == 'reviewed')
@@ -184,9 +187,6 @@
                                     <span class="block text-red-400 mt-2">❌ Tugas kamu perlu diperbaiki. Silakan kumpulkan kembali setelah diperbaiki.</span>
                                 @elseif($pengumpulan->status == 'submitted')
                                     <span class="block text-yellow-600 mt-2">📤 Tugas kamu sudah dikumpulkan, menunggu review SPV.</span>
-                                @endif
-                                @if($pengumpulan->nilai !== null)
-                                    <span class="block mt-2 text-cyan-400">📊 Nilai: <b class="text-glow-cyan">{{ $pengumpulan->nilai }}</b></span>
                                 @endif
                                 @if($pengumpulan->keterangan)
                                     <span class="block mt-2 text-gray-300">💬 Feedback SPV: <i>{{ $pengumpulan->keterangan }}</i></span>

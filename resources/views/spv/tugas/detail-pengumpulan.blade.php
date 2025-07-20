@@ -225,8 +225,8 @@
                 <!-- Grid Layout for Form Fields -->
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
                     
-                    <!-- Nilai Input -->
-                    <div class="space-y-3">
+                    <!-- Nilai Input - Only show when status is "done" -->
+                    <div class="space-y-3" id="score-section" style="display: none;">
                         <label for="nilai" class="flex items-center gap-2 text-sm font-semibold text-gray-200">
                             <svg class="w-4 h-4 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/>
@@ -237,7 +237,7 @@
                             <input type="number" name="nilai" id="nilai" 
                                    class="w-full bg-gray-900/50 border-2 border-gray-600/50 rounded-xl px-4 py-3 text-white placeholder-gray-400 focus:border-teal-500 focus:ring-4 focus:ring-teal-500/20 transition-all duration-300 text-lg font-semibold" 
                                    value="{{ old('nilai', $pengumpulan->nilai) }}" 
-                                   min="0" max="100" required
+                                   min="0" max="100"
                                    placeholder="Masukkan nilai 0-100">
                             <div class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 text-sm">
                                 /100
@@ -368,10 +368,12 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     };
 
-    // Update status description
+    // Update status description and score section visibility
     function updateStatusDescription() {
         const selectedStatus = statusSelect.value;
         const description = statusDescriptions[selectedStatus];
+        const scoreSection = document.getElementById('score-section');
+        const nilaiInput = document.getElementById('nilai');
         
         if (description) {
             statusDescription.className = `mt-3 p-4 rounded-lg text-sm ${description.class}`;
@@ -383,6 +385,16 @@ document.addEventListener('DOMContentLoaded', function() {
                     <span>${description.text}</span>
                 </div>
             `;
+        }
+        
+        // Show/hide score section based on status
+        if (selectedStatus === 'done') {
+            scoreSection.style.display = 'block';
+            nilaiInput.required = true;
+        } else {
+            scoreSection.style.display = 'none';
+            nilaiInput.required = false;
+            nilaiInput.value = '';
         }
     }
 
@@ -408,6 +420,12 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initialize
     updateStatusDescription();
     updateCharCount();
+    
+    // Show score section if current status is 'done'
+    if (statusSelect.value === 'done') {
+        document.getElementById('score-section').style.display = 'block';
+        document.getElementById('nilai').required = true;
+    }
 
     // Form validation
     const form = document.querySelector('form');
