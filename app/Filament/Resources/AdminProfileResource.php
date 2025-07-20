@@ -30,6 +30,9 @@ class AdminProfileResource extends Resource
     protected static ?string $pluralModelLabel = 'Profile Admin';
 
     protected static ?string $navigationGroup = 'Pengaturan';
+    
+    // Sembunyikan dari navigation
+    protected static bool $shouldRegisterNavigation = false;
 
     public static function form(Form $form): Form
     {

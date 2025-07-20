@@ -71,6 +71,39 @@ class User extends Authenticatable implements FilamentUser
         return $this->role === 'admin';
     }
 
+    /**
+     * Get the URL for the user's avatar in Filament
+     */
+    public function getFilamentAvatarUrl(): ?string
+    {
+        if (!$this->photo) {
+            return null;
+        }
+        
+        // Jika foto sudah berupa URL lengkap, return as is
+        if (str_starts_with($this->photo, 'http')) {
+            return $this->photo;
+        }
+        
+        // Jika foto disimpan di public/profile-pictures (path relatif)
+        if (str_starts_with($this->photo, 'profile-pictures/')) {
+            return asset($this->photo);
+        }
+        
+        // Jika hanya nama file, cek di public/profile-pictures
+        if (file_exists(public_path('profile-pictures/' . $this->photo))) {
+            return asset('profile-pictures/' . $this->photo);
+        }
+        
+        // Jika foto disimpan di storage/app/public
+        if (file_exists(storage_path('app/public/' . $this->photo))) {
+            return asset('storage/' . $this->photo);
+        }
+        
+        // Default fallback
+        return asset($this->photo);
+    }
+
     // Relasi dengan model lain
     public function kelompok()
     {

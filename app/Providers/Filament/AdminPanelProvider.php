@@ -57,10 +57,8 @@ class AdminPanelProvider extends PanelProvider
                 Authenticate::class,
             ])
             ->authGuard('web')
-            ->renderHook(
-                'panels::user-menu.before',
-                fn () => view('vendor.filament.components.user-menu'),
-            );
+            ->userMenuItems([])  // Menghapus semua item di user menu
+            ->renderHook('panels::head.end', fn () => '<style>[data-slot="user-menu"] { display: none !important; }</style>');
     }
     
     public function register(): void
