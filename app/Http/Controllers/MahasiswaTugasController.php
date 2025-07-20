@@ -53,6 +53,10 @@ class MahasiswaTugasController extends Controller
             'keterangan' => 'nullable|string|max:2000',
         ]);
 
+        // Ambil kelompok_id dari user yang sedang login
+        $user = Auth::user();
+        $kelompokId = $user->kelompok_id;
+
         $pengumpulan = PengumpulanTugas::firstOrNew(
             [
                 'user_id' => Auth::id(),
@@ -78,6 +82,9 @@ class MahasiswaTugasController extends Controller
         $pengumpulan->keterangan = $request->keterangan;
         $pengumpulan->status = 'submitted'; // Reset status ke submitted untuk review ulang
         $pengumpulan->submitted_at = now();
+        
+        // Pastikan kelompok_id tersimpan
+        $pengumpulan->kelompok_id = $kelompokId;
         
         // Reset nilai dan feedback jika ini adalah resubmission
         if ($pengumpulan->exists) {

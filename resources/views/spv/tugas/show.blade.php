@@ -167,8 +167,8 @@
                             
                             <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
                                 <div>
-                                    <span class="text-gray-400">Kelompok:</span>
-                                    <span class="text-white font-medium">{{ $pengumpulan->kelompok->nama ?? 'Belum ada' }}</span>
+                                    <span class="text-gray-400">Cluster:</span>
+                                    <span class="text-white font-medium">{{ $pengumpulan->user->kelompok->nama ?? 'Belum ada kelompok' }}</span>
                                 </div>
                                 <div>
                                     <span class="text-gray-400">Dikumpulkan:</span>

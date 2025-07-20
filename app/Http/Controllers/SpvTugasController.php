@@ -24,7 +24,7 @@ class SpvTugasController extends Controller
         $kelompokIds = \App\Models\Kelompok::where('spv_id', $spv->id)->pluck('id');
         
         // Ambil pengumpulan tugas hanya dari mahasiswa di kelompok yang di-supervisi
-        $pengumpulans = PengumpulanTugas::with(['user', 'tugas', 'kelompok'])
+        $pengumpulans = PengumpulanTugas::with(['user.kelompok', 'tugas', 'kelompok'])
             ->whereHas('user', function($query) use ($kelompokIds) {
                 $query->whereIn('kelompok_id', $kelompokIds);
             })
@@ -44,7 +44,7 @@ class SpvTugasController extends Controller
         $kelompokIds = \App\Models\Kelompok::where('spv_id', $spv->id)->pluck('id');
         
         // Ambil pengumpulan tugas hanya dari mahasiswa di kelompok yang di-supervisi
-        $pengumpulans = PengumpulanTugas::with(['user', 'kelompok'])
+        $pengumpulans = PengumpulanTugas::with(['user.kelompok', 'kelompok'])
             ->where('tugas_id', $id)
             ->whereHas('user', function($query) use ($kelompokIds) {
                 $query->whereIn('kelompok_id', $kelompokIds);
@@ -63,8 +63,13 @@ class SpvTugasController extends Controller
         // Ambil kelompok yang di-supervisi oleh SPV ini
         $kelompokIds = \App\Models\Kelompok::where('spv_id', $spv->id)->pluck('id');
         
-        // Ambil pengumpulan tugas hanya jika mahasiswa ada di kelompok yang di-supervisi
-        $pengumpulan = PengumpulanTugas::with(['user', 'tugas', 'kelompok'])
+        // Ambil pengumpulan tugas dengan eager loading yang benar
+        // Menggunakan user.kelompok untuk mendapatkan data kelompok terbaru dari user
+        $pengumpulan = PengumpulanTugas::with([
+                'user.kelompok', // Relasi kelompok melalui user (data terbaru)
+                'tugas',
+                'kelompok' // Tetap load relasi kelompok langsung untuk backward compatibility
+            ])
             ->whereHas('user', function($query) use ($kelompokIds) {
                 $query->whereIn('kelompok_id', $kelompokIds);
             })
@@ -73,13 +78,13 @@ class SpvTugasController extends Controller
         return view('spv.tugas.detail-pengumpulan', compact('pengumpulan'));
     }
 
-    // Approve tugas dan beri nilai/keterangan
+    // Approve tugas dan beri nilai/feedback
     public function approve(Request $request, $id)
     {
         // Validate input
         $validated = $request->validate([
             'nilai' => 'nullable|integer|min:0|max:100',
-            'keterangan' => 'nullable|string|max:1000',
+            'feedback' => 'nullable|string|max:1000',
             'status' => 'required|in:reviewed,approved,done,rejected'
         ]);
 
@@ -88,9 +93,9 @@ class SpvTugasController extends Controller
             return back()->withErrors(['nilai' => 'Nilai wajib diisi ketika status adalah "Tugas Selesai".']);
         }
 
-        // Additional validation: keterangan is required when status is 'rejected'
-        if ($validated['status'] === 'rejected' && empty($validated['keterangan'])) {
-            return back()->withErrors(['keterangan' => 'Keterangan wajib diisi ketika status adalah "Butuh Perbaikan".']);
+        // Additional validation: feedback is required when status is 'rejected'
+        if ($validated['status'] === 'rejected' && empty($validated['feedback'])) {
+            return back()->withErrors(['feedback' => 'Feedback wajib diisi ketika status adalah "Butuh Perbaikan".']);
         }
         
         $spv = auth()->user();
@@ -112,7 +117,7 @@ class SpvTugasController extends Controller
             $pengumpulan->nilai = null;
         }
         
-        $pengumpulan->keterangan = $validated['keterangan'];
+        $pengumpulan->feedback = $validated['feedback'];
         $pengumpulan->save();
         
         // Pesan sukses berdasarkan status

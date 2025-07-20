@@ -19,7 +19,7 @@ class CreateKelompok extends CreateRecord
     {
         return [
             '/admin' => 'Dashboard',
-            '/admin/cluster' => 'Cluster',
+            '/admin/dashboard/cluster' => 'Cluster',
             '' => 'Buat',
         ];
     }

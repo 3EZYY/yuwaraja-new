@@ -188,8 +188,8 @@
                                 @elseif($pengumpulan->status == 'submitted')
                                     <span class="block text-yellow-600 mt-2">📤 Tugas kamu sudah dikumpulkan, menunggu review SPV.</span>
                                 @endif
-                                @if($pengumpulan->keterangan)
-                                    <span class="block mt-2 text-gray-300">💬 Feedback SPV: <i>{{ $pengumpulan->keterangan }}</i></span>
+                                @if($pengumpulan->feedback)
+                                    <span class="block mt-2 text-gray-300">💬 Feedback SPV: <i>{{ $pengumpulan->feedback }}</i></span>
                                 @endif
                             </div>
                         </div>

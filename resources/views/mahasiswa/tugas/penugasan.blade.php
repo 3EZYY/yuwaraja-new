@@ -219,8 +219,8 @@
                                     <span class="text-gray-400 font-semibold">{{ ucfirst($pengumpulan->status) }}</span>
                                 @endif
                             </p>
-                            @if($pengumpulan->keterangan)
-                                <p class="text-sm text-gray-400 mt-1">Feedback SPV: <em>{{ $pengumpulan->keterangan }}</em></p>
+                            @if($pengumpulan->feedback)
+                                <p class="text-sm text-gray-400 mt-1">Feedback SPV: <em>{{ $pengumpulan->feedback }}</em></p>
                             @endif
                             @if($pengumpulan->status == 'done' && $pengumpulan->nilai !== null)
                                 <p class="text-sm text-cyan-400 mt-1">Nilai: <strong>{{ $pengumpulan->nilai }}</strong></p>

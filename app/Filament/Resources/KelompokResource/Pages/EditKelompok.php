@@ -19,7 +19,7 @@ class EditKelompok extends EditRecord
     {
         return [
             '/admin' => 'Dashboard',
-            '/admin/cluster' => 'Cluster',
+            '/admin/dashboard/cluster' => 'Cluster',
             '' => 'Edit',
         ];
     }
