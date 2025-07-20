@@ -76,10 +76,16 @@
                                         <h3 class="font-display text-xl font-bold text-gray-50 group-hover:text-teal-500 transition-colors duration-300">{{ $item->judul }}</h3>
                                         @php $pengumpulan = $pengumpulanTugas[$item->id] ?? null; @endphp
                                         @if($pengumpulan)
-                                        @if($pengumpulan->status == 'approved')
+                                        @if($pengumpulan->status == 'done')
+                                        <span class="text-xs font-bold py-1 px-3 rounded-full bg-purple-500/10 text-purple-400 border border-purple-500/20">SELESAI</span>
+                                        @elseif($pengumpulan->status == 'approved')
                                         <span class="text-xs font-bold py-1 px-3 rounded-full bg-green-500/10 text-green-400 border border-green-500/20">DISETUJUI</span>
+                                        @elseif($pengumpulan->status == 'rejected')
+                                        <span class="text-xs font-bold py-1 px-3 rounded-full bg-red-500/10 text-red-400 border border-red-500/20">PERLU PERBAIKAN</span>
+                                        @elseif($pengumpulan->status == 'reviewed')
+                                        <span class="text-xs font-bold py-1 px-3 rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/20">DIREVIEW</span>
                                         @else
-                                        <span class="text-xs font-bold py-1 px-3 rounded-full bg-yellow-500/10 text-teal-500 border border-amber-500/20">DIKUMPULKAN</span>
+                                        <span class="text-xs font-bold py-1 px-3 rounded-full bg-yellow-500/10 text-yellow-400 border border-yellow-500/20">DIKUMPULKAN</span>
                                         @endif
                                         @else
                                         <span class="text-xs font-bold py-1 px-3 rounded-full bg-red-500/10 text-red-400 border border-red-500/20">PENDING</span>
@@ -197,10 +203,33 @@
                             File Terkumpul
                         </p>
                         <a href="{{ Storage::url($pengumpulan->file_path) }}" target="_blank" class="text-amber-300 hover:underline text-sm truncate block mt-1 ml-7">{{ basename($pengumpulan->file_path) }}</a>
+                        
+                        <!-- Status pengumpulan -->
+                        <div class="mt-3 pt-3 border-t border-gray-700">
+                            <p class="text-sm text-gray-300">Status: 
+                                @if($pengumpulan->status == 'reviewed')
+                                    <span class="text-blue-400 font-semibold">Sedang Direview SPV</span>
+                                @elseif($pengumpulan->status == 'rejected')
+                                    <span class="text-red-400 font-semibold">Butuh Perbaikan</span>
+                                @elseif($pengumpulan->status == 'done')
+                                    <span class="text-purple-400 font-semibold">Tugas Selesai</span>
+                                @elseif($pengumpulan->status == 'submitted')
+                                    <span class="text-yellow-400 font-semibold">Menunggu Review</span>
+                                @else
+                                    <span class="text-gray-400 font-semibold">{{ ucfirst($pengumpulan->status) }}</span>
+                                @endif
+                            </p>
+                            @if($pengumpulan->keterangan)
+                                <p class="text-sm text-gray-400 mt-1">Feedback SPV: <em>{{ $pengumpulan->keterangan }}</em></p>
+                            @endif
+                            @if($pengumpulan->nilai !== null)
+                                <p class="text-sm text-cyan-400 mt-1">Nilai: <strong>{{ $pengumpulan->nilai }}</strong></p>
+                            @endif
+                        </div>
                     </div>
                     @endif
 
-                    @if(now() <= $tugas->deadline)
+                    @if(now() <= $tugas->deadline && (!isset($pengumpulan) || $pengumpulan->status !== 'done'))
                         <form action="{{ route('mahasiswa.tugas.submit', $tugas) }}" method="POST" enctype="multipart/form-data" class="space-y-4">
                             @csrf
                             <div>
@@ -215,7 +244,13 @@
                                 @error('keterangan') <p class="text-sm text-red-400 mt-1">{{ $message }}</p> @enderror
                             </div>
                             <button type="submit" class="w-full px-6 py-3 bg-teal-500 hover:bg-teal-600 text-black font-bold rounded-lg transition-all duration-300 hover:shadow-lg hover:shadow-teal-500/20 font-display focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-900 focus:ring-teal-400">
-                                {{ (isset($pengumpulan) && $pengumpulan->file_path) ? 'Kirim Versi Baru' : 'Kirim Misi' }}
+                                @if(isset($pengumpulan) && $pengumpulan->status == 'rejected')
+                                    Kumpulkan Ulang (Perbaikan)
+                                @elseif(isset($pengumpulan) && $pengumpulan->file_path)
+                                    Kirim Versi Baru
+                                @else
+                                    Kirim Misi
+                                @endif
                             </button>
                         </form>
                         @else

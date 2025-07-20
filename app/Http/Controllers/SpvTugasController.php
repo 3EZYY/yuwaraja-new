@@ -79,7 +79,7 @@ class SpvTugasController extends Controller
         $request->validate([
             'nilai' => 'required|numeric|min:0|max:100',
             'keterangan' => 'nullable|string',
-            'status' => 'required|in:reviewed,approved,done',
+            'status' => 'required|in:reviewed,rejected,done',
         ]);
         
         $spv = auth()->user();
@@ -92,12 +92,26 @@ class SpvTugasController extends Controller
             $query->whereIn('kelompok_id', $kelompokIds);
         })->findOrFail($id);
         
+        // Validasi khusus untuk status rejected
+        if ($request->input('status') === 'rejected' && empty($request->input('keterangan'))) {
+            return redirect()->back()->withErrors(['keterangan' => 'Feedback wajib diisi ketika tugas membutuhkan perbaikan.']);
+        }
+        
         $pengumpulan->status = $request->input('status');
         $pengumpulan->nilai = $request->input('nilai');
         $pengumpulan->keterangan = $request->input('keterangan');
         $pengumpulan->save();
         
+        // Pesan sukses berdasarkan status
+        $messages = [
+            'reviewed' => 'Tugas telah ditandai sedang direview.',
+            'rejected' => 'Tugas telah ditolak dan mahasiswa dapat mengumpulkan kembali.',
+            'done' => 'Tugas telah diselesaikan dan dinilai.'
+        ];
+        
+        $message = $messages[$request->input('status')] ?? 'Status tugas berhasil diperbarui.';
+        
         // TODO: Trigger notifikasi ke mahasiswa jika status berubah
-        return redirect()->back()->with('success', 'Status tugas dan nilai berhasil diperbarui.');
+        return redirect()->back()->with('success', $message);
     }
 }

@@ -40,6 +40,7 @@
     .status-submitted { background: rgba(59, 130, 246, 0.2); color: #3b82f6; }
     .status-reviewed { background: rgba(34, 197, 94, 0.2); color: #22c55e; }
     .status-approved { background: rgba(34, 197, 94, 0.2); color: #22c55e; }
+    .status-rejected { background: rgba(239, 68, 68, 0.2); color: #ef4444; }
     .status-done { background: rgba(168, 85, 247, 0.2); color: #a855f7; }
     
     .form-input {
@@ -180,18 +181,37 @@
         </div>
 
         <!-- Form Review -->
-        <div class="bg-gray-800/60 border border-gray-700 rounded-lg shadow-lg p-6 scroll-reveal">
-            <h3 class="font-kanit text-xl font-semibold text-white mb-6">Form Penilaian</h3>
+        <div class="bg-gradient-to-br from-gray-800/80 to-gray-900/80 backdrop-blur-sm border border-gray-700/50 rounded-2xl shadow-2xl p-8 scroll-reveal">
+            <div class="flex items-center gap-3 mb-8">
+                <div class="p-3 bg-gradient-to-r from-teal-500 to-cyan-500 rounded-xl">
+                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                    </svg>
+                </div>
+                <div>
+                    <h3 class="font-kanit text-2xl font-bold text-white">Form Penilaian</h3>
+                    <p class="text-gray-400 text-sm">Berikan penilaian dan feedback untuk mahasiswa</p>
+                </div>
+            </div>
             
             @if(session('success'))
-                <div class="bg-green-500/20 border border-green-500/50 text-green-300 px-4 py-3 rounded-lg mb-6">
+                <div class="bg-gradient-to-r from-green-500/20 to-emerald-500/20 border border-green-500/30 text-green-300 px-6 py-4 rounded-xl mb-6 flex items-center gap-3">
+                    <svg class="w-5 h-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                    </svg>
                     {{ session('success') }}
                 </div>
             @endif
 
             @if($errors->any())
-                <div class="bg-red-500/20 border border-red-500/50 text-red-300 px-4 py-3 rounded-lg mb-6">
-                    <ul class="list-disc list-inside">
+                <div class="bg-gradient-to-r from-red-500/20 to-pink-500/20 border border-red-500/30 text-red-300 px-6 py-4 rounded-xl mb-6">
+                    <div class="flex items-center gap-3 mb-2">
+                        <svg class="w-5 h-5 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                        <span class="font-semibold">Terdapat kesalahan:</span>
+                    </div>
+                    <ul class="list-disc list-inside space-y-1 ml-8">
                         @foreach($errors->all() as $error)
                             <li>{{ $error }}</li>
                         @endforeach
@@ -199,34 +219,102 @@
                 </div>
             @endif
             
-            <form action="{{ route('spv.tugas.approve', $pengumpulan->id) }}" method="POST" class="space-y-6">
+            <form action="{{ route('spv.tugas.approve', $pengumpulan->id) }}" method="POST" class="space-y-8">
                 @csrf
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                        <label for="nilai" class="block text-sm font-semibold text-gray-300 mb-2">Nilai (0-100)</label>
-                        <input type="number" name="nilai" id="nilai" class="form-input" 
-                               value="{{ old('nilai', $pengumpulan->nilai) }}" min="0" max="100" required>
+                
+                <!-- Grid Layout for Form Fields -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    
+                    <!-- Nilai Input -->
+                    <div class="space-y-3">
+                        <label for="nilai" class="flex items-center gap-2 text-sm font-semibold text-gray-200">
+                            <svg class="w-4 h-4 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/>
+                            </svg>
+                            Nilai (0-100)
+                        </label>
+                        <div class="relative">
+                            <input type="number" name="nilai" id="nilai" 
+                                   class="w-full bg-gray-900/50 border-2 border-gray-600/50 rounded-xl px-4 py-3 text-white placeholder-gray-400 focus:border-teal-500 focus:ring-4 focus:ring-teal-500/20 transition-all duration-300 text-lg font-semibold" 
+                                   value="{{ old('nilai', $pengumpulan->nilai) }}" 
+                                   min="0" max="100" required
+                                   placeholder="Masukkan nilai 0-100">
+                            <div class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 text-sm">
+                                /100
+                            </div>
+                        </div>
                     </div>
-                    <div>
-                        <label for="status" class="block text-sm font-semibold text-gray-300 mb-2">Status</label>
-                        <select name="status" id="status" class="form-input">
-                            <option value="reviewed" {{ $pengumpulan->status == 'reviewed' ? 'selected' : '' }}>Perlu Diteliti</option>
-                            <option value="approved" {{ $pengumpulan->status == 'approved' ? 'selected' : '' }}>Approve</option>
-                            <option value="done" {{ $pengumpulan->status == 'done' ? 'selected' : '' }}>Done/Selesai</option>
-                        </select>
+                    
+                    <!-- Status Select -->
+                    <div class="space-y-3">
+                        <label for="status" class="flex items-center gap-2 text-sm font-semibold text-gray-200">
+                            <svg class="w-4 h-4 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                            Status Penilaian
+                        </label>
+                        <div class="relative">
+                            <select name="status" id="status" 
+                                    class="w-full bg-gray-900/50 border-2 border-gray-600/50 rounded-xl px-4 py-3 text-white focus:border-teal-500 focus:ring-4 focus:ring-teal-500/20 transition-all duration-300 text-lg font-semibold appearance-none cursor-pointer">
+                                <option value="reviewed" {{ $pengumpulan->status == 'reviewed' ? 'selected' : '' }}>
+                                    🔍 Sedang Direview SPV
+                                </option>
+                                <option value="rejected" {{ $pengumpulan->status == 'rejected' ? 'selected' : '' }}>
+                                    ❌ Butuh Perbaikan
+                                </option>
+                                <option value="done" {{ $pengumpulan->status == 'done' ? 'selected' : '' }}>
+                                    ✅ Tugas Selesai
+                                </option>
+                            </select>
+                            <div class="absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none">
+                                <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                                </svg>
+                            </div>
+                        </div>
+                        
+                        <!-- Status Description -->
+                        <div id="status-description" class="mt-3 p-4 rounded-lg text-sm">
+                            <!-- Description will be updated by JavaScript -->
+                        </div>
                     </div>
                 </div>
-                <div>
-                    <label for="keterangan" class="block text-sm font-semibold text-gray-300 mb-2">Keterangan/Feedback</label>
-                    <textarea name="keterangan" id="keterangan" rows="4" class="form-input" 
-                              placeholder="Berikan feedback atau keterangan untuk mahasiswa...">{{ old('keterangan', $pengumpulan->keterangan) }}</textarea>
-                </div>
-                <div class="flex justify-end pt-6 border-t border-gray-700">
-                    <button type="submit" class="submit-button">
-                        <svg class="w-5 h-5 mr-2 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                
+                <!-- Feedback Textarea -->
+                <div class="space-y-3">
+                    <label for="keterangan" class="flex items-center gap-2 text-sm font-semibold text-gray-200">
+                        <svg class="w-4 h-4 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
                         </svg>
-                        Simpan Review
+                        Keterangan/Feedback
+                    </label>
+                    <div class="relative">
+                        <textarea name="keterangan" id="keterangan" rows="5" 
+                                  class="w-full bg-gray-900/50 border-2 border-gray-600/50 rounded-xl px-4 py-3 text-white placeholder-gray-400 focus:border-teal-500 focus:ring-4 focus:ring-teal-500/20 transition-all duration-300 resize-none" 
+                                  placeholder="Berikan feedback konstruktif untuk membantu mahasiswa berkembang...">{{ old('keterangan', $pengumpulan->keterangan) }}</textarea>
+                        <div class="absolute bottom-3 right-3 text-gray-500 text-xs">
+                            <span id="char-count">0</span> karakter
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Submit Button -->
+                <div class="flex flex-col sm:flex-row items-center justify-between pt-8 border-t border-gray-700/50 gap-4">
+                    <div class="text-sm text-gray-400">
+                        <svg class="w-4 h-4 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                        Pastikan penilaian sudah sesuai sebelum menyimpan
+                    </div>
+                    <button type="submit" 
+                            class="group relative px-8 py-4 bg-gradient-to-r from-teal-500 to-cyan-500 hover:from-teal-600 hover:to-cyan-600 text-white font-bold rounded-xl transition-all duration-300 transform hover:scale-105 hover:shadow-2xl hover:shadow-teal-500/25 focus:outline-none focus:ring-4 focus:ring-teal-500/50">
+                        <div class="flex items-center gap-3">
+                            <svg class="w-5 h-5 group-hover:rotate-12 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                            </svg>
+                            <span class="text-lg">Simpan Penilaian</span>
+                        </div>
+                        <div class="absolute inset-0 bg-white/20 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                     </button>
                 </div>
             </form>
@@ -237,7 +325,12 @@
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     const revealElements = document.querySelectorAll('.scroll-reveal');
+    const statusSelect = document.getElementById('status');
+    const statusDescription = document.getElementById('status-description');
+    const keteranganTextarea = document.getElementById('keterangan');
+    const charCount = document.getElementById('char-count');
     
+    // Scroll reveal animation
     revealElements.forEach(el => {
         el.classList.add('opacity-0', 'transform', 'translate-y-5');
         el.classList.add('transition-all', 'duration-700', 'ease-out');
@@ -257,6 +350,91 @@ document.addEventListener('DOMContentLoaded', function() {
 
     revealElements.forEach(el => {
         observer.observe(el);
+    });
+
+    // Status descriptions
+    const statusDescriptions = {
+        'reviewed': {
+            text: 'Tugas sedang dalam tahap review oleh SPV. Mahasiswa akan menerima notifikasi bahwa tugas mereka sedang diperiksa.',
+            class: 'bg-blue-500/10 border border-blue-500/30 text-blue-300'
+        },
+        'rejected': {
+            text: 'Tugas membutuhkan perbaikan. Mahasiswa dapat mengumpulkan tugas kembali setelah melakukan revisi sesuai feedback.',
+            class: 'bg-red-500/10 border border-red-500/30 text-red-300'
+        },
+        'done': {
+            text: 'Tugas telah selesai dan dinilai. Mahasiswa tidak dapat lagi mengumpulkan tugas untuk assignment ini.',
+            class: 'bg-green-500/10 border border-green-500/30 text-green-300'
+        }
+    };
+
+    // Update status description
+    function updateStatusDescription() {
+        const selectedStatus = statusSelect.value;
+        const description = statusDescriptions[selectedStatus];
+        
+        if (description) {
+            statusDescription.className = `mt-3 p-4 rounded-lg text-sm ${description.class}`;
+            statusDescription.innerHTML = `
+                <div class="flex items-start gap-2">
+                    <svg class="w-4 h-4 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                    <span>${description.text}</span>
+                </div>
+            `;
+        }
+    }
+
+    // Character counter for textarea
+    function updateCharCount() {
+        const count = keteranganTextarea.value.length;
+        charCount.textContent = count;
+        
+        if (count > 500) {
+            charCount.parentElement.classList.add('text-red-400');
+        } else if (count > 300) {
+            charCount.parentElement.classList.add('text-yellow-400');
+            charCount.parentElement.classList.remove('text-red-400');
+        } else {
+            charCount.parentElement.classList.remove('text-red-400', 'text-yellow-400');
+        }
+    }
+
+    // Event listeners
+    statusSelect.addEventListener('change', updateStatusDescription);
+    keteranganTextarea.addEventListener('input', updateCharCount);
+
+    // Initialize
+    updateStatusDescription();
+    updateCharCount();
+
+    // Form validation
+    const form = document.querySelector('form');
+    form.addEventListener('submit', function(e) {
+        const nilai = document.getElementById('nilai').value;
+        const status = statusSelect.value;
+        
+        if (!nilai || nilai < 0 || nilai > 100) {
+            e.preventDefault();
+            alert('Nilai harus diisi dan berada dalam rentang 0-100');
+            return;
+        }
+        
+        if (status === 'done' && (!keteranganTextarea.value.trim())) {
+            const confirm = window.confirm('Anda akan menyelesaikan tugas tanpa memberikan feedback. Apakah Anda yakin?');
+            if (!confirm) {
+                e.preventDefault();
+                return;
+            }
+        }
+        
+        if (status === 'rejected' && (!keteranganTextarea.value.trim())) {
+            e.preventDefault();
+            alert('Feedback wajib diisi ketika tugas membutuhkan perbaikan');
+            keteranganTextarea.focus();
+            return;
+        }
     });
 });
 </script>

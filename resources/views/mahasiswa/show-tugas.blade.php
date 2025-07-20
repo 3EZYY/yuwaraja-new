@@ -154,27 +154,42 @@
                             <i class="fas fa-check-circle text-glow-cyan text-2xl mr-3"></i>
                             <div>
                                 <h3 class="text-xl font-semibold text-glow-cyan">✅ Upload Tugas Anda</h3>
-                                <p class="text-gray-300">Dikumpulkan pada: {{ \Carbon\Carbon::parse($pengumpulan->tanggal_submit)->format('d M Y, H:i') }}</p>
+                                <p class="text-gray-300">Dikumpulkan pada: {{ \Carbon\Carbon::parse($pengumpulan->submitted_at)->format('d M Y, H:i') }}</p>
                                 <span class="inline-block mt-2 status-badge
                                     {{
-                                        $pengumpulan->status == 'done' ? 'bg-green-500 text-white' :
-                                        ($pengumpulan->status == 'approved' ? 'bg-blue-500 text-white' :
-                                        ($pengumpulan->status == 'reviewed' ? 'bg-yellow-400 text-black' : 'bg-gray-500 text-white'))
+                                        $pengumpulan->status == 'done' ? 'bg-purple-500 text-white' :
+                                        ($pengumpulan->status == 'approved' ? 'bg-green-500 text-white' :
+                                        ($pengumpulan->status == 'reviewed' ? 'bg-blue-500 text-white' : 
+                                        ($pengumpulan->status == 'rejected' ? 'bg-red-500 text-white' :
+                                        ($pengumpulan->status == 'submitted' ? 'bg-yellow-500 text-black' : 'bg-gray-500 text-white'))))
                                     }}">
-                                    Status: {{ ucfirst($pengumpulan->status) }}
+                                    Status: 
+                                    @if($pengumpulan->status == 'reviewed')
+                                        Sedang Direview SPV
+                                    @elseif($pengumpulan->status == 'rejected')
+                                        Butuh Perbaikan
+                                    @elseif($pengumpulan->status == 'done')
+                                        Tugas Selesai
+                                    @else
+                                        {{ ucfirst($pengumpulan->status) }}
+                                    @endif
                                 </span>
                                 @if($pengumpulan->status == 'done')
-                                    <span class="block text-green-400 mt-2">✨ Tugas kamu sudah selesai & dinilai!</span>
+                                    <span class="block text-purple-400 mt-2">✨ Tugas kamu sudah selesai & dinilai!</span>
                                 @elseif($pengumpulan->status == 'approved')
-                                    <span class="block text-blue-400 mt-2">🔄 Tugas kamu sudah di-approve SPV, menunggu finalisasi.</span>
+                                    <span class="block text-green-400 mt-2">✅ Tugas kamu sudah di-approve SPV.</span>
                                 @elseif($pengumpulan->status == 'reviewed')
-                                    <span class="block text-yellow-400 mt-2">🔍 Tugas kamu sedang diteliti SPV.</span>
+                                    <span class="block text-blue-400 mt-2">🔍 Tugas kamu sedang direview oleh SPV.</span>
+                                @elseif($pengumpulan->status == 'rejected')
+                                    <span class="block text-red-400 mt-2">❌ Tugas kamu perlu diperbaiki. Silakan kumpulkan kembali setelah diperbaiki.</span>
+                                @elseif($pengumpulan->status == 'submitted')
+                                    <span class="block text-yellow-600 mt-2">📤 Tugas kamu sudah dikumpulkan, menunggu review SPV.</span>
                                 @endif
                                 @if($pengumpulan->nilai !== null)
                                     <span class="block mt-2 text-cyan-400">📊 Nilai: <b class="text-glow-cyan">{{ $pengumpulan->nilai }}</b></span>
                                 @endif
                                 @if($pengumpulan->keterangan)
-                                    <span class="block mt-2 text-gray-300">💬 Catatan SPV: <i>{{ $pengumpulan->keterangan }}</i></span>
+                                    <span class="block mt-2 text-gray-300">💬 Feedback SPV: <i>{{ $pengumpulan->keterangan }}</i></span>
                                 @endif
                             </div>
                         </div>
@@ -191,6 +206,21 @@
                                 </a>
                             </div>
                         </div>
+                        
+                        <!-- Resubmission button for rejected status -->
+                        @if($pengumpulan->status == 'rejected' && now() <= $tugas->deadline)
+                            <div class="mt-4 pt-4 border-t border-gray-700">
+                                <a href="{{ route('mahasiswa.tugas.kerjakan', $tugas) }}" 
+                                   class="cyber-btn bg-orange-600 hover:bg-orange-500 w-full py-3 text-center block">
+                                    <i class="fas fa-redo mr-2"></i>
+                                    Kumpulkan Ulang Tugas
+                                </a>
+                                <p class="text-sm text-gray-400 mt-2 text-center">
+                                    <i class="fas fa-info-circle mr-1"></i>
+                                    Perbaiki tugas sesuai feedback SPV dan kumpulkan kembali
+                                </p>
+                            </div>
+                        @endif
                     </div>
                 @else
                     <!-- Submission Form -->

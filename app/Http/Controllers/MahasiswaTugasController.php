@@ -35,11 +35,14 @@ class MahasiswaTugasController extends Controller
             ->where('tugas_id', $tugas->id)
             ->first();
 
+        // Cek apakah tugas sudah selesai (done) - tidak bisa mengumpulkan lagi
         if ($pengumpulan && $pengumpulan->status === 'done') {
             return redirect()->route('mahasiswa.tugas.show', $tugas)
-                ->with('error', 'Tugas ini sudah selesai dan dinilai.');
+                ->with('error', 'Tugas ini sudah selesai dan dinilai. Anda tidak dapat mengumpulkan lagi.');
         }
 
+        // Jika status rejected, mahasiswa bisa mengumpulkan kembali
+        $kerjakanMode = true;
         return view('mahasiswa.tugas.penugasan', compact('tugas', 'pengumpulan', 'kerjakanMode'));
     }
 
@@ -57,7 +60,14 @@ class MahasiswaTugasController extends Controller
             ]
         );
 
+        // Cek apakah tugas sudah selesai (done) - tidak bisa mengumpulkan lagi
+        if ($pengumpulan->exists && $pengumpulan->status === 'done') {
+            return redirect()->route('mahasiswa.tugas.show', $tugas)
+                ->with('error', 'Tugas ini sudah selesai dan dinilai. Anda tidak dapat mengumpulkan lagi.');
+        }
+
         if ($request->hasFile('file')) {
+            // Hapus file lama jika ada
             if ($pengumpulan->file_path) {
                 Storage::disk('public')->delete($pengumpulan->file_path);
             }
@@ -66,12 +76,22 @@ class MahasiswaTugasController extends Controller
         }
 
         $pengumpulan->keterangan = $request->keterangan;
-        $pengumpulan->status = 'submitted';
+        $pengumpulan->status = 'submitted'; // Reset status ke submitted untuk review ulang
         $pengumpulan->submitted_at = now();
+        
+        // Reset nilai dan feedback jika ini adalah resubmission
+        if ($pengumpulan->exists) {
+            $pengumpulan->nilai = null;
+            $pengumpulan->feedback = null;
+        }
 
         $pengumpulan->save();
 
+        $message = $pengumpulan->wasRecentlyCreated 
+            ? 'Tugas berhasil dikumpulkan!' 
+            : 'Tugas berhasil dikumpulkan kembali dan akan direview ulang!';
+
         return redirect()->route('mahasiswa.tugas.show', $tugas)
-            ->with('success', 'Tugas berhasil dikumpulkan!');
+            ->with('success', $message);
     }
 }
