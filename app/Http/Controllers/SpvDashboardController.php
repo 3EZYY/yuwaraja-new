@@ -28,12 +28,15 @@ class SpvDashboardController extends Controller
     {
         return view('spv.jadwal-detail', compact('jadwal'));
     }
+    
     public function index()
     {
         $user = Auth::user();
 
-        // Data untuk SPV
-        $kelompokDibimbing = Kelompok::where('spv_id', $user->id)->get();
+        // Data untuk dashboard - selalu ambil data terbaru
+        $kelompokDibimbing = Kelompok::where('spv_id', $user->id)
+            ->orderBy('updated_at', 'desc')
+            ->get();
         $mahasiswaDibimbing = User::whereIn('kelompok_id', $kelompokDibimbing->pluck('id'))->get();
         $pengumuman = Pengumuman::latest()->take(5)->get();
         $jadwal = JadwalAcara::where('tanggal_mulai', '>=', now())->orderBy('tanggal_mulai')->get();
@@ -41,7 +44,9 @@ class SpvDashboardController extends Controller
 
         // Statistik
         $totalKelompok = $kelompokDibimbing->count();
-        $totalMahasiswa = $mahasiswaDibimbing->count();
+        $totalMahasiswa = $kelompokDibimbing->sum(function ($kelompok) {
+            return $kelompok->anggota->count();
+        });
         $tugasSelesai = PengumpulanTugas::whereIn('kelompok_id', $kelompokDibimbing->pluck('id'))->count();
 
         return view('spv.dashboard', compact(
@@ -55,25 +60,5 @@ class SpvDashboardController extends Controller
             'totalMahasiswa',
             'tugasSelesai'
         ));
-    }
-
-    public function cluster(Request $request)
-    {
-        $user = Auth::user();
-        // Ambil semua prodi unik dari mahasiswa yang dibimbing
-        $prodiList = User::whereIn('kelompok_id', function($q) use ($user) {
-            $q->select('id')->from('kelompoks')->where('spv_id', $user->id);
-        })->select('program_studi')->distinct()->pluck('program_studi');
-
-        $filterProdi = $request->input('prodi');
-        $kelompokDibimbing = Kelompok::where('spv_id', $user->id)
-            ->with(['mahasiswa' => function($q) use ($filterProdi) {
-                if ($filterProdi) {
-                    $q->where('program_studi', $filterProdi);
-                }
-            }])
-            ->get();
-
-        return view('spv.cluster', compact('kelompokDibimbing', 'prodiList', 'filterProdi'));
     }
 }

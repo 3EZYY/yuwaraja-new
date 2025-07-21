@@ -13,18 +13,22 @@ class SpvClusterController extends Controller
     public function index(Request $request)
     {
         $user = Auth::user();
+        
         // Ambil semua prodi unik dari mahasiswa yang dibimbing
         $prodiList = \App\Models\User::whereIn('kelompok_id', function($q) use ($user) {
             $q->select('id')->from('kelompoks')->where('spv_id', $user->id);
         })->select('program_studi')->distinct()->pluck('program_studi');
 
         $filterProdi = $request->input('prodi');
+        
+        // Pastikan data kelompok selalu fresh dari database
         $kelompokDibimbing = Kelompok::where('spv_id', $user->id)
             ->with(['mahasiswa' => function($q) use ($filterProdi) {
                 if ($filterProdi) {
                     $q->where('program_studi', $filterProdi);
                 }
             }])
+            ->orderBy('updated_at', 'desc') // Urutkan berdasarkan update terbaru
             ->get();
 
         return view('spv.cluster', compact('kelompokDibimbing', 'prodiList', 'filterProdi'));

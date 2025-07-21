@@ -50,9 +50,11 @@
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 515.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 919.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
                             Jaringan Kelompok
                         </h1>
-                        <p class="text-gray-400 mt-1">Kelompok: <span class="text-amber-300 font-semibold">Cluster Beta</span></p>
                         @if(isset($kelompokDibimbing) && $kelompokDibimbing->count() > 0)
-                            <p class="text-teal-300 text-sm mt-1 font-medium">{{ $kelompokDibimbing->first()->nama_kelompok }}</p>
+                            <p class="text-gray-400 mt-1">Kelompok: <span class="text-amber-300 font-semibold">{{ $kelompokDibimbing->first()->nama_kelompok }}</span></p>
+                            <p class="text-teal-300 text-sm mt-1 font-medium">Kode: {{ $kelompokDibimbing->first()->code }}</p>
+                        @else
+                            <p class="text-gray-400 mt-1">Kelompok: <span class="text-red-300 font-semibold">Belum ada kelompok</span></p>
                         @endif
                     </div>
                 </div>
