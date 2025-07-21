@@ -53,6 +53,47 @@
         }
     </style>
 
+    <!-- Alert Messages -->
+    @if(session('success'))
+        <div id="success-alert" class="fixed top-4 right-4 z-50 max-w-md bg-green-600 text-white p-4 rounded-lg shadow-lg">
+            <div class="flex items-center gap-3">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                <div>
+                    <p class="font-semibold">{{ session('success') }}</p>
+                    @if(session('absensi_detail'))
+                        <p class="text-sm mt-1">{{ session('absensi_detail.judul') }}</p>
+                        <p class="text-xs">{{ session('absensi_detail.waktu_absen') }} - {{ session('absensi_detail.status') }}</p>
+                    @endif
+                </div>
+                <button onclick="closeAlert('success-alert')" class="ml-auto">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    @endif
+
+    @if(session('error'))
+        <div id="error-alert" class="fixed top-4 right-4 z-50 max-w-md bg-red-600 text-white p-4 rounded-lg shadow-lg">
+            <div class="flex items-center gap-3">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                <div>
+                    <p class="font-semibold">{{ session('error') }}</p>
+                </div>
+                <button onclick="closeAlert('error-alert')" class="ml-auto">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    @endif
+
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-10">
 
@@ -256,6 +297,18 @@
             }, { threshold: 0.1 });
             const elements = document.querySelectorAll('.animate-on-scroll');
             elements.forEach(el => observer.observe(el));
+
+            // Auto-hide alerts after 5 seconds
+            setTimeout(() => {
+                const successAlert = document.getElementById('success-alert');
+                const errorAlert = document.getElementById('error-alert');
+                if (successAlert) successAlert.style.display = 'none';
+                if (errorAlert) errorAlert.style.display = 'none';
+            }, 5000);
         });
+
+        function closeAlert(alertId) {
+            document.getElementById(alertId).style.display = 'none';
+        }
     </script>
 @endsection

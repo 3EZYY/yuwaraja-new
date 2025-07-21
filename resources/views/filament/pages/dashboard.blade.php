@@ -1,4 +1,23 @@
 <x-filament::page>
+    <!-- Role Error Alert -->
+    @if(session('role_error'))
+        <div id="role-error-alert" class="fixed top-4 right-4 z-50 max-w-md bg-pink-600 text-white p-4 rounded-lg shadow-lg">
+            <div class="flex items-center gap-3">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"></path>
+                </svg>
+                <div>
+                    <p class="font-semibold">{{ session('role_error') }}</p>
+                </div>
+                <button onclick="closeAlert('role-error-alert')" class="ml-auto">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    @endif
+
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <!-- Statistik Overview -->
         <div class="col-span-full">
@@ -114,4 +133,23 @@
             </div>
         </div>
     </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Auto-hide alerts after 5 seconds
+            setTimeout(() => {
+                const roleErrorAlert = document.getElementById('role-error-alert');
+                if (roleErrorAlert) {
+                    roleErrorAlert.style.display = 'none';
+                }
+            }, 5000);
+        });
+
+        function closeAlert(alertId) {
+            const alert = document.getElementById(alertId);
+            if (alert) {
+                alert.style.display = 'none';
+            }
+        }
+    </script>
 </x-filament::page>

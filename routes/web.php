@@ -64,6 +64,9 @@ Route::middleware(['auth', 'verified', 'role:admin'])->prefix('admin')->name('ad
         Auth::logout();
         return redirect('/login');
     })->name('logout');
+    
+    // QR Code download route
+    Route::get('/absensi/{absensi}/download-qr', [\App\Http\Controllers\Admin\AbsensiController::class, 'downloadQr'])->name('absensi.download-qr');
 });
 
 // Routes untuk SPV
@@ -124,6 +127,7 @@ Route::middleware(['auth', 'verified', 'role:mahasiswa'])->prefix('mahasiswa')->
     Route::controller(AbsensiController::class)->prefix('absensi')->name('absensi.')->group(function () {
         Route::get('/history', 'history')->name('history');
         Route::get('/current', 'current')->name('current');
+        Route::get('/scan/{qrCode}', 'scan')->name('scan');
     });
 
     // Friendship Routes

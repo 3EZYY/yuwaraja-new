@@ -77,11 +77,11 @@ class Absensi extends Model
     }
 
     /**
-     * Generate QR Code URL
+     * Generate QR Code URL - Direct to mahasiswa dashboard
      */
     public function getQrCodeUrlAttribute()
     {
-        return route('absensi.scan', $this->qr_code);
+        return route('mahasiswa.absensi.scan', $this->qr_code);
     }
 
     /**

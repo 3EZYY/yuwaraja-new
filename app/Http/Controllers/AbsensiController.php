@@ -19,29 +19,38 @@ class AbsensiController extends Controller
         $absensi = Absensi::where('qr_code', $qrCode)->first();
 
         if (!$absensi) {
-            return view('absensi.scan')->with('error', 'QR Code tidak valid atau tidak ditemukan.');
+            return redirect()->route('mahasiswa.dashboard')->with('error', 'QR Code tidak valid atau tidak ditemukan.');
         }
 
         // Check if user is authenticated
         if (!auth()->check()) {
-            return view('absensi.scan', compact('absensi'))->with('error', 'Anda harus login terlebih dahulu untuk melakukan absensi.');
+            return redirect()->route('login')->with('error', 'Anda harus login terlebih dahulu untuk melakukan absensi.');
         }
 
         $user = auth()->user();
 
-        // Check if user is mahasiswa
+        // Check if user is mahasiswa with sweet alert message
         if ($user->role !== 'mahasiswa') {
-            return view('absensi.scan', compact('absensi'))->with('error', 'Hanya mahasiswa yang dapat melakukan absensi.');
+            $message = 'Maaf yaa, cuman Mahasiswa yang bisa absen ^^';
+            
+            // Redirect based on role
+            if ($user->role === 'admin') {
+                return redirect('/admin')->with('role_error', $message);
+            } elseif ($user->role === 'spv') {
+                return redirect()->route('spv.dashboard')->with('role_error', $message);
+            }
+            
+            return redirect()->route('dashboard')->with('role_error', $message);
         }
 
         // Check if absensi is active
         if (!$absensi->is_active) {
-            return view('absensi.scan', compact('absensi'))->with('error', 'Sesi absensi ini sudah tidak aktif.');
+            return redirect()->route('mahasiswa.dashboard')->with('error', 'Sesi absensi ini sudah tidak aktif.');
         }
 
         // Check if current time is within absensi time range
         if (!$absensi->isCurrentlyActive()) {
-            return view('absensi.scan', compact('absensi'))->with('error', 'Absensi hanya dapat dilakukan pada jam ' . $absensi->jam_mulai->format('H:i') . ' - ' . $absensi->jam_selesai->format('H:i') . '.');
+            return redirect()->route('mahasiswa.dashboard')->with('error', 'Absensi hanya dapat dilakukan pada jam ' . $absensi->jam_mulai->format('H:i') . ' - ' . $absensi->jam_selesai->format('H:i') . '.');
         }
 
         // Check if user already attended
@@ -50,10 +59,11 @@ class AbsensiController extends Controller
             ->first();
 
         if ($existingAbsensi) {
-            return view('absensi.scan', compact('absensi'))->with('error', 'Anda sudah melakukan absensi untuk sesi ini pada ' . $existingAbsensi->waktu_absen->format('d/m/Y H:i:s') . '.');
+            return redirect()->route('mahasiswa.dashboard')->with('error', 'Anda sudah melakukan absensi untuk sesi ini pada ' . $existingAbsensi->waktu_absen->format('d/m/Y H:i:s') . '.');
         }
 
         // Record attendance
+        $now = Carbon::now();
         $absensiMahasiswa = AbsensiMahasiswa::create([
             'absensi_id' => $absensi->id,
             'user_id' => $user->id,
@@ -64,10 +74,13 @@ class AbsensiController extends Controller
 
         $status = $absensiMahasiswa->isOnTime() ? 'Tepat Waktu' : 'Terlambat';
 
-        return view('absensi.scan', compact('absensi'))->with([
+        return redirect()->route('mahasiswa.dashboard')->with([
             'success' => 'Absensi berhasil dicatat! Terima kasih.',
-            'waktu_absen' => $absensiMahasiswa->waktu_absen->format('d/m/Y H:i:s'),
-            'status' => $status
+            'absensi_detail' => [
+                'judul' => $absensi->judul,
+                'waktu_absen' => $absensiMahasiswa->waktu_absen->format('d/m/Y H:i:s'),
+                'status' => $status
+            ]
         ]);
     }
 

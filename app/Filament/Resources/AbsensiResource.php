@@ -18,7 +18,6 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\BadgeColumn;
 use Filament\Tables\Columns\BooleanColumn;
 use Filament\Tables\Actions\Action;
-use App\Filament\Resources\AbsensiResource\Actions\DownloadQrCodeAction;
 
 class AbsensiResource extends Resource
 {
@@ -132,12 +131,18 @@ class AbsensiResource extends Resource
                     ->label('Status Aktif'),
             ])
             ->actions([
-                DownloadQrCodeAction::make(),
+                Action::make('download_qr')
+                    ->label('Download QR Code')
+                    ->icon('heroicon-o-qr-code')
+                    ->color('success')
+                    ->url(fn (Absensi $record): string => route('admin.absensi.download-qr', $record))
+                    ->openUrlInNewTab(),
+
                 Action::make('view_participants')
                     ->label('Lihat Peserta')
                     ->icon('heroicon-o-users')
                     ->color('info')
-                    ->url(fn (Absensi $record): string => route('filament.admin.resources.absensi.participants', $record)),
+                    ->url(fn (Absensi $record): string => AbsensiResource::getUrl('participants', ['record' => $record])),
 
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
