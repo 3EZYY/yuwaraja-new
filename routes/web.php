@@ -15,6 +15,8 @@ use App\Http\Controllers\SpvTugasController;
 use App\Http\Controllers\SpvClusterController;
 use App\Http\Controllers\FriendshipController;
 use App\Http\Controllers\FaqController;
+use App\Http\Controllers\AbsensiController;
+use App\Http\Controllers\SpvAbsensiController;
 use App\Models\Faq;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -29,6 +31,9 @@ Route::middleware(['auth', 'role:mahasiswa'])->group(function () {
 // API Routes untuk validasi real-time
 Route::get('/api/check-username', [ValidationController::class, 'checkUsername']);
 Route::get('/api/check-email', [ValidationController::class, 'checkEmail']);
+
+// Route untuk scan QR Code absensi (publik)
+Route::get('/absensi/scan/{qrCode}', [AbsensiController::class, 'scan'])->name('absensi.scan');
 
 Route::get('/', function () {
     $faqs = Faq::active()->ordered()->get();
@@ -60,6 +65,8 @@ Route::middleware(['auth', 'verified', 'role:admin'])->prefix('admin')->name('ad
         return redirect('/login');
     })->name('logout');
 });
+
+// Routes untuk SPV
 Route::middleware(['auth', 'verified', 'role:spv'])->prefix('spv')->name('spv.')->group(function () {
     Route::get('/dashboard', [SpvDashboardController::class, 'index'])->name('dashboard');
     Route::get('/cluster', [SpvClusterController::class, 'index'])->name('cluster.index');
@@ -73,6 +80,13 @@ Route::middleware(['auth', 'verified', 'role:spv'])->prefix('spv')->name('spv.')
     Route::get('/pengumuman', [SpvDashboardController::class, 'pengumuman'])->name('pengumuman.index');
     Route::get('/pengumuman/{pengumuman}', [SpvDashboardController::class, 'showPengumuman'])->name('pengumuman.detail');
     Route::get('/jadwal/{jadwal}', [SpvDashboardController::class, 'showJadwal'])->name('jadwal.detail');
+    
+    // Absensi Routes untuk SPV
+    Route::controller(SpvAbsensiController::class)->prefix('absensi')->name('absensi.')->group(function () {
+        Route::get('/', 'index')->name('index');
+        Route::get('/{id}', 'show')->name('show');
+        Route::get('/{id}/export', 'export')->name('export');
+    });
     
     // Profile Routes untuk SPV
     Route::get('/profile', [SpvProfileController::class, 'edit'])->name('profile.edit');
@@ -104,6 +118,12 @@ Route::middleware(['auth', 'verified', 'role:mahasiswa'])->prefix('mahasiswa')->
     Route::controller(MahasiswaJadwalController::class)->group(function () {
         Route::get('/jadwal', 'index')->name('jadwal.index');
         Route::get('/jadwal/{jadwal}', 'show')->name('jadwal.detail');
+    });
+
+    // Absensi Routes untuk Mahasiswa
+    Route::controller(AbsensiController::class)->prefix('absensi')->name('absensi.')->group(function () {
+        Route::get('/history', 'history')->name('history');
+        Route::get('/current', 'current')->name('current');
     });
 
     // Friendship Routes

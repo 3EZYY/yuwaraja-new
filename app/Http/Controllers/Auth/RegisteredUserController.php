@@ -60,11 +60,20 @@ class RegisteredUserController extends Controller
                     }
                 }
             ],
+            'email_student' => ['nullable', 'string', 'lowercase', 'email', 'max:255'],
             'program_studi' => ['required', 'string', 'max:255'],
             'angkatan' => ['required', 'string', 'in:2023,2024,2025'],
             'nomor_telepon' => ['required', 'string', 'max:255'], // Tambahan 'required'
             'tanggal_lahir' => ['required', 'date'], // Tambahan 'required'
             'jenis_kelamin' => ['required', 'string', 'in:Laki-laki,Perempuan'], // Tambahan 'required'
+            'asal_sekolah_jenis' => ['required', 'string', 'in:SMA,SMK,MAN,Lainnya'],
+            'asal_sekolah_nama' => ['required', 'string', 'max:255'],
+            'jurusan_sekolah' => ['nullable', 'string', 'max:255'],
+            'asal_kota' => ['required', 'string', 'max:255'],
+            'alamat_domisili' => ['required', 'string'],
+            'provinsi' => ['required', 'string', 'max:255'],
+            'kota' => ['required', 'string', 'max:255'],
+            'jalur_masuk' => ['required', 'string', 'in:SNBP,SNBT,Mandiri UB,Mandiri Vokasi'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ], [
             // Custom error messages
@@ -79,12 +88,20 @@ class RegisteredUserController extends Controller
             'username.unique' => 'Username sudah dipakai nih!',
             'email.required' => 'Email wajib diisi!',
             'email.unique' => 'Email sudah dipakai nih!',
+            'email_student.email' => 'Format email student tidak valid.',
             'program_studi.required' => 'Program studi wajib dipilih!',
             'angkatan.required' => 'Angkatan wajib diisi!',
             'angkatan.in' => 'Angkatan hanya boleh 2023, 2024, atau 2025.',
-            'nomor_telepon.required' => 'Nomor telepon wajib diisi!',
+            'nomor_telepon.required' => 'Nomor WhatsApp wajib diisi!',
             'tanggal_lahir.required' => 'Tanggal lahir wajib diisi!',
             'jenis_kelamin.required' => 'Jenis kelamin wajib dipilih!',
+            'asal_sekolah_jenis.required' => 'Asal sekolah wajib dipilih!',
+            'asal_sekolah_nama.required' => 'Nama sekolah wajib diisi!',
+            'asal_kota.required' => 'Asal kota wajib diisi!',
+            'alamat_domisili.required' => 'Alamat domisili wajib diisi!',
+            'provinsi.required' => 'Provinsi wajib diisi!',
+            'kota.required' => 'Kota domisili wajib diisi!',
+            'jalur_masuk.required' => 'Jalur masuk wajib dipilih!',
             'password.required' => 'Password wajib diisi!',
             'password.confirmed' => 'Konfirmasi password tidak cocok!',
         ]);
@@ -94,11 +111,20 @@ class RegisteredUserController extends Controller
             'nim' => $request->nim,
             'username' => $request->username,
             'email' => $request->email,
+            'email_student' => $request->email_student,
             'program_studi' => $request->program_studi,
             'angkatan' => $request->angkatan,
             'nomor_telepon' => $request->nomor_telepon,
             'tanggal_lahir' => $request->tanggal_lahir,
             'jenis_kelamin' => $request->jenis_kelamin,
+            'asal_sekolah_jenis' => $request->asal_sekolah_jenis,
+            'asal_sekolah_nama' => $request->asal_sekolah_nama,
+            'jurusan_sekolah' => $request->jurusan_sekolah,
+            'asal_kota' => $request->asal_kota,
+            'alamat_domisili' => $request->alamat_domisili,
+            'provinsi' => $request->provinsi,
+            'kota' => $request->kota,
+            'jalur_masuk' => $request->jalur_masuk,
             'password' => Hash::make($request->password),
             'role' => 'mahasiswa', 
         ]);

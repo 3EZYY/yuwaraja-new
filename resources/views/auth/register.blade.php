@@ -82,10 +82,10 @@
 
             <!-- Nomor Telepon -->
             <div class="form-field" style="animation-delay: 1.2s;">
-                <x-input-label for="nomor_telepon" value="Nomor Telepon"
+                <x-input-label for="nomor_telepon" value="Nomor WhatsApp"
                     class="mb-1 text-sm text-cyan-300 tracking-wide" />
                 <x-text-input id="nomor_telepon" class="cyber-input" type="text" name="nomor_telepon"
-                    :value="old('nomor_telepon')" required placeholder="Masukan Nomor Telepon" />
+                    :value="old('nomor_telepon')" required placeholder="Masukan Nomor WhatsApp" />
                 <x-input-error :messages="$errors->get('nomor_telepon')" class="mt-2 text-yellow-400 text-xs" />
             </div>
 
@@ -110,20 +110,102 @@
                 </select>
                 <x-input-error :messages="$errors->get('jenis_kelamin')" class="mt-2 text-yellow-400 text-xs" />
             </div>
+
+            <!-- Asal Sekolah Jenis -->
+            <div class="form-field" style="animation-delay: 1.4s;">
+                <x-input-label for="asal_sekolah_jenis" value="Asal Sekolah" class="mb-1 text-sm text-cyan-300 tracking-wide" />
+                <select id="asal_sekolah_jenis" name="asal_sekolah_jenis" class="cyber-input cyber-select" required>
+                    <option value="" disabled {{ old('asal_sekolah_jenis') ? '' : 'selected' }}>Pilih Jenis Sekolah</option>
+                    <option value="SMA" {{ old('asal_sekolah_jenis') == 'SMA' ? 'selected' : '' }}>SMA</option>
+                    <option value="SMK" {{ old('asal_sekolah_jenis') == 'SMK' ? 'selected' : '' }}>SMK</option>
+                    <option value="MAN" {{ old('asal_sekolah_jenis') == 'MAN' ? 'selected' : '' }}>MAN</option>
+                    <option value="Lainnya" {{ old('asal_sekolah_jenis') == 'Lainnya' ? 'selected' : '' }}>Lainnya</option>
+                </select>
+                <x-input-error :messages="$errors->get('asal_sekolah_jenis')" class="mt-2 text-yellow-400 text-xs" />
+            </div>
+
+            <!-- Nama Sekolah -->
+            <div class="form-field" style="animation-delay: 1.4s;">
+                <x-input-label for="asal_sekolah_nama" value="Nama Sekolah" class="mb-1 text-sm text-cyan-300 tracking-wide" />
+                <x-text-input id="asal_sekolah_nama" class="cyber-input" type="text" name="asal_sekolah_nama"
+                    :value="old('asal_sekolah_nama')" required placeholder="Masukan Nama Sekolah" />
+                <x-input-error :messages="$errors->get('asal_sekolah_nama')" class="mt-2 text-yellow-400 text-xs" />
+            </div>
+
+            <!-- Jurusan Sekolah -->
+            <div class="form-field" style="animation-delay: 1.5s;">
+                <x-input-label for="jurusan_sekolah" value="Jurusan/Bidang Minat" class="mb-1 text-sm text-cyan-300 tracking-wide" />
+                <x-text-input id="jurusan_sekolah" class="cyber-input" type="text" name="jurusan_sekolah"
+                    :value="old('jurusan_sekolah')" placeholder="Contoh: IPS, Bahasa, Teknik Informatika, dll" />
+                <x-input-error :messages="$errors->get('jurusan_sekolah')" class="mt-2 text-yellow-400 text-xs" />
+            </div>
+
+            <!-- Asal Kota -->
+            <div class="form-field" style="animation-delay: 1.5s;">
+                <x-input-label for="asal_kota" value="Asal Kota" class="mb-1 text-sm text-cyan-300 tracking-wide" />
+                <x-text-input id="asal_kota" class="cyber-input" type="text" name="asal_kota"
+                    :value="old('asal_kota')" required placeholder="Masukan Asal Kota" />
+                <x-input-error :messages="$errors->get('asal_kota')" class="mt-2 text-yellow-400 text-xs" />
+            </div>
+
+            <!-- Provinsi -->
+            <div class="form-field" style="animation-delay: 1.6s;">
+                <x-input-label for="provinsi" value="Provinsi" class="mb-1 text-sm text-cyan-300 tracking-wide" />
+                <x-text-input id="provinsi" class="cyber-input" type="text" name="provinsi"
+                    :value="old('provinsi')" required placeholder="Masukan Provinsi" />
+                <x-input-error :messages="$errors->get('provinsi')" class="mt-2 text-yellow-400 text-xs" />
+            </div>
+
+            <!-- Kota Domisili -->
+            <div class="form-field" style="animation-delay: 1.6s;">
+                <x-input-label for="kota" value="Kota Domisili" class="mb-1 text-sm text-cyan-300 tracking-wide" />
+                <x-text-input id="kota" class="cyber-input" type="text" name="kota"
+                    :value="old('kota')" required placeholder="Masukan Kota Domisili" />
+                <x-input-error :messages="$errors->get('kota')" class="mt-2 text-yellow-400 text-xs" />
+            </div>
+
+            <!-- Jalur Masuk -->
+            <div class="form-field" style="animation-delay: 1.7s;">
+                <x-input-label for="jalur_masuk" value="Jalur Masuk" class="mb-1 text-sm text-cyan-300 tracking-wide" />
+                <select id="jalur_masuk" name="jalur_masuk" class="cyber-input cyber-select" required>
+                    <option value="" disabled {{ old('jalur_masuk') ? '' : 'selected' }}>Pilih Jalur Masuk</option>
+                    <option value="SNBP" {{ old('jalur_masuk') == 'SNBP' ? 'selected' : '' }}>SNBP</option>
+                    <option value="SNBT" {{ old('jalur_masuk') == 'SNBT' ? 'selected' : '' }}>SNBT</option>
+                    <option value="Mandiri UB" {{ old('jalur_masuk') == 'Mandiri UB' ? 'selected' : '' }}>Mandiri UB</option>
+                    <option value="Mandiri Vokasi" {{ old('jalur_masuk') == 'Mandiri Vokasi' ? 'selected' : '' }}>Mandiri Vokasi</option>
+                </select>
+                <x-input-error :messages="$errors->get('jalur_masuk')" class="mt-2 text-yellow-400 text-xs" />
+            </div>
+        </div>
+
+        <!-- Alamat Domisili -->
+        <div class="form-field" style="animation-delay: 1.8s;">
+            <x-input-label for="alamat_domisili" value="Alamat Domisili Lengkap" class="mb-1 text-sm text-cyan-300 tracking-wide" />
+            <textarea id="alamat_domisili" name="alamat_domisili" class="cyber-input" rows="3" 
+                required placeholder="Masukan alamat domisili lengkap">{{ old('alamat_domisili') }}</textarea>
+            <x-input-error :messages="$errors->get('alamat_domisili')" class="mt-2 text-yellow-400 text-xs" />
         </div>
 
         <!-- Email Address -->
-        <div class="form-field" style="animation-delay: 1.4s;">
-            <x-input-label for="email" value="Email" class="mb-1 text-sm text-cyan-300 tracking-wide" />
+        <div class="form-field" style="animation-delay: 1.9s;">
+            <x-input-label for="email" value="Email Pribadi" class="mb-1 text-sm text-cyan-300 tracking-wide" />
             <x-text-input id="email" class="cyber-input" type="email" name="email" :value="old('email')" required
-                autocomplete="username" placeholder="Masukan Email" />
+                autocomplete="username" placeholder="Masukan Email Pribadi" />
             <x-input-error :messages="$errors->get('email')" class="mt-2 text-yellow-400 text-xs" />
+        </div>
+
+        <!-- Email Student -->
+        <div class="form-field" style="animation-delay: 1.9s;">
+            <x-input-label for="email_student" value="Email Student (@student.ub.ac.id)" class="mb-1 text-sm text-cyan-300 tracking-wide" />
+            <x-text-input id="email_student" class="cyber-input" type="email" name="email_student" :value="old('email_student')"
+                placeholder="Masukan Email Student (opsional)" />
+            <x-input-error :messages="$errors->get('email_student')" class="mt-2 text-yellow-400 text-xs" />
         </div>
 
         {{-- Layout Grid untuk Password --}}
         <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6">
             <!-- Password -->
-            <div class="form-field" style="animation-delay: 1.5s;">
+            <div class="form-field" style="animation-delay: 2.0s;">
                 <x-input-label for="password" value="Password"
                     class="mb-1 text-sm text-cyan-300 tracking-wide" />
                 <x-text-input id="password" class="cyber-input" type="password" name="password" required
@@ -132,7 +214,7 @@
             </div>
 
             <!-- Confirm Password -->
-            <div class="form-field" style="animation-delay: 1.5s;">
+            <div class="form-field" style="animation-delay: 2.0s;">
                 <x-input-label for="password_confirmation" value="Konfirmasi Password"
                     class="mb-1 text-sm text-cyan-300 tracking-wide" />
                 <x-text-input id="password_confirmation" class="cyber-input" type="password"
@@ -146,7 +228,7 @@
             {{ __('Daftar') }}
         </x-primary-button>
             
-        <div class="flex items-center justify-center mt-4 form-field w-full" style="animation-delay: 1.6s;">
+        <div class="flex items-center justify-center mt-4 form-field w-full" style="animation-delay: 2.1s;">
             Sudah Punya Akun?
             <a class="font-bold underline text-yellow-400 hover:text-yellow-300 rounded-md focus:outline-none transition px-2"
                 href="{{ route('login') }}">
@@ -304,8 +386,9 @@ document.addEventListener('DOMContentLoaded', function() {
     form.addEventListener('submit', function(e) {
         const requiredFields = [
             'name', 'nim', 'username', 'program_studi', 'angkatan', 
-            'nomor_telepon', 'tanggal_lahir', 'jenis_kelamin', 'email', 
-            'password', 'password_confirmation'
+            'nomor_telepon', 'tanggal_lahir', 'jenis_kelamin', 'asal_sekolah_jenis',
+            'asal_sekolah_nama', 'asal_kota', 'alamat_domisili', 'provinsi', 'kota',
+            'jalur_masuk', 'email', 'password', 'password_confirmation'
         ];
         
         let hasEmptyFields = false;
