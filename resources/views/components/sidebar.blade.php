@@ -47,7 +47,7 @@
                 Dashboard
             </x-sidebar.nav-link>
 
-            <x-sidebar.nav-link :href="route('mahasiswa.friendship.index')" :active="request()->routeIs('mahasiswa.tugas.*')">
+            <x-sidebar.nav-link :href="route('mahasiswa.friendship.index')" :active="request()->routeIs('mahasiswa.friendship.*')">
                 <x-slot name="icon">
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
                         <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z" />
@@ -153,24 +153,24 @@
             <div class="absolute bottom-0 left-0 right-0 p-4 bg-black/30 border-t border-cyan-400/20">
                 {{-- Informasi Kelompok untuk Mahasiswa --}}
                 @if($role === 'mahasiswa' && Auth::user()->kelompok_id)
-                <a href="{{ route('mahasiswa.friendship.index') }}" class="block mb-3 p-3 rounded-lg bg-green-400/10 border border-green-400/20 hover:bg-green-400/20 hover:border-green-400/40 transition-all duration-200 group">
+                <a href="{{ route('mahasiswa.friendship.index') }}" class="block mb-3 p-3 rounded-lg bg-cyan-400/10 border border-cyan-400/20 hover:bg-cyan-400/20 hover:border-cyan-400/40 transition-all duration-200 group">
                     <div class="flex items-center gap-2 mb-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-green-400 group-hover:text-green-300" viewBox="0 0 20 20" fill="currentColor">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-cyan-400 group-hover:text-cyan-300" viewBox="0 0 20 20" fill="currentColor">
                             <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z" />
                         </svg>
-                        <h4 class="text-sm font-semibold text-green-400 group-hover:text-green-300">Kelompok</h4>
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-green-400/50 group-hover:text-green-300 ml-auto" viewBox="0 0 20 20" fill="currentColor">
+                        <h4 class="text-sm font-semibold text-cyan-400 group-hover:text-cyan-300">Kelompok</h4>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-cyan-400/50 group-hover:text-cyan-300 ml-auto" viewBox="0 0 20 20" fill="currentColor">
                             <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
                         </svg>
                     </div>
                     <div class="space-y-1">
-                        <p class="text-xs text-white font-medium group-hover:text-green-100">{{ Auth::userWithKelompok()->kelompok?->nama_kelompok ?? 'Kelompok tidak ditemukan' }}</p>
-                        <p class="text-xs text-green-400/70 group-hover:text-green-300/80">Kode: {{ Auth::userWithKelompok()->kelompok?->code ?? 'N/A' }}</p>
+                        <p class="text-xs text-white font-medium group-hover:text-cyan-100">{{ Auth::userWithKelompok()->kelompok?->nama_kelompok ?? 'Kelompok tidak ditemukan' }}</p>
+                        <p class="text-xs text-cyan-400/70 group-hover:text-cyan-300/80">Kode: {{ Auth::userWithKelompok()->kelompok?->code ?? 'N/A' }}</p>
                         <div class="flex items-center justify-between mt-2">
-                            <span class="text-xs text-green-400 group-hover:text-green-300">
+                            <span class="text-xs text-cyan-400 group-hover:text-cyan-300">
                                 {{ Auth::userWithKelompok()->kelompok?->users?->count() ?? 0 }} Anggota
                             </span>
-                            <span class="text-xs text-green-400/70 group-hover:text-green-300/80">
+                            <span class="text-xs text-cyan-400/70 group-hover:text-cyan-300/80">
                                 Klik untuk berteman →
                             </span>
                         </div>
