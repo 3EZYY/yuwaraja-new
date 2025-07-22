@@ -47,8 +47,10 @@
                     <!-- Header Text -->
                     <div>
                         <h1 class="font-display text-2xl sm:text-3xl font-bold text-teal-300 text-glow-teal flex items-center gap-3">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 515.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 919.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
-                            Jaringan Kelompok
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                            </svg>
+                            Jejaring Cluster
                         </h1>
                         @if(isset($kelompokDibimbing) && $kelompokDibimbing->count() > 0)
                             <p class="text-gray-400 mt-1">Kelompok: <span class="text-amber-300 font-semibold">{{ $kelompokDibimbing->first()->nama_kelompok }}</span></p>
@@ -77,7 +79,7 @@
             <div class="bg-gray-900/50 p-6 rounded-xl border border-gray-700/50">
                 <h2 class="font-display text-xl font-bold text-white mb-4 flex items-center gap-3">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
                     SPV
                 </h2>
@@ -116,12 +118,7 @@
 
             <!-- Cluster List Section -->
             <div>
-                <h2 class="font-display text-xl font-bold text-white mb-6 flex items-center gap-3">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-amber-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 515.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 919.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
-                    </svg>
-                    Anggota Kelompok
-                </h2>
+                
                 @if(isset($kelompokDibimbing) && $kelompokDibimbing->count() > 0)
                     <div class="space-y-6">
                         @foreach($kelompokDibimbing as $kelompok)
@@ -130,15 +127,15 @@
                             <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
                                 <div class="flex items-center gap-4">
                                     <!-- Icon Cluster -->
-                                    <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-amber-400/20 to-amber-600/20 flex items-center justify-center border border-amber-400/30 group-hover:scale-105 transition-transform duration-300">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                            <path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 515.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 919.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
-                                        </svg>
+                                    <div class="w-12 h-12 rounded-xl flex items-center justify-center group-hover:scale-105 transition-transform duration-300">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="text-white w-8 h-8" viewBox="0 0 20 20" fill="currentColor">
+                        <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z" />
+                    </svg>
                                     </div>
                                     
                                     <!-- Info Cluster -->
                                     <div>
-                                        <h3 class="text-xl font-bold text-white mb-1 group-hover:text-amber-300 transition-colors duration-300">{{ $kelompok->nama_kelompok }}</h3>
+                                        <h3 class="text-xl font-bold text-white mb-1 group-hover:text-white transition-colors duration-300">{{ $kelompok->nama_kelompok }}</h3>
                                         <div class="flex items-center gap-3">
                                             <p class="text-gray-400 text-sm">{{ $kelompok->mahasiswa->count() }} Anggota</p>
                                             <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-green-500/15 text-green-400 border border-green-500/25">
@@ -150,7 +147,7 @@
                                 </div>
                                 
                                 <!-- Action Button -->
-                                <a href="{{ route('filament.admin.resources.cluster.edit', $kelompok->id) }}" class="inline-flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-amber-500/10 to-amber-600/10 hover:from-amber-500/20 hover:to-amber-600/20 border border-amber-500/30 hover:border-amber-400/50 text-amber-400 hover:text-amber-300 rounded-xl transition-all duration-300 text-sm font-medium group/btn">
+                                <a href="{{ route('filament.admin.resources.cluster.edit', $kelompok->id) }}" class="inline-flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-amber-500/10 to-amber-600/10 hover:from-amber-500/20 hover:to-amber-600/20 border border-amber-500/30 hover:border-amber-400/50 text-white hover:text-amber-30 rounded-xl transition-all duration-300 text-sm font-medium group/btn">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 group-hover/btn:rotate-12 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                                     </svg>
@@ -160,12 +157,7 @@
 
                             <!-- Anggota Cluster -->
                             <div>
-                                <h4 class="font-display text-lg font-bold text-white mb-4 flex items-center gap-2">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z" />
-                                    </svg>
-                                    Anggota Cluster
-                                </h4>
+                               
                                 @if($kelompok->mahasiswa->count() > 0)
                                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
                                         @foreach($kelompok->mahasiswa as $mahasiswa)
@@ -220,7 +212,7 @@
                                     <div class="bg-gradient-to-br from-gray-800/40 to-gray-700/20 backdrop-blur-sm p-8 text-center rounded-xl border border-gray-600/30">
                                         <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-gray-700/50 flex items-center justify-center">
                                             <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-                                                <path stroke-linecap="round" stroke-linejoin="round" d="M18 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zM3 19.235v-.11a6.375 6.375 0 0112.75 0v.109A12.318 12.318 0 019.374 21c-2.331 0-4.512-.645-6.374-1.766z" />
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z" />
                                             </svg>
                                         </div>
                                         <h3 class="text-lg font-semibold text-gray-300 mb-2">Belum Ada Anggota</h3>
@@ -311,7 +303,7 @@
                             </svg>
                             Informasi Profil
                         </h3>
-                        <div class="space-y-3">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
                             <div>
                                 <label class="text-gray-400 text-sm">Nama Lengkap</label>
                                 <p id="profileName" class="text-white font-medium">-</p>
@@ -325,6 +317,10 @@
                                 <p id="profileEmail" class="text-white">-</p>
                             </div>
                             <div>
+                                <label class="text-gray-400 text-sm">Email Student</label>
+                                <p id="profileEmailStudent" class="text-white">-</p>
+                            </div>
+                            <div class="md:col-span-2">
                                 <label class="text-gray-400 text-sm">Cluster</label>
                                 <p id="profileCluster" class="text-white">-</p>
                             </div>
@@ -339,7 +335,7 @@
                             </svg>
                             Informasi Personal
                         </h3>
-                        <div class="space-y-3">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
                             <div>
                                 <label class="text-gray-400 text-sm">Jenis Kelamin</label>
                                 <p id="personalGender" class="text-white">-</p>
@@ -348,13 +344,9 @@
                                 <label class="text-gray-400 text-sm">Tempat Lahir</label>
                                 <p id="personalBirthPlace" class="text-white">-</p>
                             </div>
-                            <div>
+                            <div class="md:col-span-2">
                                 <label class="text-gray-400 text-sm">Tanggal Lahir</label>
                                 <p id="personalBirthDate" class="text-white">-</p>
-                            </div>
-                            <div>
-                                <label class="text-gray-400 text-sm">Agama</label>
-                                <p id="personalReligion" class="text-white">-</p>
                             </div>
                         </div>
                     </div>
@@ -427,6 +419,19 @@
                                 <p id="educationEntryPath" class="text-white">-</p>
                             </div>
                         </div>
+                    </div>
+                </div>
+
+                <!-- Description Section (Full Width) -->
+                <div class="bg-gradient-to-br from-gray-800/60 to-gray-700/40 rounded-xl p-6 border border-gray-600/30 mt-6">
+                    <h3 class="text-lg font-bold text-white mb-4 flex items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                        </svg>
+                        Deskripsi
+                    </h3>
+                    <div>
+                        <p id="profileDescription" class="text-gray-300 leading-relaxed">-</p>
                     </div>
                 </div>
             </div>
@@ -642,13 +647,13 @@ function populateModalData(mahasiswa, kelompok) {
     document.getElementById('profileName').textContent = mahasiswa.name || '-';
     document.getElementById('profileNim').textContent = mahasiswa.nim || '-';
     document.getElementById('profileEmail').textContent = mahasiswa.email || '-';
+    document.getElementById('profileEmailStudent').textContent = mahasiswa.email_student || '-';
     document.getElementById('profileCluster').textContent = kelompok ? kelompok.nama_kelompok : '-';
     
     // Personal information
     document.getElementById('personalGender').textContent = mahasiswa.jenis_kelamin || '-';
     document.getElementById('personalBirthPlace').textContent = mahasiswa.tempat_lahir || '-';
     document.getElementById('personalBirthDate').textContent = mahasiswa.tanggal_lahir ? formatDate(mahasiswa.tanggal_lahir) : '-';
-    document.getElementById('personalReligion').textContent = mahasiswa.agama || '-';
     
     // Contact information
     document.getElementById('contactPhone').textContent = mahasiswa.nomor_telepon || '-';
@@ -664,6 +669,9 @@ function populateModalData(mahasiswa, kelompok) {
     document.getElementById('educationGradYear').textContent = mahasiswa.angkatan || '-';
     document.getElementById('educationGpa').textContent = mahasiswa.program_studi || '-';
     document.getElementById('educationEntryPath').textContent = mahasiswa.jalur_masuk || '-';
+    
+    // Description
+    document.getElementById('profileDescription').textContent = mahasiswa.deskripsi || 'Tidak ada deskripsi yang tersedia.';
 }
 
 function closeMahasiswaModal() {
