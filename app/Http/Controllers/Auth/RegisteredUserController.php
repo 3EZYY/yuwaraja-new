@@ -32,19 +32,19 @@ class RegisteredUserController extends Controller
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'nim' => [
-                'required', 
-                'string', 
+                'required',
+                'string',
                 'min:15',
                 'max:16',
                 'regex:/^(23|24|25)\d{13,14}$/',
-                'unique:'.User::class
+                'unique:' . User::class
             ], // NIM 15-16 digit dengan awalan 23/24/25
             'username' => [
-                'required', 
-                'string', 
-                'max:255', 
+                'required',
+                'string',
+                'max:255',
                 'regex:/^[a-zA-Z0-9]+$/',
-                'unique:'.User::class
+                'unique:' . User::class
             ],
             'email' => [
                 'required',
@@ -52,18 +52,32 @@ class RegisteredUserController extends Controller
                 'lowercase',
                 'email',
                 'max:255',
-                'unique:'.User::class,
+                'unique:' . User::class,
                 // ATURAN BARU DI SINI
                 function ($attribute, $value, $fail) {
                     if (!(str_ends_with($value, '@gmail.com') || str_ends_with($value, '@student.ub.ac.id'))) {
-                        $fail('Alamat email harus menggunakan @gmail.com atau @student.ub.ac.id.');
+                        $fail('Alamat email harus menggunakan @gmail.com');
                     }
                 }
             ],
-            'email_student' => ['nullable', 'string', 'lowercase', 'email', 'max:255'],
+            'email_student' => [
+                'nullable',
+                'string',
+                'lowercase',
+                'email',
+                'max:255',
+                'unique:' . User::class,
+                // ATURAN BARU DI SINI
+                function ($attribute, $value, $fail) {
+                    if ($value && !str_ends_with($value, '@student.ub.ac.id')) {
+                        $fail('Alamat email harus menggunakan @student.ub.ac.id');
+                    }
+                }
+            ],
             'program_studi' => ['required', 'string', 'max:255'],
             'angkatan' => ['required', 'string', 'in:2023,2024,2025'],
             'nomor_telepon' => ['required', 'string', 'max:255'], // Tambahan 'required'
+            'tempat_lahir' => ['required', 'string', 'max:255'], // Tambahan field tempat lahir
             'tanggal_lahir' => ['required', 'date'], // Tambahan 'required'
             'jenis_kelamin' => ['required', 'string', 'in:Laki-laki,Perempuan'], // Tambahan 'required'
             'asal_sekolah_jenis' => ['required', 'string', 'in:SMA,SMK,MAN,Lainnya'],
@@ -72,7 +86,7 @@ class RegisteredUserController extends Controller
             'asal_kota' => ['required', 'string', 'max:255'],
             'alamat_domisili' => ['required', 'string'],
             'provinsi' => ['required', 'string', 'max:255'],
-            'kota' => ['required', 'string', 'max:255'],
+            'kota' => ['required', 'string', 'in:Kota,Kabupaten'],
             'jalur_masuk' => ['required', 'string', 'in:SNBP,SNBT,Mandiri UB,Mandiri Vokasi'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ], [
@@ -93,6 +107,7 @@ class RegisteredUserController extends Controller
             'angkatan.required' => 'Angkatan wajib diisi!',
             'angkatan.in' => 'Angkatan hanya boleh 2023, 2024, atau 2025.',
             'nomor_telepon.required' => 'Nomor WhatsApp wajib diisi!',
+            'tempat_lahir.required' => 'Tempat lahir wajib diisi!',
             'tanggal_lahir.required' => 'Tanggal lahir wajib diisi!',
             'jenis_kelamin.required' => 'Jenis kelamin wajib dipilih!',
             'asal_sekolah_jenis.required' => 'Asal sekolah wajib dipilih!',
@@ -100,7 +115,8 @@ class RegisteredUserController extends Controller
             'asal_kota.required' => 'Asal kota wajib diisi!',
             'alamat_domisili.required' => 'Alamat domisili wajib diisi!',
             'provinsi.required' => 'Provinsi wajib diisi!',
-            'kota.required' => 'Kota domisili wajib diisi!',
+            'kota.required' => 'Kota/Kabupaten wajib dipilih!',
+            'kota.in' => 'Pilihan hanya boleh Kota atau Kabupaten.',
             'jalur_masuk.required' => 'Jalur masuk wajib dipilih!',
             'password.required' => 'Password wajib diisi!',
             'password.confirmed' => 'Konfirmasi password tidak cocok!',
@@ -115,6 +131,7 @@ class RegisteredUserController extends Controller
             'program_studi' => $request->program_studi,
             'angkatan' => $request->angkatan,
             'nomor_telepon' => $request->nomor_telepon,
+            'tempat_lahir' => $request->tempat_lahir,
             'tanggal_lahir' => $request->tanggal_lahir,
             'jenis_kelamin' => $request->jenis_kelamin,
             'asal_sekolah_jenis' => $request->asal_sekolah_jenis,
@@ -126,7 +143,7 @@ class RegisteredUserController extends Controller
             'kota' => $request->kota,
             'jalur_masuk' => $request->jalur_masuk,
             'password' => Hash::make($request->password),
-            'role' => 'mahasiswa', 
+            'role' => 'mahasiswa',
         ]);
 
         event(new Registered($user));

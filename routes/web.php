@@ -31,6 +31,8 @@ Route::middleware(['auth', 'role:mahasiswa'])->group(function () {
 // API Routes untuk validasi real-time
 Route::get('/api/check-username', [ValidationController::class, 'checkUsername']);
 Route::get('/api/check-email', [ValidationController::class, 'checkEmail']);
+Route::get('/api/check-email-student', [ValidationController::class, 'checkEmailStudent']);
+Route::get('/api/check-nim', [ValidationController::class, 'checkNim']);
 
 // Route untuk scan QR Code absensi (publik)
 Route::get('/absensi/scan/{qrCode}', [AbsensiController::class, 'scan'])->name('absensi.scan');

@@ -81,6 +81,13 @@
                     <x-input-error :messages="$errors->get('jalur_masuk')" class="mt-2 text-yellow-400 text-xs" />
                 </div>
 
+                <!-- Tempat Lahir -->
+                <div style="animation-delay: 1.1s;">
+                    <x-input-label for="tempat_lahir" value="Tempat Lahir" class="mb-1 text-sm text-cyan-300 tracking-wide" />
+                    <x-text-input id="tempat_lahir" class="cyber-input" type="text" name="tempat_lahir" :value="old('tempat_lahir')" required placeholder="Contoh: Malang" />
+                    <x-input-error :messages="$errors->get('tempat_lahir')" class="mt-2 text-yellow-400 text-xs" />
+                </div>
+
                 <!-- Tanggal Lahir -->
                 <div style="animation-delay: 1.1s;">
                     <x-input-label for="tanggal_lahir" value="Tanggal Lahir" class="mb-1 text-sm text-cyan-300 tracking-wide" />
@@ -129,28 +136,32 @@
                 <!-- Asal Kota -->
                 <div style="animation-delay: 1.5s;">
                     <x-input-label for="asal_kota" value="Asal Kota" class="mb-1 text-sm text-cyan-300 tracking-wide" />
-                    <x-text-input id="asal_kota" class="cyber-input" type="text" name="asal_kota" :value="old('asal_kota')" required placeholder="Masukan Asal Kota" />
+                    <x-text-input id="asal_kota" class="cyber-input" type="text" name="asal_kota" :value="old('asal_kota')" required placeholder="Contoh: Malang" />
                     <x-input-error :messages="$errors->get('asal_kota')" class="mt-2 text-yellow-400 text-xs" />
                 </div>
 
                 <!-- Provinsi Domisili -->
                 <div style="animation-delay: 1.6s;">
-                    <x-input-label for="provinsi" value="Provinsi Domisili" class="mb-1 text-sm text-cyan-300 tracking-wide" />
-                    <x-text-input id="provinsi" class="cyber-input" type="text" name="provinsi" :value="old('provinsi')" required placeholder="Masukan Provinsi" />
+                    <x-input-label for="provinsi" value="Provinsi" class="mb-1 text-sm text-cyan-300 tracking-wide" />
+                    <x-text-input id="provinsi" class="cyber-input" type="text" name="provinsi" :value="old('provinsi')" required placeholder="Contoh: Jawa Timur" />
                     <x-input-error :messages="$errors->get('provinsi')" class="mt-2 text-yellow-400 text-xs" />
                 </div>
 
-                <!-- Kota Domisili -->
+                <!-- Kota/Kabupaten -->
                 <div style="animation-delay: 1.6s;">
-                    <x-input-label for="kota" value="Kota Domisili" class="mb-1 text-sm text-cyan-300 tracking-wide" />
-                    <x-text-input id="kota" class="cyber-input" type="text" name="kota" :value="old('kota')" required placeholder="Masukan Kota Domisili" />
+                    <x-input-label for="kota" value="Kota/Kabupaten" class="mb-1 text-sm text-cyan-300 tracking-wide" />
+                    <select id="kota" name="kota" class="cyber-input cyber-select" required>
+                        <option value="" disabled {{ old('kota') ? '' : 'selected' }}>Pilih Kota/Kabupaten</option>
+                        <option value="Kota" {{ old('kota') == 'Kota' ? 'selected' : '' }}>Kota</option>
+                        <option value="Kabupaten" {{ old('kota') == 'Kabupaten' ? 'selected' : '' }}>Kabupaten</option>
+                    </select>
                     <x-input-error :messages="$errors->get('kota')" class="mt-2 text-yellow-400 text-xs" />
                 </div>
 
-                <!-- Alamat Domisili Lengkap (Span 2 kolom) -->
+                <!-- Alamat Lengkap (Span 2 kolom) -->
                 <div class="md:col-span-2" style="animation-delay: 1.7s;">
-                    <x-input-label for="alamat_domisili" value="Alamat Domisili Lengkap" class="mb-1 text-sm text-cyan-300 tracking-wide" />
-                    <textarea id="alamat_domisili" name="alamat_domisili" class="cyber-input" rows="3" required placeholder="Masukan alamat domisili lengkap">{{ old('alamat_domisili') }}</textarea>
+                    <x-input-label for="alamat_domisili" value="Alamat Lengkap" class="mb-1 text-sm text-cyan-300 tracking-wide" />
+                    <textarea id="alamat_domisili" name="alamat_domisili" class="cyber-input" rows="3" required placeholder="Contoh: Jl. Veteran No. 10, RT 02/RW 05, Ketawanggede, Kec. Lowokwaru, Kota Malang, Jawa Timur 65145">{{ old('alamat_domisili') }}</textarea>
                     <x-input-error :messages="$errors->get('alamat_domisili')" class="mt-2 text-yellow-400 text-xs" />
                 </div>
 
@@ -223,6 +234,7 @@
         const form = document.querySelector('form');
         const usernameInput = document.getElementById('username');
         const emailInput = document.getElementById('email');
+        const emailStudentInput = document.getElementById('email_student');
         const nimInput = document.getElementById('nim');
 
         // Fungsi untuk membuat elemen pesan validasi
@@ -245,6 +257,7 @@
 
         const usernameMessage = createValidationMessage('username');
         const emailMessage = createValidationMessage('email');
+        const emailStudentMessage = createValidationMessage('email_student');
         const nimMessage = createValidationMessage('nim');
 
         // Fungsi Debounce
@@ -300,7 +313,21 @@
             return true;
         }
 
-        // Validasi format username
+        // Validasi format email student
+        function validateEmailStudentFormat(email) {
+            if (email.length === 0) {
+                emailStudentMessage.textContent = '';
+                return true;
+            }
+            if (!email.endsWith('@student.ub.ac.id')) {
+                emailStudentMessage.textContent = '✗ Alamat email harus menggunakan @student.ub.ac.id';
+                emailStudentMessage.className = 'mt-1 text-xs text-red-400';
+                return false;
+            }
+            emailStudentMessage.textContent = '✓ Format email student valid';
+            emailStudentMessage.className = 'mt-1 text-xs text-green-400';
+            return true;
+        }
         function validateUsernameFormat(username) {
             if (username.length === 0) {
                 usernameMessage.textContent = '';
@@ -360,10 +387,57 @@
             }
         }, 500);
 
+        // Cek ketersediaan email student
+        const checkEmailStudentAvailability = debounce(async function(email_student) {
+            if (!validateEmailStudentFormat(email_student)) {
+                return;
+            }
+            if (email_student.length === 0) {
+                return;
+            }
+            try {
+                const response = await fetch(`/api/check-email-student?email_student=${encodeURIComponent(email_student)}`);
+                const data = await response.json();
+                if (data.available) {
+                    emailStudentMessage.textContent = '✓ ' + data.message;
+                    emailStudentMessage.className = 'mt-1 text-xs text-green-400';
+                } else {
+                    emailStudentMessage.textContent = '✗ ' + data.message;
+                    emailStudentMessage.className = 'mt-1 text-xs text-red-400';
+                }
+            } catch (error) {
+                console.error('Error checking email student:', error);
+            }
+        }, 500);
+
+        // Cek ketersediaan NIM
+        const checkNimAvailability = debounce(async function(nim) {
+            if (!validateNIM(nim)) {
+                return;
+            }
+            try {
+                const response = await fetch(`/api/check-nim?nim=${encodeURIComponent(nim)}`);
+                const data = await response.json();
+                if (data.available) {
+                    nimMessage.textContent = '✓ ' + data.message;
+                    nimMessage.className = 'mt-1 text-xs text-green-400';
+                } else {
+                    nimMessage.textContent = '✗ ' + data.message;
+                    nimMessage.className = 'mt-1 text-xs text-red-400';
+                }
+            } catch (error) {
+                console.error('Error checking nim:', error);
+            }
+        }, 500);
+
         // Tambahkan event listeners
         nimInput.addEventListener('input', function() {
             this.value = this.value.replace(/[^0-9]/g, '');
-            validateNIM(this.value);
+            if (this.value.length >= 15) {
+                checkNimAvailability(this.value);
+            } else {
+                validateNIM(this.value);
+            }
         });
 
         usernameInput.addEventListener('input', function() {
@@ -379,11 +453,19 @@
             checkEmailAvailability(this.value);
         });
 
+        emailStudentInput.addEventListener('input', function() {
+            if (this.value.length > 0) {
+                checkEmailStudentAvailability(this.value);
+            } else {
+                validateEmailStudentFormat(this.value);
+            }
+        });
+
         // Validasi form saat submit
         form.addEventListener('submit', function(e) {
             const requiredFields = [
                 'name', 'nim', 'username', 'program_studi', 'angkatan', 'nomor_telepon',
-                'tanggal_lahir', 'jenis_kelamin', 'asal_sekolah_jenis', 'asal_sekolah_nama',
+                'tempat_lahir', 'tanggal_lahir', 'jenis_kelamin', 'asal_sekolah_jenis', 'asal_sekolah_nama',
                 'asal_kota', 'alamat_domisili', 'provinsi', 'kota', 'jalur_masuk',
                 'email', 'password', 'password_confirmation'
             ];

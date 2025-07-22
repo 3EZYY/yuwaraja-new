@@ -39,4 +39,36 @@ class ValidationController extends Controller
             'message' => $exists ? 'Email sudah dipakai nih!' : 'Email tersedia!'
         ]);
     }
+    
+    public function checkEmailStudent(Request $request)
+    {
+        $email_student = $request->get('email_student');
+        
+        if (empty($email_student)) {
+            return response()->json(['available' => true]);
+        }
+        
+        $exists = User::where('email_student', $email_student)->exists();
+        
+        return response()->json([
+            'available' => !$exists,
+            'message' => $exists ? 'Email student sudah dipakai!' : 'Email student tersedia!'
+        ]);
+    }
+    
+    public function checkNim(Request $request)
+    {
+        $nim = $request->get('nim');
+        
+        if (empty($nim)) {
+            return response()->json(['available' => true]);
+        }
+        
+        $exists = User::where('nim', $nim)->exists();
+        
+        return response()->json([
+            'available' => !$exists,
+            'message' => $exists ? 'NIM sudah terdaftar!' : 'NIM tersedia!'
+        ]);
+    }
 }
