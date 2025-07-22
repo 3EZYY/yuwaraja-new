@@ -701,8 +701,14 @@
                 </nav>
 
                 <div class="hidden lg:flex items-center space-x-6">
-                    <a href="/login" class="login-button">LOG IN</a>
-                    <a href="/register" class="register-button">REGISTER</a>
+                    @auth
+                        <a href="/dashboard" class="bg-gradient-to-r from-yellow-400 to-yellow-500 hover:from-yellow-500 hover:to-yellow-600 text-gray-900 font-semibold text-sm md:text-base px-4 md:px-6 py-2 md:py-2.5 rounded-xl transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:shadow-yellow-500/25 tracking-wide">
+                            DASHBOARD
+                        </a>
+                    @else
+                        <a href="/login" class="login-button">LOG IN</a>
+                        <a href="/register" class="register-button">REGISTER</a>
+                    @endauth
                 </div>
 
                 <button id="hamburger-button" class="hamburger-button flex flex-col justify-center items-center space-y-1.5 lg:hidden z-50">
@@ -720,8 +726,14 @@
         <a href="#prodi" class="nav-link-mobile font-kanit text-2xl text-white">Prodi</a>
         <a href="#faq" class="nav-link-mobile font-kanit text-2xl text-white">FAQ</a>
         <div class="mt-8 pt-8 border-t border-gray-700 w-full flex flex-col items-center gap-4">
-            <a href="/login" class="login-button text-2xl">LOG IN</a>
-            <a href="/register" class="register-button text-lg w-full max-w-xs text-center">REGISTER</a>
+            @auth
+                <a href="/dashboard" class="bg-gradient-to-r from-yellow-400 to-yellow-500 hover:from-yellow-500 hover:to-yellow-600 text-gray-900 font-semibold text-lg sm:text-xl px-6 py-3 rounded-xl transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:shadow-yellow-500/25 tracking-wide w-full max-w-xs text-center">
+                    DASHBOARD
+                </a>
+            @else
+                <a href="/login" class="login-button text-2xl">LOG IN</a>
+                <a href="/register" class="register-button text-lg w-full max-w-xs text-center">REGISTER</a>
+            @endauth
         </div>
     </nav>
 
