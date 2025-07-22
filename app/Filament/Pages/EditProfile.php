@@ -7,7 +7,6 @@ use Filament\Forms\Contracts\HasForms;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Form;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Section;
 use Filament\Actions\Action;
 use Filament\Notifications\Notification;
@@ -38,7 +37,6 @@ class EditProfile extends Page implements HasForms
             'phone' => $user->phone ?? $user->nomor_telepon ?? '',
             'nim' => $user->nim ?? '',
             'program_studi' => $user->program_studi ?? '',
-            'photo' => $user->photo,
         ]);
     }
 
@@ -49,18 +47,6 @@ class EditProfile extends Page implements HasForms
                 Section::make('Informasi Profile')
                     ->description('Update informasi profile Anda')
                     ->schema([
-                        FileUpload::make('photo')
-                            ->label('Foto Profile')
-                            ->image()
-                            ->disk('public_uploads')
-                            ->directory('profile-pictures')
-                            ->imageEditor()
-                            ->imageEditorAspectRatios(['1:1'])
-                            ->maxSize(2048)
-                            ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/jpg'])
-                            ->helperText('Upload foto profile Anda (maksimal 2MB, format: JPG, PNG)')
-                            ->columnSpanFull(),
-                            
                         TextInput::make('name')
                             ->label('Nama Lengkap')
                             ->required()

@@ -76,12 +76,6 @@ class KelompokResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\ImageColumn::make('photo')
-                    ->label('Foto Cluster')
-                    ->disk('public')
-                    ->size(50)
-                    ->circular()
-                    ->defaultImageUrl(url('/images/default-avatar.svg')),
                 Tables\Columns\TextColumn::make('nama_kelompok')
                     ->searchable()
                     ->label('Nama Cluster'),
