@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Upload Foto Registrasi</title>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+</head>
+<body>
+    <h2>Test Upload Foto Registrasi</h2>
+    <form action="http://127.0.0.1:8000/register" method="POST" enctype="multipart/form-data">
+        <input type="hidden" name="_token" value="test-token">
+        
+        <label>Nama:</label><br>
+        <input type="text" name="name" value="Test User" required><br><br>
+        
+        <label>NIM:</label><br>
+        <input type="text" name="nim" value="231407071111999" required><br><br>
+        
+        <label>Username:</label><br>
+        <input type="text" name="username" value="testuser999" required><br><br>
+        
+        <label>Email:</label><br>
+        <input type="email" name="email" value="testuser999@gmail.com" required><br><br>
+        
+        <label>Program Studi:</label><br>
+        <input type="text" name="program_studi" value="Teknik Informatika" required><br><br>
+        
+        <label>Angkatan:</label><br>
+        <select name="angkatan" required>
+            <option value="2023">2023</option>
+        </select><br><br>
+        
+        <label>Nomor Telepon:</label><br>
+        <input type="text" name="nomor_telepon" value="081234567890" required><br><br>
+        
+        <label>Tempat Lahir:</label><br>
+        <input type="text" name="tempat_lahir" value="Jakarta" required><br><br>
+        
+        <label>Tanggal Lahir:</label><br>
+        <input type="date" name="tanggal_lahir" value="2000-01-01" required><br><br>
+        
+        <label>Jenis Kelamin:</label><br>
+        <select name="jenis_kelamin" required>
+            <option value="Laki-laki">Laki-laki</option>
+        </select><br><br>
+        
+        <label>Asal Sekolah Jenis:</label><br>
+        <select name="asal_sekolah_jenis" required>
+            <option value="SMA">SMA</option>
+        </select><br><br>
+        
+        <label>Asal Sekolah Nama:</label><br>
+        <input type="text" name="asal_sekolah_nama" value="SMA Test" required><br><br>
+        
+        <label>Asal Kota:</label><br>
+        <input type="text" name="asal_kota" value="Jakarta" required><br><br>
+        
+        <label>Alamat Domisili:</label><br>
+        <textarea name="alamat_domisili" required>Jl. Test No. 123</textarea><br><br>
+        
+        <label>Provinsi:</label><br>
+        <input type="text" name="provinsi" value="DKI Jakarta" required><br><br>
+        
+        <label>Kota:</label><br>
+        <select name="kota" required>
+            <option value="Kota">Kota</option>
+        </select><br><br>
+        
+        <label>Jalur Masuk:</label><br>
+        <select name="jalur_masuk" required>
+            <option value="SNBP">SNBP</option>
+        </select><br><br>
+        
+        <label>Foto Profil:</label><br>
+        <input type="file" name="photo" accept=".jpg,.jpeg,.png,.svg"><br><br>
+        
+        <label>Password:</label><br>
+        <input type="password" name="password" value="password123" required><br><br>
+        
+        <label>Konfirmasi Password:</label><br>
+        <input type="password" name="password_confirmation" value="password123" required><br><br>
+        
+        <button type="submit">Daftar</button>
+    </form>
+</body>
+</html>

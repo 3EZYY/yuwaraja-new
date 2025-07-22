@@ -88,6 +88,7 @@ class RegisteredUserController extends Controller
             'provinsi' => ['required', 'string', 'max:255'],
             'kota' => ['required', 'string', 'in:Kota,Kabupaten'],
             'jalur_masuk' => ['required', 'string', 'in:SNBP,SNBT,Mandiri UB,Mandiri Vokasi'],
+            'photo' => ['nullable', 'image', 'mimes:jpeg,jpg,png,svg', 'max:5120'], // 5MB max
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ], [
             // Custom error messages
@@ -118,9 +119,29 @@ class RegisteredUserController extends Controller
             'kota.required' => 'Kota/Kabupaten wajib dipilih!',
             'kota.in' => 'Pilihan hanya boleh Kota atau Kabupaten.',
             'jalur_masuk.required' => 'Jalur masuk wajib dipilih!',
+            'photo.image' => 'File harus berupa gambar!',
+            'photo.mimes' => 'Format foto harus JPEG, JPG, PNG, atau SVG!',
+            'photo.max' => 'Ukuran foto maksimal 5MB!',
             'password.required' => 'Password wajib diisi!',
             'password.confirmed' => 'Konfirmasi password tidak cocok!',
         ]);
+
+        // Handle photo upload
+        $photoPath = null;
+        if ($request->hasFile('photo')) {
+            $photo = $request->file('photo');
+            $photoName = 'profile_' . time() . '_' . uniqid() . '.' . $photo->getClientOriginalExtension();
+            
+            // Create directory if it doesn't exist
+            $uploadPath = public_path('profile-pictures');
+            if (!file_exists($uploadPath)) {
+                mkdir($uploadPath, 0755, true);
+            }
+            
+            // Move the uploaded file
+            $photo->move($uploadPath, $photoName);
+            $photoPath = $photoName;
+        }
 
         $user = User::create([
             'name' => $request->name,
@@ -142,6 +163,7 @@ class RegisteredUserController extends Controller
             'provinsi' => $request->provinsi,
             'kota' => $request->kota,
             'jalur_masuk' => $request->jalur_masuk,
+            'photo' => $photoPath,
             'password' => Hash::make($request->password),
             'role' => 'mahasiswa',
         ]);

@@ -83,6 +83,13 @@
             @endif
         </div>
 
+        <!-- Email Student -->
+        <div>
+            <x-input-label for="email_student" value="Email Student" class="font-semibold text-gray-300" />
+            <x-text-input id="email_student" name="email_student" type="email" class="mt-1 block w-full bg-gray-900/50 border-gray-700/50 text-gray-200 rounded-lg focus:border-teal-400 focus:ring-1 focus:ring-teal-400 transition" :value="old('email_student', $user->email_student)" autocomplete="email" placeholder="Contoh: nama@student.ub.ac.id"/>
+            <x-input-error class="mt-2 text-red-400" :messages="$errors->get('email_student')" />
+        </div>
+
         <div>
             <x-input-label for="program_studi" value="Program Studi" class="font-semibold text-gray-300" />
             <select id="program_studi" name="program_studi" class="mt-1 block w-full bg-gray-900/50 border-gray-700/50 text-gray-200 rounded-lg focus:border-teal-400 focus:ring-1 focus:ring-teal-400 transition" required>
@@ -95,10 +102,117 @@
             <x-input-error class="mt-2 text-red-400" :messages="$errors->get('program_studi')" />
         </div>
 
+        <!-- Angkatan -->
+        <div>
+            <x-input-label for="angkatan" value="Angkatan" class="font-semibold text-gray-300" />
+            <select id="angkatan" name="angkatan" class="mt-1 block w-full bg-gray-900/50 border-gray-700/50 text-gray-200 rounded-lg focus:border-teal-400 focus:ring-1 focus:ring-teal-400 transition">
+                <option value="" disabled {{ !$user->angkatan ? 'selected' : '' }}>-- Pilih Angkatan --</option>
+                <option value="2023" {{ old('angkatan', $user->angkatan) == '2023' ? 'selected' : '' }}>2023</option>
+                <option value="2024" {{ old('angkatan', $user->angkatan) == '2024' ? 'selected' : '' }}>2024</option>
+                <option value="2025" {{ old('angkatan', $user->angkatan) == '2025' ? 'selected' : '' }}>2025</option>
+            </select>
+            <x-input-error class="mt-2 text-red-400" :messages="$errors->get('angkatan')" />
+        </div>
+
         <div>
             <x-input-label for="nomor_telepon" value="Nomor Telepon" class="font-semibold text-gray-300" />
             <x-text-input id="nomor_telepon" name="nomor_telepon" type="text" class="mt-1 block w-full bg-gray-900/50 border-gray-700/50 text-gray-200 rounded-lg focus:border-teal-400 focus:ring-1 focus:ring-teal-400 transition" :value="old('nomor_telepon', $user->nomor_telepon)" autocomplete="tel" placeholder="Contoh: 081234567890"/>
             <x-input-error class="mt-2 text-red-400" :messages="$errors->get('nomor_telepon')" />
+        </div>
+
+        <!-- Data Kelahiran -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+                <x-input-label for="tempat_lahir" value="Tempat Lahir" class="font-semibold text-gray-300" />
+                <x-text-input id="tempat_lahir" name="tempat_lahir" type="text" class="mt-1 block w-full bg-gray-900/50 border-gray-700/50 text-gray-200 rounded-lg focus:border-teal-400 focus:ring-1 focus:ring-teal-400 transition" :value="old('tempat_lahir', $user->tempat_lahir)" placeholder="Contoh: Malang"/>
+                <x-input-error class="mt-2 text-red-400" :messages="$errors->get('tempat_lahir')" />
+            </div>
+            <div>
+                <x-input-label for="tanggal_lahir" value="Tanggal Lahir" class="font-semibold text-gray-300" />
+                <x-text-input id="tanggal_lahir" name="tanggal_lahir" type="date" class="mt-1 block w-full bg-gray-900/50 border-gray-700/50 text-gray-200 rounded-lg focus:border-teal-400 focus:ring-1 focus:ring-teal-400 transition" :value="old('tanggal_lahir', $user->tanggal_lahir ? $user->tanggal_lahir->format('Y-m-d') : '')"/>
+                <x-input-error class="mt-2 text-red-400" :messages="$errors->get('tanggal_lahir')" />
+            </div>
+        </div>
+
+        <!-- Jenis Kelamin -->
+        <div>
+            <x-input-label for="jenis_kelamin" value="Jenis Kelamin" class="font-semibold text-gray-300" />
+            <select id="jenis_kelamin" name="jenis_kelamin" class="mt-1 block w-full bg-gray-900/50 border-gray-700/50 text-gray-200 rounded-lg focus:border-teal-400 focus:ring-1 focus:ring-teal-400 transition">
+                <option value="" disabled {{ !$user->jenis_kelamin ? 'selected' : '' }}>-- Pilih Jenis Kelamin --</option>
+                <option value="Laki-Laki" {{ old('jenis_kelamin', $user->jenis_kelamin) == 'Laki-Laki' ? 'selected' : '' }}>Laki-Laki</option>
+                <option value="Perempuan" {{ old('jenis_kelamin', $user->jenis_kelamin) == 'Perempuan' ? 'selected' : '' }}>Perempuan</option>
+            </select>
+            <x-input-error class="mt-2 text-red-400" :messages="$errors->get('jenis_kelamin')" />
+        </div>
+
+        <!-- Data Sekolah Asal -->
+        <div class="space-y-4 p-4 bg-gray-800/30 rounded-lg border border-gray-700/50">
+            <h3 class="text-lg font-semibold text-teal-300 mb-3">Informasi Sekolah Asal</h3>
+            
+            <div>
+                <x-input-label for="asal_sekolah_jenis" value="Jenis Sekolah" class="font-semibold text-gray-300" />
+                <select id="asal_sekolah_jenis" name="asal_sekolah_jenis" class="mt-1 block w-full bg-gray-900/50 border-gray-700/50 text-gray-200 rounded-lg focus:border-teal-400 focus:ring-1 focus:ring-teal-400 transition">
+                    <option value="" disabled {{ !$user->asal_sekolah_jenis ? 'selected' : '' }}>-- Pilih Jenis Sekolah --</option>
+                    <option value="SMA" {{ old('asal_sekolah_jenis', $user->asal_sekolah_jenis) == 'SMA' ? 'selected' : '' }}>SMA</option>
+                    <option value="SMK" {{ old('asal_sekolah_jenis', $user->asal_sekolah_jenis) == 'SMK' ? 'selected' : '' }}>SMK</option>
+                    <option value="MAN" {{ old('asal_sekolah_jenis', $user->asal_sekolah_jenis) == 'MAN' ? 'selected' : '' }}>MAN</option>
+                    <option value="Lainnya" {{ old('asal_sekolah_jenis', $user->asal_sekolah_jenis) == 'Lainnya' ? 'selected' : '' }}>Lainnya</option>
+                </select>
+                <x-input-error class="mt-2 text-red-400" :messages="$errors->get('asal_sekolah_jenis')" />
+            </div>
+
+            <div>
+                <x-input-label for="asal_sekolah_nama" value="Nama Sekolah" class="font-semibold text-gray-300" />
+                <x-text-input id="asal_sekolah_nama" name="asal_sekolah_nama" type="text" class="mt-1 block w-full bg-gray-900/50 border-gray-700/50 text-gray-200 rounded-lg focus:border-teal-400 focus:ring-1 focus:ring-teal-400 transition" :value="old('asal_sekolah_nama', $user->asal_sekolah_nama)" placeholder="Contoh: SMAN 1 Malang"/>
+                <x-input-error class="mt-2 text-red-400" :messages="$errors->get('asal_sekolah_nama')" />
+            </div>
+
+            <div>
+                <x-input-label for="jurusan_sekolah" value="Jurusan Sekolah" class="font-semibold text-gray-300" />
+                <x-text-input id="jurusan_sekolah" name="jurusan_sekolah" type="text" class="mt-1 block w-full bg-gray-900/50 border-gray-700/50 text-gray-200 rounded-lg focus:border-teal-400 focus:ring-1 focus:ring-teal-400 transition" :value="old('jurusan_sekolah', $user->jurusan_sekolah)" placeholder="Contoh: IPA, IPS, Teknik Informatika"/>
+                <x-input-error class="mt-2 text-red-400" :messages="$errors->get('jurusan_sekolah')" />
+            </div>
+        </div>
+
+        <!-- Data Lokasi -->
+        <div class="space-y-4 p-4 bg-gray-800/30 rounded-lg border border-gray-700/50">
+            <h3 class="text-lg font-semibold text-teal-300 mb-3">Informasi Lokasi</h3>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <x-input-label for="asal_kota" value="Asal Kota" class="font-semibold text-gray-300" />
+                    <x-text-input id="asal_kota" name="asal_kota" type="text" class="mt-1 block w-full bg-gray-900/50 border-gray-700/50 text-gray-200 rounded-lg focus:border-teal-400 focus:ring-1 focus:ring-teal-400 transition" :value="old('asal_kota', $user->asal_kota)" placeholder="Contoh: Malang"/>
+                    <x-input-error class="mt-2 text-red-400" :messages="$errors->get('asal_kota')" />
+                </div>
+                <div>
+                    <x-input-label for="provinsi" value="Provinsi" class="font-semibold text-gray-300" />
+                    <x-text-input id="provinsi" name="provinsi" type="text" class="mt-1 block w-full bg-gray-900/50 border-gray-700/50 text-gray-200 rounded-lg focus:border-teal-400 focus:ring-1 focus:ring-teal-400 transition" :value="old('provinsi', $user->provinsi)" placeholder="Contoh: Jawa Timur"/>
+                    <x-input-error class="mt-2 text-red-400" :messages="$errors->get('provinsi')" />
+                </div>
+            </div>
+
+            <div>
+                <x-input-label for="kota" value="Kota / Kabupaten" class="font-semibold text-gray-300" />
+                <select id="kota" name="kota" class="mt-1 block w-full bg-gray-900/50 border-gray-700/50 text-gray-200 rounded-lg focus:border-teal-400 focus:ring-1 focus:ring-teal-400 transition">
+                    <option value="" disabled {{ !$user->kota ? 'selected' : '' }}>-- Pilih Kota / Kabupaten --</option>
+                    <option value="Kota" {{ old('kota', $user->kota) == 'Kota' ? 'selected' : '' }}>Kota</option>
+                    <option value="Kabupaten" {{ old('kota', $user->kota) == 'Kabupaten' ? 'selected' : '' }}>Kabupaten</option>
+                </select>
+                <x-input-error class="mt-2 text-red-400" :messages="$errors->get('kota')" />
+            </div>
+        </div>
+
+        <!-- Jalur Masuk -->
+        <div>
+            <x-input-label for="jalur_masuk" value="Jalur Masuk" class="font-semibold text-gray-300" />
+            <select id="jalur_masuk" name="jalur_masuk" class="mt-1 block w-full bg-gray-900/50 border-gray-700/50 text-gray-200 rounded-lg focus:border-teal-400 focus:ring-1 focus:ring-teal-400 transition">
+                <option value="" disabled {{ !$user->jalur_masuk ? 'selected' : '' }}>-- Pilih Jalur Masuk --</option>
+                <option value="SNBP" {{ old('jalur_masuk', $user->jalur_masuk) == 'SNBP' ? 'selected' : '' }}>SNBP (Seleksi Nasional Berdasarkan Prestasi)</option>
+                <option value="SNBT" {{ old('jalur_masuk', $user->jalur_masuk) == 'SNBT' ? 'selected' : '' }}>SNBT (Seleksi Nasional Berdasarkan Tes)</option>
+                <option value="Mandiri UB" {{ old('jalur_masuk', $user->jalur_masuk) == 'Mandiri UB' ? 'selected' : '' }}>Mandiri UB</option>
+                <option value="Mandiri Vokasi" {{ old('jalur_masuk', $user->jalur_masuk) == 'Mandiri Vokasi' ? 'selected' : '' }}>Mandiri Vokasi</option>
+            </select>
+            <x-input-error class="mt-2 text-red-400" :messages="$errors->get('jalur_masuk')" />
         </div>
 
         <div>
