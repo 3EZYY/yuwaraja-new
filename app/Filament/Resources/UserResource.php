@@ -11,6 +11,7 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Hash;
+use Filament\Forms\Components\Textarea;
 
 class UserResource extends Resource
 {
@@ -65,11 +66,16 @@ class UserResource extends Resource
                     ->required()
                     ->searchable(),
 
-                Forms\Components\TextInput::make('angkatan')
+                // 1. Angkatan - Dropdown
+                Forms\Components\Select::make('angkatan')
                     ->label('Angkatan')
+                    ->options([
+                        '2023' => '2023',
+                        '2024' => '2024',
+                        '2025' => '2025',
+                    ])
                     ->required()
-                    ->maxLength(4)
-                    ->placeholder('2024'),
+                    ->searchable(),
 
                 Forms\Components\TextInput::make('nomor_telepon')
                     ->label('Nomor Telepon')
@@ -81,6 +87,11 @@ class UserResource extends Resource
                     ->label('Tanggal Lahir')
                     ->required(),
 
+                // 2. Tempat Lahir
+                Forms\Components\TextInput::make('tempat_lahir')
+                    ->label('Tempat Lahir')
+                    ->maxLength(255),
+
                 Forms\Components\Select::make('jenis_kelamin')
                     ->label('Jenis Kelamin')
                     ->options([
@@ -88,6 +99,110 @@ class UserResource extends Resource
                         'Perempuan' => 'Perempuan',
                     ])
                     ->required(),
+
+                // 3. Jalur Masuk - Dropdown
+                Forms\Components\Select::make('jalur_masuk')
+                    ->label('Jalur Masuk')
+                    ->options([
+                        'SNBP' => 'SNBP',
+                        'SNBT' => 'SNBT',
+                        'Mandiri UB' => 'Mandiri UB',
+                        'Mandiri Vokasi' => 'Mandiri Vokasi',
+                    ])
+                    ->searchable(),
+
+                // 4. Asal Sekolah - Dropdown
+                Forms\Components\Select::make('asal_sekolah_jenis')
+                    ->label('Jenis Sekolah')
+                    ->options([
+                        'SMA' => 'SMA',
+                        'SMK' => 'SMK',
+                        'MAN' => 'MAN',
+                        'Lainnya' => 'Lainnya',
+                    ])
+                    ->searchable(),
+
+                // 5. Nama Sekolah
+                Forms\Components\TextInput::make('asal_sekolah_nama')
+                    ->label('Nama Sekolah')
+                    ->maxLength(255),
+
+                // 6. Jurusan/Bidang Minat
+                Forms\Components\TextInput::make('jurusan_sekolah')
+                    ->label('Jurusan/Bidang Minat')
+                    ->maxLength(255),
+
+                // 7. Asal Kota
+                Forms\Components\TextInput::make('asal_kota')
+                    ->label('Asal Kota')
+                    ->maxLength(255),
+
+                // 8. Provinsi - Dropdown dengan 38 provinsi
+                Forms\Components\Select::make('provinsi')
+                    ->label('Provinsi')
+                    ->options([
+                        'Nanggroe Aceh Darussalam' => 'Nanggroe Aceh Darussalam (Banda Aceh)',
+                        'Sumatera Utara' => 'Sumatera Utara (Medan)',
+                        'Sumatera Selatan' => 'Sumatera Selatan (Palembang)',
+                        'Sumatera Barat' => 'Sumatera Barat (Padang)',
+                        'Bengkulu' => 'Bengkulu (Bengkulu)',
+                        'Riau' => 'Riau (Pekanbaru)',
+                        'Kepulauan Riau' => 'Kepulauan Riau (Tanjung Pinang)',
+                        'Jambi' => 'Jambi (Jambi)',
+                        'Lampung' => 'Lampung (Bandar Lampung)',
+                        'Bangka Belitung' => 'Bangka Belitung (Pangkal Pinang)',
+                        'Kalimantan Barat' => 'Kalimantan Barat (Pontianak)',
+                        'Kalimantan Timur' => 'Kalimantan Timur (Samarinda)',
+                        'Kalimantan Selatan' => 'Kalimantan Selatan (Banjarbaru)',
+                        'Kalimantan Tengah' => 'Kalimantan Tengah (Palangkaraya)',
+                        'Kalimantan Utara' => 'Kalimantan Utara (Tanjung Selor)',
+                        'Banten' => 'Banten (Serang)',
+                        'DKI Jakarta' => 'DKI Jakarta (Jakarta)',
+                        'Jawa Barat' => 'Jawa Barat (Bandung)',
+                        'Jawa Tengah' => 'Jawa Tengah (Semarang)',
+                        'Daerah Istimewa Yogyakarta' => 'Daerah Istimewa Yogyakarta (Yogyakarta)',
+                        'Jawa Timur' => 'Jawa Timur (Surabaya)',
+                        'Bali' => 'Bali (Denpasar)',
+                        'Nusa Tenggara Timur' => 'Nusa Tenggara Timur (Kupang)',
+                        'Nusa Tenggara Barat' => 'Nusa Tenggara Barat (Mataram)',
+                        'Gorontalo' => 'Gorontalo (Gorontalo)',
+                        'Sulawesi Barat' => 'Sulawesi Barat (Mamuju)',
+                        'Sulawesi Tengah' => 'Sulawesi Tengah (Palu)',
+                        'Sulawesi Utara' => 'Sulawesi Utara (Manado)',
+                        'Sulawesi Tenggara' => 'Sulawesi Tenggara (Kendari)',
+                        'Sulawesi Selatan' => 'Sulawesi Selatan (Makassar)',
+                        'Maluku Utara' => 'Maluku Utara (Sofifi)',
+                        'Maluku' => 'Maluku (Ambon)',
+                        'Papua Barat' => 'Papua Barat (Manokwari)',
+                        'Papua' => 'Papua (Jayapura)',
+                        'Papua Tengah' => 'Papua Tengah (Nabire)',
+                        'Papua Pegunungan' => 'Papua Pegunungan (Jayawijaya)',
+                        'Papua Selatan' => 'Papua Selatan (Merauke)',
+                        'Papua Barat Daya' => 'Papua Barat Daya (Sorong)',
+                    ])
+                    ->searchable(),
+
+                // 9. Kota/Kabupaten - Dropdown
+                Forms\Components\Select::make('kota_kabupaten')
+                    ->label('Kota/Kabupaten')
+                    ->options([
+                        'Kota' => 'Kota',
+                        'Kabupaten' => 'Kabupaten',
+                    ])
+                    ->searchable(),
+
+                // 10. Alamat Lengkap
+                Forms\Components\Textarea::make('alamat_lengkap')
+                    ->label('Alamat Lengkap')
+                    ->rows(3)
+                    ->maxLength(500),
+
+                // 11. Email Student.ub.ac.id
+                Forms\Components\TextInput::make('email_student')
+                    ->label('Email Student.ub.ac.id')
+                    ->email()
+                    ->suffix('@student.ub.ac.id')
+                    ->maxLength(255),
 
                 Forms\Components\Select::make('role')
                     ->label('Role')
