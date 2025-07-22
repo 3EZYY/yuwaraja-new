@@ -52,6 +52,15 @@ class SpvTugasController extends Controller
             ->latest()
             ->paginate(10);
         
+        // Check if this is an AJAX request for modal
+        if (request()->ajax() || request()->wantsJson()) {
+            return response()->json([
+                'tugas' => $tugas,
+                'pengumpulans' => $pengumpulans,
+                'html' => view('spv.tugas.modal-content', compact('tugas', 'pengumpulans'))->render()
+            ]);
+        }
+        
         return view('spv.tugas.show', compact('tugas', 'pengumpulans'));
     }
 

@@ -63,14 +63,7 @@
                             <div class="flex flex-wrap items-center gap-x-4 gap-y-2 mb-3">
                                 <h2 class="font-kanit text-xl lg:text-2xl font-semibold text-white">
                                     {{ $item->judul }}
-                                </h2>
-                                @if($item->tingkat_kesulitan === 'mudah')
-                                    <span class="text-xs font-medium text-green-300 bg-green-900/50 ring-1 ring-green-300/30 px-3 py-1 rounded-full">Mudah</span>
-                                @elseif($item->tingkat_kesulitan === 'sedang')
-                                    <span class="text-xs font-medium text-yellow-300 bg-yellow-900/50 ring-1 ring-yellow-300/30 px-3 py-1 rounded-full">Sedang</span>
-                                @else
-                                    <span class="text-xs font-medium text-red-300 bg-red-900/50 ring-1 ring-red-300/30 px-3 py-1 rounded-full">Sulit</span>
-                                @endif
+                               </h2>
                             </div>
                             
                             <p class="font-poppins text-gray-300 text-sm leading-relaxed mb-6">
@@ -118,11 +111,11 @@
                         </div>
 
                         <div class="flex-shrink-0 mt-4 md:mt-0 md:ml-6">
-                             <a href="{{ route('mahasiswa.tugas.show', $item) }}" 
+                             <button onclick="openTaskModal({{ $item->id }})" 
                                 class="inline-flex items-center justify-center gap-2 w-full md:w-auto bg-teal-500 text-gray-900 font-semibold text-sm px-5 py-3 rounded-lg shadow-md transition-all duration-300 hover:bg-teal-400 hover:shadow-lg hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-900 focus:ring-teal-500">
                                 <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path d="M10 12a2 2 0 100-4 2 2 0 000 4z" /><path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd" /></svg>
                                 Lihat Detail
-                            </a>
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -144,7 +137,84 @@
     </div>
 </div>
 
+<!-- Modal -->
+<div id="taskModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center p-4">
+    <div class="bg-gray-800 rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+        <div class="flex justify-between items-center p-6 border-b border-gray-700">
+            <h2 class="text-xl font-semibold text-white">Detail Tugas</h2>
+            <button onclick="closeTaskModal()" class="text-gray-400 hover:text-white">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+        </div>
+        <div id="modalContent" class="p-6">
+            <div class="text-center py-8">
+                <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-teal-400 mx-auto"></div>
+                <p class="text-gray-400 mt-4">Memuat detail tugas...</p>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
+function openTaskModal(taskId) {
+    const modal = document.getElementById('taskModal');
+    const modalContent = document.getElementById('modalContent');
+    
+    // Show modal
+    modal.classList.remove('hidden');
+    
+    // Reset content
+    modalContent.innerHTML = `
+        <div class="text-center py-8">
+            <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-teal-400 mx-auto"></div>
+            <p class="text-gray-400 mt-4">Memuat detail tugas...</p>
+        </div>
+    `;
+    
+    // Load content via AJAX
+    fetch(`/spv/tugas/${taskId}`, {
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest',
+            'Accept': 'application/json',
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+        }
+    })
+        .then(response => response.json())
+        .then(data => {
+            if (data.html) {
+                modalContent.innerHTML = data.html;
+            } else {
+                modalContent.innerHTML = '<p class="text-red-400">Gagal memuat detail tugas.</p>';
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            modalContent.innerHTML = '<p class="text-red-400">Terjadi kesalahan saat memuat detail tugas.</p>';
+        });
+}
+
+function closeTaskModal() {
+    const modal = document.getElementById('taskModal');
+    modal.classList.add('hidden');
+}
+
+// Close modal when clicking outside
+document.getElementById('taskModal').addEventListener('click', function(e) {
+    if (e.target === this) {
+        closeTaskModal();
+    }
+});
+
+// Close modal with Escape key
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        closeTaskModal();
+    }
+});
+
+// Scroll reveal animation
 document.addEventListener('DOMContentLoaded', function() {
     const revealElements = document.querySelectorAll('.scroll-reveal');
     

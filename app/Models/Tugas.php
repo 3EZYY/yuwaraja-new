@@ -21,7 +21,7 @@ class Tugas extends Model
     ];
 
     protected $casts = [
-        'deadline' => 'date',
+        'deadline' => 'datetime',
         'is_active' => 'boolean',
     ];
 

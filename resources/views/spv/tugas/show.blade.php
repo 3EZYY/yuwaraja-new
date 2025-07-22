@@ -78,13 +78,6 @@
                         <h2 class="font-kanit text-2xl lg:text-3xl font-semibold text-white">
                             {{ $tugas->judul }}
                         </h2>
-                        @if($tugas->tingkat_kesulitan === 'mudah')
-                            <span class="text-xs font-medium text-green-300 bg-green-900/50 ring-1 ring-green-300/30 px-3 py-1 rounded-full">Mudah</span>
-                        @elseif($tugas->tingkat_kesulitan === 'sedang')
-                            <span class="text-xs font-medium text-yellow-300 bg-yellow-900/50 ring-1 ring-yellow-300/30 px-3 py-1 rounded-full">Sedang</span>
-                        @else
-                            <span class="text-xs font-medium text-red-300 bg-red-900/50 ring-1 ring-red-300/30 px-3 py-1 rounded-full">Sulit</span>
-                        @endif
                     </div>
                     
                     <p class="font-poppins text-gray-300 text-sm leading-relaxed mb-6">

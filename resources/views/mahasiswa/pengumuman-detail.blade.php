@@ -1,79 +1,197 @@
 @extends('layouts.app')
 
 @section('content')
-    {{-- CSS Kustom Minimal untuk Font dan Efek Khusus --}}
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600&family=Poppins:wght@600;700;900&display=swap');
-        
-        .font-display { font-family: 'Poppins', sans-serif; }
-        .font-body { font-family: 'Kanit', sans-serif; }
-        
-        /* Efek Glow untuk Teks */
-        .text-glow-teal {
-            text-shadow: 0 0 15px theme('colors.teal.500 / 0.5');
+
+        :root {
+            --bg-main: #0a0a0a;
+            --surface-card: #111827;
+            --border-color: rgba(20, 184, 166, 0.25); 
+            --brand-teal: #14b8a6;
+            --brand-gold: #f59e0b;
+            --text-primary: #d1d5db;
+            --text-secondary: #6b7280;
         }
 
-        /* Animasi Background (opsional, jika ingin konsisten) */
-        @keyframes scroll-grid {
-            from { background-position: 0 0; }
-            to { background-position: -500px -500px; }
+        body {
+            background-color: var(--bg-main) !important;
+            font-family: 'Kanit', sans-serif;
+            color: var(--text-primary);
         }
-        .animated-grid-background {
-            position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0;
-            background-image: linear-gradient(theme('colors.teal.500 / 0.1') 1px, transparent 1px),
-                              linear-gradient(90deg, theme('colors.teal.500 / 0.1') 1px, transparent 1px);
-            background-size: 3rem 3rem;
-            animation: scroll-grid 45s linear infinite;
+        
+        .font-display {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .text-glow-gold-subtle {
+            text-shadow: 0 0 8px rgba(245, 158, 11, 0.5);
+        }
+        .text-glow-teal-subtle {
+            text-shadow: 0 0 8px rgba(20, 184, 166, 0.6);
+        }
+
+        .themed-card {
+            background-color: var(--surface-card);
+            border: 1px solid var(--border-color);
+            border-radius: 0.75rem;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        .themed-card:hover {
+            border-color: var(--brand-gold);
+            box-shadow: 0 0 20px rgba(245, 158, 11, 0.15);
+        }
+
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .animate-on-scroll.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .back-button {
+            background: linear-gradient(135deg, var(--brand-teal), #0d9488);
+            color: #000;
+            font-weight: 700;
+            text-transform: uppercase;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .back-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(20, 184, 166, 0.3);
+            color: #000;
+            text-decoration: none;
+        }
+
+        /* Enhanced content styling */
+        .content-area {
+            line-height: 1.8;
+        }
+        
+        .content-area p {
+            margin-bottom: 1.5rem;
+            text-align: justify;
+        }
+        
+        .content-area h1, .content-area h2, .content-area h3 {
+            color: var(--brand-teal);
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+        
+        .content-area ul, .content-area ol {
+            margin: 1.5rem 0;
+            padding-left: 1.5rem;
+        }
+        
+        .content-area li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .content-area strong {
+            color: #ffffff;
+            font-weight: 600;
+        }
+        
+        .content-area em {
+            color: var(--brand-gold);
+            font-style: italic;
         }
     </style>
 
-<div class="font-body bg-gray-900 min-h-screen py-12 sm:py-16 relative overflow-hidden">
-    <div class="animated-grid-background opacity-20"></div>
-
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-
-        <!-- Navigasi Kembali -->
-        <div class="mb-8">
-            <a href="{{ route('mahasiswa.pengumuman.index') }}" class="inline-flex items-center gap-2 text-teal-300 hover:text-amber-300 transition-colors group">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 transform group-hover:-translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M11 17l-5-5m0 0l5-5m-5 5h12" />
-                </svg>
-                Kembali ke Pusat Informasi
-            </a>
-        </div>
-        
-        <!-- Konten Detail Pengumuman -->
-        <article class="bg-gray-950/70 backdrop-blur-xl shadow-2xl rounded-2xl border border-teal-500/20">
-            <div class="p-6 sm:p-8 md:p-10">
-                
-                {{-- Header Pengumuman --}}
-                <header class="mb-6 pb-6 border-b border-gray-700/50">
-                    <h1 class="font-display text-3xl md:text-4xl font-bold text-teal-200 text-glow-teal mb-3">{{ $pengumuman->judul }}</h1>
-                    <div class="flex items-center gap-2 text-sm text-gray-400">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
-                        <span>Dipublikasikan pada: <span class="font-semibold text-amber-300">{{ $pengumuman->created_at->format('d F Y, H:i') }}</span></span>
+    <div class="py-12">
+        <div class="max-w-4xl mx-auto sm:px-6 lg:px-8 space-y-8">
+            
+            <!-- Header -->
+            <div class="themed-card p-6 md:p-8 animate-on-scroll">
+                <div class="flex items-center gap-4">
+                    <span class="text-4xl">📢</span>
+                    <div>
+                        <h1 class="font-display text-3xl font-bold text-white uppercase">Pusat Informasi</h1>
+                        <p class="font-kanit text-gray-400 mt-1 text-sm tracking-wider">DETAIL PENGUMUMAN</p>
                     </div>
-                </header>
-
-                {{-- Isi Konten --}}
-                <div class="prose prose-invert prose-lg max-w-none text-gray-300 
-                           prose-headings:text-teal-300 prose-headings:font-bold prose-headings:mb-4 prose-headings:mt-6
-                           prose-p:text-gray-300 prose-p:leading-relaxed prose-p:mb-4
-                           prose-a:text-amber-300 hover:prose-a:text-amber-200 prose-a:underline
-                           prose-strong:text-white prose-strong:font-semibold
-                           prose-em:text-gray-200 prose-em:italic
-                           prose-ul:text-gray-300 prose-ol:text-gray-300
-                           prose-li:mb-2 prose-li:leading-relaxed
-                           prose-blockquote:border-l-4 prose-blockquote:border-teal-400 prose-blockquote:pl-4 prose-blockquote:italic prose-blockquote:text-gray-400
-                           prose-code:bg-gray-800 prose-code:text-teal-300 prose-code:px-2 prose-code:py-1 prose-code:rounded
-                           prose-pre:bg-gray-800 prose-pre:border prose-pre:border-gray-700
-                           prose-img:rounded-lg prose-img:shadow-lg
-                           prose-hr:border-gray-600">
-                    {!! $pengumuman->konten !!}
                 </div>
             </div>
-        </article>
-        
+
+            <!-- Main Content -->
+            <div class="themed-card animate-on-scroll">
+                <div class="p-8">
+                    <!-- Title and Meta -->
+                    <div class="border-b border-gray-700 pb-6 mb-8">
+                        <h1 class="font-display text-4xl font-bold text-white mb-4 text-glow-gold-subtle">{{ $pengumuman->judul }}</h1>
+                        <div class="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-6 text-sm text-gray-400">
+                            <div class="flex items-center gap-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-teal-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                </svg>
+                                <span>Dipublikasikan pada: <span class="font-semibold text-amber-300">{{ $pengumuman->created_at->format('d F Y, H:i') }}</span></span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                                <span class="text-green-400 font-medium">Pengumuman Resmi</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Content -->
+                    <div class="prose prose-lg max-w-none">
+                        <div class="content-area text-gray-300 leading-relaxed text-lg space-y-4">
+                            {!! $pengumuman->konten !!}
+                        </div>
+                    </div>
+
+                    <!-- Footer Info -->
+                    <div class="mt-8 pt-6 border-t border-gray-700">
+                        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 text-sm text-gray-500">
+                            <div>
+                                <span>Terakhir diperbarui: {{ $pengumuman->updated_at->format('d F Y, H:i') }}</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                                <span>Informasi resmi dari Panitia PPKMB YUWARAJA XVII</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Back Button -->
+                    <div class="mt-8 pt-6 border-t border-gray-700">
+                        <a href="{{ route('mahasiswa.pengumuman.index') }}" class="back-button">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                            </svg>
+                            Kembali ke Pusat Informasi
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-</div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const observer = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                    }
+                });
+            }, { threshold: 0.1 });
+            const elements = document.querySelectorAll('.animate-on-scroll');
+            elements.forEach(el => observer.observe(el));
+        });
+    </script>
 @endsection

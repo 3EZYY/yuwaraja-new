@@ -33,8 +33,11 @@ class TugasResource extends Resource
                 Forms\Components\Textarea::make('deskripsi')
                     ->required()
                     ->columnSpanFull(),
-                Forms\Components\DatePicker::make('deadline')
-                    ->required(),
+                Forms\Components\DateTimePicker::make('deadline')
+                    ->required()
+                    ->seconds(false)
+                    ->displayFormat('d/m/Y H:i')
+                    ->helperText('Pilih tanggal dan jam deadline tugas'),
                 Forms\Components\Select::make('tipe')
                     ->options([
                         'individual' => 'Individual',
@@ -64,7 +67,7 @@ class TugasResource extends Resource
                 Tables\Columns\TextColumn::make('judul')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('deadline')
-                    ->date()
+                    ->dateTime('d/m/Y H:i')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('tipe'),
                 Tables\Columns\TextColumn::make('file_path')

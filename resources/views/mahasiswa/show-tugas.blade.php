@@ -157,8 +157,8 @@
                                 <p class="text-gray-300">Dikumpulkan pada: {{ \Carbon\Carbon::parse($pengumpulan->submitted_at)->format('d M Y, H:i') }}</p>
                                 <span class="inline-block mt-2 status-badge
                                     {{
-                                        $pengumpulan->status == 'done' ? 'bg-purple-500 text-white' :
-                                        ($pengumpulan->status == 'approved' ? 'bg-green-500 text-white' :
+                                        $pengumpulan->status == 'done' ? 'bg-green-500 text-white' :
+                                        ($pengumpulan->status == 'approved' ? 'bg-sky-500 text-white' :
                                         ($pengumpulan->status == 'reviewed' ? 'bg-blue-500 text-white' : 
                                         ($pengumpulan->status == 'rejected' ? 'bg-red-500 text-white' :
                                         ($pengumpulan->status == 'submitted' ? 'bg-yellow-500 text-black' : 'bg-gray-500 text-white'))))
@@ -167,20 +167,24 @@
                                     @if($pengumpulan->status == 'reviewed')
                                         Sedang Direview SPV
                                     @elseif($pengumpulan->status == 'rejected')
-                                        Butuh Perbaikan
+                                        Perlu Revisi
                                     @elseif($pengumpulan->status == 'done')
-                                        Tugas Selesai
+                                        Tugas Selesai - Pengumpulan Ditutup
+                                    @elseif($pengumpulan->status == 'approved')
+                                        Disetujui SPV
+                                    @elseif($pengumpulan->status == 'submitted')
+                                        Menunggu Review SPV
                                     @else
                                         {{ ucfirst($pengumpulan->status) }}
                                     @endif
                                 </span>
                                 @if($pengumpulan->status == 'done')
-                                    <span class="block text-green-400 mt-2">✅ Tugas Selesai</span>
+                                    <span class="block text-green-400 mt-2">✅ Tugas Selesai - Pengumpulan Ditutup</span>
                                     @if($pengumpulan->nilai !== null)
                                         <span class="block mt-2 text-cyan-400">📊 Nilai: <b class="text-glow-cyan">{{ $pengumpulan->nilai }}</b></span>
                                     @endif
                                 @elseif($pengumpulan->status == 'approved')
-                                    <span class="block text-green-400 mt-2">✅ Tugas kamu sudah di-approve SPV.</span>
+                                    <span class="block text-sky-400 mt-2">✅ Tugas kamu sudah disetujui SPV.</span>
                                 @elseif($pengumpulan->status == 'reviewed')
                                     <span class="block text-blue-400 mt-2">🔍 Tugas kamu sedang direview oleh SPV.</span>
                                 @elseif($pengumpulan->status == 'rejected')

@@ -172,8 +172,12 @@
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                             <span>MISI SELESAI</span>
                         </div>
-                        <p class="text-5xl font-display font-bold text-white">{{ $tugas->where('is_active', false)->count() }}<span class="text-3xl text-gray-600">/{{ $tugas->count() }}</span></p>
-                        @php $progress = $tugas->count() > 0 ? ($tugas->where('is_active', false)->count() / $tugas->count()) * 100 : 0; @endphp
+                        @php 
+                            $tugasSelesai = $pengumpulanTugas->whereIn('status', ['approved', 'done'])->count();
+                            $totalTugas = $tugas->count();
+                            $progress = $totalTugas > 0 ? ($tugasSelesai / $totalTugas) * 100 : 0;
+                        @endphp
+                        <p class="text-5xl font-display font-bold text-white">{{ $tugasSelesai }}<span class="text-3xl text-gray-600">/{{ $totalTugas }}</span></p>
                         <div class="w-full bg-gray-700 rounded-full h-1.5 mt-1"><div class="bg-teal-500 h-1.5 rounded-full" style="width: {{ $progress }}%"></div></div>
                     </div>
                     <div class="themed-card p-6 flex flex-col gap-2 animate-on-scroll" style="animation-delay: 300ms;">
@@ -247,8 +251,14 @@
                                                 <span class="px-2.5 py-1 font-semibold rounded bg-green-500/10 text-green-400">Selesai & Dinilai</span>
                                             @elseif($pengumpulan->status == 'approved')
                                                 <span class="px-2.5 py-1 font-semibold rounded bg-sky-500/10 text-sky-400">Disetujui</span>
+                                            @elseif($pengumpulan->status == 'rejected')
+                                                <span class="px-2.5 py-1 font-semibold rounded bg-red-500/10 text-red-400">Perlu Revisi</span>
+                                            @elseif($pengumpulan->status == 'reviewed')
+                                                <span class="px-2.5 py-1 font-semibold rounded bg-blue-500/10 text-blue-400">Sedang Direview</span>
+                                            @elseif($pengumpulan->status == 'submitted')
+                                                <span class="px-2.5 py-1 font-semibold rounded bg-yellow-500/10 text-yellow-400">Menunggu Review</span>
                                             @else
-                                                <span class="px-2.5 py-1 font-semibold rounded bg-yellow-500/10 text-yellow-400">Direview</span>
+                                                <span class="px-2.5 py-1 font-semibold rounded bg-gray-500/10 text-gray-400">{{ ucfirst($pengumpulan->status) }}</span>
                                             @endif
                                         @else
                                             @if($task->deadline < now())

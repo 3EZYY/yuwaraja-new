@@ -260,10 +260,18 @@
                                 @endif
                             </button>
                         </form>
+                        @elseif(isset($pengumpulan) && $pengumpulan->status == 'done')
+                        <div class="bg-green-900/30 border border-green-500/30 rounded-lg p-6 text-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 mx-auto text-green-400 mb-2" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                            </svg>
+                            <p class="text-green-300 font-semibold font-display">Tugas Selesai – Pengumpulan Ditutup</p>
+                            <p class="text-green-300/80 text-sm">Tugas telah selesai dan dinilai oleh SPV.</p>
+                        </div>
                         @else
                         <div class="bg-red-900/30 border border-red-500/30 rounded-lg p-6 text-center">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 mx-auto text-red-400 mb-2" viewBox="0 0 20 20" fill="currentColor">
-                                <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd" />
+                                <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 616 0z" clip-rule="evenodd" />
                             </svg>
                             <p class="text-red-300 font-semibold font-display">Waktu Habis</p>
                             <p class="text-red-300/80 text-sm">Deadline telah berakhir. Pengumpulan ditutup.</p>
