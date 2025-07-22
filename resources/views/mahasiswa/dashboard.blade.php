@@ -62,10 +62,6 @@
                 </svg>
                 <div>
                     <p class="font-semibold">{{ session('success') }}</p>
-                    @if(session('absensi_detail'))
-                        <p class="text-sm mt-1">{{ session('absensi_detail.judul') }}</p>
-                        <p class="text-xs">{{ session('absensi_detail.waktu_absen') }} - {{ session('absensi_detail.status') }}</p>
-                    @endif
                 </div>
                 <button onclick="closeAlert('success-alert')" class="ml-auto">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -190,10 +186,6 @@
                         <p class="text-5xl font-display font-bold text-amber-500 text-glow-gold-subtle">{{ $pengumuman->count() }}</p>
                         <p class="text-xs text-gray-500 mt-auto">Pesan baru diterima</p>
                     </div>
-                    <a href="#" class="bg-teal-600 p-6 rounded-xl flex flex-col items-center justify-center text-center text-white hover:bg-teal-500 transition-colors group animate-on-scroll" style="animation-delay: 400ms;">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 mb-2 transition-transform group-hover:scale-110" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd" /></svg>
-                        <p class="font-display font-bold text-lg uppercase">Absensi</p>
-                    </a>
                 </div>
             </div>
 

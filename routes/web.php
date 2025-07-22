@@ -15,8 +15,7 @@ use App\Http\Controllers\SpvTugasController;
 use App\Http\Controllers\SpvClusterController;
 use App\Http\Controllers\FriendshipController;
 use App\Http\Controllers\FaqController;
-use App\Http\Controllers\AbsensiController;
-use App\Http\Controllers\SpvAbsensiController;
+
 use App\Models\Faq;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -34,8 +33,7 @@ Route::get('/api/check-email', [ValidationController::class, 'checkEmail']);
 Route::get('/api/check-email-student', [ValidationController::class, 'checkEmailStudent']);
 Route::get('/api/check-nim', [ValidationController::class, 'checkNim']);
 
-// Route untuk scan QR Code absensi (publik)
-Route::get('/absensi/scan/{qrCode}', [AbsensiController::class, 'scan'])->name('absensi.scan');
+
 
 Route::get('/', function () {
     $faqs = Faq::active()->ordered()->get();
@@ -66,9 +64,6 @@ Route::middleware(['auth', 'verified', 'role:admin'])->prefix('admin')->name('ad
         Auth::logout();
         return redirect('/login');
     })->name('logout');
-    
-    // QR Code download route
-    Route::get('/absensi/{absensi}/download-qr', [\App\Http\Controllers\Admin\AbsensiController::class, 'downloadQr'])->name('absensi.download-qr');
 });
 
 // Routes untuk SPV
@@ -86,13 +81,6 @@ Route::middleware(['auth', 'verified', 'role:spv'])->prefix('spv')->name('spv.')
     Route::get('/pengumuman', [SpvDashboardController::class, 'pengumuman'])->name('pengumuman.index');
     Route::get('/pengumuman/{pengumuman}', [SpvDashboardController::class, 'showPengumuman'])->name('pengumuman.detail');
     Route::get('/jadwal/{jadwal}', [SpvDashboardController::class, 'showJadwal'])->name('jadwal.detail');
-    
-    // Absensi Routes untuk SPV
-    Route::controller(SpvAbsensiController::class)->prefix('absensi')->name('absensi.')->group(function () {
-        Route::get('/', 'index')->name('index');
-        Route::get('/{id}', 'show')->name('show');
-        Route::get('/{id}/export', 'export')->name('export');
-    });
     
     // Profile Routes untuk SPV
     Route::get('/profile', [SpvProfileController::class, 'edit'])->name('profile.edit');
@@ -124,13 +112,6 @@ Route::middleware(['auth', 'verified', 'role:mahasiswa'])->prefix('mahasiswa')->
     Route::controller(MahasiswaJadwalController::class)->group(function () {
         Route::get('/jadwal', 'index')->name('jadwal.index');
         Route::get('/jadwal/{jadwal}', 'show')->name('jadwal.detail');
-    });
-
-    // Absensi Routes untuk Mahasiswa
-    Route::controller(AbsensiController::class)->prefix('absensi')->name('absensi.')->group(function () {
-        Route::get('/history', 'history')->name('history');
-        Route::get('/current', 'current')->name('current');
-        Route::get('/scan/{qrCode}', 'scan')->name('scan');
     });
 
     // Friendship Routes

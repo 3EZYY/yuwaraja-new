@@ -16,6 +16,8 @@ class PanitiaResource extends Resource
 {
     protected static ?string $model = User::class;
 
+    protected static ?string $slug = 'panitia';
+
     protected static ?string $navigationIcon = 'heroicon-o-users';
 
     protected static ?string $navigationLabel = 'Panitia';
