@@ -25,9 +25,9 @@
                 <div style="animation-delay: 0.8s;">
                     <x-input-label for="nim" value="NIM" class="mb-1 text-sm text-cyan-300 tracking-wide" />
                     <x-text-input id="nim" class="cyber-input" type="text" name="nim" :value="old('nim')"
-                        pattern="^(23|24|25)\d{12,13}$"
+                        pattern="^(23|24|25)\d{13,14}$"
                         title="NIM harus 15-16 digit dan dimulai dengan 23, 24, atau 25" maxlength="16" minlength="15"
-                        required placeholder="Masukan NIM (15-16 digit)" autocomplete="nim" />
+                        required placeholder="Masukan NIM (15-16 digit, awalan 23/24/25)" autocomplete="nim" />
                     <x-input-error :messages="$errors->get('nim')" class="mt-2 text-yellow-400 text-xs" />
                 </div>
 
@@ -266,17 +266,36 @@
                 nimMessage.textContent = '';
                 return true;
             }
-            if (nim.length < 15 || nim.length > 16) {
-                nimMessage.textContent = '✗ NIM harus 15-16 digit';
+            
+            // Cek panjang NIM
+            if (nim.length < 15) {
+                nimMessage.textContent = '✗ NIM minimal 15 digit';
                 nimMessage.className = 'mt-1 text-xs text-red-400';
                 return false;
             }
-            if (!/^(23|24|25)\d{12,13}$/.test(nim)) {
+            if (nim.length > 16) {
+                nimMessage.textContent = '✗ NIM maksimal 16 digit';
+                nimMessage.className = 'mt-1 text-xs text-red-400';
+                return false;
+            }
+            
+            // Cek awalan NIM
+            const prefix = nim.substring(0, 2);
+            if (!['23', '24', '25'].includes(prefix)) {
                 nimMessage.textContent = '✗ NIM harus dimulai dengan 23, 24, atau 25';
                 nimMessage.className = 'mt-1 text-xs text-red-400';
                 return false;
             }
-            nimMessage.textContent = '✓ Format NIM valid';
+            
+            // Cek format lengkap dengan regex
+            if (!/^(23|24|25)\d{13,14}$/.test(nim)) {
+                nimMessage.textContent = '✗ Format NIM tidak valid';
+                nimMessage.className = 'mt-1 text-xs text-red-400';
+                return false;
+            }
+            
+            // Jika semua validasi berhasil
+            nimMessage.textContent = `✓ NIM valid (${nim.length} digit, awalan ${prefix})`;
             nimMessage.className = 'mt-1 text-xs text-green-400';
             return true;
         }
