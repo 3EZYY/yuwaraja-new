@@ -19,10 +19,11 @@ class FriendshipController extends Controller
             return redirect()->route('mahasiswa.dashboard')->with('error', 'Kamu belum bergabung dengan kelompok!');
         }
 
-        // Ambil semua anggota kelompok (kecuali diri sendiri)
+        // Ambil semua anggota kelompok (termasuk diri sendiri)
         $kelompokMembers = User::where('kelompok_id', $user->kelompok_id)
-                              ->where('id', '!=', $user->id)
                               ->where('role', 'mahasiswa')
+                              ->orderByRaw('CASE WHEN id = ? THEN 0 ELSE 1 END', [$user->id])
+                              ->orderBy('name')
                               ->get();
 
         // Ambil supervisor kelompok

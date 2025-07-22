@@ -27,17 +27,37 @@
                     <p class="text-gray-400 mt-1">Kelompok: <span class="text-white font-semibold">{{ $user->kelompok->nama_kelompok }}</span></p>
                     
                     <!-- Profile Cluster -->
-                    <div class="mt-4 flex items-center gap-3">
-                        <div class="w-16 h-16 rounded-full bg-gradient-to-br from-teal-400 to-cyan-500 p-1">
-                            <div class="w-full h-full rounded-full bg-gray-900 flex items-center justify-center">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-teal-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
-                                </svg>
+                    <div class="mt-4 flex items-center gap-4">
+                        <div class="relative">
+                            <div class="w-20 h-20 rounded-full bg-gradient-to-br from-teal-400 to-cyan-500 p-1 shadow-lg">
+                                @if($user->kelompok->photo)
+                                    <img src="{{ asset('storage/' . $user->kelompok->photo) }}" 
+                                         alt="{{ $user->kelompok->nama_kelompok }}" 
+                                         class="w-full h-full rounded-full object-cover bg-gray-900">
+                                @else
+                                    <div class="w-full h-full rounded-full bg-gray-900 flex items-center justify-center">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-teal-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
+                                        </svg>
+                                    </div>
+                                @endif
+                            </div>
+                            <!-- Status indicator -->
+                            <div class="absolute -bottom-1 -right-1 w-6 h-6 bg-green-500 rounded-full border-2 border-gray-900 flex items-center justify-center">
+                                <div class="w-2 h-2 bg-white rounded-full animate-pulse"></div>
                             </div>
                         </div>
-                        <div>
-                            <h3 class="text-lg font-semibold text-white">Profile Cluster</h3>
-                            <p class="text-sm text-gray-400">{{ $user->kelompok->nama_kelompok }} Network</p>
+                        <div class="flex-1">
+                            <h3 class="text-xl font-bold text-white text-glow-teal">{{ $user->kelompok->nama_kelompok }}</h3>
+                            <div class="flex items-center gap-2 text-xs text-gray-400 mt-1">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
+                                </svg>
+                                <span>{{ $kelompokMembers->count() }} Anggota</span>
+                                @if($supervisor)
+                                    <span class="text-cyan-400">• 1 SPV</span>
+                                @endif
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -84,17 +104,22 @@
                 @if($kelompokMembers->count() > 0)
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                         @foreach($kelompokMembers as $member)
-                        <div class="bg-gray-900/50 text-center p-6 rounded-xl border border-gray-700/50 hover:border-amber-400/50 hover:bg-gray-900 transition-all duration-300 transform hover:-translate-y-1">
+                        <div class="bg-gray-900/50 text-center p-6 rounded-xl border border-gray-700/50 hover:border-amber-400/50 hover:bg-gray-900 transition-all duration-300 transform hover:-translate-y-1 {{ $member->id == $user->id ? 'ring-2 ring-teal-400/50' : '' }}">
                             @if($member->photo)
-                                <img src="{{ asset('profile-pictures/' . $member->photo) }}" alt="{{ $member->name }}" class="w-20 h-20 rounded-full border-2 border-amber-400/50 mx-auto mb-4">
+                                <img src="{{ asset('profile-pictures/' . $member->photo) }}" alt="{{ $member->name }}" class="w-20 h-20 rounded-full border-2 {{ $member->id == $user->id ? 'border-teal-400' : 'border-amber-400/50' }} mx-auto mb-4">
                             @else
-                                <div class="w-20 h-20 rounded-full bg-amber-400/20 flex items-center justify-center text-amber-300 font-bold text-3xl font-display mx-auto mb-4 border-2 border-amber-400/50">{{ strtoupper(substr($member->name, 0, 1)) }}</div>
+                                <div class="w-20 h-20 rounded-full {{ $member->id == $user->id ? 'bg-teal-400/20 border-teal-400' : 'bg-amber-400/20 border-amber-400/50' }} flex items-center justify-center text-amber-300 font-bold text-3xl font-display mx-auto mb-4 border-2">{{ strtoupper(substr($member->name, 0, 1)) }}</div>
                             @endif
                             
-                            <h3 class="text-lg font-bold text-white mb-1 truncate">{{ $member->name }}</h3>
+                            <h3 class="text-lg font-bold text-white mb-1 truncate">{{ $member->name }} {{ $member->id == $user->id ? '(Kamu)' : '' }}</h3>
                             <p class="text-gray-400 text-sm mb-4">{{ $member->nim }}</p>
                             
-                            @if($user->isFriendWith($member->id))
+                            @if($member->id == $user->id)
+                                <span class="inline-flex items-center gap-2 w-full justify-center px-3 py-2 rounded-lg text-sm font-semibold bg-teal-500/10 text-teal-300 border border-teal-500/20">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" /></svg>
+                                    Anda
+                                </span>
+                            @elseif($user->isFriendWith($member->id))
                                 <span class="inline-flex items-center gap-2 w-full justify-center px-3 py-2 rounded-lg text-sm font-semibold bg-green-500/10 text-green-400 border border-green-500/20">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" /></svg>
                                     Sudah Berteman

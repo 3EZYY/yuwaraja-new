@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Kelompok;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
@@ -32,6 +33,27 @@ class SpvClusterController extends Controller
             ->get();
 
         return view('spv.cluster', compact('kelompokDibimbing', 'prodiList', 'filterProdi'));
+    }
+
+    public function showMahasiswa($id)
+    {
+        $user = Auth::user();
+        $mahasiswa = User::findOrFail($id);
+        
+        // Pastikan SPV hanya bisa melihat mahasiswa di kelompok yang dia supervisi
+        $kelompok = $mahasiswa->kelompok;
+        if (!$kelompok || $kelompok->spv_id !== Auth::id()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Anda tidak memiliki akses untuk melihat detail mahasiswa ini.'
+            ], 403);
+        }
+        
+        return response()->json([
+            'success' => true,
+            'mahasiswa' => $mahasiswa,
+            'kelompok' => $kelompok
+        ]);
     }
 
     public function uploadPhoto(Request $request)

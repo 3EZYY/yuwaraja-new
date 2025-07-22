@@ -75,6 +75,7 @@ Route::middleware(['auth', 'verified', 'role:admin'])->prefix('admin')->name('ad
 Route::middleware(['auth', 'verified', 'role:spv'])->prefix('spv')->name('spv.')->group(function () {
     Route::get('/dashboard', [SpvDashboardController::class, 'index'])->name('dashboard');
     Route::get('/cluster', [SpvClusterController::class, 'index'])->name('cluster.index');
+    Route::get('/mahasiswa/{id}', [SpvClusterController::class, 'showMahasiswa'])->name('mahasiswa.detail');
     Route::post('/cluster/upload-photo', [SpvClusterController::class, 'uploadPhoto'])->name('cluster.upload-photo');
     Route::delete('/cluster/delete-photo', [SpvClusterController::class, 'deletePhoto'])->name('cluster.delete-photo');
     Route::get('/tugas', [SpvTugasController::class, 'index'])->name('tugas.index');

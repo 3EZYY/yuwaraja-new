@@ -196,12 +196,21 @@
                                                     <p class="text-gray-400 text-xs mb-3 font-mono">{{ $mahasiswa->nim ?? 'NIM belum diisi' }}</p>
                                                     
                                                     <!-- Status Badge -->
-                                                    <div class="inline-flex items-center gap-1.5 w-full justify-center px-3 py-1.5 rounded-lg text-xs font-semibold bg-green-500/15 text-green-400 border border-green-500/25">
+                                                    <div class="inline-flex items-center gap-1.5 w-full justify-center px-3 py-1.5 rounded-lg text-xs font-semibold bg-green-500/15 text-green-400 border border-green-500/25 mb-3">
                                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" viewBox="0 0 20 20" fill="currentColor">
                                                             <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
                                                         </svg>
                                                         Aktif
                                                     </div>
+                                                    
+                                                    <!-- Detail Button -->
+                                    <button onclick="showMahasiswaModal({{ $mahasiswa->id }})" class="inline-flex items-center justify-center gap-1.5 w-full px-3 py-2 rounded-lg text-xs font-semibold bg-blue-500/15 hover:bg-blue-500/25 text-blue-400 hover:text-blue-300 border border-blue-500/25 hover:border-blue-400/40 transition-all duration-300 group/detail">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 group-hover/detail:scale-110 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                        </svg>
+                                        Lihat Detail
+                                    </button>
                                                 </div>
                                             </div>
                                         </div>
@@ -235,9 +244,202 @@
 </div>
 
 <!-- Hidden File Input untuk Upload -->
-<input type="file" id="cluster-photo-input" accept="image/*" class="hidden">
 <input type="file" id="profile-photo-input" accept="image/*" class="hidden">
 <input type="file" id="cluster-profile-photo-input" accept="image/*" class="hidden">
+
+<!-- Modal Detail Mahasiswa -->
+<div id="mahasiswaModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 hidden">
+    <div class="bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl shadow-2xl border border-gray-700/50 w-full max-w-4xl mx-4 max-h-[90vh] overflow-hidden">
+        <!-- Modal Header -->
+        <div class="flex items-center justify-between p-6 border-b border-gray-700/50">
+            <div class="flex items-center gap-4">
+                <div class="w-12 h-12 rounded-full bg-gradient-to-br from-blue-500/20 to-blue-600/20 flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                    </svg>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold text-white" id="modalTitle">Detail Mahasiswa</h3>
+                    <p class="text-gray-400 text-sm">Informasi lengkap mahasiswa</p>
+                </div>
+            </div>
+            <button onclick="closeMahasiswaModal()" class="p-2 rounded-lg hover:bg-gray-700/50 text-gray-400 hover:text-white transition-colors duration-200">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+        </div>
+
+        <!-- Modal Content -->
+        <div class="p-6 overflow-y-auto max-h-[calc(90vh-140px)]">
+            <!-- Loading State -->
+            <div id="modalLoading" class="flex items-center justify-center py-12">
+                <div class="text-center">
+                    <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-400 mx-auto mb-4"></div>
+                    <p class="text-gray-400">Memuat data mahasiswa...</p>
+                </div>
+            </div>
+
+            <!-- Content -->
+            <div id="modalContent" class="hidden">
+                <!-- Student Header -->
+                <div class="bg-gradient-to-r from-blue-500/10 to-purple-500/10 rounded-xl p-6 mb-6 border border-blue-500/20">
+                    <div class="flex items-center gap-6">
+                        <div id="studentPhoto" class="w-20 h-20 rounded-full border-2 border-blue-400/50 overflow-hidden bg-gradient-to-br from-blue-400/20 to-purple-400/20 flex items-center justify-center">
+                            <!-- Photo will be inserted here -->
+                        </div>
+                        <div class="flex-1">
+                            <h2 id="studentName" class="text-2xl font-bold text-white mb-2">-</h2>
+                            <p id="studentNim" class="text-blue-400 font-mono text-lg mb-1">-</p>
+                            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-sm font-semibold bg-green-500/15 text-green-400 border border-green-500/25">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                                </svg>
+                                Aktif
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Information Grid -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <!-- Profile Information -->
+                    <div class="bg-gradient-to-br from-gray-800/60 to-gray-700/40 rounded-xl p-6 border border-gray-600/30">
+                        <h3 class="text-lg font-bold text-white mb-4 flex items-center gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                            </svg>
+                            Informasi Profil
+                        </h3>
+                        <div class="space-y-3">
+                            <div>
+                                <label class="text-gray-400 text-sm">Nama Lengkap</label>
+                                <p id="profileName" class="text-white font-medium">-</p>
+                            </div>
+                            <div>
+                                <label class="text-gray-400 text-sm">NIM</label>
+                                <p id="profileNim" class="text-white font-mono">-</p>
+                            </div>
+                            <div>
+                                <label class="text-gray-400 text-sm">Email</label>
+                                <p id="profileEmail" class="text-white">-</p>
+                            </div>
+                            <div>
+                                <label class="text-gray-400 text-sm">Cluster</label>
+                                <p id="profileCluster" class="text-white">-</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Personal Information -->
+                    <div class="bg-gradient-to-br from-gray-800/60 to-gray-700/40 rounded-xl p-6 border border-gray-600/30">
+                        <h3 class="text-lg font-bold text-white mb-4 flex items-center gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 14a3.001 3.001 0 00-2.83 2M15 11h3m-3 4h2" />
+                            </svg>
+                            Informasi Personal
+                        </h3>
+                        <div class="space-y-3">
+                            <div>
+                                <label class="text-gray-400 text-sm">Jenis Kelamin</label>
+                                <p id="personalGender" class="text-white">-</p>
+                            </div>
+                            <div>
+                                <label class="text-gray-400 text-sm">Tempat Lahir</label>
+                                <p id="personalBirthPlace" class="text-white">-</p>
+                            </div>
+                            <div>
+                                <label class="text-gray-400 text-sm">Tanggal Lahir</label>
+                                <p id="personalBirthDate" class="text-white">-</p>
+                            </div>
+                            <div>
+                                <label class="text-gray-400 text-sm">Agama</label>
+                                <p id="personalReligion" class="text-white">-</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Contact Information -->
+                    <div class="bg-gradient-to-br from-gray-800/60 to-gray-700/40 rounded-xl p-6 border border-gray-600/30">
+                        <h3 class="text-lg font-bold text-white mb-4 flex items-center gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-purple-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                            </svg>
+                            Informasi Kontak
+                        </h3>
+                        <div class="space-y-3">
+                            <div>
+                                <label class="text-gray-400 text-sm">No. Telepon</label>
+                                <p id="contactPhone" class="text-white">-</p>
+                            </div>
+                            <div>
+                                <label class="text-gray-400 text-sm">Alamat</label>
+                                <p id="contactAddress" class="text-white">-</p>
+                            </div>
+                            <div>
+                                <label class="text-gray-400 text-sm">Kota</label>
+                                <p id="contactCity" class="text-white">-</p>
+                            </div>
+                            <div>
+                                <label class="text-gray-400 text-sm">Provinsi</label>
+                                <p id="contactProvince" class="text-white">-</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Educational Background -->
+                    <div class="bg-gradient-to-br from-gray-800/60 to-gray-700/40 rounded-xl p-6 border border-gray-600/30">
+                        <h3 class="text-lg font-bold text-white mb-4 flex items-center gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 14l9-5-9-5-9 5 9 5z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
+                            </svg>
+                            Latar Belakang Pendidikan
+                        </h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                            <div>
+                                <label class="text-gray-400 text-sm">Jenis Sekolah</label>
+                                <p id="educationSchoolType" class="text-white">-</p>
+                            </div>
+                            <div>
+                                <label class="text-gray-400 text-sm">Asal Sekolah</label>
+                                <p id="educationSchool" class="text-white">-</p>
+                            </div>
+                            <div>
+                                <label class="text-gray-400 text-sm">Jurusan Sekolah</label>
+                                <p id="educationMajor" class="text-white">-</p>
+                            </div>
+                            <div>
+                                <label class="text-gray-400 text-sm">Asal Kota</label>
+                                <p id="educationCity" class="text-white">-</p>
+                            </div>
+                            <div>
+                                <label class="text-gray-400 text-sm">Angkatan</label>
+                                <p id="educationGradYear" class="text-white">-</p>
+                            </div>
+                            <div>
+                                <label class="text-gray-400 text-sm">Program Studi</label>
+                                <p id="educationGpa" class="text-white">-</p>
+                            </div>
+                            <div class="md:col-span-2">
+                                <label class="text-gray-400 text-sm">Jalur Masuk</label>
+                                <p id="educationEntryPath" class="text-white">-</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal Footer -->
+        <div class="flex items-center justify-end gap-3 p-6 border-t border-gray-700/50">
+            <button onclick="closeMahasiswaModal()" class="px-6 py-2.5 rounded-lg border border-gray-600 text-gray-300 hover:text-white hover:border-gray-500 transition-colors duration-200">
+                Tutup
+            </button>
+        </div>
+    </div>
+</div>
 
 <script>
 // Upload Cluster Profile Photo (Header)
@@ -311,6 +513,7 @@ function uploadClusterProfilePhoto() {
         alert('Tidak ada cluster yang tersedia untuk diupload foto.');
     @endif
 }
+
 // Upload Profile Photo
 function uploadProfilePhoto() {
     const input = document.getElementById('profile-photo-input');
@@ -377,119 +580,127 @@ function uploadProfilePhoto() {
     input.click();
 }
 
-// Upload Cluster Photo
-function uploadClusterPhoto(kelompokId) {
-    const input = document.getElementById('cluster-photo-input');
-    input.onchange = function(e) {
-        const file = e.target.files[0];
-        if (!file) return;
-        
-        // Validasi file
-        if (!file.type.startsWith('image/')) {
-            alert('Harap pilih file gambar yang valid!');
-            return;
-        }
-        
-        if (file.size > 5 * 1024 * 1024) { // 5MB
-            alert('Ukuran file terlalu besar! Maksimal 5MB.');
-            return;
-        }
-        
-        // Upload file
-        const formData = new FormData();
-        formData.append('photo', file);
-        formData.append('kelompok_id', kelompokId);
-        formData.append('_token', '{{ csrf_token() }}');
-        
-        // Show loading
-        const loadingDiv = document.createElement('div');
-        loadingDiv.innerHTML = `
-            <div class="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-                <div class="bg-gray-800 p-6 rounded-lg text-white text-center">
-                    <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-teal-400 mx-auto mb-4"></div>
-                    <p>Mengupload foto...</p>
-                </div>
-            </div>
-        `;
-        document.body.appendChild(loadingDiv);
-        
-        fetch('{{ route("spv.cluster.upload-photo") }}', {
-            method: 'POST',
-            body: formData,
-            headers: {
-                'X-CSRF-TOKEN': '{{ csrf_token() }}'
-            }
-        })
-        .then(response => response.json())
-        .then(data => {
-            document.body.removeChild(loadingDiv);
-            
-            if (data.success) {
-                alert(data.message);
-                location.reload(); // Refresh halaman untuk menampilkan foto baru
-            } else {
-                alert('Error: ' + data.message);
-            }
-        })
-        .catch(error => {
-            document.body.removeChild(loadingDiv);
-            console.error('Error:', error);
-            alert('Terjadi kesalahan saat mengupload foto.');
-        });
-        
-        // Reset input
-        input.value = '';
-    };
-    
-    input.click();
-}
 
-// Delete Cluster Photo
-function deleteClusterPhoto(kelompokId) {
-    if (!confirm('Apakah Anda yakin ingin menghapus foto cluster ini?')) {
-        return;
-    }
+// Modal Functions
+function showMahasiswaModal(mahasiswaId) {
+    const modal = document.getElementById('mahasiswaModal');
+    const loading = document.getElementById('modalLoading');
+    const content = document.getElementById('modalContent');
     
-    const formData = new FormData();
-    formData.append('kelompok_id', kelompokId);
-    formData.append('_token', '{{ csrf_token() }}');
-    formData.append('_method', 'DELETE');
+    // Show modal
+    modal.classList.remove('hidden');
     
-    // Show loading
-    const loadingDiv = document.createElement('div');
-    loadingDiv.innerHTML = `
-        <div class="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-            <div class="bg-gray-800 p-6 rounded-lg text-white text-center">
-                <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-red-400 mx-auto mb-4"></div>
-                <p>Menghapus foto...</p>
-            </div>
-        </div>
-    `;
-    document.body.appendChild(loadingDiv);
+    // Show loading, hide content
+    loading.classList.remove('hidden');
+    content.classList.add('hidden');
     
-    fetch('{{ route("spv.cluster.delete-photo") }}', {
-        method: 'POST',
-        body: formData,
+    // Fetch student data
+    fetch(`/spv/mahasiswa/${mahasiswaId}`, {
+        method: 'GET',
         headers: {
-            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+            'X-Requested-With': 'XMLHttpRequest',
+            'Accept': 'application/json',
         }
     })
     .then(response => response.json())
     .then(data => {
-        document.body.removeChild(loadingDiv);
-        
         if (data.success) {
-            alert(data.message);
-            location.reload(); // Refresh halaman
+            populateModalData(data.mahasiswa, data.kelompok);
+            
+            // Hide loading, show content
+            loading.classList.add('hidden');
+            content.classList.remove('hidden');
         } else {
             alert('Error: ' + data.message);
+            closeMahasiswaModal();
         }
     })
     .catch(error => {
-        document.body.removeChild(loadingDiv);
         console.error('Error:', error);
-        alert('Terjadi kesalahan saat menghapus foto.');
+        alert('Terjadi kesalahan saat memuat data mahasiswa.');
+        closeMahasiswaModal();
     });
 }
+
+function populateModalData(mahasiswa, kelompok) {
+    // Modal title
+    document.getElementById('modalTitle').textContent = `Detail ${mahasiswa.name}`;
+    
+    // Student header
+    document.getElementById('studentName').textContent = mahasiswa.name || '-';
+    document.getElementById('studentNim').textContent = mahasiswa.nim || 'NIM belum diisi';
+    
+    // Student photo
+    const photoContainer = document.getElementById('studentPhoto');
+    if (mahasiswa.photo) {
+        photoContainer.innerHTML = `<img src="/profile-pictures/${mahasiswa.photo}" alt="${mahasiswa.name}" class="w-full h-full object-cover">`;
+    } else {
+        photoContainer.innerHTML = `<span class="text-2xl font-bold text-blue-400">${mahasiswa.name.charAt(0).toUpperCase()}</span>`;
+    }
+    
+    // Profile information
+    document.getElementById('profileName').textContent = mahasiswa.name || '-';
+    document.getElementById('profileNim').textContent = mahasiswa.nim || '-';
+    document.getElementById('profileEmail').textContent = mahasiswa.email || '-';
+    document.getElementById('profileCluster').textContent = kelompok ? kelompok.nama_kelompok : '-';
+    
+    // Personal information
+    document.getElementById('personalGender').textContent = mahasiswa.jenis_kelamin || '-';
+    document.getElementById('personalBirthPlace').textContent = mahasiswa.tempat_lahir || '-';
+    document.getElementById('personalBirthDate').textContent = mahasiswa.tanggal_lahir ? formatDate(mahasiswa.tanggal_lahir) : '-';
+    document.getElementById('personalReligion').textContent = mahasiswa.agama || '-';
+    
+    // Contact information
+    document.getElementById('contactPhone').textContent = mahasiswa.nomor_telepon || '-';
+    document.getElementById('contactAddress').textContent = mahasiswa.alamat_domisili || '-';
+    document.getElementById('contactCity').textContent = mahasiswa.kota || '-';
+    document.getElementById('contactProvince').textContent = mahasiswa.provinsi || '-';
+    
+    // Educational background
+    document.getElementById('educationSchoolType').textContent = mahasiswa.asal_sekolah_jenis || '-';
+    document.getElementById('educationSchool').textContent = mahasiswa.asal_sekolah_nama || '-';
+    document.getElementById('educationMajor').textContent = mahasiswa.jurusan_sekolah || '-';
+    document.getElementById('educationCity').textContent = mahasiswa.asal_kota || '-';
+    document.getElementById('educationGradYear').textContent = mahasiswa.angkatan || '-';
+    document.getElementById('educationGpa').textContent = mahasiswa.program_studi || '-';
+    document.getElementById('educationEntryPath').textContent = mahasiswa.jalur_masuk || '-';
+}
+
+function closeMahasiswaModal() {
+    const modal = document.getElementById('mahasiswaModal');
+    modal.classList.add('hidden');
+}
+
+function formatDate(dateString) {
+    if (!dateString) return '-';
+    
+    const date = new Date(dateString);
+    const options = { 
+        year: 'numeric', 
+        month: 'long', 
+        day: 'numeric' 
+    };
+    
+    return date.toLocaleDateString('id-ID', options);
+}
+
+// Close modal when clicking outside
+document.getElementById('mahasiswaModal').addEventListener('click', function(e) {
+    if (e.target === this) {
+        closeMahasiswaModal();
+    }
+});
+
+// Close modal with Escape key
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        const modal = document.getElementById('mahasiswaModal');
+        if (!modal.classList.contains('hidden')) {
+            closeMahasiswaModal();
+        }
+    }
+});
+
+
 </script>
 @endsection

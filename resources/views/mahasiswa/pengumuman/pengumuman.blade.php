@@ -116,62 +116,94 @@
                 </div>
 
                 <!-- Daftar Pengumuman -->
-                <div class="mb-8">
-
-                    @if($pengumuman->isEmpty())
-                    <div class="text-center py-16">
-                        <p class="text-gray-400 text-lg font-mono">Belum ada pengumuman aktif.</p>
-                        <p class="text-gray-500 text-sm mt-2">Silakan periksa kembali nanti.</p>
-                    </div>
-                    @else
-                    <div class="grid gap-6 md:grid-cols-1 lg:grid-cols-2">
-                        @foreach($pengumuman as $item)
-                        <a href="{{ route('mahasiswa.pengumuman.detail', $item->id) }}" class="group block">
-                            <article class="bg-gradient-to-br from-gray-900 to-gray-800/80 h-full p-6 rounded-xl border border-gray-700/50 hover:border-cyan-400/50 hover:bg-gray-900 transition-all duration-300 shadow-lg hover:shadow-cyan-500/10 flex flex-col transform hover:-translate-y-1">
-                                <div class="flex-grow">
-
-                                    {{-- PERUBAHAN DI SINI: Judul sekarang menggunakan flexbox untuk menampung ikon --}}
-                                    <h4 class="font-display text-xl font-bold text-yellow-300 group-hover:text-yellow-300 transition-colors duration-300 mb-3 flex items-center gap-x-3">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-cyan-400 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                            <path stroke-linecap="round" stroke-linejoin="round" d="M13 5l7 7-7 7M5 5l7 7-7 7" />
-                                        </svg>
-                                        <span>{{ $item->judul }}</span>
-                                    </h4>
-
-                                    <div class="flex items-center space-x-4 text-xs text-gray-400 mb-4">
-                                        <span class="inline-flex items-center gap-1.5 py-1 px-2.5 rounded-full bg-cyan-500/10 text-cyan-300 border border-cyan-500/20">
+                <div class="space-y-6">
+                    @forelse($pengumuman as $item)
+                    <div class="bg-gradient-to-br from-gray-900 to-black rounded-xl border-l-4 
+                        @if(isset($item->prioritas))
+                            @if($item->prioritas === 'tinggi') border-yellow-500 
+                            @elseif($item->prioritas === 'sedang') border-cyan-600 
+                            @else border-cyan-300 @endif
+                        @else border-cyan-400 @endif
+                        p-6 transition-all duration-300 hover:shadow-xl hover:shadow-cyan-500/10 hover:border-cyan-500 transform hover:-translate-y-1">
+                        
+                        <div class="flex flex-col md:flex-row items-start justify-between gap-6">
+                            <div class="flex-1">
+                                <div class="mb-3">
+                                    <h3 class="text-xl font-bold font-display text-white mb-2">{{ $item->judul }}</h3>
+                                    @if(isset($item->prioritas))
+                                        @if($item->prioritas === 'tinggi')
+                                            <span class="inline-flex items-center gap-2 px-3 py-1 bg-yellow-500/10 text-yellow-500 text-xs font-semibold rounded-full border border-yellow-500/20">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.21 3.03-1.742 3.03H4.42c-1.532 0-2.492-1.696-1.742-3.03l5.58-9.92zM10 13a1 1 0 110-2 1 1 0 010 2zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd" /></svg>
+                                                PRIORITAS TINGGI
+                                            </span>
+                                        @elseif($item->prioritas === 'sedang')
+                                            <span class="inline-flex items-center gap-2 px-3 py-1 bg-cyan-400/10 text-cyan-400 text-xs font-semibold rounded-full border border-cyan-400/20">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" /></svg>
+                                                PRIORITAS SEDANG
+                                            </span>
+                                        @else
+                                            <span class="inline-flex items-center gap-2 px-3 py-1 bg-gray-500/10 text-gray-400 text-xs font-semibold rounded-full border border-gray-500/20">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" /></svg>
+                                                PRIORITAS RENDAH
+                                            </span>
+                                        @endif
+                                    @else
+                                        <span class="inline-flex items-center gap-2 px-3 py-1 bg-cyan-500/10 text-cyan-300 text-xs font-semibold rounded-full border border-cyan-500/20">
                                             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                                 <path stroke-linecap="round" stroke-linejoin="round" d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z" />
                                             </svg>
                                             PENGUMUMAN
                                         </span>
-                                        <span class="inline-flex items-center gap-1.5">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                                <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                                            </svg>
-                                            <span class="font-semibold text-white">{{ ($item->published_at ?? $item->created_at)->format('d M Y') }}</span>
-                                        </span>
-                                    </div>
-                                    <p class="text-gray-400 text-sm leading-relaxed line-clamp-3">{{ Str::limit(strip_tags($item->isi ?? $item->konten ?? 'Tidak ada konten tersedia'), 150) }}</p>
+                                    @endif
                                 </div>
-                                <footer class="mt-4 pt-4 border-t border-gray-800 flex justify-end">
-                                    <div class="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-cyan-600 to-blue-600 group-hover:from-cyan-500 group-hover:to-blue-500 text-white font-bold text-sm rounded-lg transition-all duration-300 shadow-lg group-hover:shadow-cyan-500/25">
-                                        <span>Baca Selengkapnya</span>
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 transform group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                            <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                                        </svg>
+                                
+                                <p class="text-gray-300 mb-5 leading-relaxed">
+                                    {{ Str::limit(strip_tags($item->isi ?? $item->konten ?? 'Tidak ada konten tersedia'), 180) }}
+                                </p>
+                                
+                                {{-- Metadata dengan ikon dan layout yang rapi --}}
+                                <div class="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6 text-sm text-gray-400 border-t border-gray-700 pt-4">
+                                    <div class="flex items-center gap-2">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd" /></svg>
+                                        <span>{{ ($item->published_at ?? $item->created_at)->format('d M Y, H:i') }}</span>
                                     </div>
-                                </footer>
-                            </article>
-                        </a>
-                        @endforeach
+                                    <div class="flex items-center gap-2">
+                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" /></svg>
+                                        <span>{{ $item->penulis ?? 'Admin' }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            {{-- Tombol Aksi Utama dengan warna Cyan --}}
+                            <div class="flex-shrink-0 w-full md:w-auto">
+                                <a href="{{ route('mahasiswa.pengumuman.detail', $item->id) }}" 
+                                   class="w-full inline-flex items-center justify-center gap-2 bg-cyan-500 text-black font-display font-bold px-5 py-2.5 rounded-lg transition-all duration-300 hover:bg-cyan-400 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-cyan-500/50">
+                                    <span>Lihat Detail</span>
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" /></svg>
+                                </a>
+                            </div>
+                        </div>
                     </div>
-                    @endif
+                    @empty
+                    <div class="bg-gray-900/50 border-2 border-dashed border-gray-700 rounded-xl p-12 text-center flex flex-col items-center">
+                         <div class="text-gray-700 mb-4">
+                             <svg xmlns="http://www.w3.org/2000/svg" class="h-20 w-20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                                 <path stroke-linecap="round" stroke-linejoin="round" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 12h6m-1-5h.01" />
+                             </svg>
+                         </div>
+                        <h3 class="text-xl font-bold font-display text-white mb-2">Belum Ada Pengumuman</h3>
+                        <p class="text-gray-500 max-w-xs">Saat informasi baru tersedia, semua akan ditampilkan lengkap di halaman ini.</p>
+                    </div>
+                    @endforelse
 
                     <!-- Pagination Kustom -->
-                    <nav class="mt-12" aria-label="Navigasi Halaman">
-                        {{ $pengumuman->links() }}
-                    </nav>
+                    @if($pengumuman->hasPages())
+                    <div class="mt-10 flex justify-center">
+                        <div class="bg-gray-900 border border-gray-700 rounded-lg p-2">
+                            {{ $pengumuman->links() }}
+                        </div>
+                    </div>
+                    @endif
                 </div>
             </div>
         </main>
