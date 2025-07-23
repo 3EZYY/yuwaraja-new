@@ -14,6 +14,7 @@ class DatabaseSeeder extends Seeder
             Pengumuman_Seeder::class,
             Tugas_Seeder::class,
             Jadwal_Acara_Seeder::class,
+            SurveySeeder::class,         // Survey data
         ]);
     }
 }
