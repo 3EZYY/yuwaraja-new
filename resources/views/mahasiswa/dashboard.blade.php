@@ -186,6 +186,15 @@
                         <p class="text-5xl font-display font-bold text-amber-500 text-glow-gold-subtle">{{ $pengumuman->count() }}</p>
                         <p class="text-xs text-gray-500 mt-auto">Pesan baru diterima</p>
                     </div>
+                    <div class="themed-card p-6 flex flex-col justify-center items-center gap-4 animate-on-scroll cursor-pointer hover:bg-green-600/20 transition-all duration-300 transform hover:scale-105 border border-green-500/30" style="animation-delay: 400ms;" onclick="window.location.href='#'">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        <div class="text-center">
+                            <p class="font-display text-xl font-bold text-green-400 mb-1">ABSENSI</p>
+                            <p class="text-xs text-gray-400">Klik untuk absen hari ini</p>
+                        </div>
+                    </div>
                 </div>
             </div>
 

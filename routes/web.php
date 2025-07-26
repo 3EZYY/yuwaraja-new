@@ -15,6 +15,8 @@ use App\Http\Controllers\SpvTugasController;
 use App\Http\Controllers\SpvClusterController;
 use App\Http\Controllers\FriendshipController;
 use App\Http\Controllers\FaqController;
+use App\Http\Controllers\SpvAbsensiController;
+use App\Http\Controllers\MahasiswaAbsensiController;
 
 use App\Models\Faq;
 use Illuminate\Support\Facades\Route;
@@ -85,6 +87,14 @@ Route::middleware(['auth', 'verified', 'role:spv'])->prefix('spv')->name('spv.')
     Route::get('/pengumuman/{pengumuman}', [SpvDashboardController::class, 'showPengumuman'])->name('pengumuman.detail');
     Route::get('/jadwal/{jadwal}', [SpvDashboardController::class, 'showJadwal'])->name('jadwal.detail');
     
+    // Absensi Routes untuk SPV
+    Route::controller(SpvAbsensiController::class)->prefix('absensi')->name('absensi.')->group(function () {
+        Route::get('/', 'index')->name('index');
+        Route::get('/{absensi}', 'show')->name('show');
+        Route::patch('/{absensiMahasiswa}/approve', 'approve')->name('approve');
+        Route::patch('/{absensiMahasiswa}/reject', 'reject')->name('reject');
+    });
+    
     // Profile Routes untuk SPV
     Route::get('/profile', [SpvProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [SpvProfileController::class, 'update'])->name('profile.update');
@@ -115,6 +125,12 @@ Route::middleware(['auth', 'verified', 'role:mahasiswa'])->prefix('mahasiswa')->
     Route::controller(MahasiswaJadwalController::class)->group(function () {
         Route::get('/jadwal', 'index')->name('jadwal.index');
         Route::get('/jadwal/{jadwal}', 'show')->name('jadwal.detail');
+    });
+
+    // Absensi Routes untuk Mahasiswa
+    Route::controller(MahasiswaAbsensiController::class)->prefix('absensi')->name('absensi.')->group(function () {
+        Route::get('/', 'index')->name('index');
+        Route::post('/{absensi}/request', 'request')->name('request');
     });
 
     // Friendship Routes

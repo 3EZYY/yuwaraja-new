@@ -21,6 +21,9 @@
                     <x-nav-link :href="route('spv.tugas.index')" :active="request()->routeIs('spv.tugas.*')">
                         {{ __('Review Tugas') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('spv.absensi.index')" :active="request()->routeIs('spv.absensi.*')">
+                        {{ __('Absensi') }}
+                    </x-nav-link>
                 </div>
             </div>
 
@@ -78,6 +81,9 @@
             </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('spv.tugas.index')" :active="request()->routeIs('spv.tugas.*')">
                 {{ __('Review Tugas') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('spv.absensi.index')" :active="request()->routeIs('spv.absensi.*')">
+                {{ __('Absensi') }}
             </x-responsive-nav-link>
         </div>
 
