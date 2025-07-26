@@ -75,7 +75,8 @@
         @if(session('error')) <div class="bg-red-500/10 border border-red-500/30 text-red-300 text-sm p-3 rounded-lg mb-6 flex items-center gap-3"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg><span>{{ session('error') }}</span></div> @endif
 
         <div class="space-y-8">
-            <!-- SPV Info Section -->
+            <!-- SPV Info Section - Hanya tampilkan jika masih membimbing cluster -->
+            @if(isset($kelompokDibimbing) && $kelompokDibimbing->count() > 0)
             <div class="bg-gray-900/50 p-6 rounded-xl border border-gray-700/50">
                 <h2 class="font-display text-xl font-bold text-white mb-4 flex items-center gap-3">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -115,6 +116,7 @@
                     </span>
                 </div>
             </div>
+            @endif
 
             <!-- Cluster List Section -->
             <div>
@@ -146,13 +148,15 @@
                                     </div>
                                 </div>
                                 
-                                <!-- Action Button -->
-                                <a href="{{ route('filament.admin.resources.cluster.edit', $kelompok->id) }}" class="inline-flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-amber-500/10 to-amber-600/10 hover:from-amber-500/20 hover:to-amber-600/20 border border-amber-500/30 hover:border-amber-400/50 text-white hover:text-amber-30 rounded-xl transition-all duration-300 text-sm font-medium group/btn">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 group-hover/btn:rotate-12 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                                    </svg>
-                                    Edit Cluster
-                                </a>
+                                <!-- Action Buttons -->
+                                <div class="flex flex-col sm:flex-row gap-3">
+                                    <button onclick="confirmLeaveCluster({{ $kelompok->id }}, '{{ $kelompok->nama_kelompok }}')" class="inline-flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-red-500/10 to-red-600/10 hover:from-red-500/20 hover:to-red-600/20 border border-red-500/30 hover:border-red-400/50 text-red-300 hover:text-red-200 rounded-xl transition-all duration-300 text-sm font-medium group/leave">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 group-hover/leave:scale-110 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                                        </svg>
+                                        Keluar dari Cluster
+                                    </button>
+                                </div>
                             </div>
 
                             <!-- Anggota Cluster -->
@@ -195,14 +199,25 @@
                                                         Aktif
                                                     </div>
                                                     
-                                                    <!-- Detail Button -->
-                                    <button onclick="showMahasiswaModal({{ $mahasiswa->id }})" class="inline-flex items-center justify-center gap-1.5 w-full px-3 py-2 rounded-lg text-xs font-semibold bg-blue-500/15 hover:bg-blue-500/25 text-blue-400 hover:text-blue-300 border border-blue-500/25 hover:border-blue-400/40 transition-all duration-300 group/detail">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 group-hover/detail:scale-110 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                                            <path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                                        </svg>
-                                        Lihat Detail
-                                    </button>
+                                                    <!-- Action Buttons -->
+                                                    <div class="space-y-2">
+                                                        <!-- Detail Button -->
+                                        <button onclick="showMahasiswaModal({{ $mahasiswa->id }})" class="inline-flex items-center justify-center gap-1.5 w-full px-3 py-2 rounded-lg text-xs font-semibold bg-blue-500/15 hover:bg-blue-500/25 text-blue-400 hover:text-blue-300 border border-blue-500/25 hover:border-blue-400/40 transition-all duration-300 group/detail">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 group-hover/detail:scale-110 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                            </svg>
+                                            Lihat Detail
+                                        </button>
+                                        
+                                        <!-- Kick Member Button -->
+                                        <button onclick="confirmKickMember({{ $mahasiswa->id }}, '{{ $mahasiswa->name }}')" class="inline-flex items-center justify-center gap-1.5 w-full px-3 py-2 rounded-lg text-xs font-semibold bg-red-500/15 hover:bg-red-500/25 text-red-400 hover:text-red-300 border border-red-500/25 hover:border-red-400/40 transition-all duration-300 group/kick">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 group-hover/kick:scale-110 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                                            </svg>
+                                            Keluarkan
+                                        </button>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -224,10 +239,79 @@
                         @endforeach
                     </div>
                 @else
-                    <div class="bg-gray-900/50 p-8 text-center rounded-xl border border-gray-700/50">
-                        <div class="text-6xl mb-4">🏢</div>
-                        <h3 class="font-display text-2xl font-bold text-white mb-2">Belum Ada Cluster</h3>
-                        <p class="text-gray-400">Anda belum diberi tanggung jawab untuk membimbing cluster manapun.</p>
+                    <div class="space-y-6">
+                        <!-- Join Cluster Form -->
+                        <div class="bg-gradient-to-br from-gray-900/80 to-gray-800/60 backdrop-blur-sm p-8 rounded-2xl border border-gray-700/30">
+                            <div class="text-center mb-6">
+                                <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-teal-400/20 flex items-center justify-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-teal-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
+                                    </svg>
+                                </div>
+                                <h3 class="font-display text-2xl font-bold text-white mb-2">Bergabung dengan Cluster</h3>
+                                <p class="text-gray-400">Masukkan kode cluster untuk bergabung sebagai supervisor</p>
+                            </div>
+
+                            <form method="POST" action="{{ route('spv.cluster.join') }}" class="max-w-md mx-auto" onsubmit="return validateJoinForm(event)">
+                                @csrf
+                                <div class="space-y-4">
+                                    <div>
+                                        <label for="cluster_code" class="block text-sm font-medium text-gray-300 mb-2">
+                                            Kode Cluster
+                                        </label>
+                                        <div class="relative">
+                                            <input type="text" 
+                                                   id="cluster_code" 
+                                                   name="cluster_code" 
+                                                   placeholder="Masukkan kode cluster (contoh: H4J6Y)"
+                                                   class="w-full px-4 py-3 bg-gray-800/50 border border-gray-600/50 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-teal-400/50 focus:border-teal-400/50 transition-all duration-300 text-center font-mono text-lg tracking-wider uppercase"
+                                                   maxlength="5"
+                                                   oninput="formatClusterCode(this)"
+                                                   required>
+                                            <div class="absolute inset-y-0 right-0 flex items-center pr-3">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-6 6c-3 0-5.5-1.5-5.5-4a3.5 3.5 0 117 0c0 2.5-2.5 4-5.5 4a6 6 0 01-6-6 2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                                                </svg>
+                                            </div>
+                                        </div>
+                                        @error('cluster_code')
+                                            <p class="mt-2 text-sm text-red-400">{{ $message }}</p>
+                                        @enderror
+                                    </div>
+
+                                    <button type="submit" 
+                                            id="joinClusterBtn"
+                                            disabled
+                                            class="w-full inline-flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-teal-500 to-teal-600 text-white font-semibold rounded-xl transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:shadow-teal-500/25 opacity-50 cursor-not-allowed">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M11 16l-4-4m0 0l4-4m-4 4h14m-6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                                        </svg>
+                                        Bergabung dengan Cluster
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+
+                        <!-- Info Section -->
+                        <div class="bg-gray-900/50 p-8 text-center rounded-xl border border-gray-700/50">
+                            <div class="text-6xl mb-4">🏢</div>
+                            <h3 class="font-display text-2xl font-bold text-white mb-2">Belum Ada Cluster</h3>
+                            <p class="text-gray-400 mb-4">Anda belum diberi tanggung jawab untuk membimbing cluster manapun.</p>
+                            <div class="bg-blue-500/10 border border-blue-500/20 rounded-lg p-4 text-left">
+                                <h4 class="text-blue-400 font-semibold mb-2 flex items-center gap-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+                                    Cara Bergabung:
+                                </h4>
+                                <ul class="text-blue-300 text-sm space-y-1">
+                                    <li>• Dapatkan kode cluster dari admin atau mahasiswa</li>
+                                    <li>• Masukkan kode pada form di atas</li>
+                                    <li>• Klik "Bergabung dengan Cluster"</li>
+                                    <li>• Anda akan menjadi supervisor cluster tersebut</li>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
                 @endif
             </div>
@@ -708,6 +792,303 @@ document.addEventListener('keydown', function(e) {
         }
     }
 });
+
+// Leave Cluster Functions
+function confirmLeaveCluster(kelompokId, namaKelompok) {
+    // Create confirmation modal
+    const confirmModal = document.createElement('div');
+    confirmModal.id = 'leaveClusterModal';
+    confirmModal.className = 'fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50';
+    confirmModal.innerHTML = `
+        <div class="bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl shadow-2xl border border-red-500/30 w-full max-w-md mx-4">
+            <!-- Modal Header -->
+            <div class="flex items-center gap-4 p-6 border-b border-gray-700/50">
+                <div class="w-12 h-12 rounded-full bg-red-500/20 flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z" />
+                    </svg>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold text-white">Konfirmasi Keluar</h3>
+                    <p class="text-gray-400 text-sm">Tindakan ini tidak dapat dibatalkan</p>
+                </div>
+            </div>
+            
+            <!-- Modal Content -->
+            <div class="p-6">
+                <p class="text-gray-300 mb-4">
+                    Apakah Anda yakin ingin keluar dari cluster <strong class="text-red-400">"${namaKelompok}"</strong>?
+                </p>
+                <p class="text-gray-400 text-sm mb-6">
+                    Setelah keluar, Anda tidak akan lagi menjadi supervisor untuk cluster ini dan tidak dapat mengakses data anggotanya.
+                </p>
+                
+                <!-- Action Buttons -->
+                <div class="flex gap-3">
+                    <button onclick="closeLeaveClusterModal()" class="flex-1 px-4 py-2.5 bg-gray-700/50 hover:bg-gray-700 text-gray-300 hover:text-white rounded-xl transition-all duration-300 text-sm font-medium">
+                        Batal
+                    </button>
+                    <button onclick="executeLeaveCluster(${kelompokId})" class="flex-1 px-4 py-2.5 bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white rounded-xl transition-all duration-300 text-sm font-medium">
+                        Ya, Keluar
+                    </button>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    document.body.appendChild(confirmModal);
+}
+
+function closeLeaveClusterModal() {
+    const modal = document.getElementById('leaveClusterModal');
+    if (modal) {
+        document.body.removeChild(modal);
+    }
+}
+
+function executeLeaveCluster(kelompokId) {
+    // Close confirmation modal
+    closeLeaveClusterModal();
+    
+    // Show loading
+    const loadingDiv = document.createElement('div');
+    loadingDiv.innerHTML = `
+        <div class="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+            <div class="bg-gray-800 p-6 rounded-lg text-white text-center">
+                <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-red-400 mx-auto mb-4"></div>
+                <p>Memproses permintaan keluar dari cluster...</p>
+            </div>
+        </div>
+    `;
+    document.body.appendChild(loadingDiv);
+    
+    // Create form and submit
+    const form = document.createElement('form');
+    form.method = 'POST';
+    form.action = '{{ route("spv.cluster.leave") }}';
+    form.style.display = 'none';
+    
+    // Add CSRF token
+    const csrfInput = document.createElement('input');
+    csrfInput.type = 'hidden';
+    csrfInput.name = '_token';
+    csrfInput.value = '{{ csrf_token() }}';
+    form.appendChild(csrfInput);
+    
+    // Add kelompok_id
+    const kelompokInput = document.createElement('input');
+    kelompokInput.type = 'hidden';
+    kelompokInput.name = 'kelompok_id';
+    kelompokInput.value = kelompokId;
+    form.appendChild(kelompokInput);
+    
+    document.body.appendChild(form);
+    form.submit();
+}
+
+// Join Cluster Functions
+function formatClusterCode(input) {
+    // Convert to uppercase and remove any non-alphanumeric characters
+    let value = input.value.toUpperCase().replace(/[^A-Z0-9]/g, '');
+    
+    // Limit to 5 characters
+    if (value.length > 5) {
+        value = value.substring(0, 5);
+    }
+    
+    input.value = value;
+    
+    // Update button state
+    const submitBtn = document.getElementById('joinClusterBtn');
+    if (value.length === 5) {
+        submitBtn.disabled = false;
+        submitBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+        submitBtn.classList.add('hover:from-blue-600', 'hover:to-blue-700');
+    } else {
+        submitBtn.disabled = true;
+        submitBtn.classList.add('opacity-50', 'cursor-not-allowed');
+        submitBtn.classList.remove('hover:from-blue-600', 'hover:to-blue-700');
+    }
+}
+
+function validateJoinForm(event) {
+    const codeInput = document.getElementById('cluster_code');
+    const code = codeInput.value.trim();
+    
+    if (code.length !== 5) {
+        event.preventDefault();
+        alert('Kode cluster harus terdiri dari 5 karakter!');
+        codeInput.focus();
+        return false;
+    }
+    
+    // Show loading
+    const submitBtn = document.getElementById('joinClusterBtn');
+    const originalText = submitBtn.innerHTML;
+    submitBtn.innerHTML = `
+        <div class="flex items-center justify-center gap-2">
+            <div class="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+            <span>Bergabung...</span>
+        </div>
+    `;
+    submitBtn.disabled = true;
+    
+    return true;
+}
+
+// Kick Member Functions
+function confirmKickMember(userId, userName) {
+    // Create confirmation modal
+    const confirmModal = document.createElement('div');
+    confirmModal.id = 'kickMemberModal';
+    confirmModal.className = 'fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50';
+    confirmModal.innerHTML = `
+        <div class="bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl shadow-2xl border border-red-500/30 w-full max-w-md mx-4">
+            <!-- Modal Header -->
+            <div class="flex items-center gap-4 p-6 border-b border-gray-700/50">
+                <div class="w-12 h-12 rounded-full bg-red-500/20 flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                    </svg>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold text-white">Konfirmasi Keluarkan Anggota</h3>
+                    <p class="text-gray-400 text-sm">Tindakan ini tidak dapat dibatalkan</p>
+                </div>
+            </div>
+            
+            <!-- Modal Content -->
+            <div class="p-6">
+                <p class="text-gray-300 mb-4">
+                    Apakah Anda yakin ingin mengeluarkan <strong class="text-red-400">"${userName}"</strong> dari cluster ini?
+                </p>
+                <p class="text-gray-400 text-sm mb-6">
+                    Setelah dikeluarkan, mahasiswa ini tidak akan lagi menjadi anggota cluster dan harus bergabung kembali jika ingin masuk.
+                </p>
+                
+                <!-- Action Buttons -->
+                <div class="flex gap-3">
+                    <button onclick="closeKickMemberModal()" class="flex-1 px-4 py-2.5 bg-gray-700/50 hover:bg-gray-700 text-gray-300 hover:text-white rounded-xl transition-all duration-300 text-sm font-medium">
+                        Batal
+                    </button>
+                    <button onclick="executeKickMember(${userId})" class="flex-1 px-4 py-2.5 bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white rounded-xl transition-all duration-300 text-sm font-medium">
+                        Ya, Keluarkan
+                    </button>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    document.body.appendChild(confirmModal);
+}
+
+function closeKickMemberModal() {
+    const modal = document.getElementById('kickMemberModal');
+    if (modal) {
+        document.body.removeChild(modal);
+    }
+}
+
+function executeKickMember(userId) {
+    // Close confirmation modal
+    closeKickMemberModal();
+    
+    // Show loading
+    const loadingDiv = document.createElement('div');
+    loadingDiv.id = 'kickMemberLoading';
+    loadingDiv.innerHTML = `
+        <div class="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+            <div class="bg-gray-800 p-6 rounded-lg text-white text-center">
+                <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-red-400 mx-auto mb-4"></div>
+                <p>Mengeluarkan anggota dari cluster...</p>
+            </div>
+        </div>
+    `;
+    document.body.appendChild(loadingDiv);
+    
+    // Send AJAX request
+    fetch('{{ route("spv.cluster.kick-member") }}', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+        },
+        body: JSON.stringify({
+            user_id: userId
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        // Remove loading
+        const loading = document.getElementById('kickMemberLoading');
+        if (loading) {
+            document.body.removeChild(loading);
+        }
+        
+        if (data.success) {
+            // Show success message
+            showNotification('Anggota berhasil dikeluarkan dari cluster!', 'success');
+            // Reload page after short delay
+            setTimeout(() => {
+                window.location.reload();
+            }, 1500);
+        } else {
+            showNotification(data.message || 'Gagal mengeluarkan anggota!', 'error');
+        }
+    })
+    .catch(error => {
+        // Remove loading
+        const loading = document.getElementById('kickMemberLoading');
+        if (loading) {
+            document.body.removeChild(loading);
+        }
+        
+        console.error('Error:', error);
+        showNotification('Terjadi kesalahan saat mengeluarkan anggota!', 'error');
+    });
+}
+
+function showNotification(message, type = 'info') {
+    const notification = document.createElement('div');
+    notification.className = `fixed top-4 right-4 z-50 p-4 rounded-lg shadow-lg max-w-sm transform transition-all duration-300 translate-x-full`;
+    
+    if (type === 'success') {
+        notification.classList.add('bg-green-600', 'text-white');
+    } else if (type === 'error') {
+        notification.classList.add('bg-red-600', 'text-white');
+    } else {
+        notification.classList.add('bg-blue-600', 'text-white');
+    }
+    
+    notification.innerHTML = `
+        <div class="flex items-center gap-3">
+            <div class="flex-shrink-0">
+                ${type === 'success' ? 
+                    '<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>' :
+                    '<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"></path></svg>'
+                }
+            </div>
+            <p class="text-sm font-medium">${message}</p>
+        </div>
+    `;
+    
+    document.body.appendChild(notification);
+    
+    // Animate in
+    setTimeout(() => {
+        notification.classList.remove('translate-x-full');
+    }, 100);
+    
+    // Auto remove after 3 seconds
+    setTimeout(() => {
+        notification.classList.add('translate-x-full');
+        setTimeout(() => {
+            if (document.body.contains(notification)) {
+                document.body.removeChild(notification);
+            }
+        }, 300);
+    }, 3000);
+}
 
 
 </script>

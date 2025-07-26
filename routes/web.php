@@ -73,6 +73,9 @@ Route::middleware(['auth', 'verified', 'role:spv'])->prefix('spv')->name('spv.')
     Route::get('/mahasiswa/{id}', [SpvClusterController::class, 'showMahasiswa'])->name('mahasiswa.detail');
     Route::post('/cluster/upload-photo', [SpvClusterController::class, 'uploadPhoto'])->name('cluster.upload-photo');
     Route::delete('/cluster/delete-photo', [SpvClusterController::class, 'deletePhoto'])->name('cluster.delete-photo');
+    Route::post('/cluster/leave', [SpvClusterController::class, 'leaveCluster'])->name('cluster.leave');
+    Route::post('/cluster/join', [SpvClusterController::class, 'joinCluster'])->name('cluster.join');
+    Route::post('/cluster/kick-member', [SpvClusterController::class, 'kickMember'])->name('cluster.kick-member');
     Route::get('/tugas', [SpvTugasController::class, 'index'])->name('tugas.index');
     Route::get('/tugas/{id}', [SpvTugasController::class, 'show'])->name('tugas.show');
     Route::get('/tugas/pengumpulan/{id}', [SpvTugasController::class, 'showPengumpulan'])->name('tugas.pengumpulan.show');
