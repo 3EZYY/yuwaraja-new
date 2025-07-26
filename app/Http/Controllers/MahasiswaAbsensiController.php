@@ -71,7 +71,7 @@ class MahasiswaAbsensiController extends Controller
             'keterangan' => $request->keterangan
         ]);
 
-        return redirect()->back()->with('success', 'Request absensi berhasil dikirim. Menunggu persetujuan dari supervisor.');
+        return redirect()->back()->with('success', 'absensi kamu masuk ke Kakak SPV yaaa ^^');
     }
 
     public function show(Absensi $absensi)

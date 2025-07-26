@@ -278,6 +278,11 @@ function closeAbsensiModal() {
     document.getElementById('keterangan').value = '';
 }
 
+// Tampilkan alert jika ada session success
+@if(session('success'))
+    alert("{{ session('success') }}");
+@endif
+
 // Auto refresh setiap 30 detik untuk update status waktu
 setInterval(function() {
     location.reload();

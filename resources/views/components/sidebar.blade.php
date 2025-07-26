@@ -56,6 +56,15 @@
                 Cluster
             </x-sidebar.nav-link>
 
+            <x-sidebar.nav-link :href="route('mahasiswa.absensi.index')" :active="request()->routeIs('mahasiswa.absensi.*')">
+                <x-slot name="icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd" />
+                    </svg>
+                </x-slot>
+                Absensi
+            </x-sidebar.nav-link>
+
             <x-sidebar.nav-link :href="route('mahasiswa.tugas.index')" :active="request()->routeIs('mahasiswa.tugas.*')">
                 <x-slot name="icon">
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
@@ -116,6 +125,15 @@
                     </svg>
                 </x-slot>
                 Cluster
+            </x-sidebar.nav-link>
+
+            <x-sidebar.nav-link :href="route('spv.absensi.index')" :active="request()->routeIs('spv.absensi.*')">
+                <x-slot name="icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd" />
+                    </svg>
+                </x-slot>
+                Absensi
             </x-sidebar.nav-link>
 
             <x-sidebar.nav-link :href="route('spv.tugas.index')" :active="request()->routeIs('spv.tugas.*')">

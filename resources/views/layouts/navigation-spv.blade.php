@@ -15,7 +15,7 @@
                     <x-nav-link :href="route('spv.dashboard')" :active="request()->routeIs('spv.dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('spv.kelompok.index')" :active="request()->routeIs('spv.kelompok.*')">
+                    <x-nav-link :href="route('spv.cluster.index')" :active="request()->routeIs('spv.cluster.*')">
                         {{ __('Kelompok Saya') }}
                     </x-nav-link>
                     <x-nav-link :href="route('spv.tugas.index')" :active="request()->routeIs('spv.tugas.*')">
@@ -76,7 +76,7 @@
             <x-responsive-nav-link :href="route('spv.dashboard')" :active="request()->routeIs('spv.dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('spv.kelompok.index')" :active="request()->routeIs('spv.kelompok.*')">
+            <x-responsive-nav-link :href="route('spv.cluster.index')" :active="request()->routeIs('spv.cluster.*')">
                 {{ __('Kelompok Saya') }}
             </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('spv.tugas.index')" :active="request()->routeIs('spv.tugas.*')">
