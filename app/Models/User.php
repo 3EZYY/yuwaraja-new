@@ -105,15 +105,25 @@ class User extends Authenticatable implements FilamentUser
             return asset('profile-pictures/' . $this->photo);
         }
         
-        // Jika foto disimpan di storage/app/public
-        if (file_exists(storage_path('app/public/' . $this->photo))) {
-            return asset('storage/' . $this->photo);
-        }
-        
-        // Default fallback
-        return asset($this->photo);
+        return null;
     }
 
+    public function absensi()
+    {
+        return $this->belongsToMany(Absensi::class, 'absensi_mahasiswa')
+                    ->withPivot(['status', 'waktu_absen', 'keterangan', 'approved_by', 'approved_at'])
+                    ->withTimestamps();
+    }
+
+    public function absensiDiajukan()
+    {
+        return $this->absensi()->wherePivot('status', 'pending');
+    }
+
+    public function absensiDiapprove()
+    {
+        return $this->absensi()->wherePivot('status', 'approved');
+    }
     // Relasi dengan model lain
     public function kelompok()
     {
@@ -128,6 +138,11 @@ class User extends Authenticatable implements FilamentUser
     public function mahasiswa()
     {
         return $this->hasMany(\App\Models\User::class, 'kelompok_id');
+    }
+
+    public function kelompokDibimbing()
+    {
+        return $this->hasMany(Kelompok::class, 'spv_id');
     }
 
     // Friendship relationships
