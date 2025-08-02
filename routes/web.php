@@ -133,6 +133,12 @@ Route::middleware(['auth', 'verified', 'role:mahasiswa'])->prefix('mahasiswa')->
         Route::post('/{absensi}/request', 'request')->name('request');
     });
 
+    // Survey Routes
+    Route::controller(\App\Http\Controllers\SurveyController::class)->prefix('survey')->name('survey.')->group(function () {
+        Route::get('/{survey}/fill', 'showForUser')->name('fill');
+        Route::post('/{survey}/submit', 'storeAnswers')->name('submit');
+    });
+
     // Friendship Routes
     Route::controller(FriendshipController::class)->prefix('cluster')->name('friendship.')->group(function () {
         Route::get('/', 'index')->name('index');

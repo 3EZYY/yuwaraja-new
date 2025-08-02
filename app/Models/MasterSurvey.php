@@ -87,4 +87,12 @@ class MasterSurvey extends Model
     {
         return $this->hasilSurvey()->distinct('user_id')->count('user_id');
     }
+
+    /**
+     * Get the route key for the model.
+     */
+    public function getRouteKeyName(): string
+    {
+        return 'id_master_survey';
+    }
 }

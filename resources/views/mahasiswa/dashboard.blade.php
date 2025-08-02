@@ -356,7 +356,7 @@
                                         </span>
                                     @else
                                         @if($survey->tanggal_selesai >= now())
-                                            <a href="#" class="inline-block px-4 py-2 text-xs font-bold font-display rounded-md transition-all duration-300 transform hover:scale-105 bg-purple-500 text-white hover:bg-purple-400">
+                                            <a href="{{ route('mahasiswa.survey.fill', $survey->id_master_survey) }}" class="inline-block px-4 py-2 text-xs font-bold font-display rounded-md transition-all duration-300 transform hover:scale-105 bg-purple-500 text-white hover:bg-purple-400">
                                                 ISI SURVEY
                                             </a>
                                         @else

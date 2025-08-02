@@ -230,7 +230,7 @@ class SurveyController extends Controller
         );
 
         if ($berhasil) {
-            return redirect()->route('dashboard')
+            return redirect()->route('mahasiswa.dashboard')
                 ->with('success', 'Terima kasih! Jawaban Anda telah tersimpan.');
         } else {
             return back()->withErrors(['error' => 'Gagal menyimpan jawaban. Silakan coba lagi.'])
