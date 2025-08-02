@@ -162,7 +162,7 @@
                     @endif
                 </div>
 
-                <div class="lg:col-span-2 grid grid-cols-1 sm:grid-cols-3 gap-6">
+                <div class="lg:col-span-2 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                     <div class="themed-card p-6 flex flex-col gap-2 animate-on-scroll" style="animation-delay: 200ms;">
                         <div class="flex items-center gap-2 font-display text-sm text-gray-400">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
@@ -185,6 +185,20 @@
                         </div>
                         <p class="text-5xl font-display font-bold text-amber-500 text-glow-gold-subtle">{{ $pengumuman->count() }}</p>
                         <p class="text-xs text-gray-500 mt-auto">Pesan baru diterima</p>
+                    </div>
+                    <div class="themed-card p-6 flex flex-col gap-2 animate-on-scroll" style="animation-delay: 400ms;">
+                        <div class="flex items-center gap-2 font-display text-sm text-gray-400">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 8l2 2 4-4" />
+                            </svg>
+                            <span>SURVEY</span>
+                        </div>
+                        @php
+                            $totalSurveys = $surveys->count();
+                            $completedSurveys = collect($surveyStatus)->filter()->count();
+                        @endphp
+                        <p class="text-5xl font-display font-bold text-teal-500 text-glow-teal-subtle">{{ $completedSurveys }}<span class="text-3xl text-gray-600">/{{ $totalSurveys }}</span></p>
+                        <p class="text-xs text-gray-500 mt-auto">Survey diselesaikan</p>
                     </div>
                 </div>
             </div>
@@ -284,6 +298,98 @@
                         </table>
                     </div>
                 </div>
+            </div>
+
+            <!-- Panel Survey -->
+            <div class="themed-card animate-on-scroll">
+                <div class="p-6 flex items-center gap-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-purple-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 8l2 2 4-4" />
+                    </svg>
+                    <h3 class="font-display text-xl font-bold text-white">Survey Aktif</h3>
+                    <span class="ml-auto px-3 py-1 text-xs font-bold bg-purple-500/20 text-purple-400 rounded-full">{{ $surveys->count() }} Survey</span>
+                </div>
+                @if($surveys->count() > 0)
+                <div class="overflow-x-auto">
+                    <table class="min-w-full">
+                        <thead class="bg-gray-950/50">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-xs font-semibold font-display text-gray-400 uppercase tracking-wider">Survey</th>
+                                <th class="px-6 py-3 text-left text-xs font-semibold font-display text-gray-400 uppercase tracking-wider">Periode</th>
+                                <th class="px-6 py-3 text-left text-xs font-semibold font-display text-gray-400 uppercase tracking-wider">Pertanyaan</th>
+                                <th class="px-6 py-3 text-left text-xs font-semibold font-display text-gray-400 uppercase tracking-wider">Status</th>
+                                <th class="px-6 py-3 text-center text-xs font-semibold font-display text-gray-400 uppercase tracking-wider">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-800">
+                            @foreach($surveys as $survey)
+                            @php $hasAnswered = $surveyStatus[$survey->id_master_survey] ?? false; @endphp
+                            <tr class="hover:bg-gray-800/60 transition-colors duration-200">
+                                <td class="px-6 py-4">
+                                    <div>
+                                        <p class="text-sm font-semibold text-white">{{ $survey->judul_survey }}</p>
+                                        @if($survey->deskripsi_survey)
+                                        <p class="text-xs text-gray-400 mt-1 line-clamp-2">{{ Str::limit($survey->deskripsi_survey, 100) }}</p>
+                                        @endif
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
+                                    <div class="text-xs">
+                                        <p>{{ $survey->tanggal_mulai->format('d M Y') }}</p>
+                                        <p class="text-gray-500">s/d {{ $survey->tanggal_selesai->format('d M Y') }}</p>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
+                                    <span class="px-2 py-1 text-xs bg-gray-700 text-gray-300 rounded">{{ $survey->detilSurvey->count() }} pertanyaan</span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-xs">
+                                    @if($hasAnswered)
+                                        <div class="flex items-center gap-2">
+                                            <span class="px-2.5 py-1 font-semibold rounded bg-green-500/10 text-green-400">✓ Sudah Diisi</span>
+                                        </div>
+                                    @else
+                                        @if($survey->tanggal_selesai < now())
+                                            <span class="px-2.5 py-1 font-semibold rounded bg-red-500/10 text-red-400">⚠ Terlewat</span>
+                                        @else
+                                            <div class="flex items-center gap-2">
+                                                <span class="px-2.5 py-1 font-semibold rounded bg-yellow-500/10 text-yellow-400 animate-pulse">⏳ Belum Diisi</span>
+                                                @php
+                                                    $timeLeft = $survey->tanggal_selesai->diffInDays(now());
+                                                @endphp
+                                                @if($timeLeft <= 3)
+                                                    <span class="text-xs text-red-400 font-medium">{{ $timeLeft }} hari lagi</span>
+                                                @endif
+                                            </div>
+                                        @endif
+                                    @endif
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-center">
+                                    @if($hasAnswered)
+                                        <span class="inline-block px-4 py-2 text-xs font-bold font-display rounded-md bg-gray-700 text-gray-400 cursor-not-allowed">
+                                            SELESAI
+                                        </span>
+                                    @else
+                                        @if($survey->tanggal_selesai >= now())
+                                            <a href="#" class="inline-block px-4 py-2 text-xs font-bold font-display rounded-md transition-all duration-300 transform hover:scale-105 bg-purple-500 text-white hover:bg-purple-400">
+                                                ISI SURVEY
+                                            </a>
+                                        @else
+                                            <span class="inline-block px-4 py-2 text-xs font-bold font-display rounded-md bg-gray-700 text-gray-400 cursor-not-allowed">
+                                                TERLEWAT
+                                            </span>
+                                        @endif
+                                    @endif
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+                @else
+                <div class="p-6 text-center">
+                    <p class="text-gray-500 italic">// Tidak ada survey aktif saat ini //</p>
+                </div>
+                @endif
             </div>
         </div>
     </div>

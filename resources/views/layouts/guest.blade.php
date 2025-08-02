@@ -12,20 +12,88 @@
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Rajdhani:wght@400;700&display=swap" rel="stylesheet">
 
-        <!-- Scripts -->
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
-        @if (!file_exists(public_path('build/manifest.json')))
-            <script src="https://cdn.tailwindcss.com"></script>
-        @endif
+        <!-- Tailwind CSS CDN -->
+        <script src="https://cdn.tailwindcss.com"></script>
+        
+        <!-- Tailwind Config -->
+        <script>
+            tailwind.config = {
+                theme: {
+                    extend: {
+                        fontFamily: {
+                            'orbitron': ['Orbitron', 'sans-serif'],
+                            'rajdhani': ['Rajdhani', 'sans-serif']
+                        }
+                    }
+                }
+            }
+        </script>
 
         <!-- Kustomisasi CSS - VERSI RAPIH & KONSISTEN -->
         <style>
+            /* === TEXT EFFECTS === */
+            .text-glow-cyan {
+                text-shadow: 0 0 10px #00eaff, 0 0 20px #00eaff, 0 0 30px #00eaff;
+            }
+            .text-glow-yellow {
+                text-shadow: 0 0 10px #ffe066, 0 0 20px #ffe066, 0 0 30px #ffe066;
+            }
+            .text-glow-red {
+                text-shadow: 0 0 10px #ef4444, 0 0 20px #ef4444, 0 0 30px #ef4444;
+            }
+            
+            /* === CYBERPUNK GRID === */
+            .cyber-grid {
+                background-image: 
+                    linear-gradient(rgba(0, 234, 255, 0.1) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(0, 234, 255, 0.1) 1px, transparent 1px);
+                background-size: 50px 50px;
+                animation: grid-move 20s linear infinite;
+            }
+            @keyframes grid-move {
+                0% { transform: translate(0, 0); }
+                100% { transform: translate(50px, 50px); }
+            }
+            
+            /* === FLOATING PARTICLES === */
+            .floating-particles {
+                position: relative;
+                overflow: hidden;
+            }
+            .floating-particles::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-image: 
+                    radial-gradient(2px 2px at 20px 30px, rgba(255, 224, 102, 0.3), transparent),
+                    radial-gradient(2px 2px at 40px 70px, rgba(0, 234, 255, 0.3), transparent),
+                    radial-gradient(1px 1px at 90px 40px, rgba(255, 224, 102, 0.2), transparent),
+                    radial-gradient(1px 1px at 130px 80px, rgba(0, 234, 255, 0.2), transparent);
+                background-repeat: repeat;
+                background-size: 200px 100px;
+                animation: float-particles 15s ease-in-out infinite;
+                pointer-events: none;
+            }
+            @keyframes float-particles {
+                0%, 100% { transform: translateY(0px) rotate(0deg); }
+                50% { transform: translateY(-10px) rotate(180deg); }
+            }
+            
             /* === CORE SETUP === */
             body {
                 font-family: 'Rajdhani', sans-serif;
                 background-color: #0a0a14;
                 color: #e0e0e0;
                 overflow-x: hidden;
+                width: 100%;
+                max-width: 100vw;
+            }
+            
+            * {
+                box-sizing: border-box;
             }
             .font-orbitron { font-family: 'Orbitron', sans-serif; }
 
@@ -56,6 +124,8 @@
                 overflow: hidden;
                 animation: float-in 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
                 opacity: 0;
+                max-width: 100%;
+                width: 100%;
             }
             @keyframes float-in {
                 from { transform: translateY(40px); opacity: 0; }
@@ -93,9 +163,11 @@
                 border: 1px solid rgba(0, 225, 255, 0.3) !important;
                 color: #e0e0e0 !important;
                 border-radius: 4px !important;
-                width: 100%;
+                width: 100% !important;
+                max-width: 100% !important;
                 padding: 10px 15px !important;
                 transition: all 0.3s ease;
+                box-sizing: border-box !important;
             }
             .cyber-input:focus {
                 outline: none !important;
@@ -145,6 +217,35 @@
             }
             .cyber-checkbox-label input[type="checkbox"]:checked + .custom-checkbox-ui::before {
                 background-color: #00e1ff; border-color: #00e1ff; box-shadow: 0 0 5px #00e1ff;
+            }
+
+            /* === RESPONSIVE FIXES === */
+            @media (max-width: 768px) {
+                .auth-card {
+                    margin: 1rem;
+                    padding: 1rem !important;
+                    max-width: calc(100vw - 2rem);
+                }
+                .cyber-input {
+                    font-size: 16px !important; /* Prevent zoom on iOS */
+                }
+                .grid {
+                    gap: 1rem !important;
+                }
+            }
+            
+            @media (max-width: 480px) {
+                .auth-card {
+                    margin: 0.5rem;
+                    padding: 0.75rem !important;
+                    max-width: calc(100vw - 1rem);
+                }
+                h1 {
+                    font-size: 1.5rem !important;
+                }
+                h2 {
+                    font-size: 1rem !important;
+                }
             }
         </style>
     </head>
@@ -206,8 +307,8 @@
             <div class="grid-lines"></div>
         </div>
 
-        <div class="min-h-screen flex flex-col justify-center items-center py-12 px-4">
-            <div class="auth-card w-full sm:max-w-2xl p-8 md:p-12 rounded-lg">
+        <div class="min-h-screen flex flex-col justify-center items-center py-6 px-2 sm:px-4">
+            <div class="auth-card w-full max-w-4xl p-4 sm:p-6 md:p-8 lg:p-12 rounded-lg">
                 <div class="corner top-left"></div><div class="corner top-right"></div>
                 <div class="corner bottom-left"></div><div class="corner bottom-right"></div>
                 

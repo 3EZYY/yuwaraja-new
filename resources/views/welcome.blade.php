@@ -4,14 +4,14 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>PKKMB YUWARAJA 2025 - Vokasi Universitas Brawijaya</title>
+    <title>PKKMB YUWARAJA 2025 - Fakultas Vokasi Universitas Brawijaya</title>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Orbitron:wght@400..900&display=swap" rel="stylesheet">
 
-    <!-- Tailwind CSS -->
+    <!-- Vite Assets -->
     <script src="https://cdn.tailwindcss.com"></script>
 
     <style>
@@ -906,7 +906,7 @@
                             <li>
                                 <a href="https://vokasi.ub.ac.id/ti/" target="_blank" class="flex items-center justify-between group p-3 -m-3 rounded-lg transition-colors hover:bg-white/5">
                                     <div>
-                                        <h4 class="font-kanit text-lg font-semibold text-white">D3 Teknik Informatika</h4>
+                                        <h4 class="font-kanit text-lg font-semibold text-white">D3 Teknologi Informasi</h4>
                                         <p class="text-gray-400 text-sm mt-1">Membangun dan Mengamankan Infrastruktur Digital Masa Depan.</p>
                                     </div>
                                     <img src="images/arrow.svg" alt="arrow" class="w-5 h-5">
@@ -930,7 +930,7 @@
                     <div class="lg:col-span-7">
                         <div class="text-center lg:text-left mb-12">
                             <h2 class="text-2xl md:text-5xl font-orbitron font-bold text-white text-glow-cyan relative reveal-up">
-                                KNOWLEDGE BASE
+                                KNOWLEDGE BASED
                             </h2>
                             <p class="mt-4 text-lg text-[#3FEAE5] font-extralight reveal-up" style="transition-delay: 0.1s;">
                                 Pertanyaan yang sering muncul di Transisi Ksatria

@@ -7,7 +7,7 @@ use Filament\Actions;
 use Filament\Resources\Pages\ViewRecord;
 use Filament\Infolists\Infolist;
 use Filament\Infolists\Components\TextEntry;
-use Filament\Infolists\Components\BadgeEntry;
+
 use Filament\Infolists\Components\Section;
 use Filament\Infolists\Components\Grid;
 
@@ -33,8 +33,9 @@ class ViewHasilSurvey extends ViewRecord
                             ->schema([
                                 TextEntry::make('masterSurvey.judul_survey')
                                     ->label('Judul Survey'),
-                                BadgeEntry::make('masterSurvey.status')
+                                TextEntry::make('masterSurvey.status')
                                     ->label('Status Survey')
+                                    ->badge()
                                     ->color(fn (string $state): string => match ($state) {
                                         'aktif' => 'success',
                                         'nonaktif' => 'danger',
@@ -53,8 +54,9 @@ class ViewHasilSurvey extends ViewRecord
                             ->columnSpanFull(),
                         Grid::make(3)
                             ->schema([
-                                BadgeEntry::make('detilSurvey.tipe_pertanyaan')
+                                TextEntry::make('detilSurvey.tipe_pertanyaan')
                                     ->label('Tipe Pertanyaan')
+                                    ->badge()
                                     ->color(fn (string $state): string => match($state) {
                                         'text' => 'primary',
                                         'textarea' => 'success',
@@ -71,8 +73,9 @@ class ViewHasilSurvey extends ViewRecord
                                         'select' => 'Select Dropdown',
                                         default => ucfirst($state)
                                     }),
-                                BadgeEntry::make('detilSurvey.wajib_diisi')
+                                TextEntry::make('detilSurvey.wajib_diisi')
                                     ->label('Wajib Diisi')
+                                    ->badge()
                                     ->color(fn (bool $state): string => $state ? 'success' : 'gray')
                                     ->formatStateUsing(fn (bool $state): string => $state ? 'Ya' : 'Tidak'),
                                 TextEntry::make('detilSurvey.urutan')

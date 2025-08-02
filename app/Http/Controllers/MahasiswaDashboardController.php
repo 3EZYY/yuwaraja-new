@@ -6,6 +6,8 @@ use App\Models\Pengumuman;
 use App\Models\JadwalAcara;
 use App\Models\Tugas;
 use App\Models\PengumpulanTugas;
+use App\Models\MasterSurvey;
+use App\Models\HasilSurvey;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\RedirectResponse;
@@ -41,8 +43,18 @@ class MahasiswaDashboardController extends Controller
         $tugas = Tugas::all();
         // Ambil status pengumpulan tugas mahasiswa
         $pengumpulanTugas = PengumpulanTugas::where('user_id', $user->id)->get()->keyBy('tugas_id');
+        
+        // Ambil survey aktif dan status pengisian
+        $surveys = MasterSurvey::berjalan()->with('detilSurvey')->get();
+        $surveyStatus = [];
+        foreach ($surveys as $survey) {
+            $hasAnswered = HasilSurvey::where('id_master_survey', $survey->id_master_survey)
+                                    ->where('user_id', $user->id)
+                                    ->exists();
+            $surveyStatus[$survey->id_master_survey] = $hasAnswered;
+        }
 
-        return view('mahasiswa.dashboard', compact('user', 'pengumuman', 'jadwal', 'tugas', 'pengumpulanTugas'));
+        return view('mahasiswa.dashboard', compact('user', 'pengumuman', 'jadwal', 'tugas', 'pengumpulanTugas', 'surveys', 'surveyStatus'));
     }
 
     public function showTugas(Tugas $tugas)

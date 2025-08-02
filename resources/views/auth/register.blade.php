@@ -11,7 +11,7 @@
             </div>
 
             {{-- Grid utama untuk semua input, dengan jarak yang lebih rapat --}}
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-x-4 lg:gap-x-6 gap-y-4">
 
                 <!-- Nama Lengkap -->
                 <div style="animation-delay: 0.8s;">
@@ -159,7 +159,7 @@
                 </div>
 
                 <!-- Alamat Lengkap (Span 2 kolom) -->
-                <div class="md:col-span-2" style="animation-delay: 1.7s;">
+                <div class="lg:col-span-2" style="animation-delay: 1.7s;">
                     <x-input-label for="alamat_domisili" value="Alamat Lengkap" class="mb-1 text-sm text-cyan-300 tracking-wide" />
                     <textarea id="alamat_domisili" name="alamat_domisili" class="cyber-input" rows="3" required placeholder="Contoh: Jl. Veteran No. 10, RT 02/RW 05, Ketawanggede, Kec. Lowokwaru, Kota Malang, Jawa Timur 65145">{{ old('alamat_domisili') }}</textarea>
                     <x-input-error :messages="$errors->get('alamat_domisili')" class="mt-2 text-yellow-400 text-xs" />

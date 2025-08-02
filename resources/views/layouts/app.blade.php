@@ -15,12 +15,28 @@
         <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
 
         <!-- Scripts -->
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
+        <!-- Tailwind CSS CDN -->
+        <script src="https://cdn.tailwindcss.com"></script>
+        
+        <!-- Tailwind Config -->
+        <script>
+            tailwind.config = {
+                darkMode: 'class',
+                theme: {
+                    extend: {
+                        fontFamily: {
+                            'orbitron': ['Orbitron', 'sans-serif'],
+                            'rajdhani': ['Rajdhani', 'sans-serif']
+                        }
+                    }
+                }
+            }
+        </script>
 
         <!-- Alpine.js -->
         <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
     </head>
-    <body class="font-sans antialiased bg-black text-cyan-300">
+    <body class="font-sans antialiased bg-black dark:bg-gray-900 text-cyan-300 dark:text-gray-200 transition-colors duration-200">
         <!-- Session Expired Alert -->
         @if(session('show_alert') && session('error'))
             <div id="session-alert" 
