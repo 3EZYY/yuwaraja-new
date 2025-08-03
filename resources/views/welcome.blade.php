@@ -209,7 +209,7 @@
             z-index: 0;
             background-image:
                 linear-gradient(to bottom, transparent 50%, #012633 100%),
-                url('/images/bg-img.svg');
+                url('/images/bg-img.jpg');
 
             background-size: cover;
             background-position: center;
@@ -743,19 +743,28 @@
             <div class="hero-content container mx-auto px-6" style="user-select: none;">
                 <div class="max-w-4xl mx-auto text-center">
                     <h2 class="font-kanit text-lg sm:text-xl md:text-3xl text-white tracking-[0.2em] md:tracking-[0.3em] uppercase reveal-up">
-                        PKKMB VOKASI UB
+                        PKKMB FAKULTAS VOKASI <BR>UNIVERSITAS BRAWIJAYA
                     </h2>
 
-                    <h1 class="font-orbitron text-4xl sm:text-5xl md:text-7xl lg:text-8xl text-[#3FEAE5] text-glow-cyan mt-4 font-bold reveal-up" style="transition-delay: 0.1s;">
+                    <h2 class="font-orbitron text-4xl sm:text-5xl md:text-7xl lg:text-8xl text-[#3FEAE5] text-glow-cyan mt-4 font-bold reveal-up" style="transition-delay: 0.1s;">
                         YUWARAJA
                         <span class="block text-[#E8AA1F] text-glow-yellow">
-                            XVII 2025
+                          
                         </span>
-                    </h1>
+                              
+                           
+        <span class="block text-[#E8AA1F] text-glow-yellow">
+                       XVII - 2025  
+                         </span>
+    </h2>
 
-                    <p class="mt-6 md:mt-8 text-base md:text-xl text-white font-light max-w-2xl mx-auto leading-relaxed reveal-up" style="transition-delay: 0.2s;">
-                        Sebuah Era baru telah tiba. Sambungkan potensimu, bentuk masa depan. Selamat datang, Ksatria Yuwaraja, di gerbang Inovasi Fakultas Vokasi Universitas Brawijaya.
-                    </p>
+        <h2 class="font-kanit text-lg sm:text-xl md:text-3xl text-white tracking-[0.2em] md:tracking-[0.3em] uppercase reveal-up">
+                       Be Adaptive, Shape Tomorrow! 
+                    </h2>
+
+                    <h2 class="mt-6 md:mt-8 text-base md:text-xl text-white font-light max-w-2xl mx-auto leading-relaxed reveal-up" style="transition-delay: 0.2s;">
+               PENGENALAN KEHIDUPAN KAMPUS MAHASISWA BARU  
+    </h2>
 
                     <div class="mt-10 md:mt-12 reveal-up" style="transition-delay: 0.3s;">
                         <a href="#informasi" class="inline-flex items-center justify-center border-2 border-[#E8AA1F] rounded-md overflow-hidden transition-all duration-300 group hover:shadow-lg hover:shadow-yellow-500/20">
@@ -779,56 +788,110 @@
                 <div class="text-center mb-16">
                     <h2
                         class="text-2xl md:text-5xl font-orbitron font-bold text-white text-glow-cyan relative">
-                        LATEST TRANSMISSIONS</h2>
-                    <p class="mt-4 text-lg text-[#3FEAE5] font-extralight reveal-up" style="transition-delay: 0.2s;">Update intel penting
-                        langsung dari pusat komando.</p>
+                      They Grow Into Greatness Here</h2>
+                    <p class="mt-4 text-lg text-[#3FEAE5] font-extralight reveal-up" style="transition-delay: 0.2s;">
+                        Mereka Adalah Alumni-Alumni yang lahir dan berproses menjadi besar di Vokasi UB.</p>
                 </div>
                 <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6 md:gap-8 lg:gap-10 items-center">
                     <!-- Card 1 -->
                     <div class="cyber-card p-6 sm:p-8 reveal-up hover:box-glow-cyan">
                         <div class="mb-6">
-                            <img src="/images/date.svg" alt="rangkaian acara" class="w-10 sm:w-12 h-auto mb-4">
-                            <h3 class="text-lg sm:text-xl font-kanit text-white mb-2 text-glow-cyan">RANGKAIAN ACARA</h3>
+                            <div class="flex items-center gap-4 mb-4">
+                                <img src="/images/ahmad.png" alt="Ahmad Syaifulloh" class="w-16 h-16 rounded-full object-cover border-2 border-[#3FEAE5]">
+                                <div>
+                                    <h3 class="text-lg sm:text-xl font-kanit text-white text-glow-cyan">CTO PT Sinergi Ketahanan Pangan (CHICKIN)</h3>
+                                    <p class="text-[#3FEAE5] text-sm italic">Ahmad Syaifulloh - Alumni Vokasi UB, 2013</p>
+                                </div>
+                            </div>
                             <p class="text-[#3FEAE5] text-sm sm:text-base font-extralight">
-                                Jadwal lengkap, peraturan pakaian, dan semua yang perlu kamu ketahui untuk orientasi.
-                                Jangan sampai salah kostum, Ksatria!
+                               CHICKIN adalah perusahaan agritech yang memodernisasi industri peternakan ayam Indonesia melalui teknologi IoT CI-Touch. Mereka menyediakan solusi terintegrasi untuk peternak broiler, mulai dari sapronak hingga distribusi. Dengan slogan #TumbuhBareng, CHICKIN berkomitmen mendemokratisasi akses protein dan memperkuat ketahanan pangan nasional melalui inovasi digital berkelanjutan.
                             </p>
                         </div>
-                        <a href="/login" class="block w-full text-center bg-[#E8AA1F] text-[#012633] rounded-full px-4 py-2 text-base sm:text-xl font-semibold">
-                            Lihat Selengkapnya
-                        </a>
+                    
                     </div>
 
                     <!-- Card 2 -->
                     <div class="cyber-card p-6 sm:p-8 reveal-up hover:box-glow-cyan" style="transition-delay: 0.15s;">
                         <div class="mb-6">
-                            <img src="/images/misi.svg" alt="misi" class="w-10 sm:w-12 h-auto mb-4">
-                            <h3 class="text-lg sm:text-xl font-kanit text-white mb-2 text-glow-cyan">MISI & PENUGASAN</h3>
+                            <div class="flex items-center gap-4 mb-4">
+                                <img src="/images/fato.png" alt="Maulana Derifato" class="w-16 h-16 rounded-full object-cover border-2 border-[#3FEAE5]">
+                                <div>
+                                    <h3 class="text-lg sm:text-xl font-kanit text-white text-glow-cyan">CEO PT Myeco Indonesia</h3>
+                                    <p class="text-[#3FEAE5] text-sm italic">Maulana Derifato Achmad - Alumni Vokasi UB, 2021</p>
+                                </div>
+                            </div>
                             <p class="text-[#3FEAE5] text-sm sm:text-base font-extralight">
-                                Tugas awal telah di-deploy! Selesaikan misimu untuk membuktikan kemampuan dan mendapatkan poin pengalaman pertama.
+                               PT Myeco Indonesia adalah startup teknologi yang menghadirkan solusi otomatisasi perangkat listrik berbasis AIoT (Artificial Intelligence & Internet of Things). Myeco menciptakan super app penghemat listrik dengan penghematan hingga 55%. Melalui teknologi Smart EcoRoom dan motto "Save your OUTgo with myECO", perusahaan berkomitmen menciptakan smart home ramah lingkungan untuk masa depan berkelanjutan.
                             </p>
                         </div>
-                        <a href="/login" class="block w-full text-center bg-[#E8AA1F] text-[#012633] rounded-full px-4 py-2 text-base sm:text-xl font-semibold">
-                            Lihat Selengkapnya
-                        </a>
+                      
                     </div>
 
                     <!-- Card 3 -->
                     <div class="cyber-card p-6 sm:p-8 reveal-up hover:box-glow-cyan" style="transition-delay: 0.3s;">
                         <div class="mb-6">
                             <img src="/images/event.svg" alt="event komunitas" class="w-10 sm:w-12 h-auto mb-4">
-                            <h3 class="text-lg sm:text-xl font-kanit text-white mb-2 text-glow-cyan">EVENT KOMUNITAS</h3>
+                            <h3 class="text-lg sm:text-xl font-kanit text-white mb-2 text-glow-cyan">  Where Success Takes Shape!</h3>
                             <p class="text-gray-400 text-sm sm:text-base">
-                                Jadwal meet & greet, workshop, dan webinar untuk memperluas jaringanmu.
-                                Saatnya terhubung dengan ksatria lain!
+                         Ribuan Alumni Vokasi UB telah membuktikan keunggulan sebagai praktisi handal dan wirausahawan sukses. Mereka yang dulu berproses di kampus, kini memimpin industri, membangun bisnis, dan menciptakan lapangan kerja. Skill praktis + jiwa entrepreneur adalah formula kesuksesan nyata.
+
                             </p>
                         </div>
-                        <a href="/login" class="block w-full text-center bg-[#E8AA1F] text-[#012633] rounded-full px-4 py-2 text-base sm:text-xl font-semibold">
+                        <!-- <a href="/login" class="block w-full text-center bg-[#E8AA1F] text-[#012633] rounded-full px-4 py-2 text-base sm:text-xl font-semibold">
                             Lihat Selengkapnya
-                        </a>
+                        </a> -->
                     </div>
                 </div>
             </div>
+
+<br>
+            <br>
+                   <div class="container mx-auto px-6 relative z-20">
+                <div class="text-center mb-16">
+                    <h2
+                        class="text-2xl md:text-5xl font-orbitron font-bold text-white text-glow-cyan relative">
+                     How will you grow here? Learn, lead, succeed</h2>
+                    <p class="mt-4 text-lg text-[#3FEAE5] font-extralight reveal-up" style="transition-delay: 0.2s;">Bagaimana Vokasi UB membantumu berproses.</p>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6 md:gap-8 lg:gap-10 items-center">
+                    <!-- Card 1 -->
+                    <div class="cyber-card p-6 sm:p-8 reveal-up hover:box-glow-cyan">
+                        <div class="mb-6">
+                           
+                            <h3 class="text-lg sm:text-xl font-kanit text-white mb-2 text-glow-cyan">Sertifikasi Kompetensi</h3>
+                            <p class="text-[#3FEAE5] text-sm sm:text-base font-extralight">
+                        Mahasiswa Fakultas Vokasi Universitas Brawijaya Wajib Menempuh Sertifikasi Kompetensi Berstandar BNSP (Badan Nasional Sertifikasi Profesi) pada Semester Akhir Sebagai Syarat Kelulusan. Akan dikoordinir program studi.
+                            </p>
+                        </div>
+                      
+                    </div>
+
+                    <!-- Card 2 -->
+                    <div class="cyber-card p-6 sm:p-8 reveal-up hover:box-glow-cyan" style="transition-delay: 0.15s;">
+                        <div class="mb-6">
+
+                            <h3 class="text-lg sm:text-xl font-kanit text-white mb-2 text-glow-cyan">Kewajiban Magang</h3>
+                            <p class="text-[#3FEAE5] text-sm sm:text-base font-extralight">
+                             Mahasiswa Fakultas Vokasi Universitas Brawijaya Wajib Menempuh Magang/On Job Training di perusahaan selama minimal 1 semester.
+                                 </p>
+                        </div>
+                
+                    </div>
+
+                    <!-- Card 3 -->
+                     <div class="cyber-card p-6 sm:p-8 reveal-up hover:box-glow-cyan" style="transition-delay: 0.15s;">
+                   
+                    <div class="mb-6">
+                                                        <h3 class="text-lg sm:text-xl font-kanit text-white mb-2 text-glow-cyan">Praktik Diutamakan</h3>
+                     <p class="text-[#3FEAE5] text-sm sm:text-base font-extralight">
+                            Pendidikan vokasi, dengan fokus utamanya pada penguasaan keahlian terapan, menawarkan pendekatan belajar yang unik, di mana praktik lapangan mendominasi 60% dari keseluruhan pembelajaran.
+                            </p>
+                        </div>
+                      
+                    </div>
+                </div>
+            </div>
+            
         </section>
 
         <!-- Program Studi Section -->
