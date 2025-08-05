@@ -308,7 +308,7 @@
         </div>
 
         <div class="min-h-screen flex flex-col justify-center items-center py-6 px-2 sm:px-4">
-            <div class="auth-card w-full max-w-4xl p-4 sm:p-6 md:p-8 lg:p-12 rounded-lg">
+            <div class="auth-card w-full max-w-2xl p-4 sm:p-6 md:p-8 lg:p-12 rounded-lg">
                 <div class="corner top-left"></div><div class="corner top-right"></div>
                 <div class="corner bottom-left"></div><div class="corner bottom-right"></div>
                 
