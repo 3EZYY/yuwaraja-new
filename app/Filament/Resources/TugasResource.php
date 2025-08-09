@@ -12,6 +12,7 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Closure;
 
 class TugasResource extends Resource
 {
@@ -47,14 +48,15 @@ class TugasResource extends Resource
                     ->default('kelompok'),
                 Forms\Components\FileUpload::make('file_path')
                     ->label('File Tugas')
+                    ->disk('public')
                     ->directory('tugas-files')
-                    ->acceptedFileTypes(['.pdf', '.doc', '.docx', '.txt', '.zip', '.rar'])
                     ->maxSize(10240) // 10MB
                     ->downloadable()
                     ->openable()
                     ->columnSpanFull()
                     ->helperText('Upload file tugas yang dapat diunduh oleh mahasiswa. Format yang didukung: PDF, DOC, DOCX, TXT, ZIP, RAR. Maksimal 10MB.')
-                    ->nullable(),
+                    ->nullable()
+                    ->preserveFilenames(),
                 Forms\Components\Toggle::make('is_active')
                     ->required(),
             ]);

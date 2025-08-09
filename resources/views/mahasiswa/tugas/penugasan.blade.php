@@ -175,7 +175,7 @@
                             </svg>
                             Lampiran
                         </h3>
-                        <a href="{{ Storage::url($tugas->file_path) }}" target="_blank" class="inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold bg-gray-700 hover:bg-gray-600 text-teal-200 rounded-lg transition-colors">
+                        <a href="{{ route('mahasiswa.tugas.download', $tugas) }}" class="inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold bg-gray-700 hover:bg-gray-600 text-teal-200 rounded-lg transition-colors">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
                             </svg>
@@ -209,7 +209,7 @@
                             </svg>
                             File Terkumpul
                         </p>
-                        <a href="{{ Storage::url($pengumpulan->file_path) }}" target="_blank" class="text-amber-300 hover:underline text-sm truncate block mt-1 ml-7">{{ basename($pengumpulan->file_path) }}</a>
+                        <a href="{{ route('mahasiswa.pengumpulan.download', $pengumpulan) }}" class="text-amber-300 hover:underline text-sm truncate block mt-1 ml-7">{{ basename($pengumpulan->file_path) }}</a>
                         
                         <!-- Status pengumpulan -->
                         <div class="mt-3 pt-3 border-t border-gray-700">

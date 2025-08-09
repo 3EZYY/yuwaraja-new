@@ -76,8 +76,9 @@
                     </p>
                     
                     {{-- Metadata dengan ikon dan layout yang rapi --}}
-                    <div class="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6 text-sm text-gray-400 border-t border-gray-500 pt-4">
-                        <div class="flex items-center gap-2">
+                    <div class="flex flex-col justify-between sm:flex-row sm:items-center gap-4 sm:gap-6 text-sm text-gray-400 border-t border-gray-500 pt-4">
+                       <div class="flex items-center gap-4">
+                         <div class="flex items-center gap-2">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd" /></svg>
                             <span>{{ $item->created_at->format('d M Y, H:i') }}</span>
                         </div>
@@ -85,17 +86,18 @@
                              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" /></svg>
                             <span>{{ $item->penulis ?? 'Admin' }}</span>
                         </div>
+                       </div>
+                        {{-- Tombol Aksi Utama dengan warna Kuning --}}
+                        <div class="flex-shrink-0 w-full md:w-auto">
+                            <a href="{{ route('spv.pengumuman.detail', $item) }}" 
+                               class="w-full inline-flex items-center justify-center gap-2 bg-yellow-500 text-black font-poppins font-bold px-5 py-2.5 rounded-lg transition-all duration-300 hover:bg-yellow-400 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-yellow-500/50">
+                                <span>Lihat Detail</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" /></svg>
+                            </a>
+                        </div>
                     </div>
                 </div>
                 
-                {{-- Tombol Aksi Utama dengan warna Kuning --}}
-                <div class="flex-shrink-0 w-full md:w-auto">
-                    <a href="{{ route('spv.pengumuman.detail', $item) }}" 
-                       class="w-full inline-flex items-center justify-center gap-2 bg-yellow-500 text-black font-poppins font-bold px-5 py-2.5 rounded-lg transition-all duration-300 hover:bg-yellow-400 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-yellow-500/50">
-                        <span>Lihat Detail</span>
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" /></svg>
-                    </a>
-                </div>
             </div>
         </div>
         @empty

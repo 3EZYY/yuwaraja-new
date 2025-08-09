@@ -75,11 +75,11 @@
         <!-- Remember Me & Lost Password -->
         <div class="flex items-center justify-between mt-6 text-sm opacity-0"
             style="animation: float-in 0.8s forwards 1.4s;">
-            <label for="remember_me" class="inline-flex items-center cyber-checkbox-label">
+            <label for="remember_me" class="inline-flex items-center cursor-pointer group">
                 <input id="remember_me" name="remember" type="checkbox"
-                    class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500" />
-                <span class="custom-checkbox-ui ms-2 text-gray-400 hover:text-white transition">
-                    {{ __('Keep Connection') }}
+                    class="w-4 h-4 text-cyan-400 bg-gray-900 border-2 border-cyan-500 rounded focus:ring-cyan-500 focus:ring-2 transition-all duration-200" />
+                <span class="ml-2 text-gray-400 group-hover:text-cyan-400 transition-colors duration-200 select-none">
+                    {{ __('Remember Me') }}
                 </span>
             </label>
 

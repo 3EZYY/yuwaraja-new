@@ -5,6 +5,8 @@ use Illuminate\Http\Request;
 use App\Models\PengumpulanTugas;
 use App\Models\Tugas;
 use App\Models\User;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Response;
 
 class SpvTugasController extends Controller
 {
@@ -150,5 +152,86 @@ class SpvTugasController extends Controller
         
         // TODO: Trigger notifikasi ke mahasiswa jika status berubah
         return redirect()->back()->with('success', $message);
+    }
+    
+    // Download file pengumpulan tugas dengan validasi akses
+    public function downloadFile($id)
+    {
+        $spv = auth()->user();
+        
+        // Ambil kelompok yang di-supervisi oleh SPV ini
+        $kelompokIds = \App\Models\Kelompok::where('spv_id', $spv->id)->pluck('id');
+        
+        // Pastikan pengumpulan tugas adalah dari mahasiswa di kelompok yang di-supervisi
+        $pengumpulan = PengumpulanTugas::with(['user', 'tugas'])
+            ->whereHas('user', function($query) use ($kelompokIds) {
+                $query->whereIn('kelompok_id', $kelompokIds);
+            })
+            ->findOrFail($id);
+        
+        // Cek apakah file exists
+        if (!$pengumpulan->file_path) {
+            abort(404, 'File tidak ditemukan.');
+        }
+        
+        $filePath = storage_path('app/public/' . $pengumpulan->file_path);
+        
+        // Cek apakah file fisik ada
+        if (!file_exists($filePath)) {
+            abort(404, 'File tidak ditemukan di server.');
+        }
+        
+        // Ambil informasi file
+        $originalName = basename($pengumpulan->file_path);
+        $extension = pathinfo($filePath, PATHINFO_EXTENSION);
+        
+        // Buat nama file yang lebih descriptive
+        $downloadName = sprintf(
+            '%s_%s_%s.%s',
+            str_replace(' ', '_', $pengumpulan->tugas->judul ?? 'tugas'),
+            str_replace(' ', '_', $pengumpulan->user->name ?? 'mahasiswa'),
+            date('Y-m-d', strtotime($pengumpulan->created_at)),
+            $extension
+        );
+        
+        // Tentukan MIME type
+        $mimeType = $this->getMimeType($extension);
+        
+        // Return file response dengan header yang benar
+        return Response::download($filePath, $downloadName, [
+            'Content-Type' => $mimeType,
+            'Content-Disposition' => 'attachment; filename="' . $downloadName . '"',
+            'Cache-Control' => 'no-cache, no-store, must-revalidate',
+            'Pragma' => 'no-cache',
+            'Expires' => '0'
+        ]);
+    }
+    
+    // Helper method untuk mendapatkan MIME type
+    private function getMimeType($extension)
+    {
+        $mimeTypes = [
+            'pdf' => 'application/pdf',
+            'doc' => 'application/msword',
+            'docx' => 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+            'xls' => 'application/vnd.ms-excel',
+            'xlsx' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+            'ppt' => 'application/vnd.ms-powerpoint',
+            'pptx' => 'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+            'txt' => 'text/plain',
+            'rtf' => 'application/rtf',
+            'odt' => 'application/vnd.oasis.opendocument.text',
+            'zip' => 'application/zip',
+            'rar' => 'application/x-rar-compressed',
+            '7z' => 'application/x-7z-compressed',
+            'jpg' => 'image/jpeg',
+            'jpeg' => 'image/jpeg',
+            'png' => 'image/png',
+            'gif' => 'image/gif',
+            'bmp' => 'image/bmp',
+            'svg' => 'image/svg+xml',
+        ];
+        
+        return $mimeTypes[strtolower($extension)] ?? 'application/octet-stream';
     }
 }

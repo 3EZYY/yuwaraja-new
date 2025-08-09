@@ -21,11 +21,11 @@ class MahasiswaAbsensiController extends Controller
             ->orderBy('jam_mulai', 'asc')
             ->get();
 
-        // Ambil riwayat absensi mahasiswa
+        // Ambil riwayat absensi mahasiswa dengan pagination
         $riwayatAbsensi = AbsensiMahasiswa::with(['absensi', 'approvedBy'])
             ->where('user_id', $user->id)
             ->orderBy('created_at', 'desc')
-            ->get();
+            ->paginate(10);
 
         return view('mahasiswa.absensi.index', compact('absensiAktif', 'riwayatAbsensi'));
     }
@@ -42,8 +42,11 @@ class MahasiswaAbsensiController extends Controller
         // Cek apakah masih dalam rentang waktu
         $now = now();
         $tanggalAbsensi = Carbon::parse($absensi->tanggal);
-        $jamMulai = Carbon::parse($absensi->tanggal . ' ' . $absensi->jam_mulai);
-        $jamSelesai = Carbon::parse($absensi->tanggal . ' ' . $absensi->jam_selesai);
+        
+        // Format tanggal dan waktu dengan benar
+        $tanggalString = $tanggalAbsensi->format('Y-m-d');
+        $jamMulai = Carbon::parse($tanggalString . ' ' . $absensi->jam_mulai);
+        $jamSelesai = Carbon::parse($tanggalString . ' ' . $absensi->jam_selesai);
 
         if ($now->toDateString() !== $tanggalAbsensi->toDateString()) {
             return redirect()->back()->with('error', 'Absensi hanya bisa dilakukan pada tanggal yang ditentukan.');

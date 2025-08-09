@@ -137,8 +137,7 @@
                                         <p class="text-gray-400 text-sm">Unduh file ini untuk melihat detail lengkap tugas</p>
                                     </div>
                                 </div>
-                                <a href="{{ asset('storage/' . $tugas->file_path) }}" 
-                                   target="_blank"
+                                <a href="{{ route('mahasiswa.tugas.download', $tugas) }}" 
                                    class="cyber-btn px-6 py-3">
                                     <i class="fas fa-download mr-2"></i>Download File
                                 </a>
@@ -203,8 +202,7 @@
                                     <i class="fas fa-file-alt text-cyan-400 mr-2"></i>
                                     <span class="text-gray-300">File yang dikumpulkan:</span>
                                 </div>
-                                <a href="{{ Storage::url($pengumpulan->file_path) }}"
-                                   target="_blank"
+                                <a href="{{ route('mahasiswa.pengumpulan.download', $pengumpulan) }}"
                                    class="cyber-btn px-4 py-2 text-sm">
                                     <i class="fas fa-download mr-1"></i>Download
                                 </a>

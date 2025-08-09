@@ -39,6 +39,7 @@ class KelompokResource extends Resource
                     ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
                     ->imageEditor()
                     ->imageEditorAspectRatios(['1:1'])
+                    ->preserveFilenames()
                     ->helperText('Upload foto untuk cluster (maksimal 2MB, format: JPG, PNG, WEBP)'),
                 Forms\Components\TextInput::make('nama_kelompok')
                     ->required()

@@ -70,7 +70,7 @@
                                 {{ Str::limit($item->deskripsi, 250) }}
                             </p>
 
-                            <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 text-sm">
+                            <div class="grid grid-cols-2 sm:grid-cols-5 gap-3 text-sm">
                                 <div class="flex items-center gap-3">
                                     <svg class="w-6 h-6 text-teal-400/70 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
                                     <div>
@@ -107,16 +107,16 @@
                                         <div class="font-semibold text-white">{{ \Carbon\Carbon::parse($item->deadline)->diffForHumans() }}</div>
                                     </div>
                                 </div>
+                                <div class="flex-shrink-0 mt-4 md:mt-0 md:ml-20">
+                                     <button onclick="openTaskModal({{ $item->id }})" 
+                                        class="inline-flex items-center justify-center gap-2 w-full md:w-auto bg-teal-500 text-gray-900 font-semibold text-sm px-5 py-3 rounded-lg shadow-md transition-all duration-300 hover:bg-teal-400 hover:shadow-lg hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-900 focus:ring-teal-500">
+                                        <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path d="M10 12a2 2 0 100-4 2 2 0 000 4z" /><path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd" /></svg>
+                                        Lihat Detail
+                                    </button>
+                                </div>
                             </div>
                         </div>
 
-                        <div class="flex-shrink-0 mt-4 md:mt-0 md:ml-6">
-                             <button onclick="openTaskModal({{ $item->id }})" 
-                                class="inline-flex items-center justify-center gap-2 w-full md:w-auto bg-teal-500 text-gray-900 font-semibold text-sm px-5 py-3 rounded-lg shadow-md transition-all duration-300 hover:bg-teal-400 hover:shadow-lg hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-900 focus:ring-teal-500">
-                                <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path d="M10 12a2 2 0 100-4 2 2 0 000 4z" /><path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd" /></svg>
-                                Lihat Detail
-                            </button>
-                        </div>
                     </div>
                 </div>
             </div>

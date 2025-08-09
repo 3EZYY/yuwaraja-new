@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.spv')
 
 @section('content')
     {{-- CSS Kustom Minimal untuk Font dan Efek Khusus --}}
@@ -23,7 +23,25 @@
                     <!-- Cluster Profile Photo -->
                     <div class="relative group">
                         @if(isset($kelompokDibimbing) && $kelompokDibimbing->count() > 0 && $kelompokDibimbing->first()->photo)
-                            <img src="{{ asset('storage/' . $kelompokDibimbing->first()->photo) }}" alt="Cluster Profile" class="w-20 h-20 rounded-full border-3 border-teal-400/70 object-cover">
+                            @php
+                                $photoPath = $kelompokDibimbing->first()->photo;
+                                $fullPhotoUrl = asset('storage/' . $photoPath);
+                            @endphp
+                            <img src="{{ $fullPhotoUrl }}" 
+                                 alt="Cluster Profile" 
+                                 class="w-20 h-20 rounded-full border-3 border-teal-400/70 object-cover"
+                                 onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                            <!-- Fallback when image fails to load -->
+                            <div class="w-20 h-20 rounded-full bg-teal-400/20 flex items-center justify-center text-teal-300 font-bold border-3 border-teal-400/50 cursor-pointer hover:bg-teal-400/30 transition-all duration-300 group" 
+                                 onclick="uploadClusterProfilePhoto()" 
+                                 style="display: none;">
+                                <div class="text-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 mx-auto group-hover:scale-110 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
+                                    </svg>
+                                </div>
+                            </div>
                             <div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity rounded-full flex items-center justify-center">
                                 <button onclick="uploadClusterProfilePhoto()" class="bg-teal-500 hover:bg-teal-600 text-white p-2 rounded-full transition-colors">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -40,6 +58,14 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
                                     </svg>
                                 </div>
+                            </div>
+                        @endif
+                        
+                        <!-- Debug info (hapus setelah fix) -->
+                        @if(isset($kelompokDibimbing) && $kelompokDibimbing->count() > 0)
+                            <div class="absolute -bottom-20 left-0 text-xs text-gray-400 whitespace-nowrap bg-black/80 p-2 rounded opacity-0 group-hover:opacity-100 transition-opacity z-10">
+                                Photo: {{ $kelompokDibimbing->first()->photo ?? 'null' }}<br>
+                                URL: {{ asset('storage/' . ($kelompokDibimbing->first()->photo ?? '')) }}
                             </div>
                         @endif
                     </div>
@@ -536,6 +562,8 @@ function uploadClusterProfilePhoto() {
     @if(isset($kelompokDibimbing) && $kelompokDibimbing->count() > 0)
         const kelompokId = {{ $kelompokDibimbing->first()->id }};
         const input = document.getElementById('cluster-profile-photo-input');
+        
+        // Set up the onchange handler
         input.onchange = function(e) {
             const file = e.target.files[0];
             if (!file) return;

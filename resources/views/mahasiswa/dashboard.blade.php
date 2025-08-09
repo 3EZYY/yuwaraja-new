@@ -186,6 +186,20 @@
                         <p class="text-5xl font-display font-bold text-amber-500 text-glow-gold-subtle">{{ $pengumuman->count() }}</p>
                         <p class="text-xs text-gray-500 mt-auto">Pesan baru diterima</p>
                     </div>
+                    <!-- Button Absen Card -->
+                    <div class="themed-card p-6 flex flex-col justify-center items-center gap-4 animate-on-scroll hover:scale-105 transform transition-all duration-300" style="animation-delay: 400ms;">
+                        <a href="{{ route('mahasiswa.absensi.index') }}" class="w-full flex flex-col items-center justify-center gap-3 group">
+                            <div class="p-4 rounded-full bg-gradient-to-br from-emerald-500 to-teal-600 group-hover:from-emerald-400 group-hover:to-teal-500 transition-all duration-300 shadow-lg group-hover:shadow-emerald-500/25">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                            </div>
+                            <div class="text-center">
+                                <p class="font-display text-lg font-bold text-white group-hover:text-emerald-400 transition-colors">ABSEN</p>
+                                <p class="text-xs text-gray-400 group-hover:text-gray-300 transition-colors">Catat Kehadiran</p>
+                            </div>
+                        </a>
+                    </div>
                 </div>
             </div>
 
@@ -343,7 +357,7 @@
                                                     $timeLeft = $survey->tanggal_selesai->diffInDays(now());
                                                 @endphp
                                                 @if($timeLeft <= 3)
-                                                    <span class="text-xs text-red-400 font-medium">{{ $timeLeft }} hari lagi</span>
+                                                    <!-- <span class="text-xs text-red-400 font-medium">{{ $timeLeft }} hari lagi</span> -->
                                                 @endif
                                             </div>
                                         @endif
