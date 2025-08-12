@@ -17,7 +17,7 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         <!-- Header -->
-        <header class="bg-gray-950/50 backdrop-blur-xl p-6 rounded-2xl mb-8 border border-teal-500/20">
+        <header class="bg-gray-900/50 backdrop-blur-xl p-6 rounded-2xl mb-8 border border-teal-500/20">
             <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
                 <div class="flex items-center gap-6">
                     <!-- Cluster Profile Photo -->
@@ -29,10 +29,11 @@
                             @endphp
                             <img src="{{ $fullPhotoUrl }}" 
                                  alt="Cluster Profile" 
-                                 class="w-20 h-20 rounded-full border-3 border-teal-400/70 object-cover"
+                                 title="Foto Cluster"
+                                 class="w-20 h-20 rounded-full border-3 border-cyan-400/70 object-cover"
                                  onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                             <!-- Fallback when image fails to load -->
-                            <div class="w-20 h-20 rounded-full bg-teal-400/20 flex items-center justify-center text-teal-300 font-bold border-3 border-teal-400/50 cursor-pointer hover:bg-teal-400/30 transition-all duration-300 group" 
+                            <div class="w-20 h-20 rounded-full bg-cyan-400/20 flex items-center justify-center text-cyan-300 font-bold border-3 border-cyan-400/50 cursor-pointer hover:bg-cyan-400/30 transition-all duration-300 group" 
                                  onclick="uploadClusterProfilePhoto()" 
                                  style="display: none;">
                                 <div class="text-center">
@@ -43,7 +44,7 @@
                                 </div>
                             </div>
                             <div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity rounded-full flex items-center justify-center">
-                                <button onclick="uploadClusterProfilePhoto()" class="bg-teal-500 hover:bg-teal-600 text-white p-2 rounded-full transition-colors">
+                                <button onclick="uploadClusterProfilePhoto()" class="bg-cyan-500 hover:bg-cyan-600 text-white p-2 rounded-full transition-colors">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -51,7 +52,7 @@
                                 </button>
                             </div>
                         @else
-                            <div class="w-20 h-20 rounded-full bg-teal-400/20 flex items-center justify-center text-teal-300 font-bold border-3 border-teal-400/50 cursor-pointer hover:bg-teal-400/30 transition-all duration-300 group" onclick="uploadClusterProfilePhoto()">
+                            <div class="w-20 h-20 rounded-full bg-cyan-400/20 flex items-center justify-center text-cyan-300 font-bold border-3 border-cyan-400/50 cursor-pointer hover:bg-cyan-400/30 transition-all duration-300 group" onclick="uploadClusterProfilePhoto()">
                                 <div class="text-center">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 mx-auto group-hover:scale-110 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
@@ -61,33 +62,29 @@
                             </div>
                         @endif
                         
-                        <!-- Debug info (hapus setelah fix) -->
-                        @if(isset($kelompokDibimbing) && $kelompokDibimbing->count() > 0)
-                            <div class="absolute -bottom-20 left-0 text-xs text-gray-400 whitespace-nowrap bg-black/80 p-2 rounded opacity-0 group-hover:opacity-100 transition-opacity z-10">
-                                Photo: {{ $kelompokDibimbing->first()->photo ?? 'null' }}<br>
-                                URL: {{ asset('storage/' . ($kelompokDibimbing->first()->photo ?? '')) }}
-                            </div>
-                        @endif
+
                     </div>
                     
                     <!-- Header Text -->
                     <div>
-                        <h1 class="font-display text-2xl sm:text-3xl font-bold text-teal-300 text-glow-teal flex items-center gap-3">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
-                            </svg>
+                        <h1 class="font-display text-2xl sm:text-3xl font-bold text-white flex items-center gap-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
+  <path fill-rule="evenodd" d="M8.25 6.75a3.75 3.75 0 1 1 7.5 0 3.75 3.75 0 0 1-7.5 0ZM15.75 9.75a3 3 0 1 1 6 0 3 3 0 0 1-6 0ZM2.25 9.75a3 3 0 1 1 6 0 3 3 0 0 1-6 0ZM6.31 15.117A6.745 6.745 0 0 1 12 12a6.745 6.745 0 0 1 6.709 7.498.75.75 0 0 1-.372.568A12.696 12.696 0 0 1 12 21.75c-2.305 0-4.47-.612-6.337-1.684a.75.75 0 0 1-.372-.568 6.787 6.787 0 0 1 1.019-4.38Z" clip-rule="evenodd" />
+  <path d="M5.082 14.254a8.287 8.287 0 0 0-1.308 5.135 9.687 9.687 0 0 1-1.764-.44l-.115-.04a.563.563 0 0 1-.373-.487l-.01-.121a3.75 3.75 0 0 1 3.57-4.047ZM20.226 19.389a8.287 8.287 0 0 0-1.308-5.135 3.75 3.75 0 0 1 3.57 4.047l-.01.121a.563.563 0 0 1-.373.486l-.115.04c-.567.2-1.156.349-1.764.441Z" />
+</svg>
+
                             Jejaring Cluster
                         </h1>
                         @if(isset($kelompokDibimbing) && $kelompokDibimbing->count() > 0)
-                            <p class="text-gray-400 mt-1">Kelompok: <span class="text-amber-300 font-semibold">{{ $kelompokDibimbing->first()->nama_kelompok }}</span></p>
+                            <p class="text-gray-400 mt-1">Kelompok: <span class="text-teal-300 font-semibold">{{ $kelompokDibimbing->first()->nama_kelompok }}</span></p>
                             <p class="text-teal-300 text-sm mt-1 font-medium">Kode: {{ $kelompokDibimbing->first()->code }}</p>
                         @else
-                            <p class="text-gray-400 mt-1">Kelompok: <span class="text-red-300 font-semibold">Belum ada kelompok</span></p>
+                            <p class="text-gray-400 mt-1">Kelompok: <span class="text-red-300 font-semibold">Belum ada Cluster</span></p>
                         @endif
                     </div>
                 </div>
                 
-                <a href="{{ route('spv.dashboard') }}" class="inline-flex items-center gap-2 text-sm text-amber-300 hover:text-amber-200 transition-colors group lg:self-start">
+                <a href="{{ route('spv.dashboard') }}" class="inline-flex items-center gap-2 text-sm text-teal-300 hover:text-amber-400 transition-colors group lg:self-start">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 transform group-hover:-translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M11 17l-5-5m0 0l5-5m-5 5h12" />
                     </svg>
@@ -103,7 +100,7 @@
         <div class="space-y-8">
             <!-- SPV Info Section - Hanya tampilkan jika masih membimbing cluster -->
             @if(isset($kelompokDibimbing) && $kelompokDibimbing->count() > 0)
-            <div class="bg-gray-900/50 p-6 rounded-xl border border-gray-700/50">
+            <div class="bg-gray-800/60 p-6 rounded-xl border border-gray-700/50">
                 <h2 class="font-display text-xl font-bold text-white mb-4 flex items-center gap-3">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -150,7 +147,7 @@
                 @if(isset($kelompokDibimbing) && $kelompokDibimbing->count() > 0)
                     <div class="space-y-6">
                         @foreach($kelompokDibimbing as $kelompok)
-                        <div class="bg-gradient-to-br from-gray-900/80 to-gray-800/60 backdrop-blur-sm p-6 rounded-2xl border border-gray-700/30 hover:border-amber-400/40 hover:shadow-xl hover:shadow-amber-400/10 transition-all duration-300 group">
+                        <div class="bg-gray-800/60 backdrop-blur-sm p-6 rounded-2xl border border-gray-700/30 hover:border-cyan-400/40 hover:shadow-xl hover:shadow-cyan-400/10 transition-all duration-300 group">
                             <!-- Header Cluster -->
                             <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
                                 <div class="flex items-center gap-4">
@@ -174,15 +171,7 @@
                                     </div>
                                 </div>
                                 
-                                <!-- Action Buttons -->
-                                <div class="flex flex-col sm:flex-row gap-3">
-                                    <button onclick="confirmLeaveCluster({{ $kelompok->id }}, '{{ $kelompok->nama_kelompok }}')" class="inline-flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-red-500/10 to-red-600/10 hover:from-red-500/20 hover:to-red-600/20 border border-red-500/30 hover:border-red-400/50 text-red-300 hover:text-red-200 rounded-xl transition-all duration-300 text-sm font-medium group/leave">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 group-hover/leave:scale-110 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                            <path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-                                        </svg>
-                                        Keluar dari Cluster
-                                    </button>
-                                </div>
+                                <!-- Cluster Info Only - No Action Buttons -->
                             </div>
 
                             <!-- Anggota Cluster -->
@@ -191,19 +180,19 @@
                                 @if($kelompok->mahasiswa->count() > 0)
                                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
                                         @foreach($kelompok->mahasiswa as $mahasiswa)
-                                        <div class="bg-gradient-to-br from-gray-800/60 to-gray-700/40 backdrop-blur-sm p-4 rounded-xl border border-gray-600/30 hover:border-amber-400/40 hover:shadow-lg hover:shadow-amber-400/5 transition-all duration-300 transform hover:-translate-y-1 group/member">
+                                        <div class="bg-gray-700/60 backdrop-blur-sm p-4 rounded-xl border border-gray-600/30 hover:border-cyan-400/40 hover:shadow-lg hover:shadow-cyan-400/5 transition-all duration-300 transform hover:-translate-y-1 group/member">
                                             <!-- Avatar -->
                                             <div class="flex flex-col items-center text-center">
                                                 @if($mahasiswa->photo)
                                                     <div class="relative mb-3">
-                                                        <img src="{{ asset('profile-pictures/' . $mahasiswa->photo) }}" alt="{{ $mahasiswa->name }}" class="w-16 h-16 rounded-full border-2 border-amber-400/50 group-hover/member:border-amber-400 transition-colors duration-300 object-cover">
+                                                        <img src="{{ asset('profile-pictures/' . $mahasiswa->photo) }}" alt="{{ $mahasiswa->name }}" class="w-16 h-16 rounded-full border-2 border-cyan-400/50 group-hover/member:border-cyan-400 transition-colors duration-300 object-cover">
                                                         <div class="absolute -bottom-1 -right-1 w-5 h-5 bg-green-500 rounded-full border-2 border-gray-800 flex items-center justify-center">
                                                             <div class="w-2 h-2 bg-white rounded-full"></div>
                                                         </div>
                                                     </div>
                                                 @else
                                                     <div class="relative mb-3">
-                                                        <div class="w-16 h-16 rounded-full bg-gradient-to-br from-amber-400/20 to-amber-600/20 flex items-center justify-center text-amber-300 font-bold text-xl font-display border-2 border-amber-400/50 group-hover/member:border-amber-400 transition-colors duration-300">
+                                                        <div class="w-16 h-16 rounded-full bg-gradient-to-br from-cyan-400/20 to-cyan-600/20 flex items-center justify-center text-cyan-300 font-bold text-xl font-display border-2 border-cyan-400/50 group-hover/member:border-cyan-400 transition-colors duration-300">
                                                             {{ strtoupper(substr($mahasiswa->name, 0, 1)) }}
                                                         </div>
                                                         <div class="absolute -bottom-1 -right-1 w-5 h-5 bg-green-500 rounded-full border-2 border-gray-800 flex items-center justify-center">
@@ -214,7 +203,7 @@
                                                 
                                                 <!-- Info Mahasiswa -->
                                                 <div class="w-full">
-                                                    <h3 class="text-base font-bold text-white mb-1 truncate group-hover/member:text-amber-300 transition-colors duration-300">{{ $mahasiswa->name }}</h3>
+                                                    <h3 class="text-base font-bold text-white mb-1 truncate group-hover/member:text-cyan-300 transition-colors duration-300">{{ $mahasiswa->name }}</h3>
                                                     <p class="text-gray-400 text-xs mb-3 font-mono">{{ $mahasiswa->nim ?? 'NIM belum diisi' }}</p>
                                                     
                                                     <!-- Status Badge -->
@@ -228,7 +217,7 @@
                                                     <!-- Action Buttons -->
                                                     <div class="space-y-2">
                                                         <!-- Detail Button -->
-                                        <button onclick="showMahasiswaModal({{ $mahasiswa->id }})" class="inline-flex items-center justify-center gap-1.5 w-full px-3 py-2 rounded-lg text-xs font-semibold bg-blue-500/15 hover:bg-blue-500/25 text-blue-400 hover:text-blue-300 border border-blue-500/25 hover:border-blue-400/40 transition-all duration-300 group/detail">
+                                        <button onclick="showMahasiswaModal({{ $mahasiswa->id }})" class="inline-flex items-center justify-center gap-1.5 w-full px-3 py-2 rounded-lg text-xs font-semibold bg-cyan-500/15 hover:bg-cyan-500/25 text-cyan-400 hover:text-cyan-300 border border-cyan-500/25 hover:border-cyan-400/40 transition-all duration-300 group/detail">
                                             <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 group-hover/detail:scale-110 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                                 <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                                                 <path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
@@ -236,13 +225,15 @@
                                             Lihat Detail
                                         </button>
                                         
-                                        <!-- Kick Member Button -->
+                                        <!-- Kick Member Button - Only show if not the current SPV -->
+                                        @if($mahasiswa->id !== auth()->user()->id)
                                         <button onclick="confirmKickMember({{ $mahasiswa->id }}, '{{ $mahasiswa->name }}')" class="inline-flex items-center justify-center gap-1.5 w-full px-3 py-2 rounded-lg text-xs font-semibold bg-red-500/15 hover:bg-red-500/25 text-red-400 hover:text-red-300 border border-red-500/25 hover:border-red-400/40 transition-all duration-300 group/kick">
                                             <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 group-hover/kick:scale-110 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                                 <path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
                                             </svg>
                                             Keluarkan
                                         </button>
+                                        @endif
                                                     </div>
                                                 </div>
                                             </div>
@@ -269,8 +260,8 @@
                         <!-- Join Cluster Form -->
                         <div class="bg-gradient-to-br from-gray-900/80 to-gray-800/60 backdrop-blur-sm p-8 rounded-2xl border border-gray-700/30">
                             <div class="text-center mb-6">
-                                <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-teal-400/20 flex items-center justify-center">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-teal-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-cyan-400/20 flex items-center justify-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
                                     </svg>
                                 </div>
@@ -290,7 +281,7 @@
                                                    id="cluster_code" 
                                                    name="cluster_code" 
                                                    placeholder="Masukkan kode cluster (contoh: H4J6Y)"
-                                                   class="w-full px-4 py-3 bg-gray-800/50 border border-gray-600/50 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-teal-400/50 focus:border-teal-400/50 transition-all duration-300 text-center font-mono text-lg tracking-wider uppercase"
+                                                   class="w-full px-4 py-3 bg-gray-800/50 border border-gray-600/50 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-cyan-400/50 focus:border-cyan-400/50 transition-all duration-300 text-center font-mono text-lg tracking-wider uppercase"
                                                    maxlength="5"
                                                    oninput="formatClusterCode(this)"
                                                    required>
@@ -308,7 +299,7 @@
                                     <button type="submit" 
                                             id="joinClusterBtn"
                                             disabled
-                                            class="w-full inline-flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-teal-500 to-teal-600 text-white font-semibold rounded-xl transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:shadow-teal-500/25 opacity-50 cursor-not-allowed">
+                                            class="w-full inline-flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-cyan-500 to-cyan-600 text-white font-semibold rounded-xl transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:shadow-cyan-500/25 opacity-50 cursor-not-allowed">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M11 16l-4-4m0 0l4-4m-4 4h14m-6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
                                         </svg>
@@ -323,14 +314,14 @@
                             <div class="text-6xl mb-4">🏢</div>
                             <h3 class="font-display text-2xl font-bold text-white mb-2">Belum Ada Cluster</h3>
                             <p class="text-gray-400 mb-4">Anda belum diberi tanggung jawab untuk membimbing cluster manapun.</p>
-                            <div class="bg-blue-500/10 border border-blue-500/20 rounded-lg p-4 text-left">
-                                <h4 class="text-blue-400 font-semibold mb-2 flex items-center gap-2">
+                            <div class="bg-cyan-500/10 border border-cyan-500/20 rounded-lg p-4 text-left">
+                                <h4 class="text-cyan-400 font-semibold mb-2 flex items-center gap-2">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                                     </svg>
                                     Cara Bergabung:
                                 </h4>
-                                <ul class="text-blue-300 text-sm space-y-1">
+                                <ul class="text-cyan-300 text-sm space-y-1">
                                     <li>• Dapatkan kode cluster dari admin atau mahasiswa</li>
                                     <li>• Masukkan kode pada form di atas</li>
                                     <li>• Klik "Bergabung dengan Cluster"</li>
@@ -355,8 +346,8 @@
         <!-- Modal Header -->
         <div class="flex items-center justify-between p-6 border-b border-gray-700/50">
             <div class="flex items-center gap-4">
-                <div class="w-12 h-12 rounded-full bg-gradient-to-br from-blue-500/20 to-blue-600/20 flex items-center justify-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <div class="w-12 h-12 rounded-full bg-gradient-to-br from-cyan-500/20 to-cyan-600/20 flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                     </svg>
                 </div>
@@ -377,7 +368,7 @@
             <!-- Loading State -->
             <div id="modalLoading" class="flex items-center justify-center py-12">
                 <div class="text-center">
-                    <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-400 mx-auto mb-4"></div>
+                    <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-cyan-400 mx-auto mb-4"></div>
                     <p class="text-gray-400">Memuat data mahasiswa...</p>
                 </div>
             </div>
@@ -385,14 +376,14 @@
             <!-- Content -->
             <div id="modalContent" class="hidden">
                 <!-- Student Header -->
-                <div class="bg-gradient-to-r from-blue-500/10 to-purple-500/10 rounded-xl p-6 mb-6 border border-blue-500/20">
+                <div class="bg-gradient-to-r from-cyan-500/10 to-sky-500/10 rounded-xl p-6 mb-6 border border-cyan-500/20">
                     <div class="flex items-center gap-6">
-                        <div id="studentPhoto" class="w-20 h-20 rounded-full border-2 border-blue-400/50 overflow-hidden bg-gradient-to-br from-blue-400/20 to-purple-400/20 flex items-center justify-center">
+                        <div id="studentPhoto" class="w-20 h-20 rounded-full border-2 border-cyan-400/50 overflow-hidden bg-gradient-to-br from-cyan-400/20 to-sky-400/20 flex items-center justify-center">
                             <!-- Photo will be inserted here -->
                         </div>
                         <div class="flex-1">
                             <h2 id="studentName" class="text-2xl font-bold text-white mb-2">-</h2>
-                            <p id="studentNim" class="text-blue-400 font-mono text-lg mb-1">-</p>
+                            <p id="studentNim" class="text-cyan-400 font-mono text-lg mb-1">-</p>
                             <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-sm font-semibold bg-green-500/15 text-green-400 border border-green-500/25">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
                                     <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
@@ -666,7 +657,7 @@ function uploadProfilePhoto() {
         `;
         document.body.appendChild(loadingDiv);
         
-        fetch('{{ route("profile.upload-photo") }}', {
+        fetch('{{ route("spv.profile.upload-photo") }}', {
             method: 'POST',
             body: formData,
             headers: {
@@ -821,98 +812,8 @@ document.addEventListener('keydown', function(e) {
     }
 });
 
-// Leave Cluster Functions
-function confirmLeaveCluster(kelompokId, namaKelompok) {
-    // Create confirmation modal
-    const confirmModal = document.createElement('div');
-    confirmModal.id = 'leaveClusterModal';
-    confirmModal.className = 'fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50';
-    confirmModal.innerHTML = `
-        <div class="bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl shadow-2xl border border-red-500/30 w-full max-w-md mx-4">
-            <!-- Modal Header -->
-            <div class="flex items-center gap-4 p-6 border-b border-gray-700/50">
-                <div class="w-12 h-12 rounded-full bg-red-500/20 flex items-center justify-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z" />
-                    </svg>
-                </div>
-                <div>
-                    <h3 class="text-xl font-bold text-white">Konfirmasi Keluar</h3>
-                    <p class="text-gray-400 text-sm">Tindakan ini tidak dapat dibatalkan</p>
-                </div>
-            </div>
-            
-            <!-- Modal Content -->
-            <div class="p-6">
-                <p class="text-gray-300 mb-4">
-                    Apakah Anda yakin ingin keluar dari cluster <strong class="text-red-400">"${namaKelompok}"</strong>?
-                </p>
-                <p class="text-gray-400 text-sm mb-6">
-                    Setelah keluar, Anda tidak akan lagi menjadi supervisor untuk cluster ini dan tidak dapat mengakses data anggotanya.
-                </p>
-                
-                <!-- Action Buttons -->
-                <div class="flex gap-3">
-                    <button onclick="closeLeaveClusterModal()" class="flex-1 px-4 py-2.5 bg-gray-700/50 hover:bg-gray-700 text-gray-300 hover:text-white rounded-xl transition-all duration-300 text-sm font-medium">
-                        Batal
-                    </button>
-                    <button onclick="executeLeaveCluster(${kelompokId})" class="flex-1 px-4 py-2.5 bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white rounded-xl transition-all duration-300 text-sm font-medium">
-                        Ya, Keluar
-                    </button>
-                </div>
-            </div>
-        </div>
-    `;
-    
-    document.body.appendChild(confirmModal);
-}
-
-function closeLeaveClusterModal() {
-    const modal = document.getElementById('leaveClusterModal');
-    if (modal) {
-        document.body.removeChild(modal);
-    }
-}
-
-function executeLeaveCluster(kelompokId) {
-    // Close confirmation modal
-    closeLeaveClusterModal();
-    
-    // Show loading
-    const loadingDiv = document.createElement('div');
-    loadingDiv.innerHTML = `
-        <div class="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-            <div class="bg-gray-800 p-6 rounded-lg text-white text-center">
-                <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-red-400 mx-auto mb-4"></div>
-                <p>Memproses permintaan keluar dari cluster...</p>
-            </div>
-        </div>
-    `;
-    document.body.appendChild(loadingDiv);
-    
-    // Create form and submit
-    const form = document.createElement('form');
-    form.method = 'POST';
-    form.action = '{{ route("spv.cluster.leave") }}';
-    form.style.display = 'none';
-    
-    // Add CSRF token
-    const csrfInput = document.createElement('input');
-    csrfInput.type = 'hidden';
-    csrfInput.name = '_token';
-    csrfInput.value = '{{ csrf_token() }}';
-    form.appendChild(csrfInput);
-    
-    // Add kelompok_id
-    const kelompokInput = document.createElement('input');
-    kelompokInput.type = 'hidden';
-    kelompokInput.name = 'kelompok_id';
-    kelompokInput.value = kelompokId;
-    form.appendChild(kelompokInput);
-    
-    document.body.appendChild(form);
-    form.submit();
-}
+// Leave Cluster Functions - REMOVED
+// Feature removed as per requirements
 
 // Join Cluster Functions
 function formatClusterCode(input) {

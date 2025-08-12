@@ -21,7 +21,7 @@
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <!-- Statistik Overview -->
         <div class="col-span-full">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 <!-- Total Mahasiswa -->
                 <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm">
                     <div class="p-6">
@@ -56,22 +56,41 @@
                     </div>
                 </div>
 
-                <!-- Total Penugasan -->
+                <!-- Total SPV -->
                 <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm">
                     <div class="p-6">
                         <div class="flex items-center gap-4">
-                            <div class="p-2 bg-warning-100 rounded-lg">
-                                <x-heroicon-o-clipboard-document-list class="w-6 h-6 text-warning-700"/>
+                            <div class="p-2 bg-blue-100 rounded-lg">
+                                <x-heroicon-o-user-circle class="w-6 h-6 text-blue-700"/>
                             </div>
                             <div>
-                                <p class="text-sm font-medium text-gray-600 dark:text-gray-400">Total Penugasan</p>
+                                <p class="text-sm font-medium text-gray-600 dark:text-gray-400">Total SPV</p>
                                 <h3 class="text-2xl font-semibold text-gray-900 dark:text-white">
-                                    {{ \App\Models\Tugas::count() }}
+                                    {{ \App\Models\User::where('role', 'spv')->count() }}
                                 </h3>
                             </div>
                         </div>
                     </div>
                 </div>
+
+                <!-- Total Admin -->
+                <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm">
+                    <div class="p-6">
+                        <div class="flex items-center gap-4">
+                            <div class="p-2 bg-red-100 rounded-lg">
+                                <x-heroicon-o-shield-check class="w-6 h-6 text-red-700"/>
+                            </div>
+                            <div>
+                                <p class="text-sm font-medium text-gray-600 dark:text-gray-400">Total Admin</p>
+                                <h3 class="text-2xl font-semibold text-gray-900 dark:text-white">
+                                    {{ \App\Models\User::where('role', 'admin')->count() }}
+                                </h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
             </div>
         </div>
 
@@ -79,7 +98,7 @@
         <div class="lg:col-span-2">
             <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm">
                 <div class="p-6">
-                    <h2 class="text-lg font-medium text-gray-900 dark:text-white mb-4">Aktivitas Terbaru</h2>
+                    <h2 class="text-lg font-medium text-gray-900 dark:text-white mb-4">Pengumuman Terbaru</h2>
                     <div class="space-y-4">
                         @foreach(\App\Models\Pengumuman::latest()->take(5)->get() as $pengumuman)
                         <div class="flex items-start gap-4">

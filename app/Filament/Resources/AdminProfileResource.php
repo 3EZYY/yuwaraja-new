@@ -98,8 +98,8 @@ class AdminProfileResource extends Resource
                     ->label('NIM')
                     ->searchable(),
                     
-                TextColumn::make('jurusan')
-                    ->label('Jurusan')
+                TextColumn::make('program_studi')
+                    ->label('Program Studi')
                     ->searchable(),
                     
                 TextColumn::make('role')

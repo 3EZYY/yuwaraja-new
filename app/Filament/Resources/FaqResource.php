@@ -20,12 +20,14 @@ class FaqResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-question-mark-circle';
 
     protected static ?string $navigationLabel = 'FAQ Management';
+    
+    protected static ?string $navigationGroup = 'FAQ';
 
     protected static ?string $modelLabel = 'FAQ';
 
     protected static ?string $pluralModelLabel = 'FAQs';
 
-    protected static ?int $navigationSort = 6;
+    protected static ?int $navigationSort = 1;
 
     public static function form(Form $form): Form
     {

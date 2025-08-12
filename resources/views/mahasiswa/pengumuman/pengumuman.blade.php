@@ -1,48 +1,119 @@
 @extends('layouts.app')
 
 @section('content')
-{{-- CSS Kustom Minimal untuk Font, Animasi Background, dan Paginasi --}}
+{{-- CSS Kustom dengan Glass Card Effect seperti SPV --}}
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600&family=Poppins:wght@600;700;900&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@600;700;900&display=swap');
 
+    :root {
+        --bg-main: #0a0a0a;
+        --surface-card: #111827;
+        --surface-elevated: rgba(30, 41, 59, 0.9);
+        --border-primary: rgba(20, 184, 166, 0.25);
+        --border-secondary: rgba(148, 163, 184, 0.2);
+        --accent-cyan: #14b8a6;
+        --accent-blue: #f59e0b;
+        --accent-red: #ef4444;
+        --text-primary: #d1d5db;
+        --text-secondary: #6b7280;
+        --text-muted: #9ca3af;
+    }
+
+    body {
+        background-color: var(--bg-main) !important;
+        font-family: 'Inter', sans-serif;
+        color: var(--text-primary);
+        min-height: 100vh;
+    }
+    
     .font-display {
         font-family: 'Poppins', sans-serif;
     }
 
-    .font-body {
-        font-family: 'Kanit', sans-serif;
+    .glass-card {
+        background: var(--surface-card);
+        backdrop-filter: blur(20px);
+        border: 1px solid var(--border-primary);
+        border-radius: 1rem;
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    .glass-card:hover {
+        border-color: var(--accent-blue);
+        box-shadow: 0 25px 50px -12px rgba(245, 158, 11, 0.25);
+        transform: translateY(-2px);
     }
 
-    /* Efek Glow untuk Teks */
-    .text-glow-cyan {
-        text-shadow: 0 0 15px theme('colors.cyan.400 / 0.6');
+    .glass-elevated {
+        background: var(--surface-elevated);
+        backdrop-filter: blur(24px);
+        border: 1px solid var(--border-secondary);
+        border-radius: 0.75rem;
     }
 
-    .text-glow-yellow {
-        text-shadow: 0 0 15px theme('colors.yellow.400 / 0.6');
+    .animate-fade-in {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    .animate-fade-in.visible {
+        opacity: 1;
+        transform: translateY(0);
     }
 
-    /* Animasi Background */
-    @keyframes scroll-grid {
-        from {
-            background-position: 0 0;
-        }
-
-        to {
-            background-position: -500px -500px;
-        }
+    .type-badge {
+        padding: 0.5rem 1rem;
+        border-radius: 9999px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
     }
 
-    .animated-grid-background {
-        position: absolute;
-        inset: 0;
-        width: 100%;
-        height: 100%;
-        z-index: 0;
-        background-image: linear-gradient(theme('colors.cyan.400 / 0.1') 1px, transparent 1px),
-            linear-gradient(90deg, theme('colors.cyan.400 / 0.1') 1px, transparent 1px);
-        background-size: 3rem 3rem;
-        animation: scroll-grid 45s linear infinite;
+    .type-penting {
+        background: rgba(239, 68, 68, 0.15);
+        color: #fca5a5;
+        border: 1px solid rgba(239, 68, 68, 0.3);
+    }
+
+    .type-umum {
+        background: rgba(34, 211, 238, 0.15);
+        color: #67e8f9;
+        border: 1px solid rgba(34, 211, 238, 0.3);
+    }
+
+    .btn-primary {
+        background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
+        color: #0f172a;
+        font-weight: 600;
+        padding: 0.875rem 2rem;
+        border-radius: 0.75rem;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.75rem;
+        box-shadow: 0 10px 25px -5px rgba(20, 184, 166, 0.3);
+    }
+    
+    .btn-primary:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 20px 40px -5px rgba(20, 184, 166, 0.4);
+        color: #0f172a;
+        text-decoration: none;
+    }
+
+    .meta-info {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: var(--text-muted);
+        font-size: 0.875rem;
     }
 
     /* Styling Paginasi Laravel */
@@ -62,153 +133,202 @@
         border-radius: 0.5rem;
         font-size: 0.875rem;
         font-weight: 600;
-        background-color: theme('colors.gray.800 / 0.5');
-        color: theme('colors.cyan.300');
-        border: 1px solid theme('colors.gray.700');
+        background-color: rgba(15, 23, 42, 0.8);
+        color: var(--accent-cyan);
+        border: 1px solid var(--border-secondary);
         transition: all 0.2s ease-in-out;
     }
 
     .pagination li a:hover {
-        background-color: theme('colors.cyan.500 / 0.2');
-        border-color: theme('colors.cyan.400');
-        color: theme('colors.white');
+        background-color: rgba(20, 184, 166, 0.2);
+        border-color: var(--accent-cyan);
+        color: white;
     }
 
     .pagination li.active span {
-        background-color: theme('colors.cyan.500');
-        border-color: theme('colors.cyan.400');
-        color: theme('colors.black');
+        background-color: var(--accent-cyan);
+        border-color: var(--accent-cyan);
+        color: #0f172a;
         cursor: default;
     }
 
     .pagination li.disabled span {
-        background-color: theme('colors.gray.800 / 0.2');
-        color: theme('colors.gray.600');
+        background-color: rgba(15, 23, 42, 0.2);
+        color: var(--text-secondary);
         cursor: not-allowed;
+    }
+
+    @media (max-width: 768px) {
+        .glass-card {
+            margin: 1rem;
+            border-radius: 0.75rem;
+        }
+        
+        .btn-primary {
+            padding: 0.75rem 1.5rem;
+            font-size: 0.875rem;
+        }
     }
 </style>
 
-<div class="font-body bg-gray-900 min-h-screen py-12 sm:py-16 relative overflow-hidden">
-    <div class="animated-grid-background"></div>
+<div class="min-h-screen py-8 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-5xl mx-auto space-y-8">
+        
+        <!-- Header -->
+        <div class="glass-card p-6 md:p-8 animate-fade-in">
+            <div class="flex items-center gap-4">
+                <span class="text-4xl">📢</span>
+                <div>
+                    <h1 class="font-display text-3xl md:text-4xl font-bold text-white mb-2">Pusat Informasi</h1>
+                    <p class="text-gray-400 text-sm md:text-base">Akses pengumuman & pembaruan penting untuk seluruh mahasiswa</p>
+                </div>
+            </div>
+        </div>
 
-    <div class="max-w-6xl mx-auto sm:px-6 lg:px-8 relative z-10">
-        <!-- Header Utama -->
-        <header class="text-center mb-12">
-            <h1 class="font-display text-4xl sm:text-5xl font-bold text-white mb-2" style="text-shadow: 5px 3px 30px #4bfbea;">
-                Pusat Informasi
-            </h1>
-            <p class="text-cyan-200/60 text-base sm:text-lg">Akses pengumuman & pembaruan penting</p>
-            <div class="w-24 h-1 bg-gradient-to-r from-cyan-400 to-yellow-400 mx-auto mt-3 rounded-full"></div>
-        </header>
-
-        <!-- Kontainer Pengumuman -->
-        <main class="bg-gray-950/70 backdrop-blur-xl shadow-2xl rounded-2xl mb-8 border border-cyan-500/20">
-            <div class="p-6 sm:p-8 md:p-10">
-                <!-- Header Internal -->
-                <div class="mb-8 border-l-4 border-cyan-400 pl-4">
-                    <h2 class="font-display text-2xl font-bold text-white flex items-center gap-3">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-red-400" viewBox="0 0 20 20" fill="currentColor">
-                            <path d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z" />
-                        </svg>
-                        PENGUMUMAN
-                    </h2>
-                    <p class="text-gray-400 text-sm">Informasi penting untuk seluruh mahasiswa.</p>
+        <!-- Daftar Pengumuman -->
+        <div class="space-y-6">
+            @forelse($pengumuman as $item)
+            <div class="glass-card p-6 md:p-8 animate-fade-in">
+                <!-- Type Badge -->
+                <div class="mb-4">
+                    @if($item->tipe === 'penting')
+                        <span class="type-badge type-penting">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-2.694-.833-3.464 0L3.35 16.5c-.77.833.192 2.5 1.732 2.5z" />
+                            </svg>
+                            Penting
+                        </span>
+                    @else
+                        <span class="type-badge type-umum">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            Umum
+                        </span>
+                    @endif
                 </div>
 
-                <!-- Daftar Pengumuman -->
-                <div class="space-y-6">
-                    @forelse($pengumuman as $item)
-                    <div class="bg-gradient-to-br from-gray-900 to-black rounded-xl border-l-4 
-                        @if(isset($item->prioritas))
-                            @if($item->prioritas === 'tinggi') border-yellow-500 
-                            @elseif($item->prioritas === 'sedang') border-cyan-600 
-                            @else border-cyan-300 @endif
-                        @else border-cyan-400 @endif
-                        p-6 transition-all duration-300 hover:shadow-xl hover:shadow-cyan-500/10 hover:border-cyan-500 transform hover:-translate-y-1">
-                        
-                        <div class="flex flex-col md:flex-row items-start justify-between gap-6">
-                            <div class="flex-1">
-                                <div class="mb-3">
-                                    <h3 class="text-xl font-bold font-display text-white mb-2">{{ $item->judul }}</h3>
-                                    @if(isset($item->prioritas))
-                                        @if($item->prioritas === 'tinggi')
-                                            <span class="inline-flex items-center gap-2 px-3 py-1 bg-yellow-500/10 text-yellow-500 text-xs font-semibold rounded-full border border-yellow-500/20">
-                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.21 3.03-1.742 3.03H4.42c-1.532 0-2.492-1.696-1.742-3.03l5.58-9.92zM10 13a1 1 0 110-2 1 1 0 010 2zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd" /></svg>
-                                                PRIORITAS TINGGI
-                                            </span>
-                                        @elseif($item->prioritas === 'sedang')
-                                            <span class="inline-flex items-center gap-2 px-3 py-1 bg-cyan-400/10 text-cyan-400 text-xs font-semibold rounded-full border border-cyan-400/20">
-                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" /></svg>
-                                                PRIORITAS SEDANG
-                                            </span>
-                                        @else
-                                            <span class="inline-flex items-center gap-2 px-3 py-1 bg-gray-500/10 text-gray-400 text-xs font-semibold rounded-full border border-gray-500/20">
-                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" /></svg>
-                                                PRIORITAS RENDAH
-                                            </span>
-                                        @endif
-                                    @else
-                                        <span class="inline-flex items-center gap-2 px-3 py-1 bg-cyan-500/10 text-cyan-300 text-xs font-semibold rounded-full border border-cyan-500/20">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                                <path stroke-linecap="round" stroke-linejoin="round" d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z" />
-                                            </svg>
-                                            PENGUMUMAN
-                                        </span>
-                                    @endif
-                                </div>
-                                
-                                <p class="text-gray-300 mb-5 leading-relaxed">
-                                    {{ Str::limit(strip_tags($item->isi ?? $item->konten ?? 'Tidak ada konten tersedia'), 180) }}
-                                </p>
-                                
-                                {{-- Metadata dengan ikon dan layout yang rapi --}}
-                                <div class="flex justify-between flex-col sm:flex-row sm:items-center gap-4 sm:gap-6 text-sm text-gray-400 border-t border-gray-700 pt-4">
-                                  <div class="flex items-center gap-4">
-                                      <div class="flex items-center gap-2">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd" /></svg>
-                                        <span>{{ ($item->published_at ?? $item->created_at)->format('d M Y, H:i') }}</span>
-                                    </div>
-                                    <div class="flex items-center gap-2">
-                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" /></svg>
-                                        <span>{{ $item->penulis ?? 'Admin' }}</span>
-                                    </div>
-                                  </div>
-                                    {{-- Tombol Aksi Utama dengan warna Cyan --}}
-                                    <div class="flex-shrink-0 w-full md:w-auto">
-                                        <a href="{{ route('mahasiswa.pengumuman.detail', $item->id) }}" 
-                                           class="w-full inline-flex items-center justify-center gap-2 bg-cyan-500 text-black font-display font-bold px-5 py-2.5 rounded-lg transition-all duration-300 hover:bg-cyan-400 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-cyan-500/50">
-                                            <span>Lihat Detail</span>
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" /></svg>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            
+                <!-- Title and Content -->
+                <div class="border-b border-slate-700/50 pb-6 mb-6">
+                    <h2 class="font-display text-2xl md:text-3xl font-bold text-white mb-4 leading-tight">{{ $item->judul }}</h2>
+                    
+                    <div class="flex flex-col sm:flex-row gap-4 sm:gap-8 mb-4">
+                        <div class="meta-info">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                            </svg>
+                            <span>{{ ($item->published_at ?? $item->created_at)->format('d F Y, H:i') }}</span>
+                        </div>
+                        <div class="meta-info">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                            </svg>
+                            <span>Admin YUWARAJA XVII</span>
                         </div>
                     </div>
-                    @empty
-                    <div class="bg-gray-900/50 border-2 border-dashed border-gray-700 rounded-xl p-12 text-center flex flex-col items-center">
-                         <div class="text-gray-700 mb-4">
-                             <svg xmlns="http://www.w3.org/2000/svg" class="h-20 w-20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-                                 <path stroke-linecap="round" stroke-linejoin="round" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 12h6m-1-5h.01" />
-                             </svg>
-                         </div>
-                        <h3 class="text-xl font-bold font-display text-white mb-2">Belum Ada Pengumuman</h3>
-                        <p class="text-gray-500 max-w-xs">Saat informasi baru tersedia, semua akan ditampilkan lengkap di halaman ini.</p>
-                    </div>
-                    @endforelse
+                    
+                    <p class="text-white leading-relaxed text-lg">
+                        {{ Str::limit(strip_tags($item->isi ?? $item->konten ?? 'Tidak ada konten tersedia'), 200) }}
+                    </p>
+                </div>
 
-                    <!-- Pagination Kustom -->
-                    @if($pengumuman->hasPages())
-                    <div class="mt-10 flex justify-center">
-                        <div class="bg-gray-900 border border-gray-700 rounded-lg p-2">
-                            {{ $pengumuman->links() }}
-                        </div>
-                    </div>
+                <!-- Action Section -->
+                <div class="flex justify-end">
+                    <a href="{{ route('mahasiswa.pengumuman.detail', $item->id) }}" class="btn-primary">
+                        <span>Lihat Detail</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+            @empty
+            <div class="glass-card p-12 text-center animate-fade-in">
+                <div class="flex flex-col items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-slate-500 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                    </svg>
+                    <h3 class="text-xl font-bold text-white mb-2">Belum Ada Pengumuman</h3>
+                    <p class="text-gray-400">Pengumuman akan muncul di sini ketika tersedia.</p>
+                </div>
+            </div>
+            @endforelse
+        </div>
+
+        <!-- Pagination -->
+        @if($pengumuman->hasPages())
+        <div class="glass-card p-6 animate-fade-in">
+            <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div class="text-sm text-gray-400">
+                    Menampilkan {{ $pengumuman->firstItem() ?? 0 }} - {{ $pengumuman->lastItem() ?? 0 }} dari {{ $pengumuman->total() }} pengumuman
+                </div>
+                
+                <div class="flex items-center space-x-2">
+                    {{-- Previous Page Link --}}
+                    @if ($pengumuman->onFirstPage())
+                        <span class="px-3 py-2 text-sm font-medium text-gray-500 bg-gray-800/50 border border-gray-700/50 rounded-lg cursor-not-allowed">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                            </svg>
+                        </span>
+                    @else
+                        <a href="{{ $pengumuman->previousPageUrl() }}" class="px-3 py-2 text-sm font-medium text-white bg-gray-800/50 border border-gray-700/50 rounded-lg hover:bg-teal-600/20 hover:border-teal-500/50 transition-all duration-300">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                            </svg>
+                        </a>
+                    @endif
+
+                    {{-- Pagination Elements --}}
+                    @foreach ($pengumuman->getUrlRange(1, $pengumuman->lastPage()) as $page => $url)
+                        @if ($page == $pengumuman->currentPage())
+                            <span class="px-3 py-2 text-sm font-medium text-gray-900 bg-teal-400 border border-teal-400 rounded-lg font-bold">
+                                {{ $page }}
+                            </span>
+                        @else
+                            <a href="{{ $url }}" class="px-3 py-2 text-sm font-medium text-white bg-gray-800/50 border border-gray-700/50 rounded-lg hover:bg-teal-600/20 hover:border-teal-500/50 transition-all duration-300">
+                                {{ $page }}
+                            </a>
+                        @endif
+                    @endforeach
+
+                    {{-- Next Page Link --}}
+                    @if ($pengumuman->hasMorePages())
+                        <a href="{{ $pengumuman->nextPageUrl() }}" class="px-3 py-2 text-sm font-medium text-white bg-gray-800/50 border border-gray-700/50 rounded-lg hover:bg-teal-600/20 hover:border-teal-500/50 transition-all duration-300">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                            </svg>
+                        </a>
+                    @else
+                        <span class="px-3 py-2 text-sm font-medium text-gray-500 bg-gray-800/50 border border-gray-700/50 rounded-lg cursor-not-allowed">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                            </svg>
+                        </span>
                     @endif
                 </div>
             </div>
-        </main>
+        </div>
+        @endif
     </div>
 </div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Intersection Observer for animations
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { 
+            threshold: 0.1,
+            rootMargin: '50px'
+        });
+        
+        const elements = document.querySelectorAll('.animate-fade-in');
+        elements.forEach(el => observer.observe(el));
+    });
+</script>
 @endsection

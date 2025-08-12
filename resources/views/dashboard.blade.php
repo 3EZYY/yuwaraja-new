@@ -12,7 +12,7 @@
             <div class="bg-gradient-to-r from-blue-600 to-purple-600 overflow-hidden shadow-lg sm:rounded-lg">
                 <div class="p-6 text-white">
                     <h3 class="text-2xl font-bold mb-2">Selamat Datang, {{ $user->name }}! 👋</h3>
-                    <p class="text-blue-100">Kelompok: {{ $user->kelompok->nama_kelompok ?? 'Belum ada kelompok' }}</p>
+                    <p class="text-blue-100">Kelompok: {{ $user->kelompok->nama_kelompok ?? 'Belum ada Cluster' }}</p>
                     <p class="text-blue-100">Jurusan: {{ $user->jurusan ?? 'Belum diisi' }}</p>
                 </div>
             </div>

@@ -19,11 +19,20 @@ class UserResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-users';
 
-    protected static ?string $navigationLabel = 'Manajemen User';
+    protected static ?string $navigationLabel = 'User Account';
+    
+    protected static ?string $navigationGroup = 'User Management';
+    
+    protected static ?int $navigationSort = 1;
 
     protected static ?string $modelLabel = 'User';
 
     protected static ?string $pluralModelLabel = 'Users';
+
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()->with(['kelompok', 'kelompokDibimbing']);
+    }
 
     public static function form(Form $form): Form
     {
@@ -266,10 +275,23 @@ class UserResource extends Resource
                         'mahasiswa' => 'success',
                     }),
 
-                Tables\Columns\TextColumn::make('kelompok.nama_kelompok')
+                Tables\Columns\TextColumn::make('cluster_info')
                     ->label('Cluster')
-                    ->sortable()
-                    ->placeholder('Belum ada kelompok'),
+                    ->sortable(false)
+                    ->getStateUsing(function ($record) {
+                        if ($record->role === 'spv') {
+                            // Untuk SPV, tampilkan kelompok yang dibimbing
+                            $kelompokDibimbing = $record->kelompokDibimbing;
+                            if ($kelompokDibimbing->count() > 0) {
+                                return $kelompokDibimbing->pluck('nama_kelompok')->join(', ');
+                            }
+                            return 'Belum ada Cluster';
+                        } else {
+                            // Untuk mahasiswa dan admin, tampilkan kelompok tempat mereka berada
+                            return $record->kelompok?->nama_kelompok ?? 'Belum ada Cluster';
+                        }
+                    })
+                    ->searchable(false),
 
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('Dibuat')
@@ -302,6 +324,20 @@ class UserResource extends Resource
                         'D3 Teknologi Informasi' => 'D3 Teknologi Informasi',
                         'Sistem Informasi' => 'Sistem Informasi',
                         'Teknik Informatika' => 'Teknik Informatika',
+                    ]),
+
+                Tables\Filters\SelectFilter::make('kelompok_id')
+                    ->label('Filter Cluster')
+                    ->relationship('kelompok', 'nama_kelompok')
+                    ->searchable()
+                    ->preload(),
+
+                Tables\Filters\SelectFilter::make('angkatan')
+                    ->label('Filter Angkatan')
+                    ->options([
+                        '2023' => '2023',
+                        '2024' => '2024',
+                        '2025' => '2025',
                     ]),
             ])
             ->actions([

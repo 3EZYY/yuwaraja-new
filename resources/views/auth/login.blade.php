@@ -126,5 +126,20 @@
                 eyeClosed.classList.add('hidden');
             }
         }
+
+        // Auto-submit form when Enter is pressed
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.querySelector('form');
+            const inputs = form.querySelectorAll('input[type="text"], input[type="password"]');
+            
+            inputs.forEach(input => {
+                input.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        form.submit();
+                    }
+                });
+            });
+        });
     </script>
 </x-guest-layout>

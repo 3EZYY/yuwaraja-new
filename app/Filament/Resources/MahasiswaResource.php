@@ -250,8 +250,8 @@ class MahasiswaResource extends Resource
                 Tables\Columns\TextColumn::make('nim')
                     ->label('NIM')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('jurusan')
-                    ->label('Jurusan')
+                Tables\Columns\TextColumn::make('program_studi')
+                    ->label('Program Studi')
                     ->searchable()
                     ->toggleable(),
                 Tables\Columns\TextColumn::make('kelompok.nama_kelompok')

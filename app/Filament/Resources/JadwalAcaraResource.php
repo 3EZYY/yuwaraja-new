@@ -21,6 +21,8 @@ class JadwalAcaraResource extends Resource
 
     protected static ?string $navigationGroup = 'Konten PPKMB';
 
+    protected static ?string $slug = 'jadwal-acara';
+
     public static function form(Form $form): Form
     {
         return $form
@@ -94,7 +96,7 @@ class JadwalAcaraResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListJadwalAcaras::route('/'),
+            'index' => Pages\ListJadwalAcara::route('/'),
             'create' => Pages\CreateJadwalAcara::route('/create'),
             'edit' => Pages\EditJadwalAcara::route('/{record}/edit'),
         ];

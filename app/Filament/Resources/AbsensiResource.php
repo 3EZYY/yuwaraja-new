@@ -20,11 +20,17 @@ class AbsensiResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-clock';
     
-    protected static ?string $navigationLabel = 'Manajemen Absensi';
+    protected static ?string $navigationLabel = 'Absensi Mahasiswa';
+    
+    protected static ?string $navigationGroup = 'Manajemen Absensi';
+    
+    protected static ?int $navigationSort = 1;
     
     protected static ?string $modelLabel = 'Absensi';
     
     protected static ?string $pluralModelLabel = 'Absensi';
+    
+    protected static ?string $slug = 'absensi';
 
     public static function form(Form $form): Form
     {
@@ -177,7 +183,7 @@ class AbsensiResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListAbsensis::route('/'),
+            'index' => Pages\ListAbsensi::route('/'),
             'create' => Pages\CreateAbsensi::route('/create'),
             'view' => Pages\ViewAbsensi::route('/{record}'),
             'edit' => Pages\EditAbsensi::route('/{record}/edit'),

@@ -14,19 +14,29 @@ class MahasiswaAbsensiController extends Controller
     {
         $user = Auth::user();
         
-        // Ambil absensi yang aktif dan masih dalam rentang waktu
+        $now = now();
+        $yesterday = $now->copy()->subDay();
+        
+        // Tampilkan semua absensi aktif (termasuk yang sudah terlewat untuk menampilkan pesan)
         $absensiAktif = Absensi::where('status', 'aktif')
-            ->where('tanggal', '>=', now()->toDateString())
+            ->where(function($query) use ($now, $yesterday) {
+                // Absensi untuk hari mendatang
+                $query->where('tanggal', '>', $now->toDateString())
+                      // Atau absensi hari ini (baik yang masih berlangsung maupun yang sudah berakhir)
+                      ->orWhere('tanggal', '=', $now->toDateString())
+                      // Atau absensi kemarin yang baru saja terlewat (untuk menampilkan pesan)
+                      ->orWhere('tanggal', '=', $yesterday->toDateString());
+            })
             ->orderBy('tanggal', 'asc')
             ->orderBy('jam_mulai', 'asc')
             ->get();
-
+    
         // Ambil riwayat absensi mahasiswa dengan pagination
         $riwayatAbsensi = AbsensiMahasiswa::with(['absensi', 'approvedBy'])
             ->where('user_id', $user->id)
             ->orderBy('created_at', 'desc')
             ->paginate(10);
-
+    
         return view('mahasiswa.absensi.index', compact('absensiAktif', 'riwayatAbsensi'));
     }
 
@@ -47,24 +57,26 @@ class MahasiswaAbsensiController extends Controller
         $tanggalString = $tanggalAbsensi->format('Y-m-d');
         $jamMulai = Carbon::parse($tanggalString . ' ' . $absensi->jam_mulai);
         $jamSelesai = Carbon::parse($tanggalString . ' ' . $absensi->jam_selesai);
-
+    
+        // Validasi tanggal harus sama persis
         if ($now->toDateString() !== $tanggalAbsensi->toDateString()) {
             return redirect()->back()->with('error', 'Absensi hanya bisa dilakukan pada tanggal yang ditentukan.');
         }
-
+    
+        // Validasi waktu harus dalam rentang
         if ($now < $jamMulai || $now > $jamSelesai) {
             return redirect()->back()->with('error', 'Absensi hanya bisa dilakukan dalam rentang waktu yang ditentukan.');
         }
-
+    
         // Cek apakah sudah pernah absen
         $existingAbsensi = AbsensiMahasiswa::where('absensi_id', $absensi->id)
             ->where('user_id', $user->id)
             ->first();
-
+    
         if ($existingAbsensi) {
             return redirect()->back()->with('error', 'Anda sudah melakukan absensi untuk kegiatan ini.');
         }
-
+    
         // Buat request absensi
         AbsensiMahasiswa::create([
             'absensi_id' => $absensi->id,
@@ -73,7 +85,7 @@ class MahasiswaAbsensiController extends Controller
             'waktu_absen' => now(),
             'keterangan' => $request->keterangan
         ]);
-
+    
         return redirect()->back()->with('success', 'absensi kamu masuk ke Kakak SPV yaaa ^^');
     }
 

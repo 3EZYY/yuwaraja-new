@@ -7,6 +7,7 @@ use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Filament\Tables\Actions\CreateAction;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
@@ -35,21 +36,9 @@ class MembersRelationManager extends RelationManager
                     ->label('NIM')
                     ->maxLength(20),
                     
-                Forms\Components\TextInput::make('jurusan')
-                    ->label('Jurusan')
-                    ->maxLength(100),
-                    
-                Forms\Components\FileUpload::make('photo')
-                    ->label('Foto Profile')
-                    ->image()
-                    ->directory('profile-pictures')
-                    ->imageEditor()
-                    ->imageEditorAspectRatios([
-                        '1:1',
-                    ])
-                    ->maxSize(2048)
-                    ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/jpg'])
-                    ->helperText('Upload foto profile (maksimal 2MB, format: JPG, PNG)')
+                Forms\Components\TextInput::make('program_studi')
+                    ->label('Program Studi')
+                    ->maxLength(100)
             ]);
     }
 
@@ -58,12 +47,6 @@ class MembersRelationManager extends RelationManager
         return $table
             ->recordTitleAttribute('name')
             ->columns([
-                Tables\Columns\ImageColumn::make('photo')
-                    ->label('Foto Profile')
-                    ->circular()
-                    ->size(60)
-                    ->defaultImageUrl(url('/images/default-avatar.svg')),
-                    
                 Tables\Columns\TextColumn::make('name')
                     ->label('Nama Lengkap')
                     ->searchable()
@@ -73,8 +56,8 @@ class MembersRelationManager extends RelationManager
                     ->label('NIM')
                     ->searchable(),
                     
-                Tables\Columns\TextColumn::make('jurusan')
-                    ->label('Jurusan')
+                Tables\Columns\TextColumn::make('program_studi')
+                    ->label('Program Studi')
                     ->searchable(),
                     
                 Tables\Columns\TextColumn::make('email')
@@ -99,24 +82,42 @@ class MembersRelationManager extends RelationManager
                     ]),
             ])
             ->headerActions([
-                Tables\Actions\AttachAction::make()
-                    ->label('Tambah Anggota')
-                    ->preloadRecordSelect()
-                    ->recordSelectSearchColumns(['name', 'nim', 'email'])
-                    ->form(fn (Tables\Actions\AttachAction $action): array => [
-                        $action->getRecordSelect(),
-                    ]),
+                Tables\Actions\CreateAction::make()
+                    ->label('Tambah Anggota Baru')
+                    ->mutateFormDataUsing(function (array $data): array {
+                        $data['role'] = 'mahasiswa';
+                        $data['kelompok_id'] = $this->getOwnerRecord()->getKey();
+                        return $data;
+                    }),
             ])
             ->actions([
                 Tables\Actions\EditAction::make()
                     ->label('Edit'),
-                Tables\Actions\DetachAction::make()
-                    ->label('Hapus dari Kelompok'),
+                Tables\Actions\Action::make('remove_from_group')
+                    ->label('Hapus dari Kelompok')
+                    ->icon('heroicon-o-user-minus')
+                    ->color('danger')
+                    ->requiresConfirmation()
+                    ->modalHeading('Hapus dari Kelompok')
+                    ->modalDescription('Apakah Anda yakin ingin menghapus anggota ini dari kelompok?')
+                    ->action(function ($record) {
+                        $record->update(['kelompok_id' => null]);
+                    }),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DetachBulkAction::make()
-                        ->label('Hapus dari Kelompok'),
+                    Tables\Actions\BulkAction::make('remove_from_group_bulk')
+                        ->label('Hapus dari Kelompok')
+                        ->icon('heroicon-o-user-minus')
+                        ->color('danger')
+                        ->requiresConfirmation()
+                        ->modalHeading('Hapus dari Kelompok')
+                        ->modalDescription('Apakah Anda yakin ingin menghapus anggota yang dipilih dari kelompok?')
+                        ->action(function ($records) {
+                            foreach ($records as $record) {
+                                $record->update(['kelompok_id' => null]);
+                            }
+                        }),
                 ]),
             ])
             ->modifyQueryUsing(function (Builder $query) {

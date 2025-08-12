@@ -87,9 +87,11 @@
             {{-- Menu untuk mahasiswa yang belum bergabung dengan kelompok --}}
             <x-sidebar.nav-link :href="route('mahasiswa.join-kelompok')" :active="request()->routeIs('mahasiswa.join-kelompok')">
                 <x-slot name="icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
-                        <path d="M8.257 3.099c.366-.446.957-.532 1.403-.166l.094.083 7 7a1 1 0 01.083 1.32l-.083.094-7 7a1 1 0 01-1.497-1.32l.083-.094L13.584 11H3a1 1 0 01-.993-.883L2 10a1 1 0 01.883-.993L3 9h10.584l-5.327-5.293a1 1 0 01-.083-1.32l.083-.094z" />
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
+                        <path fill-rule="evenodd" d="M8.25 6.75a3.75 3.75 0 1 1 7.5 0 3.75 3.75 0 0 1-7.5 0ZM15.75 9.75a3 3 0 1 1 6 0 3 3 0 0 1-6 0ZM2.25 9.75a3 3 0 1 1 6 0 3 3 0 0 1-6 0ZM6.31 15.117A6.745 6.745 0 0 1 12 12a6.745 6.745 0 0 1 6.709 7.498.75.75 0 0 1-.372.568A12.696 12.696 0 0 1 12 21.75c-2.305 0-4.47-.612-6.337-1.684a.75.75 0 0 1-.372-.568 6.787 6.787 0 0 1 1.019-4.38Z" clip-rule="evenodd" />
+                        <path d="M5.082 14.254a8.287 8.287 0 0 0-1.308 5.135 9.687 9.687 0 0 1-1.764-.44l-.115-.04a.563.563 0 0 1-.373-.487l-.01-.121a3.75 3.75 0 0 1 3.57-4.047ZM20.226 19.389a8.287 8.287 0 0 0-1.308-5.135 3.75 3.75 0 0 1 3.57 4.047l-.01.121a.563.563 0 0 1-.373.486l-.115.04c-.567.2-1.156.349-1.764.441Z" />
                     </svg>
+
                 </x-slot>
                 Join Kelompok
             </x-sidebar.nav-link>
@@ -97,9 +99,11 @@
             {{-- Pesan informasi untuk mahasiswa yang belum bergabung --}}
             <div class="mt-4 p-3 bg-yellow-400/10 border border-yellow-400/20 rounded-lg">
                 <div class="flex items-start gap-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor">
-                        <path fill-rule="evenodd" d="M8.257 3.099c.765-.765 2.008-.765 2.773 0l6.364 6.364a.75.75 0 010 1.061L11.03 16.89a.75.75 0 01-1.061 0L3.605 10.525a.75.75 0 010-1.061L9.97 3.099zm1.414 7.425a.75.75 0 11-1.06-1.06.75.75 0 011.06 1.06z" clip-rule="evenodd" />
-                    </svg>
+                    <!-- <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="-20">
+                        <path fill-rule="evenodd" d="M8.25 6.75a3.75 3.75 0 1 1 7.5 0 3.75 3.75 0 0 1-7.5 0ZM15.75 9.75a3 3 0 1 1 6 0 3 3 0 0 1-6 0ZM2.25 9.75a3 3 0 1 1 6 0 3 3 0 0 1-6 0ZM6.31 15.117A6.745 6.745 0 0 1 12 12a6.745 6.745 0 0 1 6.709 7.498.75.75 0 0 1-.372.568A12.696 12.696 0 0 1 12 21.75c-2.305 0-4.47-.612-6.337-1.684a.75.75 0 0 1-.372-.568 6.787 6.787 0 0 1 1.019-4.38Z" clip-rule="evenodd" />
+                        <path d="M5.082 14.254a8.287 8.287 0 0 0-1.308 5.135 9.687 9.687 0 0 1-1.764-.44l-.115-.04a.563.563 0 0 1-.373-.487l-.01-.121a3.75 3.75 0 0 1 3.57-4.047ZM20.226 19.389a8.287 8.287 0 0 0-1.308-5.135 3.75 3.75 0 0 1 3.57 4.047l-.01.121a.563.563 0 0 1-.373.486l-.115.04c-.567.2-1.156.349-1.764.441Z" />
+                    </svg> -->
+
                     <div>
                         <p class="text-sm font-medium text-yellow-400">Bergabung dengan Kelompok</p>
                         <p class="text-xs text-yellow-400/70 mt-1">Untuk mengakses Dashboard, Tugas, dan Pengumuman, silakan bergabung dengan kelompok terlebih dahulu.</p>
@@ -208,7 +212,7 @@
 
                 @if($role === 'spv')
                 @php
-                    $kelompokDibimbing = \App\Models\Kelompok::where('spv_id', Auth::id())->first();
+                $kelompokDibimbing = \App\Models\Kelompok::where('spv_id', Auth::id())->first();
                 @endphp
                 @if($kelompokDibimbing)
                 <a href="{{ route('spv.cluster.index') }}" class="block mb-3 p-3 rounded-lg  bg-cyan-400/10 border border-cyan-400/20 transition-all duration-200 group">

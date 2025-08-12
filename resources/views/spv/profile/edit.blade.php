@@ -30,7 +30,7 @@
                     {{ Auth::user()->name }}
                 </h1>
                 <p class="text-teal-300 text-base sm:text-lg text-center sm:text-left">
-                    Supervisor YUWARAJA XVII
+                    Admin YUWARAJA XVII
                 </p>
                 <p class="text-gray-400 text-sm mt-1 text-center sm:text-left">
                     {{ Auth::user()->email }}

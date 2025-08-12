@@ -3,17 +3,29 @@
 @section('content')
 <style>
     :root {
-        --cyber-primary: #00ffff;
-        --cyber-secondary: #0080ff;
+        --bg-main: #0a0a0a;
+        --surface-card: #111827;
+        --border-color: rgba(20, 184, 166, 0.25); 
+        --brand-teal: #14b8a6;
+        --brand-gold: #f59e0b;
+        --text-primary: #d1d5db;
+        --text-secondary: #6b7280;
+        --cyber-primary: var(--brand-teal);
+        --cyber-secondary: var(--brand-gold);
         --cyber-accent: #ff0080;
-        --cyber-bg-dark: #0a0a0f;
-        --cyber-bg-card: #1a1a2e;
-        --cyber-text-glow: 0 0 10px var(--cyber-primary);
-        --cyber-border: 1px solid rgba(0, 255, 255, 0.3);
+        --cyber-bg-dark: var(--bg-main);
+        --cyber-bg-card: var(--surface-card);
+        --cyber-text-glow: 0 0 10px var(--brand-teal);
+        --cyber-border: 1px solid var(--border-color);
+    }
+    
+    body {
+        background-color: var(--bg-main) !important;
+        color: var(--text-primary);
     }
     
     .cyber-card {
-        background: linear-gradient(135deg, var(--cyber-bg-card) 0%, rgba(26, 26, 46, 0.8) 100%);
+        background: var(--surface-card);
         border: var(--cyber-border);
         border-radius: 12px;
         backdrop-filter: blur(10px);
@@ -21,33 +33,33 @@
     }
     
     .cyber-card:hover {
-        border-color: var(--cyber-primary);
-        box-shadow: 0 0 20px rgba(0, 255, 255, 0.2);
+        border-color: var(--brand-gold);
+        box-shadow: 0 0 20px rgba(245, 158, 11, 0.2);
     }
     
     .text-glow-cyan {
-        color: var(--cyber-primary);
-        text-shadow: var(--cyber-text-glow);
+        color: var(--brand-teal);
+        text-shadow: 0 0 10px rgba(20, 184, 166, 0.5);
     }
     
     .cyber-input {
-        background: rgba(26, 26, 46, 0.8);
-        border: 1px solid rgba(0, 255, 255, 0.3);
-        color: #e2e8f0;
+        background: var(--surface-card);
+        border: 1px solid var(--border-color);
+        color: var(--text-primary);
         border-radius: 8px;
         transition: all 0.3s ease;
     }
     
     .cyber-input:focus {
-        border-color: var(--cyber-primary);
-        box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+        border-color: var(--brand-teal);
+        box-shadow: 0 0 10px rgba(20, 184, 166, 0.3);
         outline: none;
     }
     
     .cyber-btn {
-        background: linear-gradient(135deg, var(--cyber-primary) 0%, var(--cyber-secondary) 100%);
+        background: linear-gradient(135deg, var(--brand-teal) 0%, var(--brand-gold) 100%);
         border: none;
-        color: #0a0a0f;
+        color: white;
         font-weight: 600;
         border-radius: 8px;
         transition: all 0.3s ease;
@@ -56,7 +68,7 @@
     
     .cyber-btn:hover {
         transform: translateY(-2px);
-        box-shadow: 0 10px 20px rgba(0, 255, 255, 0.3);
+        box-shadow: 0 10px 20px rgba(20, 184, 166, 0.3);
     }
     
     .status-badge {
@@ -69,7 +81,7 @@
     }
 </style>
 
-<div class="py-12 min-h-screen bg-gradient-to-br from-gray-900 via-black to-blue-900/30 relative overflow-hidden">
+<div class="py-12 min-h-screen relative overflow-hidden" style="background-color: var(--bg-main);">
     <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
         <!-- Flash Messages -->
         @if(session('success'))
@@ -92,10 +104,10 @@
 
         <!-- Task Details -->
         <div class="cyber-card overflow-hidden">
-            <div class="bg-gradient-to-r from-cyan-500/20 to-blue-500/20 px-6 py-6 border-b border-cyan-500/30">
+            <div class="bg-gradient-to-r from-teal-500/20 to-amber-500/20 px-6 py-6 border-b border-teal-500/30">
                 <h2 class="text-2xl font-bold text-glow-cyan capitalize mb-3">{{ $tugas->judul }}</h2>
                 <div class="flex items-center text-gray-300">
-                    <i class="fas fa-calendar-alt mr-2 text-cyan-400"></i>
+                    <i class="fas fa-calendar-alt mr-2 text-teal-400"></i>
                     <span>Deadline: {{ \Carbon\Carbon::parse($tugas->deadline)->format('d M Y, H:i') }}</span>
                     @if(now() > $tugas->deadline)
                         <span class="ml-4 status-badge bg-red-500 text-white">
@@ -115,7 +127,7 @@
                     <h3 class="text-xl font-semibold text-glow-cyan mb-4">
                         <i class="fas fa-info-circle mr-2"></i>Detail Tugas
                     </h3>
-                    <div class="bg-gray-900/50 rounded-lg p-4 border border-cyan-500/30">
+                    <div class="bg-gray-900/50 rounded-lg p-4 border border-teal-500/30">
                         <div class="text-gray-300 leading-relaxed">
                             {!! nl2br(e($tugas->deskripsi)) !!}
                         </div>
@@ -128,10 +140,10 @@
                         <h3 class="text-xl font-semibold text-glow-cyan mb-4">
                             <i class="fas fa-file-download mr-2"></i>File Tugas
                         </h3>
-                        <div class="bg-gray-900/50 rounded-lg p-4 border border-cyan-500/30">
+                        <div class="bg-gray-900/50 rounded-lg p-4 border border-teal-500/30">
                             <div class="flex items-center justify-between">
                                 <div class="flex items-center">
-                                    <i class="fas fa-file-alt text-cyan-400 mr-3 text-xl"></i>
+                                    <i class="fas fa-file-alt text-teal-400 mr-3 text-xl"></i>
                                     <div>
                                         <p class="text-gray-300 font-medium">File tugas tersedia untuk diunduh</p>
                                         <p class="text-gray-400 text-sm">Unduh file ini untuk melihat detail lengkap tugas</p>

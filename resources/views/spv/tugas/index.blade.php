@@ -21,24 +21,24 @@
         background: #0D1117;
     }
     ::-webkit-scrollbar-thumb {
-        background-color: #164e63;
+        background-color: #14b8a6;
         border-radius: 10px;
         border: 2px solid #0D1117;
     }
     ::-webkit-scrollbar-thumb:hover {
-        background-color: #0e7490;
+        background-color: #0d9488;
     }
 </style>
 @endpush
 
 @section('content')
-<div class="min-h-screen bg-gradient-to-br from-[#0D1117] to-[#111827] text-white p-4 sm:p-6 lg:p-8">
+<div class="min-h-screen bg-gradient-to-br from-[#0D1117] via-[#111827] to-[#0a0a0a] text-white p-4 sm:p-6 lg:p-8">
     <div class="max-w-7xl mx-auto">
         
         <header class="mb-8 scroll-reveal">
             <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                 <div>
-                    <h1 class="font-kanit text-3xl sm:text-4xl font-bold text-teal-400 tracking-wide">
+                    <h1 class="font-kanit text-3xl sm:text-4xl font-bold bg-gradient-to-r from-teal-400 to-amber-400 bg-clip-text text-transparent tracking-wide">
                         Tugas Mahasiswa
                     </h1>
                     <p class="font-poppins text-gray-400 mt-1">
@@ -46,7 +46,7 @@
                     </p>
                 </div>
                 <div class="bg-gray-800/50 border border-gray-700 rounded-lg p-3 text-center w-full sm:w-auto">
-                    <div class="font-kanit text-3xl font-bold text-yellow-400">{{ $tugas->total() }}</div>
+                    <div class="font-kanit text-3xl font-bold bg-gradient-to-r from-teal-400 to-amber-400 bg-clip-text text-transparent">{{ $tugas->total() }}</div>
                     <div class="text-sm text-gray-400">Total Tugas</div>
                 </div>
             </div>
@@ -55,7 +55,7 @@
 
         <div class="grid grid-cols-1 gap-6">
             @forelse($tugas as $index => $item)
-            <div class="scroll-reveal bg-gray-800/60 border border-gray-700 rounded-lg shadow-lg overflow-hidden transition-all duration-300 hover:border-teal-400/50 hover:shadow-teal-500/10 hover:-translate-y-1"
+            <div class="scroll-reveal bg-gray-800/60 border border-gray-700 rounded-lg shadow-lg overflow-hidden transition-all duration-300 hover:border-cyan-400/50 hover:shadow-cyan-500/10 hover:-translate-y-1"
                  style="transition-delay: {{ $index * 100 }}ms;">
                 <div class="p-6">
                     <div class="flex flex-col md:flex-row justify-between md:items-start gap-4">
@@ -72,14 +72,14 @@
 
                             <div class="grid grid-cols-2 sm:grid-cols-5 gap-3 text-sm">
                                 <div class="flex items-center gap-3">
-                                    <svg class="w-6 h-6 text-teal-400/70 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                                    <svg class="w-6 h-6 text-cyan-400/70 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
                                     <div>
                                         <div class="text-gray-400">Deadline</div>
                                         <div class="font-semibold text-white">{{ \Carbon\Carbon::parse($item->deadline)->format('d M Y, H:i') }}</div>
                                     </div>
                                 </div>
                                 <div class="flex items-center gap-3">
-                                    <svg class="w-6 h-6 text-teal-400/70 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8v5m0 0v2.5m0-2.5h2.5m-2.5 0H9.5m7.5-6.5c-1.583-1.583-3.75-2.5-6-2.5S7.083 4.917 5.5 6.5M18.5 6.5c1.583 1.583 2.5 3.75 2.5 6s-.917 4.417-2.5 6M12 21a9 9 0 110-18 9 9 0 010 18z"></path></svg>
+                                    <svg class="w-6 h-6 text-blue-400/70 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8v5m0 0v2.5m0-2.5h2.5m-2.5 0H9.5m7.5-6.5c-1.583-1.583-3.75-2.5-6-2.5S7.083 4.917 5.5 6.5M18.5 6.5c1.583 1.583 2.5 3.75 2.5 6s-.917 4.417-2.5 6M12 21a9 9 0 110-18 9 9 0 010 18z"></path></svg>
                                     <div>
                                         <div class="text-gray-400">Poin</div>
                                         <div class="font-semibold text-white">{{ $item->poin ?? 100 }} Poin</div>
@@ -101,7 +101,7 @@
                                     @endif
                                 </div>
                                 <div class="flex items-center gap-3">
-                                    <svg class="w-6 h-6 text-teal-400/70 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                    <svg class="w-6 h-6 text-sky-400/70 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                                     <div>
                                         <div class="text-gray-400">Sisa Waktu</div>
                                         <div class="font-semibold text-white">{{ \Carbon\Carbon::parse($item->deadline)->diffForHumans() }}</div>
@@ -109,7 +109,7 @@
                                 </div>
                                 <div class="flex-shrink-0 mt-4 md:mt-0 md:ml-20">
                                      <button onclick="openTaskModal({{ $item->id }})" 
-                                        class="inline-flex items-center justify-center gap-2 w-full md:w-auto bg-teal-500 text-gray-900 font-semibold text-sm px-5 py-3 rounded-lg shadow-md transition-all duration-300 hover:bg-teal-400 hover:shadow-lg hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-900 focus:ring-teal-500">
+                                        class="inline-flex items-center justify-center gap-2 w-full md:w-auto bg-gradient-to-r from-cyan-500 to-blue-500 text-white font-semibold text-sm px-5 py-3 rounded-lg shadow-md transition-all duration-300 hover:from-cyan-600 hover:to-blue-600 hover:shadow-lg hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-900 focus:ring-cyan-500"
                                         <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path d="M10 12a2 2 0 100-4 2 2 0 000 4z" /><path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd" /></svg>
                                         Lihat Detail
                                     </button>
@@ -150,7 +150,7 @@
         </div>
         <div id="modalContent" class="p-6">
             <div class="text-center py-8">
-                <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-teal-400 mx-auto"></div>
+                <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-cyan-400 mx-auto"></div>
                 <p class="text-gray-400 mt-4">Memuat detail tugas...</p>
             </div>
         </div>

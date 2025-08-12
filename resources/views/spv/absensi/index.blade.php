@@ -1,301 +1,395 @@
 @extends('layouts.spv')
 
-{{-- Menambahkan font poppins dan Kanit jika belum ada di layout utama --}}
-@section('styles')
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;700&family=Poppins:wght@700;900&display=swap" rel="stylesheet">
-<style>
-    /* Menggunakan font yang telah ditentukan */
-    .font-poppins { font-family: 'Poppins', sans-serif; }
-    .font-kanit> { font-family: 'Kanit', sans-serif; }
-</style>
-@endsection
-
-
 @section('content')
-<div class="min-h-screen bg-gradient-to-br from-[#0F2027] via-[#203A43] to-[#2C5364] p-4 md:p-6 lg:p-8 font-poppins text-gray-200">
-    <div class="max-w-full">
-        <!-- Header Section Sesuai Tema Logo -->
-        <div class="mb-6 lg:mb-8">
-            <div class="relative overflow-hidden bg-gradient-to-r from-cyan-600/80 via-teal-700/80 to-cyan-900/80 rounded-2xl p-6 lg:p-8 shadow-2xl border border-cyan-400/30">
-                <!-- Efek Visual -->
-                <div class="absolute inset-0 bg-black/30"></div>
-                <div class="absolute inset-0 bg-gradient-to-r from-cyan-500/10 via-transparent to-teal-500/10"></div>
-                <div class="absolute inset-0 rounded-2xl bg-gradient-to-r from-cyan-400 to-amber-400 blur-lg opacity-30"></div>
-                <div class="absolute inset-[2px] rounded-2xl bg-gradient-to-r from-gray-800 via-gray-900 to-black"></div>
-                
-                <!-- Konten Header -->
-                <div class="relative z-10 flex flex-col lg:flex-row lg:items-center lg:justify-between text-white">
-                    <div class="mb-6 lg:mb-0">
-                        <div class="flex items-center mb-4">
-                            <div class="bg-cyan-400/10 backdrop-blur-sm rounded-xl p-3 mr-4 border border-cyan-300/30">
-                                <i class="fas fa-user-shield text-2xl text-cyan-300"></i>
+<div class="min-h-screen bg-gray-900 py-6">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Header -->
+        <div class="mb-8">
+            <div class="bg-gray-800 rounded-xl shadow-lg border border-gray-700 p-6">
+                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between">
+                    <div class="mb-4 sm:mb-0">
+                        <div class="flex items-center mb-2">
+                            <div class="bg-gradient-to-r from-teal-500 to-teal-600 rounded-lg p-2 mr-3">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
+                                    <path fill-rule="evenodd" d="M3 6a3 3 0 0 1 3-3h2.25a3 3 0 0 1 3 3v2.25a3 3 0 0 1-3 3H6a3 3 0 0 1-3-3V6Zm9.75 0a3 3 0 0 1 3-3H18a3 3 0 0 1 3 3v2.25a3 3 0 0 1-3 3h-2.25a3 3 0 0 1-3-3V6ZM3 15.75a3 3 0 0 1 3-3h2.25a3 3 0 0 1 3 3V18a3 3 0 0 1-3 3H6a3 3 0 0 1-3-3v-2.25Zm9.75 0a3 3 0 0 1 3-3H18a3 3 0 0 1 3 3V18a3 3 0 0 1-3 3h-2.25a3 3 0 0 1-3-3v-2.25Z" clip-rule="evenodd" />
+                                </svg>
+
                             </div>
                             <div>
-                                <h1 class="text-3xl lg:text-4xl font-kanit font-bold bg-gradient-to-r from-white to-cyan-300 bg-clip-text text-transparent tracking-wider">
-                                    ADAPTIVE
-                                </h1>
-                                <div class="text-lg font-medium text-cyan-200/80 mt-1">Supervisor Control</div>
+                                <h1 class="text-2xl font-bold text-white">Manajemen Absensi</h1>
+                                <p class="text-sm text-gray-300">Kelola dan monitor absensi mahasiswa</p>
                             </div>
                         </div>
-                        <p class="text-gray-300/80 text-base lg:text-lg leading-relaxed max-w-2xl">
-                            Monitor dan kelola absensi mahasiswa dengan sistem terintegrasi real-time.
-                        </p>
                     </div>
-                    
-                    <!-- Stats Dashboard Sesuai Tema Logo -->
-                    <div class="relative">
-                        <div class="bg-black/40 backdrop-blur-md rounded-xl p-6 border border-cyan-400/20 shadow-2xl">
-                            <div class="grid grid-cols-3 gap-4 md:gap-6">
-                                <div class="text-center">
-                                    <div class="bg-gradient-to-br from-yellow-400 to-amber-500 text-black text-xl lg:text-2xl font-bold rounded-lg px-3 py-2 mb-2 font-kanit">
-                                        {{ $pendingRequests->count() }}
-                                    </div>
-                                    <div class="text-xs lg:text-sm text-yellow-300 font-semibold uppercase tracking-wide">PENDING</div>
-                                </div>
-                                <div class="text-center border-x border-cyan-400/30">
-                                    <div class="bg-gradient-to-br from-cyan-400 to-teal-500 text-black text-xl lg:text-2xl font-bold rounded-lg px-3 py-2 mb-2 font-kanit">
-                                        {{ $absensiList->count() }}
-                                    </div>
-                                    <div class="text-xs lg:text-sm text-cyan-300 font-semibold uppercase tracking-wide">AKTIF</div>
-                                </div>
-                                <div class="text-center">
-                                    <div class="bg-gradient-to-br from-emerald-400 to-green-500 text-black text-xl lg:text-2xl font-bold rounded-lg px-3 py-2 mb-2 font-kanit">
-                                        {{ $approvedRequests->count() }}
-                                    </div>
-                                    <div class="text-xs lg:text-sm text-emerald-300 font-semibold uppercase tracking-wide">DISETUJUI</div>
-                                </div>
-                            </div>
+
+                    <!-- Stats Cards -->
+                    <div class="grid grid-cols-3 gap-4">
+                        <div class="bg-gradient-to-r from-amber-500 to-amber-600 rounded-lg p-4 text-center shadow-lg">
+                            <div class="text-2xl font-bold text-white">{{ $pendingRequests->count() }}</div>
+                            <div class="text-xs text-white font-medium">Pending</div>
                         </div>
-                        <div class="absolute -inset-1 bg-gradient-to-r from-cyan-400/20 to-amber-400/20 rounded-xl blur opacity-75"></div>
+                        <div class="bg-gradient-to-r from-teal-500 to-teal-600 rounded-lg p-4 text-center shadow-lg">
+                            <div class="text-2xl font-bold text-white">{{ $absensiList->count() }}</div>
+                            <div class="text-xs text-white font-medium">Aktif</div>
+                        </div>
+                        <div class="bg-gradient-to-r from-gray-600 to-gray-700 rounded-lg p-4 text-center shadow-lg">
+                            <div class="text-2xl font-bold text-white">{{ $approvedRequests->count() }}</div>
+                            <div class="text-xs text-white font-medium">Disetujui</div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Alert Messages Sesuai Tema Logo -->
+        <!-- Alert Messages -->
         @if(session('success'))
-            <div class="bg-gradient-to-r from-green-500/10 to-emerald-500/10 border border-green-400/50 text-green-200 px-6 py-4 rounded-xl mb-6 shadow-lg backdrop-blur-sm">
-                <div class="flex items-center">
-                    <div class="bg-green-400/20 rounded-lg p-2 mr-4"><i class="fas fa-check-circle text-green-400 text-lg"></i></div>
-                    <div>
-                        <div class="font-bold text-white">Operasi Berhasil</div>
-                        <div class="text-sm text-green-200/80">{{ session('success') }}</div>
-                    </div>
-                </div>
+        <div class="mb-6 bg-gradient-to-r from-teal-600 to-teal-700 text-white px-4 py-3 rounded-lg shadow-lg">
+            <div class="flex items-center">
+                <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                </svg>
+                <span class="font-medium">{{ session('success') }}</span>
             </div>
+        </div>
         @endif
 
         @if(session('error'))
-            <div class="bg-gradient-to-r from-red-500/10 to-rose-500/10 border border-red-400/50 text-red-300 px-6 py-4 rounded-xl mb-6 shadow-lg backdrop-blur-sm">
-                <div class="flex items-center">
-                    <div class="bg-red-400/20 rounded-lg p-2 mr-4"><i class="fas fa-exclamation-triangle text-red-400 text-lg"></i></div>
-                    <div>
-                        <div class="font-bold text-white">System Error</div>
-                        <div class="text-sm text-red-300/80">{{ session('error') }}</div>
+        <div class="mb-6 bg-gradient-to-r from-red-600 to-rose-600 text-white px-4 py-3 rounded-lg shadow-lg">
+            <div class="flex items-center">
+                <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+                </svg>
+                <span class="font-medium">{{ session('error') }}</span>
+            </div>
+        </div>
+        @endif
+
+        <!-- Pending Requests Section -->
+        @if($pendingRequests->count() > 0)
+        <div class="bg-gray-800 rounded-xl shadow-lg border border-gray-700 mb-6 lg:mb-8 overflow-hidden">
+            <div class="bg-gradient-to-r from-amber-600 to-orange-600 border-b border-gray-700 px-6 py-4">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center">
+                        <div class="bg-white bg-opacity-20 rounded-lg p-2 mr-3">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                        </div>
+                        <div>
+                            <h2 class="text-xl font-bold text-white">Permintaan Pending</h2>
+                            <p class="text-sm text-gray-200">Permintaan absensi yang menunggu persetujuan</p>
+                        </div>
+                    </div>
+                    <div class="bg-white bg-opacity-20 px-3 py-1 rounded-full">
+                        <span class="text-sm font-semibold text-white">{{ $pendingRequests->count() }} Permintaan</span>
                     </div>
                 </div>
             </div>
-        @endif
 
-        <!-- Pending Requests Card Sesuai Tema Logo (Kuning/Emas) -->
-        @if($pendingRequests->count() > 0)
-        <div class="bg-gray-900/70 backdrop-blur-md rounded-2xl shadow-2xl border border-amber-400/30 mb-6 lg:mb-8 overflow-hidden">
-            <div class="relative bg-gradient-to-r from-yellow-400 via-amber-500 to-cyan-500 px-6 py-5">
-                <div class="absolute inset-0 bg-black/20"></div>
-                <div class="relative z-10">
-                    <h2 class="text-lg lg:text-xl font-bold text-gray-900 flex items-center">
-                        <div class="bg-black/20 backdrop-blur-sm rounded-xl p-3 mr-4 border border-black/30"><i class="fas fa-clock text-amber-300 text-lg"></i></div>
-                        <div>
-                            <div class="font-kanit text-xl font-black text-white">PENDING REQUESTS</div>
-                            <div class="text-sm font-semibold opacity-80">Menunggu Verifikasi</div>
-                        </div>
-                        <div class="ml-auto bg-black/20 backdrop-blur-sm px-4 py-2 rounded-full"><span class="text-lg font-bold text-white">{{ $pendingRequests->count() }}</span></div>
-                    </h2>
-                </div>
-            </div>
-            
-            <div class="p-4 md:p-6">
-                <!-- Mobile Cards View -->
-                <div class="block lg:hidden space-y-4">
+            <div class="p-6">
+                <div class="space-y-4">
                     @foreach($pendingRequests as $request)
-                    <div class="bg-gray-800/50 backdrop-blur-sm rounded-xl p-5 border border-gray-700 hover:border-amber-400/50 transition-all duration-300">
-                        <div class="flex items-start space-x-4 mb-4">
-                            <div class="flex-shrink-0">
-                                @if($request->mahasiswa->photo)
-                                    <img class="h-14 w-14 rounded-xl object-cover ring-2 ring-amber-400/50" src="{{ asset('profile-pictures/' . $request->mahasiswa->photo) }}" alt="">
-                                @else
-                                    <div class="h-14 w-14 rounded-xl bg-gradient-to-br from-gray-700 to-gray-800 flex items-center justify-center ring-2 ring-amber-400/50"><i class="fas fa-user text-amber-400 text-lg"></i></div>
+                    <div class="bg-gray-700 border border-gray-600 rounded-lg p-4 hover:shadow-md transition-shadow">
+                        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between">
+                            <div class="flex items-center mb-3 sm:mb-0">
+                                <div class="flex-shrink-0 mr-4">
+                                    @if($request->mahasiswa->photo)
+                                    <img class="h-12 w-12 rounded-lg object-cover" src="{{ asset('profile-pictures/' . $request->mahasiswa->photo) }}" alt="">
+                                    @else
+                                    <div class="h-12 w-12 rounded-lg bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center">
+                                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                                        </svg>
+                                    </div>
+                                    @endif
+                                </div>
+                                <div>
+                                    <div class="font-semibold text-white">{{ $request->mahasiswa->name }}</div>
+                                    <div class="text-sm text-gray-300">{{ $request->mahasiswa->nim }}</div>
+                                    <div class="text-xs text-amber-400 font-medium">{{ $request->mahasiswa->kelompok->nama_kelompok ?? 'Belum ada Cluster' }}</div>
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-3 sm:mb-0 sm:flex-1 sm:mx-6">
+                                <div class="text-sm">
+                                    <div class="text-gray-400">Absensi</div>
+                                    <div class="font-medium text-white">{{ $request->absensi->judul }}</div>
+                                </div>
+                                <div class="text-sm">
+                                    <div class="text-gray-400">Waktu Request</div>
+                                    <div class="font-medium text-white">{{ $request->waktu_absen->format('d M Y, H:i') }}</div>
+                                </div>
+                                @if($request->keterangan)
+                                <div class="text-sm col-span-2">
+                                    <div class="text-gray-400">Keterangan</div>
+                                    <div class="font-medium text-gray-300">{{ $request->keterangan }}</div>
+                                </div>
                                 @endif
                             </div>
-                            <div class="flex-1 min-w-0">
-                                <div class="font-bold text-white text-base">{{ $request->mahasiswa->name }}</div>
-                                <div class="text-sm text-gray-400">{{ $request->mahasiswa->nim }}</div>
-                                <div class="text-xs text-cyan-400 font-medium">{{ $request->mahasiswa->kelompok->nama_kelompok ?? 'Belum ada kelompok' }}</div>
+
+                            <div class="flex space-x-2">
+                                <form action="{{ route('spv.absensi.approve', $request) }}" method="POST">
+                                    @csrf @method('PATCH')
+                                    <button type="submit" class="bg-gradient-to-r from-emerald-500 to-green-600 hover:from-emerald-600 hover:to-green-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-all shadow-lg">
+                                        <svg class="w-4 h-4 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                        </svg>
+                                        Setujui
+                                    </button>
+                                </form>
+                                <button onclick="openRejectModal({{ $request->id }})" class="bg-gradient-to-r from-red-500 to-rose-600 hover:from-red-600 hover:to-rose-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-all shadow-lg">
+                                    <svg class="w-4 h-4 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                    </svg>
+                                    Tolak
+                                </button>
                             </div>
-                        </div>
-                        <div class="space-y-3 mb-5">
-                            <div class="flex items-center text-sm"><i class="fas fa-bookmark text-amber-400 mr-3 w-4"></i><span class="font-semibold text-gray-200">{{ $request->absensi->judul }}</span></div>
-                            <div class="flex items-center text-sm text-gray-400"><i class="fas fa-info-circle text-cyan-400 mr-3 w-4"></i><span>{{ $request->waktu_absen->format('d M Y, H:i') }}</span></div>
-                            @if($request->keterangan)
-                            <div class="bg-gray-800/70 rounded-lg p-3 border-l-4 border-amber-400"><div class="text-xs text-gray-300">{{ $request->keterangan }}</div></div>@endif
-                        </div>
-                        <div class="flex space-x-3">
-                            <form action="{{ route('spv.absensi.approve', $request) }}" method="POST" class="flex-1">@csrf @method('PATCH')
-                                <button type="submit" class="w-full bg-gradient-to-r from-emerald-500 to-green-600 hover:from-emerald-600 hover:to-green-700 text-white px-4 py-3 rounded-xl text-sm font-bold transition-all duration-300 transform hover:scale-[1.02] shadow-lg"><i class="fas fa-check mr-2"></i>APPROVE</button>
-                            </form>
-                            <button onclick="openRejectModal({{ $request->id }})" class="flex-1 bg-gradient-to-r from-rose-500 to-red-600 hover:from-rose-600 hover:to-red-700 text-white px-4 py-3 rounded-xl text-sm font-bold transition-all duration-300 transform hover:scale-[1.02] shadow-lg"><i class="fas fa-times mr-2"></i>REJECT</button>
                         </div>
                     </div>
                     @endforeach
                 </div>
-                
-                <!-- Desktop Table View -->
-                <div class="hidden lg:block overflow-x-auto">
-                    <table class="min-w-full"><thead class="bg-gray-900/50"><tr>
-                        <th class="px-6 py-4 text-left text-xs font-bold text-amber-300 uppercase tracking-wider border-b border-gray-700"><i class="fas fa-user mr-2"></i>Mahasiswa</th>
-                        <th class="px-6 py-4 text-left text-xs font-bold text-amber-300 uppercase tracking-wider border-b border-gray-700"><i class="fas fa-bookmark mr-2"></i>Absensi</th>
-                        <th class="px-6 py-4 text-left text-xs font-bold text-amber-300 uppercase tracking-wider border-b border-gray-700"><i class="fas fa-clock mr-2"></i>Waktu Request</th>
-                        <th class="px-6 py-4 text-left text-xs font-bold text-amber-300 uppercase tracking-wider border-b border-gray-700"><i class="fas fa-comment mr-2"></i>Keterangan</th>
-                        <th class="px-6 py-4 text-left text-xs font-bold text-amber-300 uppercase tracking-wider border-b border-gray-700"><i class="fas fa-cogs mr-2"></i>Aksi</th>
-                    </tr></thead><tbody class="divide-y divide-gray-700">@foreach($pendingRequests as $request)<tr class="hover:bg-amber-500/5 transition-all duration-300 group">
-                        <td class="px-6 py-5 whitespace-nowrap"><div class="flex items-center"><div class="flex-shrink-0 h-12 w-12">@if($request->mahasiswa->photo)
-                            <img class="h-12 w-12 rounded-xl object-cover ring-2 ring-amber-400/50 group-hover:ring-amber-400 transition-all" src="{{ asset('profile-pictures/' . $request->mahasiswa->photo) }}" alt="">@else
-                            <div class="h-12 w-12 rounded-xl bg-gradient-to-br from-gray-700 to-gray-800 flex items-center justify-center ring-2 ring-amber-400/50 group-hover:ring-amber-400 transition-all"><i class="fas fa-user text-amber-400"></i></div>@endif</div>
-                            <div class="ml-4"><div class="text-sm font-bold text-white">{{ $request->mahasiswa->name }}</div><div class="text-sm text-gray-400">{{ $request->mahasiswa->nim }}</div><div class="text-xs text-cyan-400">{{ $request->mahasiswa->kelompok->nama_kelompok ?? 'Belum ada kelompok' }}</div></div></div></td>
-                        <td class="px-6 py-5 whitespace-nowrap"><div class="text-sm font-semibold text-gray-200">{{ $request->absensi->judul }}</div><div class="text-sm text-gray-400">{{ $request->absensi->tanggal->format('d M Y') }}</div><div class="text-xs text-cyan-400">{{ $request->absensi->jam_mulai_formatted }} - {{ $request->absensi->jam_selesai_formatted }}</div></td>
-                        <td class="px-6 py-5 whitespace-nowrap text-sm text-gray-300">{{ $request->waktu_absen->format('d M Y, H:i') }}</td>
-                        <td class="px-6 py-5 text-sm text-gray-400 max-w-xs"><div class="truncate">{{ $request->keterangan ?? 'Tidak ada keterangan' }}</div></td>
-                        <td class="px-6 py-5 whitespace-nowrap text-sm font-medium"><div class="flex space-x-3">
-                            <form action="{{ route('spv.absensi.approve', $request) }}" method="POST">@csrf @method('PATCH')<button type="submit" class="bg-gradient-to-r from-emerald-500 to-green-600 hover:from-emerald-600 hover:to-green-700 text-white px-4 py-2 rounded-lg text-xs font-bold transition-all transform hover:scale-105 shadow-lg"><i class="fas fa-check mr-1"></i>APPROVE</button></form>
-                            <button onclick="openRejectModal({{ $request->id }})" class="bg-gradient-to-r from-rose-500 to-red-600 hover:from-rose-600 hover:to-red-700 text-white px-4 py-2 rounded-lg text-xs font-bold transition-all transform hover:scale-105 shadow-lg"><i class="fas fa-times mr-1"></i>REJECT</button>
-                        </div></td></tr>@endforeach</tbody></table>
-                </div>
             </div>
         </div>
         @endif
 
-        <!-- Daftar Absensi Aktif Sesuai Tema Logo (Cyan/Teal) -->
-        <div class="bg-gray-900/70 backdrop-blur-md rounded-2xl shadow-2xl border border-cyan-400/30 mb-6 lg:mb-8 overflow-hidden">
-            <div class="relative bg-gradient-to-r from-cyan-500 via-teal-600 to-cyan-800 px-6 py-5">
-                <div class="absolute inset-0 bg-black/20"></div>
-                <div class="relative z-10"><h2 class="text-lg lg:text-xl font-bold text-white flex items-center">
-                    <div class="bg-black/20 backdrop-blur-sm rounded-xl p-3 mr-4 border border-black/30"><i class="fas fa-database text-cyan-300 text-lg"></i></div>
-                    <div><div class="font-kanit text-xl font-black">ACTIVE SESSIONS</div><div class="text-sm font-semibold opacity-80">Sesi Monitoring</div></div>
-                </h2></div>
-            </div>
-            
-            <div class="p-4 md:p-6">
+        <!-- Active Sessions Section -->
+        <div class="mb-8">
+            <div class="bg-gray-800 rounded-xl shadow-lg border border-gray-700 p-6">
+                <div class="flex items-center mb-6">
+                    <div class="bg-gradient-to-r from-cyan-500 to-blue-600 rounded-lg p-2 mr-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
+                            <path fill-rule="evenodd" d="M2.25 6a3 3 0 0 1 3-3h13.5a3 3 0 0 1 3 3v12a3 3 0 0 1-3 3H5.25a3 3 0 0 1-3-3V6Zm18 3H3.75v9a1.5 1.5 0 0 0 1.5 1.5h13.5a1.5 1.5 0 0 0 1.5-1.5V9Zm-15-3.75A.75.75 0 0 0 4.5 6v.008c0 .414.336.75.75.75h.008a.75.75 0 0 0 .75-.75V6a.75.75 0 0 0-.75-.75H5.25Zm1.5.75a.75.75 0 0 1 .75-.75h.008a.75.75 0 0 1 .75.75v.008a.75.75 0 0 1-.75.75H7.5a.75.75 0 0 1-.75-.75V6Zm3-.75A.75.75 0 0 0 9 6v.008c0 .414.336.75.75.75h.008a.75.75 0 0 0 .75-.75V6a.75.75 0 0 0-.75-.75H9.75Z" clip-rule="evenodd" />
+                        </svg>
+
+                    </div>
+                    <div>
+                        <h2 class="text-xl font-bold text-white">Sesi Aktif</h2>
+                        <p class="text-sm text-gray-300">Sesi absensi yang sedang berlangsung</p>
+                    </div>
+                </div>
+
                 @if($absensiList->count() > 0)
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     @foreach($absensiList as $absensi)
-                    <div class="group relative bg-gray-800/40 backdrop-blur-sm border border-gray-700/50 rounded-2xl p-6 hover:border-yellow-400 hover:shadow-2xl hover:shadow-cyan-500/10 transition-all duration-500 transform hover:scale-[1.02]">
-                        <div class="absolute inset-0 bg-gradient-to-r from-cyan-400/0 to-teal-400/0 group-hover:from-cyan-400/10 group-hover:to-teal-400/10 rounded-2xl transition-all duration-500"></div>
-                        <div class="relative z-10 flex items-start justify-between mb-5">
-                            <div class="bg-cyan-400/10 backdrop-blur-sm rounded-xl p-3 group-hover:bg-cyan-400/20 transition-all duration-300 border border-yellow-400/30"><i class="fas fa-calendar-check text-cyan-400 text-lg"></i></div>
-                            <div class="text-right"><div class="bg-gradient-to-r from-cyan-500 to-teal-600 text-white text-xs px-3 py-1.5 rounded-full font-bold shadow-lg">{{ $absensi->absensiMahasiswa()->count() }} REQ</div></div>
+                    <div class="bg-gray-700 border border-gray-600 rounded-lg p-6 hover:shadow-lg transition-shadow">
+                        <div class="flex items-center justify-between mb-4">
+                            <!-- <div class="bg-gradient-to-r from-emerald-500 to-green-600 rounded-lg p-2">
+                                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path>
+                                </svg>
+                            </div> -->
+                            @php
+                                $now = now();
+                                $absensiStart = \Carbon\Carbon::parse($absensi->tanggal->format('Y-m-d') . ' ' . $absensi->jam_mulai);
+                                $absensiEnd = \Carbon\Carbon::parse($absensi->tanggal->format('Y-m-d') . ' ' . $absensi->jam_selesai);
+                            @endphp
+                            
+                            @if($now < $absensiStart)
+                                <span class="bg-gradient-to-r from-blue-500 to-blue-600 text-white text-xs font-medium px-3 py-1 rounded-full flex items-center gap-1">
+                                    <div class="w-2 h-2 bg-white rounded-full"></div>
+                                    Akan Datang
+                                </span>
+                            @elseif($now >= $absensiStart && $now <= $absensiEnd)
+                                <span class="bg-gradient-to-r from-emerald-500 to-green-600 text-white text-xs font-medium px-3 py-1 rounded-full flex items-center gap-1">
+                                    <div class="w-2 h-2 bg-white rounded-full animate-pulse"></div>
+                                    Aktif
+                                </span>
+                            @else
+                                <span class="bg-gradient-to-r from-red-500 to-red-600 text-white text-xs font-medium px-3 py-1 rounded-full flex items-center gap-1">
+                                    <div class="w-2 h-2 bg-white rounded-full"></div>
+                                    Berakhir
+                                </span>
+                            @endif
                         </div>
-                        <h3 class="relative z-10 font-bold text-gray-200 group-hover:text-white mb-4 text-base lg:text-lg line-clamp-2 transition-colors">{{ $absensi->judul }}</h3>
-                        <div class="relative z-10 space-y-3 mb-5">
-                            <div class="flex items-center text-sm text-gray-300 group-hover:text-gray-200"><div class="bg-cyan-400/10 rounded-lg p-1.5 mr-3"><i class="fas fa-calendar text-cyan-400 text-xs"></i></div><span class="font-medium">{{ $absensi->tanggal->format('d M Y') }}</span></div>
-                            <div class="flex items-center text-sm text-gray-300 group-hover:text-gray-200"><div class="bg-cyan-400/10 rounded-lg p-1.5 mr-3"><i class="fas fa-clock text-cyan-400 text-xs"></i></div><span class="font-medium">{{ $absensi->jam_mulai_formatted }} - {{ $absensi->jam_selesai_formatted }}</span></div>
+
+                        <h3 class="text-lg font-semibold text-white mb-3">{{ $absensi->judul }}</h3>
+
+                        <div class="space-y-2 mb-4">
+                            <div class="flex items-center text-sm text-gray-300">
+                                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                                </svg>
+                                <span>{{ $absensi->tanggal->format('d M Y') }}</span>
+                            </div>
+                            <div class="flex items-center text-sm text-gray-300">
+                                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                                <span>{{ $absensi->jam_mulai_formatted }} - {{ $absensi->jam_selesai_formatted }}</span>
+                            </div>
+                            <div class="flex items-center text-sm text-gray-300">
+                                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                                </svg>
+                                <span>{{ $absensi->absensiMahasiswa()->count() }} permintaan</span>
+                            </div>
                         </div>
-                        @if($absensi->deskripsi)
-                        <div class="relative z-10 bg-gray-800/50 backdrop-blur-sm rounded-xl p-4 mb-5 border border-gray-600/30 group-hover:border-gray-500/50"><p class="text-xs text-gray-400 group-hover:text-gray-300 line-clamp-2">{{ Str::limit($absensi->deskripsi, 80) }}</p></div>@endif
-                        <div class="relative z-10 flex justify-end"><a href="{{ route('spv.absensi.show', $absensi) }}" class="inline-flex items-center px-5 py-3 bg-gradient-to-r from-cyan-500 to-teal-600 hover:from-cyan-600 hover:to-teal-700 text-white text-sm font-bold rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-cyan-500/25"><span>VIEW DETAILS</span><i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i></a></div>
+
+                        <a href="{{ route('spv.absensi.show', $absensi) }}" class="block w-full bg-gradient-to-r from-teal-600 to-teal-700 hover:from-teal-700 hover:to-teal-800 text-white font-medium py-2 px-4 rounded-lg transition-colors text-center text-sm shadow-lg">
+                            <svg class="w-4 h-4 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                            </svg>
+                            Lihat Detail
+                        </a>
                     </div>
                     @endforeach
                 </div>
                 @else
-                <div class="text-center py-16"><div class="bg-gray-800/50 backdrop-blur-sm rounded-2xl w-20 h-20 flex items-center justify-center mx-auto mb-6 border border-gray-700/50"><i class="fas fa-database text-3xl text-gray-500"></i></div><h3 class="text-xl font-bold text-gray-300 mb-3">TIDAK ADA SESI AKTIF</h3><p class="text-gray-500 text-sm max-w-md mx-auto">Sistem belum memiliki sesi absensi aktif yang berjalan.</p></div>
+                <div class="text-center py-12">
+                    <div class="bg-gray-700 rounded-full p-6 w-20 h-20 mx-auto mb-4 flex items-center justify-center">
+                        <svg class="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 9v6m4-6v6m7-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-semibold text-white mb-2">Tidak Ada Sesi Aktif</h3>
+                    <p class="text-gray-300">Belum ada sesi absensi yang sedang berlangsung</p>
+                </div>
                 @endif
             </div>
         </div>
 
-        <!-- Riwayat Disetujui Sesuai Tema Logo (Hijau) -->
+        <!-- Approved Requests Section -->
         @if($approvedRequests->count() > 0)
-        <div class="bg-gray-900/70 backdrop-blur-md rounded-2xl shadow-2xl border border-green-400/30 overflow-hidden">
-            <div class="relative bg-gradient-to-r from-emerald-500 via-green-600 to-teal-700 px-6 py-5">
-                <div class="absolute inset-0 bg-black/20"></div>
-                <div class="relative z-10"><h2 class="text-lg lg:text-xl font-bold text-white flex items-center">
-                    <div class="bg-black/20 backdrop-blur-sm rounded-xl p-3 mr-4 border border-black/30"><i class="fas fa-check-circle text-green-300 text-lg"></i></div>
-                    <div><div class="font-kanit text-xl font-black">APPROVED RECORDS</div><div class="text-sm font-semibold opacity-80">Riwayat Persetujuan</div></div>
-                    <div class="ml-auto bg-black/20 backdrop-blur-sm px-4 py-2 rounded-full"><span class="text-sm font-bold text-white">20 TERAKHIR</span></div>
-                </h2></div>
-            </div>
-            <div class="p-4 md:p-6"><div class="block lg:hidden space-y-4">
-                @foreach($approvedRequests as $request)
-                <div class="bg-gradient-to-br from-green-500/5 to-emerald-500/5 backdrop-blur-sm rounded-xl p-5 border border-green-400/30 hover:border-green-400/50 transition-all">
-                    <div class="flex items-start space-x-4 mb-4"><div class="flex-shrink-0">@if($request->mahasiswa->photo)
-                        <img class="h-12 w-12 rounded-xl object-cover ring-2 ring-green-400/50" src="{{ asset('profile-pictures/' . $request->mahasiswa->photo) }}" alt="">@else
-                        <div class="h-12 w-12 rounded-xl bg-gradient-to-br from-green-400 to-emerald-600 flex items-center justify-center ring-2 ring-green-400/50"><i class="fas fa-user text-white text-sm"></i></div>@endif</div>
-                        <div class="flex-1 min-w-0"><div class="font-bold text-white text-sm">{{ $request->mahasiswa->name }}</div><div class="text-sm text-gray-400">{{ $request->mahasiswa->nim }}</div><div class="text-xs text-green-400 font-medium">{{ $request->absensi->judul }}</div></div>
-                        <div class="flex-shrink-0"><span class="inline-flex items-center px-3 py-1.5 rounded-full text-xs font-bold bg-green-400/10 text-green-300 border border-green-400/30"><i class="fas fa-check mr-1"></i>APPROVED</span></div>
+        <div class="mb-8">
+            <div class="bg-gray-800 rounded-xl shadow-lg border border-gray-700 p-6">
+                <div class="flex items-center mb-6">
+                    <div class="bg-gradient-to-r from-teal-500 to-teal-600 rounded-lg p-2 mr-3">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                    </div>
+                    <div>
+                        <h2 class="text-xl font-bold text-white">Permintaan Disetujui</h2>
+                        <p class="text-sm text-gray-300">20 permintaan terakhir yang telah disetujui</p>
                     </div>
                 </div>
-                @endforeach
-            </div><div class="hidden lg:block overflow-x-auto"><table class="min-w-full"><thead class="bg-gray-900/50"><tr>
-                <th class="px-6 py-4 text-left text-xs font-bold text-green-300 uppercase tracking-wider border-b border-gray-700"><i class="fas fa-user mr-2"></i>Mahasiswa</th>
-                <th class="px-6 py-4 text-left text-xs font-bold text-green-300 uppercase tracking-wider border-b border-gray-700"><i class="fas fa-bookmark mr-2"></i>Absensi</th>
-                <th class="px-6 py-4 text-left text-xs font-bold text-green-300 uppercase tracking-wider border-b border-gray-700"><i class="fas fa-clock mr-2"></i>Approved At</th>
-                <th class="px-6 py-4 text-left text-xs font-bold text-green-300 uppercase tracking-wider border-b border-gray-700"><i class="fas fa-check mr-2"></i>Status</th>
-            </tr></thead><tbody class="divide-y divide-gray-700">@foreach($approvedRequests as $request)<tr class="hover:bg-green-500/5 transition-all group">
-                <td class="px-6 py-5 whitespace-nowrap"><div class="flex items-center"><div class="flex-shrink-0 h-10 w-10">@if($request->mahasiswa->photo)
-                    <img class="h-10 w-10 rounded-xl object-cover ring-2 ring-green-400/50 group-hover:ring-green-400" src="{{ asset('profile-pictures/' . $request->mahasiswa->photo) }}" alt="">@else
-                    <div class="h-10 w-10 rounded-xl bg-gradient-to-br from-green-400 to-emerald-600 flex items-center justify-center ring-2 ring-green-400/50 group-hover:ring-green-400"><i class="fas fa-user text-white text-xs"></i></div>@endif</div>
-                    <div class="ml-4"><div class="text-sm font-bold text-gray-200 group-hover:text-white">{{ $request->mahasiswa->name }}</div><div class="text-xs text-gray-400">{{ $request->mahasiswa->nim }}</div></div></div></td>
-                <td class="px-6 py-5 whitespace-nowrap"><div class="text-sm font-semibold text-gray-200">{{ $request->absensi->judul }}</div><div class="text-xs text-gray-400">{{ $request->absensi->tanggal->format('d M Y') }}</div></td>
-                <td class="px-6 py-5 whitespace-nowrap text-sm text-gray-300">{{ $request->approved_at->format('d M Y, H:i') }}</td>
-                <td class="px-6 py-5 whitespace-nowrap"><span class="inline-flex items-center px-3 py-1.5 rounded-full text-xs font-bold bg-green-400/10 text-green-300 border border-green-400/30"><i class="fas fa-check mr-1"></i>APPROVED</span></td>
-            </tr>@endforeach</tbody></table></div></div>
+
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-600">
+                        <thead class="bg-gray-700">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Mahasiswa</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Absensi</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Waktu Request</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-gray-800 divide-y divide-gray-600">
+                            @foreach($approvedRequests as $request)
+                            <tr class="hover:bg-gray-700">
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="flex items-center">
+                                        <div class="flex-shrink-0 h-10 w-10">
+                                            @if($request->mahasiswa->photo)
+                                            <img class="h-10 w-10 rounded-lg object-cover" src="{{ asset('profile-pictures/' . $request->mahasiswa->photo) }}" alt="">
+                                            @else
+                                            <div class="h-10 w-10 rounded-lg bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center">
+                                                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                                                </svg>
+                                            </div>
+                                            @endif
+                                        </div>
+                                        <div class="ml-4">
+                                            <div class="text-sm font-medium text-white">{{ $request->mahasiswa->name }}</div>
+                                            <div class="text-sm text-gray-300">{{ $request->mahasiswa->nim }}</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-white">{{ $request->absensi->judul }}</div>
+                                    <div class="text-sm text-gray-300">{{ $request->absensi->tanggal->format('d M Y') }}</div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
+                                    {{ $request->waktu_absen->format('d M Y, H:i') }}
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-gradient-to-r from-emerald-500 to-green-600 text-white">
+                                        Disetujui
+                                    </span>
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        @else
+        <div class="mb-8">
+            <div class="bg-gray-800 rounded-xl shadow-lg border border-gray-700 p-6">
+                <div class="flex items-center mb-6">
+                    <div class="bg-gradient-to-r from-emerald-500 to-green-600 rounded-lg p-2 mr-3">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                    </div>
+                    <div>
+                        <h2 class="text-xl font-bold text-white">Permintaan Disetujui</h2>
+                        <p class="text-sm text-gray-300">20 permintaan terakhir yang telah disetujui</p>
+                    </div>
+                </div>
+
+                <div class="text-center py-12">
+                    <div class="bg-gray-700 rounded-full p-6 w-20 h-20 mx-auto mb-4 flex items-center justify-center">
+                        <svg class="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-semibold text-white mb-2">Belum Ada Permintaan Disetujui</h3>
+                    <p class="text-gray-300">Belum ada permintaan absensi yang disetujui</p>
+                </div>
+            </div>
         </div>
         @endif
     </div>
 </div>
 
-<!-- Modal Reject Sesuai Tema Logo -->
-<div id="rejectModal" class="fixed inset-0 bg-black/70 backdrop-blur-md overflow-y-auto h-full w-full hidden z-50">
-    <div class="relative top-20 mx-auto p-5 w-11/12 max-w-md">
-        <div class="relative bg-gradient-to-br from-gray-800/95 to-gray-900/95 rounded-2xl shadow-2xl border border-red-500/30 overflow-hidden">
-            <div class="absolute inset-0 bg-gradient-to-r from-red-500/20 to-rose-500/20 blur-sm"></div>
-            <div class="absolute inset-[1px] rounded-2xl bg-gradient-to-br from-gray-800/95 to-gray-900/95"></div>
-            <div class="relative z-10 bg-gradient-to-r from-red-500 via-rose-600 to-red-700 px-6 py-5">
-                <div class="absolute inset-0 bg-black/20"></div>
-                <div class="relative z-10"><h3 class="text-lg font-bold text-white flex items-center">
-                    <div class="bg-black/20 backdrop-blur-sm rounded-xl p-3 mr-4 border border-black/30"><i class="fas fa-times text-white text-lg"></i></div>
-                    <div><div class="font-kanit text-xl font-black">REJECT REQUEST</div><div class="text-sm font-semibold opacity-80">Konfirmasi Penolakan</div></div>
-                </h3></div>
+<!-- Reject Request Modal -->
+<div id="rejectModal" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 hidden">
+    <div class="bg-gray-800 rounded-lg p-6 max-w-md w-full mx-4 shadow-xl border border-gray-700">
+        <div class="flex items-center mb-4">
+            <div class="bg-gradient-to-r from-red-500 to-rose-600 rounded-lg p-2 mr-3">
+                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"></path>
+                </svg>
             </div>
-            <div class="relative z-10 p-6">
-                <p class="text-gray-300 mb-4 text-sm">Anda akan menolak permintaan absensi. Berikan alasan yang jelas pada kolom di bawah.</p>
-                <form id="rejectForm" method="POST" class="space-y-6">
-                    @csrf
-                    @method('PATCH')
-                    <div><textarea name="keterangan" class="w-full px-4 py-3 bg-gray-800/50 backdrop-blur-sm border border-gray-600/50 rounded-xl text-gray-200 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 resize-none" rows="4" placeholder="Tulis alasan penolakan..." required></textarea></div>
-                    <div class="flex flex-col sm:flex-row gap-4 pt-2">
-                        <button type="submit" class="flex-1 px-6 py-4 bg-gradient-to-r from-rose-500 to-red-600 hover:from-rose-600 hover:to-red-700 text-white text-sm font-bold rounded-xl transition-all transform hover:scale-[1.02] shadow-lg flex items-center justify-center">
-                            <i class="fas fa-times-circle mr-2"></i>KONFIRMASI PENOLAKAN
-                        </button>
-                        <button type="button" onclick="closeRejectModal()" class="flex-1 px-6 py-4 bg-gray-700/50 hover:bg-gray-600/50 border border-gray-600/50 text-gray-200 text-sm font-bold rounded-xl transition-all transform hover:scale-[1.02] flex items-center justify-center">
-                            <i class="fas fa-arrow-left mr-2"></i>BATAL
-                        </button>
-                    </div>
-                </form>
+            <div>
+                <h3 class="text-lg font-semibold text-white">Tolak Permintaan</h3>
+                <p class="text-sm text-gray-300">Berikan alasan penolakan</p>
             </div>
         </div>
+
+        <form id="rejectForm" method="POST">
+            @csrf
+            @method('PATCH')
+            <div class="mb-4">
+                <label for="alasan_penolakan" class="block text-sm font-medium text-gray-300 mb-2">Alasan Penolakan</label>
+                <textarea id="alasan_penolakan" name="alasan_penolakan" rows="4" class="w-full border border-gray-600 bg-gray-700 rounded-lg px-3 py-2 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500" placeholder="Masukkan alasan penolakan..." required></textarea>
+            </div>
+
+            <div class="flex space-x-3">
+                <button type="button" onclick="closeRejectModal()" class="flex-1 bg-gray-600 hover:bg-gray-700 text-white font-medium py-2 px-4 rounded-lg transition-colors">
+                    Batal
+                </button>
+                <button type="submit" class="flex-1 bg-gradient-to-r from-red-500 to-rose-600 hover:from-red-600 hover:to-rose-700 text-white font-medium py-2 px-4 rounded-lg transition-all shadow-lg">
+                    Tolak
+                </button>
+            </div>
+        </form>
     </div>
 </div>
 
 <script>
-function openRejectModal(requestId) {
-    // Pastikan route ini sesuai dengan yang ada di web.php Anda
-    document.getElementById('rejectForm').action = `/spv/absensi/${requestId}/reject`; 
-    document.getElementById('rejectModal').classList.remove('hidden');
-}
+    function openRejectModal(requestId) {
+        // Pastikan route ini sesuai dengan yang ada di web.php Anda
+        document.getElementById('rejectForm').action = `/spv/absensi/${requestId}/reject`;
+        document.getElementById('rejectModal').classList.remove('hidden');
+    }
 
-function closeRejectModal() {
-    document.getElementById('rejectModal').classList.add('hidden');
-}
+    function closeRejectModal() {
+        document.getElementById('rejectModal').classList.add('hidden');
+    }
 </script>
 @endsection

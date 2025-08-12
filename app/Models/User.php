@@ -135,10 +135,8 @@ class User extends Authenticatable implements FilamentUser
         return $this->belongsTo(\App\Models\User::class, 'spv_id');
     }
 
-    public function mahasiswa()
-    {
-        return $this->hasMany(\App\Models\User::class, 'kelompok_id');
-    }
+    // Removed problematic self-referencing relationship
+    // Users in the same kelompok should be accessed through the Kelompok model
 
     public function kelompokDibimbing()
     {
@@ -180,13 +178,13 @@ class User extends Authenticatable implements FilamentUser
     }
 
     /**
-     * Check if friendship request exists
+     * Check if friendship request exists (pending only)
      * @param int $userId
      * @return bool
      */
     public function hasFriendshipRequestWith($userId): bool
     {
-        return $this->friendships()->where('friend_id', $userId)->exists() ||
-               $this->receivedFriendships()->where('user_id', $userId)->exists();
+        return $this->friendships()->where('friend_id', $userId)->where('status', 'pending')->exists() ||
+               $this->receivedFriendships()->where('user_id', $userId)->where('status', 'pending')->exists();
     }
 }

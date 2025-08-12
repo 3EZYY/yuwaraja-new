@@ -9,7 +9,7 @@
             </div>
 
             <p class="font-poppins text-gray-300 text-sm leading-relaxed mb-6">
-                {{ $tugas->deskripsi }}
+                {!! nl2br(e($tugas->deskripsi)) !!}
             </p>
 
             <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 text-sm">
@@ -101,7 +101,7 @@
                             <div>
                                 <span class="text-gray-400">Cluster:</span>
                                 <span
-                                    class="text-white font-medium">{{ $pengumpulan->user->kelompok->nama ?? 'Belum ada kelompok' }}</span>
+                                    class="text-white font-medium">{{ $pengumpulan->user->kelompok->nama ?? 'Belum ada Cluster' }}</span>
                             </div>
                             <div>
                                 <span class="text-gray-400">Dikumpulkan:</span>

@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>PKKMB YUWARAJA 2025 - Fakultas Vokasi Universitas Brawijaya</title>
+    <title>PPKMB Fakultas Vokasi - YUWARAJA</title>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -1175,56 +1175,22 @@
         <!-- Section "Didukung Oleh" -->
         <section class="container mx-auto px-6">
             <!-- Judul -->
-            <h3 class="text-center text-white text-4xl font-orbitron font-bold mb-8 tracking-widest uppercase text-glow-cyan">
-                SPONSOR
+            <h3 class="text-center text-lg text-cyan-400 font-light mb-6 tracking-wider capitalize">
+                Sponsor
             </h3>
 
             <!-- Kontainer Logo Utama -->
-            <div class="relative max-w-7xl mx-auto bg-[#00000033] backdrop-blur-md rounded-2xl p-6 border border-cyan-500/20 shadow-lg shadow-cyan-500/20" style="user-select: none;">
-
-                <!-- Grid Logo -->
-                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-8 gap-6 place-items-center">
-                    <!-- Logo 1 -->
-                    <a href="#" target="_blank" rel="noopener" class="group">
-                        <img src="/images/logo-sponsor/1.png" alt="Sponsor 1" class="h-16 transition-transform duration-300 group-hover:scale-110">
-                    </a>
-
-                    <!-- Logo 2 -->
-                    <a href="#" target="_blank" rel="noopener" class="group">
-                        <img src="/images/logo-sponsor/2.png" alt="Sponsor 2" class="h-16 transition-transform duration-300 group-hover:scale-110">
-                    </a>
-
-                    <!-- Logo 3 -->
-                    <a href="#" target="_blank" rel="noopener" class="group">
-                        <img src="/images/logo-sponsor/3.jpeg" alt="Sponsor 3" class="h-16 transition-transform duration-300 group-hover:scale-110">
-                    </a>
-
-                    <!-- Logo 4 -->
-                    <a href="#" target="_blank" rel="noopener" class="group">
-                        <img src="/images/logo-sponsor/4.png" alt="Sponsor 4" class="h-16 transition-transform duration-300 group-hover:scale-110">
-                    </a>
-
-                    <!-- Logo 5 -->
-                    <a href="#" target="_blank" rel="noopener" class="group">
-                        <img src="/images/logo-sponsor/5.png" alt="Sponsor 5" class="h-16 transition-transform duration-300 group-hover:scale-110">
-                    </a>
-
-                    <!-- Logo 6 -->
-                    <a href="#" target="_blank" rel="noopener" class="group">
-                        <img src="/images/logo-sponsor/6.png" alt="Sponsor 6" class="h-16 transition-transform duration-300 group-hover:scale-110">
-                    </a>
-
-                    <!-- Logo 7 -->
-                    <a href="#" target="_blank" rel="noopener" class="group">
-                        <img src="/images/logo-sponsor/7.png" alt="Sponsor 7" class="h-16 transition-transform duration-300 group-hover:scale-110">
-                    </a>
-
-                    <!-- Logo 8 -->
-                    <a href="#" target="_blank" rel="noopener" class="group">
-                        <img src="/images/logo-sponsor/8.png" alt="Sponsor 8" class="h-16 transition-transform duration-300 group-hover:scale-110">
-                    </a>
+            <div class="max-w-6xl mx-auto bg-white rounded-2xl p-6 shadow-lg shadow-cyan-500/10">
+                <div class="gap-8 flex flex-wrap place-items-center justify-center">
+                    <img src="/images/logo-sponsor/1.svg" class="h-24">
+                    <img src="/images/logo-sponsor/2.svg" class="h-24">
+                    <img src="/images/logo-sponsor/3.svg" class="h-16">
+                    <img src="/images/logo-sponsor/4.svg" class="h-24">
+                    <img src="/images/logo-sponsor/5.svg" class="h-24">
+                    <img src="/images/logo-sponsor/6.svg" class="h-24">
+                    <img src="/images/logo-sponsor/7.svg" class="h-16">
+                    <img src="/images/logo-sponsor/8.svg" class="h-24">
                 </div>
-            </div>
         </section>
 
     </main>

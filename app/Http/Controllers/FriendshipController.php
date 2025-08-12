@@ -31,8 +31,14 @@ class FriendshipController extends Controller
 
         // Ambil daftar teman yang sudah accepted
         $friends = $user->friends();
+        
+        // Ambil permintaan pertemanan yang masuk (pending)
+        $incomingRequests = $user->receivedFriendships()->pending()->with('user')->get();
+        
+        // Ambil permintaan pertemanan yang dikirim (pending)
+        $outgoingRequests = $user->friendships()->pending()->with('friend')->get();
 
-        return view('mahasiswa.friendship.index', compact('kelompokMembers', 'supervisor', 'friends', 'user'));
+        return view('mahasiswa.friendship.index', compact('kelompokMembers', 'supervisor', 'friends', 'user', 'incomingRequests', 'outgoingRequests'));
     }
 
     // Kirim permintaan pertemanan
@@ -61,10 +67,10 @@ class FriendshipController extends Controller
         Friendship::create([
             'user_id' => $user->id,
             'friend_id' => $friendId,
-            'status' => 'accepted' // Langsung accepted untuk simplicity
+            'status' => 'pending' // Menunggu persetujuan
         ]);
 
-        return back()->with('success', 'Berhasil berteman dengan ' . $targetUser->name . '!');
+        return back()->with('success', 'Permintaan pertemanan berhasil dikirim ke ' . $targetUser->name . '!');
     }
 
     // Accept friendship request
@@ -77,8 +83,9 @@ class FriendshipController extends Controller
         }
 
         $friendship->update(['status' => 'accepted']);
-
-        return back()->with('success', 'Permintaan pertemanan diterima!');
+        
+        $senderName = $friendship->user->name;
+        return back()->with('success', 'Permintaan pertemanan dari ' . $senderName . ' berhasil diterima!');
     }
 
     // Reject friendship request
@@ -90,9 +97,10 @@ class FriendshipController extends Controller
             return back()->with('error', 'Permintaan pertemanan tidak ditemukan!');
         }
 
+        $senderName = $friendship->user->name;
         $friendship->delete();
 
-        return back()->with('success', 'Permintaan pertemanan ditolak!');
+        return back()->with('success', 'Permintaan pertemanan dari ' . $senderName . ' berhasil ditolak!');
     }
 
     // Remove friend
@@ -112,5 +120,24 @@ class FriendshipController extends Controller
         }
 
         return back()->with('error', 'Pertemanan tidak ditemukan!');
+    }
+
+    // Show detailed information about a friend
+    public function showFriendDetail($friendId)
+    {
+        $user = Auth::user();
+        $friend = User::find($friendId);
+        
+        // Check if friend exists and is in the same group
+        if (!$friend || $friend->kelompok_id != $user->kelompok_id) {
+            return back()->with('error', 'User tidak ditemukan atau bukan anggota kelompok yang sama!');
+        }
+        
+        // Check if they are friends
+        if (!$user->isFriendWith($friendId)) {
+            return back()->with('error', 'Anda harus berteman terlebih dahulu untuk melihat detail informasi!');
+        }
+        
+        return view('mahasiswa.friendship.detail', compact('friend', 'user'));
     }
 }

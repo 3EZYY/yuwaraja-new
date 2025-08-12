@@ -21,6 +21,8 @@ class PengumumanResource extends Resource
 
     protected static ?string $navigationGroup = 'Konten PPKMB';
 
+    protected static ?string $slug = 'pengumuman';
+
     public static function form(Form $form): Form
     {
         return $form
@@ -89,7 +91,7 @@ class PengumumanResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListPengumumen::route('/'),
+            'index' => Pages\ListPengumuman::route('/'),
             'create' => Pages\CreatePengumuman::route('/create'),
             'edit' => Pages\EditPengumuman::route('/{record}/edit'),
         ];

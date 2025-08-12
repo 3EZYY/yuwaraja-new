@@ -26,6 +26,7 @@
                     @endif
                     <div class="flex flex-col gap-2 w-full">
                         <input id="photo" name="photo" type="file" accept="image/*" class="block w-full text-sm text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-teal-500/10 file:text-teal-300 hover:file:bg-teal-500/20 transition-colors cursor-pointer"/>
+                        <p class="text-xs text-gray-500 mt-1">Note: File foto jangan lebih dari 2MB, Jangan lupa SIMPAN PERUBAHAN!</p>
                         @if($user->photo)
                             <a href="{{ route('profile.crop-photo') }}" class="w-max inline-flex items-center px-3 py-1 bg-amber-500/10 hover:bg-amber-500/20 text-amber-300 text-xs rounded-lg transition-colors">
                                 <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -94,9 +95,21 @@
                 <select id="program_studi" name="program_studi" class="mt-1 block w-full bg-gray-800/50 border border-cyan-500/50 p-2 text-gray-200 rounded-lg focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400/50 transition" required>
                     <option value="" disabled {{ !$user->program_studi ? 'selected' : '' }}>-- Pilih Program Studi --</option>
                     <option value="D3 Teknologi Informasi" {{ old('program_studi', $user->program_studi) == 'D3 Teknologi Informasi' ? 'selected' : '' }}>D3 Teknologi Informasi</option>
-                    <option value="D3 Keuangan Dan Perbankan" {{ old('program_studi', $user->program_studi) == 'D3 Keuangan Dan Perbankan' ? 'selected' : '' }}>D3 Keuangan Dan Perbankan</option>
-                    <option value="D4 Desain Grafis" {{ old('program_studi', $user->program_studi) == 'D4 Desain Grafis' ? 'selected' : '' }}>D4 Desain Grafis</option>
-                    <option value="D4 Manajemen Perhotelan" {{ old('program_studi', $user->program_studi) == 'D4 Manajemen Perhotelan' ? 'selected' : '' }}>D4 Manajemen Perhotelan</option>
+                    <option value="D3 Teknik Komputer" {{ old('program_studi', $user->program_studi) == 'D3 Teknik Komputer' ? 'selected' : '' }}>D3 Teknik Komputer</option>
+                    <option value="D3 Teknik Elektro" {{ old('program_studi', $user->program_studi) == 'D3 Teknik Elektro' ? 'selected' : '' }}>D3 Teknik Elektro</option>
+                    <option value="D3 Teknik Mesin" {{ old('program_studi', $user->program_studi) == 'D3 Teknik Mesin' ? 'selected' : '' }}>D3 Teknik Mesin</option>
+                    <option value="D3 Teknik Sipil" {{ old('program_studi', $user->program_studi) == 'D3 Teknik Sipil' ? 'selected' : '' }}>D3 Teknik Sipil</option>
+                    <option value="D3 Akuntansi" {{ old('program_studi', $user->program_studi) == 'D3 Akuntansi' ? 'selected' : '' }}>D3 Akuntansi</option>
+                    <option value="D3 Administrasi Bisnis" {{ old('program_studi', $user->program_studi) == 'D3 Administrasi Bisnis' ? 'selected' : '' }}>D3 Administrasi Bisnis</option>
+                    <option value="D3 Keuangan dan Perbankan" {{ old('program_studi', $user->program_studi) == 'D3 Keuangan dan Perbankan' ? 'selected' : '' }}>D3 Keuangan dan Perbankan</option>
+                    <option value="D3 Bahasa Inggris" {{ old('program_studi', $user->program_studi) == 'D3 Bahasa Inggris' ? 'selected' : '' }}>D3 Bahasa Inggris</option>
+                    <option value="D4 Teknologi Rekayasa Komputer" {{ old('program_studi', $user->program_studi) == 'D4 Teknologi Rekayasa Komputer' ? 'selected' : '' }}>D4 Teknologi Rekayasa Komputer</option>
+                    <option value="D4 Teknologi Rekayasa Elektro" {{ old('program_studi', $user->program_studi) == 'D4 Teknologi Rekayasa Elektro' ? 'selected' : '' }}>D4 Teknologi Rekayasa Elektro</option>
+                    <option value="D4 Teknologi Rekayasa Mesin" {{ old('program_studi', $user->program_studi) == 'D4 Teknologi Rekayasa Mesin' ? 'selected' : '' }}>D4 Teknologi Rekayasa Mesin</option>
+                    <option value="D4 Teknologi Rekayasa Sipil" {{ old('program_studi', $user->program_studi) == 'D4 Teknologi Rekayasa Sipil' ? 'selected' : '' }}>D4 Teknologi Rekayasa Sipil</option>
+                    <option value="D4 Akuntansi Manajemen" {{ old('program_studi', $user->program_studi) == 'D4 Akuntansi Manajemen' ? 'selected' : '' }}>D4 Akuntansi Manajemen</option>
+                    <option value="D4 Administrasi Bisnis Terapan" {{ old('program_studi', $user->program_studi) == 'D4 Administrasi Bisnis Terapan' ? 'selected' : '' }}>D4 Administrasi Bisnis Terapan</option>
+                    <option value="D4 Bahasa Inggris Terapan" {{ old('program_studi', $user->program_studi) == 'D4 Bahasa Inggris Terapan' ? 'selected' : '' }}>D4 Bahasa Inggris Terapan</option>
                 </select>
                 <x-input-error class="mt-2 text-red-400" :messages="$errors->get('program_studi')" />
             </div>

@@ -21,6 +21,10 @@ class EditProfile extends Page implements HasForms
     
     protected static ?string $navigationLabel = 'Edit Profile';
     
+    protected static ?string $navigationGroup = 'Admin';
+    
+    protected static ?int $navigationSort = 2;
+    
     protected static ?string $title = 'Edit Profile';
 
     protected static string $view = 'filament.pages.edit-admin-profile';

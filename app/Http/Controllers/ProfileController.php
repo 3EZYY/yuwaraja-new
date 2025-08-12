@@ -187,12 +187,8 @@ class ProfileController extends Controller
             $user->photo = $filename;
             $user->save();
 
-            // Redirect berdasarkan role
-            if ($user->role === 'spv') {
-                return redirect()->route('spv.profile.edit')->with('status', 'profile-photo-updated');
-            } else {
-                return redirect()->route('profile.edit')->with('status', 'profile-photo-updated');
-            }
+            // Redirect ke halaman profile
+            return redirect('/profile')->with('status', 'profile-photo-updated');
 
         } catch (\Exception $e) {
             \Log::error('Error saving cropped photo: ' . $e->getMessage());

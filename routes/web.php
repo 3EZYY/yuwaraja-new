@@ -17,6 +17,7 @@ use App\Http\Controllers\FriendshipController;
 use App\Http\Controllers\FaqController;
 use App\Http\Controllers\SpvAbsensiController;
 use App\Http\Controllers\MahasiswaAbsensiController;
+use App\Http\Controllers\Mahasiswa\ClusterController as MahasiswaClusterController;
 
 use App\Models\Faq;
 use Illuminate\Support\Facades\Route;
@@ -75,7 +76,7 @@ Route::middleware(['auth', 'verified', 'role:spv'])->prefix('spv')->name('spv.')
     Route::get('/mahasiswa/{id}', [SpvClusterController::class, 'showMahasiswa'])->name('mahasiswa.detail');
     Route::post('/cluster/upload-photo', [SpvClusterController::class, 'uploadPhoto'])->name('cluster.upload-photo');
     Route::delete('/cluster/delete-photo', [SpvClusterController::class, 'deletePhoto'])->name('cluster.delete-photo');
-    Route::post('/cluster/leave', [SpvClusterController::class, 'leaveCluster'])->name('cluster.leave');
+    // Route::post('/cluster/leave', [SpvClusterController::class, 'leaveCluster'])->name('cluster.leave'); // REMOVED
     Route::post('/cluster/join', [SpvClusterController::class, 'joinCluster'])->name('cluster.join');
     Route::post('/cluster/kick-member', [SpvClusterController::class, 'kickMember'])->name('cluster.kick-member');
     Route::get('/tugas', [SpvTugasController::class, 'index'])->name('tugas.index');
@@ -99,6 +100,7 @@ Route::middleware(['auth', 'verified', 'role:spv'])->prefix('spv')->name('spv.')
     // Profile Routes untuk SPV
     Route::get('/profile', [SpvProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [SpvProfileController::class, 'update'])->name('profile.update');
+    Route::post('/profile/upload-photo', [SpvProfileController::class, 'uploadPhoto'])->name('profile.upload-photo');
     Route::get('/profile/crop-photo', [ProfileController::class, 'cropPhoto'])->name('profile.crop-photo');
     Route::post('/profile/crop-photo', [ProfileController::class, 'saveCroppedPhoto'])->name('profile.save-cropped-photo');
 });
@@ -107,6 +109,10 @@ Route::middleware(['auth', 'verified', 'role:spv'])->prefix('spv')->name('spv.')
 Route::middleware(['auth', 'verified', 'role:mahasiswa'])->prefix('mahasiswa')->name('mahasiswa.')->group(function () {
     // Dashboard
     Route::get('/dashboard', [MahasiswaDashboardController::class, 'index'])->name('dashboard');
+    
+    // Cluster Routes
+    Route::get('/cluster', [MahasiswaClusterController::class, 'index'])->name('cluster.index');
+    Route::get('/cluster/member/{id}', [MahasiswaClusterController::class, 'showMember'])->name('cluster.member.detail');
 
     // Tugas Routes
     Route::controller(MahasiswaTugasController::class)->group(function () {
@@ -149,6 +155,7 @@ Route::middleware(['auth', 'verified', 'role:mahasiswa'])->prefix('mahasiswa')->
         Route::post('/accept/{id}', 'acceptRequest')->name('accept');
         Route::post('/reject/{id}', 'rejectRequest')->name('reject');
         Route::delete('/remove/{id}', 'removeFriend')->name('remove');
+        Route::get('/detail/{id}', 'showFriendDetail')->name('detail');
     });
 });
 

@@ -153,33 +153,7 @@ class SpvClusterController extends Controller
         }
     }
 
-    public function leaveCluster(Request $request)
-    {
-        $validator = Validator::make($request->all(), [
-            'kelompok_id' => 'required|exists:kelompoks,id'
-        ]);
-
-        if ($validator->fails()) {
-            return redirect()->back()->with('error', 'Validasi gagal: ' . $validator->errors()->first());
-        }
-
-        try {
-            $kelompok = Kelompok::findOrFail($request->kelompok_id);
-            
-            // Pastikan SPV hanya bisa keluar dari kelompok yang dibimbingnya
-            if ($kelompok->spv_id !== Auth::id()) {
-                return redirect()->back()->with('error', 'Anda tidak memiliki akses untuk keluar dari kelompok ini.');
-            }
-
-            // Hapus SPV dari kelompok (set spv_id menjadi null)
-            $kelompok->update(['spv_id' => null]);
-
-            return redirect()->route('spv.cluster.index')->with('success', 'Anda berhasil keluar dari cluster "' . $kelompok->nama_kelompok . '".');
-
-        } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Terjadi kesalahan saat keluar dari cluster: ' . $e->getMessage());
-        }
-    }
+    // leaveCluster method removed - feature disabled as per requirements
 
     public function joinCluster(Request $request)
     {

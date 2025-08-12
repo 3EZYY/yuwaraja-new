@@ -5,6 +5,22 @@
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600&family=Poppins:wght@600;700;900&display=swap');
 
+    :root {
+        --bg-main: #0a0a0a;
+        --surface-card: #111827;
+        --border-color: rgba(20, 184, 166, 0.25);
+        --brand-teal: #14b8a6;
+        --brand-gold: #f59e0b;
+        --text-primary: #d1d5db;
+        --text-secondary: #6b7280;
+    }
+
+    body {
+        background-color: var(--bg-main) !important;
+        font-family: 'Kanit', sans-serif;
+        color: var(--text-primary);
+    }
+
     .font-display {
         font-family: 'Poppins', sans-serif;
     }
@@ -14,33 +30,45 @@
     }
 
     .text-glow-teal {
-        text-shadow: 0 0 12px theme('colors.teal.500 / 0.5');
+        text-shadow: 0 0 12px rgba(20, 184, 166, 0.5);
     }
 
     .text-glow-amber {
-        text-shadow: 0 0 12px theme('colors.amber.400 / 0.5');
+        text-shadow: 0 0 12px rgba(245, 158, 11, 0.5);
+    }
+
+    .themed-card {
+        background-color: var(--surface-card);
+        border: 1px solid var(--border-color);
+        border-radius: 0.75rem;
+        transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .themed-card:hover {
+        border-color: var(--brand-gold);
+        box-shadow: 0 0 20px rgba(245, 158, 11, 0.15);
     }
 
     .gradient-border {
         border: 1px solid transparent;
-        background: linear-gradient(to right, theme('colors.gray.900'), theme('colors.gray.900')) padding-box,
-            linear-gradient(135deg, theme('colors.teal.400'), theme('colors.amber.400')) border-box;
+        background: linear-gradient(to right, var(--surface-card), var(--surface-card)) padding-box,
+            linear-gradient(135deg, var(--brand-teal), var(--brand-gold)) border-box;
     }
 </style>
 
-<div class="font-body bg-[#050a0e] min-h-screen py-12 sm:py-16" style="background-image: radial-gradient(circle, #1a202c, #050a0e);">
+<div class="font-body min-h-screen py-12 sm:py-16" style="background-color: var(--bg-main);">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         <!-- Header -->
         <header class="text-center mb-12">
-            <h1 class="font-display text-4xl sm:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-b from-teal-600 to-amber-300 mb-2 text-glow-teal">
+            <h1 class="font-display text-4xl sm:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-b from-teal-400 to-amber-400 mb-2 text-glow-teal">
                 MISSION CONTROL
             </h1>
-            <p class="text-gray-100 text-base sm:text-lg">Akses & kumpulkan semua misi yang ditugaskan.</p>
+            <p class="text-gray-300 text-base sm:text-lg">Akses & kumpulkan semua misi yang ditugaskan.</p>
         </header>
 
         <!-- Kontainer Utama -->
-        <main class="bg-black/50 backdrop-blur-xl shadow-2xl rounded-2xl border border-teal-500/10">
+        <main class="themed-card backdrop-blur-xl shadow-2xl">
             <div class="p-6 sm:p-8 md:p-10">
 
                 @if(isset($listMode) && $listMode && isset($tugas))
@@ -74,9 +102,9 @@
                                 <div class="flex-grow">
                                     <div class="flex items-start justify-between mb-3">
                                         <h3 class="font-display text-xl font-bold text-gray-50 group-hover:text-teal-500 transition-colors duration-300">{{ $item->judul }}</h3>
-                                        @php 
-                                            $pengumpulan = $pengumpulanTugas[$item->id] ?? null; 
-                                            $isExpired = now() > $item->deadline;
+                                        @php
+                                        $pengumpulan = $pengumpulanTugas[$item->id] ?? null;
+                                        $isExpired = now() > $item->deadline;
                                         @endphp
                                         @if($pengumpulan)
                                         @if($pengumpulan->status == 'done')
@@ -170,12 +198,13 @@
                     @if($tugas->file_path)
                     <div>
                         <h3 class="font-display text-lg font-bold text-gray-50 mb-3 flex items-center gap-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white" viewBox="0 0 20 20" fill="currentColor">
-                                <path fill-rule="evenodd" d="M8 4a3 3 0 00-3 3v4a5 5 0 0010 0V7a3 3 0 10-6 0v4a3 3 0 11-6 0V7a1 1 0 011-1h1V4a1 1 0 112 0v1h1a1 1 0 112 0v1h1a1 1 0 011 1v2a1 1 0 11-2 0V7a3 3 0 00-3-3z" clip-rule="evenodd" />
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
+                                <path fill-rule="evenodd" d="M5.625 1.5c-1.036 0-1.875.84-1.875 1.875v17.25c0 1.035.84 1.875 1.875 1.875h12.75c1.035 0 1.875-.84 1.875-1.875V12.75A3.75 3.75 0 0 0 16.5 9h-1.875a1.875 1.875 0 0 1-1.875-1.875V5.25A3.75 3.75 0 0 0 9 1.5H5.625ZM7.5 15a.75.75 0 0 1 .75-.75h7.5a.75.75 0 0 1 0 1.5h-7.5A.75.75 0 0 1 7.5 15Zm.75 2.25a.75.75 0 0 0 0 1.5H12a.75.75 0 0 0 0-1.5H8.25Z" clip-rule="evenodd" />
+                                <path d="M12.971 1.816A5.23 5.23 0 0 1 14.25 5.25v1.875c0 .207.168.375.375.375H16.5a5.23 5.23 0 0 1 3.434 1.279 9.768 9.768 0 0 0-6.963-6.963Z" />
                             </svg>
                             Lampiran
                         </h3>
-                        <a href="{{ route('mahasiswa.tugas.download', $tugas) }}" class="inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold bg-gray-700 hover:bg-gray-600 text-teal-200 rounded-lg transition-colors">
+                        <a href="{{ route('mahasiswa.tugas.download', $tugas) }}" class="mb-5 inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold bg-gray-700 hover:bg-gray-600 text-teal-200 rounded-lg transition-colors">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
                             </svg>
@@ -186,11 +215,10 @@
                 </div>
 
                 {{-- Kolom Kanan: Panel Pengumpulan --}}
-                <div class="lg:col-span-2 bg-gray-900/80 p-6 rounded-xl border border-gray-700/50">
+                <div class="lg:col-span-2 themed-card p-6">
                     <h2 class="font-display text-xl font-bold mb-5 text-white flex items-center gap-3">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" viewBox="0 0 20 20" fill="currentColor">
-                            <path d="M5.5 13a3.5 3.5 0 01-.369-6.98 4 4 0 117.753-1.977A4.5 4.5 0 1113.5 13H11V9.414l-1.293 1.293a1 1 0 01-1.414-1.414l3-3a1 1 0 011.414 0l3 3a1 1 0 01-1.414 1.414L13 9.414V13H5.5z" />
-                            <path d="M9 13h2v5a1 1 0 11-2 0v-5z" />
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
+                            <path fill-rule="evenodd" d="M10.5 3.75a6 6 0 0 0-5.98 6.496A5.25 5.25 0 0 0 6.75 20.25H18a4.5 4.5 0 0 0 2.206-8.423 3.75 3.75 0 0 0-4.133-4.303A6.001 6.001 0 0 0 10.5 3.75Zm2.25 6a.75.75 0 0 0-1.5 0v4.94l-1.72-1.72a.75.75 0 0 0-1.06 1.06l3 3a.75.75 0 0 0 1.06 0l3-3a.75.75 0 1 0-1.06-1.06l-1.72 1.72V9.75Z" clip-rule="evenodd" />
                         </svg>
                         Status & Pengumpulan
                     </h2>
@@ -202,35 +230,35 @@
                         </svg><span>{{ session('error') }}</span></div> @endif
 
                     @if(isset($pengumpulan) && $pengumpulan->file_path)
-                    <div class="bg-gray-800 p-4 rounded-lg border border-gray-700 mb-4">
-                        <p class="text-sm font-semibold text-teal-200 flex items-center gap-2">
+                    <div class="bg-gray-800/80 p-4 rounded-lg border border-teal-500/20 mb-4">
+                        <p class="text-sm font-semibold text-teal-400 flex items-center gap-2">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                                 <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
                             </svg>
                             File Terkumpul
                         </p>
-                        <a href="{{ route('mahasiswa.pengumpulan.download', $pengumpulan) }}" class="text-amber-300 hover:underline text-sm truncate block mt-1 ml-7">{{ basename($pengumpulan->file_path) }}</a>
-                        
+                        <a href="{{ route('mahasiswa.pengumpulan.download', $pengumpulan) }}" class="text-amber-400 hover:text-amber-300 hover:underline text-sm truncate block mt-1 ml-7">{{ basename($pengumpulan->file_path) }}</a>
+
                         <!-- Status pengumpulan -->
-                        <div class="mt-3 pt-3 border-t border-gray-700">
-                            <p class="text-sm text-gray-300">Status: 
+                        <div class="mt-3 pt-3 border-t border-gray-600/50">
+                            <p class="text-sm text-gray-300">Status:
                                 @if($pengumpulan->status == 'reviewed')
-                                    <span class="text-blue-400 font-semibold">Sedang Direview SPV</span>
+                                <span class="text-blue-400 font-semibold">Sedang Direview SPV</span>
                                 @elseif($pengumpulan->status == 'rejected')
-                                    <span class="text-red-400 font-semibold">Butuh Perbaikan</span>
+                                <span class="text-red-400 font-semibold">Butuh Perbaikan</span>
                                 @elseif($pengumpulan->status == 'done')
-                                    <span class="text-purple-400 font-semibold">Tugas Selesai</span>
+                                <span class="text-purple-400 font-semibold">Tugas Selesai</span>
                                 @elseif($pengumpulan->status == 'submitted')
-                                    <span class="text-yellow-400 font-semibold">Menunggu Review</span>
+                                <span class="text-yellow-400 font-semibold">Menunggu Review</span>
                                 @else
-                                    <span class="text-gray-400 font-semibold">{{ ucfirst($pengumpulan->status) }}</span>
+                                <span class="text-gray-400 font-semibold">{{ ucfirst($pengumpulan->status) }}</span>
                                 @endif
                             </p>
                             @if($pengumpulan->feedback)
-                                <p class="text-sm text-gray-400 mt-1">Feedback SPV: <em>{{ $pengumpulan->feedback }}</em></p>
+                            <p class="text-sm text-gray-400 mt-1">Feedback SPV: <em>{{ $pengumpulan->feedback }}</em></p>
                             @endif
                             @if($pengumpulan->status == 'done' && $pengumpulan->nilai !== null)
-                                <p class="text-sm text-cyan-400 mt-1">Nilai: <strong>{{ $pengumpulan->nilai }}</strong></p>
+                            <p class="text-sm text-cyan-400 mt-1">Nilai: <strong>{{ $pengumpulan->nilai }}</strong></p>
                             @endif
                         </div>
                     </div>
@@ -252,11 +280,11 @@
                             </div>
                             <button type="submit" class="w-full px-6 py-3 bg-teal-500 hover:bg-teal-600 text-black font-bold rounded-lg transition-all duration-300 hover:shadow-lg hover:shadow-teal-500/20 font-display focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-900 focus:ring-teal-400">
                                 @if(isset($pengumpulan) && $pengumpulan->status == 'rejected')
-                                    Kumpulkan Ulang (Perbaikan)
+                                Kumpulkan Ulang (Perbaikan)
                                 @elseif(isset($pengumpulan) && $pengumpulan->file_path)
-                                    Kirim Versi Baru
+                                Kirim Versi Baru
                                 @else
-                                    Kirim Misi
+                                Kirim Misi
                                 @endif
                             </button>
                         </form>

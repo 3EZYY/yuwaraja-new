@@ -54,6 +54,7 @@
                 @endif
                 <div class="flex flex-col gap-2">
                     <input id="photo" name="photo" type="file" accept="image/*" class="block w-full text-sm text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-teal-500/10 file:text-teal-300 hover:file:bg-teal-500/20 transition-colors cursor-pointer"/>
+                    <p class="text-xs text-gray-500 mt-1">Note: File foto jangan lebih dari 2MB</p>
                     @if($user->photo)
                         <a href="{{ route('profile.crop-photo') }}" class="inline-flex items-center px-3 py-1 bg-amber-500/10 hover:bg-amber-500/20 text-amber-300 text-xs rounded-lg transition-colors">
                             <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">

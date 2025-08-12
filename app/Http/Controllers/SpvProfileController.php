@@ -95,4 +95,55 @@ class SpvProfileController extends Controller
 
         return Redirect::route('spv.profile.edit')->with('status', 'profile-updated');
     }
+
+    /**
+     * Upload profile photo via AJAX for SPV.
+     */
+    public function uploadPhoto(Request $request)
+    {
+        $request->validate([
+            'photo' => 'required|image|mimes:jpeg,png,jpg,gif|max:5120', // 5MB max
+        ]);
+
+        try {
+            $user = $request->user();
+            
+            // Delete old photo if exists
+            if ($user->photo) {
+                $oldPhotoPath = public_path('profile-pictures/' . $user->photo);
+                if (file_exists($oldPhotoPath)) {
+                    unlink($oldPhotoPath);
+                }
+            }
+
+            $photo = $request->file('photo');
+            $filename = 'spv_profile_' . $user->id . '_' . time() . '.' . $photo->getClientOriginalExtension();
+
+            // Create directory if it doesn't exist
+            $uploadPath = public_path('profile-pictures');
+            if (!file_exists($uploadPath)) {
+                mkdir($uploadPath, 0755, true);
+            }
+
+            // Store the new photo
+            $photo->move($uploadPath, $filename);
+
+            // Update user photo
+            $user->photo = $filename;
+            $user->save();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Foto profile berhasil diupload!',
+                'photo_url' => asset('profile-pictures/' . $filename)
+            ]);
+
+        } catch (\Exception $e) {
+            \Log::error('Error uploading SPV profile photo: ' . $e->getMessage());
+            return response()->json([
+                'success' => false,
+                'message' => 'Gagal mengupload foto profile. Silakan coba lagi.'
+            ], 500);
+        }
+    }
 }
