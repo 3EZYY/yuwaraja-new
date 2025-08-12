@@ -322,8 +322,6 @@ class UserResource extends Resource
                         'D3 Administrasi Bisnis' => 'D3 Administrasi Bisnis',
                         'D4 Desain Grafis' => 'D4 Desain Grafis',
                         'D3 Teknologi Informasi' => 'D3 Teknologi Informasi',
-                        'Sistem Informasi' => 'Sistem Informasi',
-                        'Teknik Informatika' => 'Teknik Informatika',
                     ]),
 
                 Tables\Filters\SelectFilter::make('kelompok_id')

@@ -7,6 +7,7 @@ use Filament\Forms\Contracts\HasForms;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Form;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Section;
 use Filament\Actions\Action;
 use Filament\Notifications\Notification;
@@ -77,9 +78,16 @@ class EditProfile extends Page implements HasForms
                             ->label('NIM')
                             ->maxLength(20),
                             
-                        TextInput::make('program_studi')
+                        Select::make('program_studi')
                             ->label('Program Studi')
-                            ->maxLength(100),
+                            ->options([
+                                'D4 Manajemen Perhotelan' => 'D4 Manajemen Perhotelan',
+                                'D3 Keuangan dan Perbankan' => 'D3 Keuangan dan Perbankan',
+                                'D3 Administrasi Bisnis' => 'D3 Administrasi Bisnis',
+                                'D4 Desain Grafis' => 'D4 Desain Grafis',
+                                'D3 Teknologi Informasi' => 'D3 Teknologi Informasi',
+                            ])
+                            ->required(),
                     ])
                     ->columns(2),
             ])

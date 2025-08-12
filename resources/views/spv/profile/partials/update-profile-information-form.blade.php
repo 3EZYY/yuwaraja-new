@@ -75,6 +75,20 @@
             <x-input-error class="mt-2" :messages="$errors->get('nomor_telepon')" />
         </div>
 
+        <!-- Program Studi -->
+        <div>
+            <x-input-label for="program_studi" :value="__('Program Studi')" class="text-teal-300 font-semibold" />
+            <select id="program_studi" name="program_studi" class="mt-1 block w-full bg-gray-800/50 border-gray-600 text-white focus:border-teal-400 focus:ring-teal-400 rounded-md" required>
+                <option value="" disabled {{ !$user->program_studi ? 'selected' : '' }}>-- Pilih Program Studi --</option>
+                <option value="D4 Manajemen Perhotelan" {{ old('program_studi', $user->program_studi) == 'D4 Manajemen Perhotelan' ? 'selected' : '' }}>D4 Manajemen Perhotelan</option>
+                <option value="D3 Keuangan dan Perbankan" {{ old('program_studi', $user->program_studi) == 'D3 Keuangan dan Perbankan' ? 'selected' : '' }}>D3 Keuangan dan Perbankan</option>
+                <option value="D3 Administrasi Bisnis" {{ old('program_studi', $user->program_studi) == 'D3 Administrasi Bisnis' ? 'selected' : '' }}>D3 Administrasi Bisnis</option>
+                <option value="D4 Desain Grafis" {{ old('program_studi', $user->program_studi) == 'D4 Desain Grafis' ? 'selected' : '' }}>D4 Desain Grafis</option>
+                <option value="D3 Teknologi Informasi" {{ old('program_studi', $user->program_studi) == 'D3 Teknologi Informasi' ? 'selected' : '' }}>D3 Teknologi Informasi</option>
+            </select>
+            <x-input-error class="mt-2" :messages="$errors->get('program_studi')" />
+        </div>
+
         <!-- Alamat -->
         <div>
             <x-input-label for="address" :value="__('Alamat')" class="text-teal-300 font-semibold" />

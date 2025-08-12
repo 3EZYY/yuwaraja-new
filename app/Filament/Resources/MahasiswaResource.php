@@ -73,22 +73,11 @@ class MahasiswaResource extends Resource
                 Forms\Components\Select::make('program_studi')
                     ->label('Program Studi')
                     ->options([
-                        'D3 Teknologi Informasi' => 'D3 Teknologi Informasi',
-                        'D3 Teknik Komputer' => 'D3 Teknik Komputer',
-                        'D3 Teknik Elektro' => 'D3 Teknik Elektro',
-                        'D3 Teknik Mesin' => 'D3 Teknik Mesin',
-                        'D3 Teknik Sipil' => 'D3 Teknik Sipil',
-                        'D3 Akuntansi' => 'D3 Akuntansi',
-                        'D3 Administrasi Bisnis' => 'D3 Administrasi Bisnis',
+                        'D4 Manajemen Perhotelan' => 'D4 Manajemen Perhotelan',
                         'D3 Keuangan dan Perbankan' => 'D3 Keuangan dan Perbankan',
-                        'D3 Bahasa Inggris' => 'D3 Bahasa Inggris',
-                        'D4 Teknologi Rekayasa Komputer' => 'D4 Teknologi Rekayasa Komputer',
-                        'D4 Teknologi Rekayasa Elektro' => 'D4 Teknologi Rekayasa Elektro',
-                        'D4 Teknologi Rekayasa Mesin' => 'D4 Teknologi Rekayasa Mesin',
-                        'D4 Teknologi Rekayasa Sipil' => 'D4 Teknologi Rekayasa Sipil',
-                        'D4 Akuntansi Manajemen' => 'D4 Akuntansi Manajemen',
-                        'D4 Administrasi Bisnis Terapan' => 'D4 Administrasi Bisnis Terapan',
-                        'D4 Bahasa Inggris Terapan' => 'D4 Bahasa Inggris Terapan',
+                        'D3 Administrasi Bisnis' => 'D3 Administrasi Bisnis',
+                        'D4 Desain Grafis' => 'D4 Desain Grafis',
+                        'D3 Teknologi Informasi' => 'D3 Teknologi Informasi',
                     ])
                     ->searchable()
                     ->required(),

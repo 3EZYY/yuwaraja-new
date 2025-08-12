@@ -45,7 +45,7 @@ class ProfileUpdateRequest extends FormRequest
             'kota' => ['nullable', 'string', 'in:Kota,Kabupaten'],
             'jalur_masuk' => ['nullable', 'string', 'in:SNBP,SNBT,Mandiri UB,Mandiri Vokasi'],
             'address' => ['nullable', 'string', 'max:500'],
-            'program_studi' => ['required', 'string', 'in:D3 Teknologi Informasi,D3 Teknik Komputer,D3 Teknik Elektro,D3 Teknik Mesin,D3 Teknik Sipil,D3 Akuntansi,D3 Administrasi Bisnis,D3 Keuangan dan Perbankan,D3 Bahasa Inggris,D4 Teknologi Rekayasa Komputer,D4 Teknologi Rekayasa Elektro,D4 Teknologi Rekayasa Mesin,D4 Teknologi Rekayasa Sipil,D4 Akuntansi Manajemen,D4 Administrasi Bisnis Terapan,D4 Bahasa Inggris Terapan'],
+            'program_studi' => ['required', 'string', 'in:D4 Manajemen Perhotelan,D3 Keuangan dan Perbankan,D3 Administrasi Bisnis,D4 Desain Grafis,D3 Teknologi Informasi'],
             'deskripsi' => ['nullable', 'string', 'max:1000'],
             'photo' => ['nullable', 'image', 'max:2048', 'mimes:jpeg,png,jpg,gif'],
         ];
