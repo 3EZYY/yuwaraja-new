@@ -230,7 +230,7 @@
                 </div>
             </div>
             <!-- Student Description Section -->
-            @if($pengumpulan->keterangan)
+            @if($pengumpulan)
             <div class="bg-gradient-to-r from-blue-500/10 to-cyan-500/10 border border-blue-500/30 rounded-lg p-6 my-5 scroll-reveal">
                 <div class="flex items-start gap-3">
                     <div class="p-2 bg-blue-500/20 rounded-lg">
