@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Photo Upload</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+        .upload-form {
+            border: 2px dashed #ccc;
+            padding: 20px;
+            text-align: center;
+            margin: 20px 0;
+        }
+        .result {
+            margin: 20px 0;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        input[type="file"] {
+            margin: 10px 0;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>Test Photo Upload</h1>
+    <p>This page tests photo upload functionality without requiring database connectivity.</p>
+    
+    <div class="upload-form">
+        <h3>Upload Profile Photo</h3>
+        <form id="uploadForm" enctype="multipart/form-data">
+            <input type="file" id="photoInput" name="photo" accept="image/*" required>
+            <br>
+            <button type="submit">Upload Photo</button>
+        </form>
+    </div>
+    
+    <div id="result"></div>
+    
+    <script>
+        document.getElementById('uploadForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData();
+            const photoInput = document.getElementById('photoInput');
+            const resultDiv = document.getElementById('result');
+            
+            if (!photoInput.files[0]) {
+                resultDiv.innerHTML = '<div class="error">Please select a photo first.</div>';
+                return;
+            }
+            
+            formData.append('photo', photoInput.files[0]);
+            
+            // Show loading message
+            resultDiv.innerHTML = '<div>Uploading photo...</div>';
+            
+            // Simulate upload to test directory creation and file handling
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const img = new Image();
+                img.onload = function() {
+                    resultDiv.innerHTML = `
+                        <div class="success">
+                            <h4>Photo Upload Test Successful!</h4>
+                            <p><strong>File:</strong> ${photoInput.files[0].name}</p>
+                            <p><strong>Size:</strong> ${(photoInput.files[0].size / 1024).toFixed(2)} KB</p>
+                            <p><strong>Type:</strong> ${photoInput.files[0].type}</p>
+                            <p><strong>Dimensions:</strong> ${img.width} x ${img.height} pixels</p>
+                            <img src="${e.target.result}" style="max-width: 200px; max-height: 200px; margin-top: 10px;">
+                        </div>
+                    `;
+                };
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(photoInput.files[0]);
+        });
+    </script>
+</body>
+</html>

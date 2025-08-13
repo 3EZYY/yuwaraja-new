@@ -98,9 +98,9 @@ Route::middleware(['auth', 'verified', 'role:spv'])->prefix('spv')->name('spv.')
     });
     
     // Profile Routes untuk SPV
-    Route::get('/profile', [SpvProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [SpvProfileController::class, 'update'])->name('profile.update');
-    Route::post('/profile/upload-photo', [SpvProfileController::class, 'uploadPhoto'])->name('profile.upload-photo');
+    Route::get('/profile', [SpvProfileController::class, 'edit'])->name('spv.profile.edit');
+    Route::patch('/profile', [SpvProfileController::class, 'update'])->name('spv.profile.update');
+    Route::post('/profile/upload-photo', [SpvProfileController::class, 'uploadPhoto'])->name('spv.profile.upload-photo');
     Route::get('/profile/crop-photo', [ProfileController::class, 'cropPhoto'])->name('profile.crop-photo');
     Route::post('/profile/crop-photo', [ProfileController::class, 'saveCroppedPhoto'])->name('profile.save-cropped-photo');
 });

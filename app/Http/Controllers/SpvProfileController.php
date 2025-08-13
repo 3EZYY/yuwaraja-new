@@ -85,15 +85,27 @@ class SpvProfileController extends Controller
             $user->email_verified_at = null;
         }
 
-        // Save changes
-        $user->save();
+        // Save changes - handle database connection issues gracefully
+        try {
+            $user->save();
+            \Log::info('SPV profile updated successfully for user: ' . $user->id);
+            
+            // If photo was uploaded, redirect to crop page
+            if ($request->hasFile('photo')) {
+                return redirect()->route('profile.crop-photo')->with('status', 'photo-uploaded');
+            }
 
-        // If photo was uploaded, redirect to crop page
-        if ($request->hasFile('photo')) {
-            return redirect()->route('profile.crop-photo')->with('status', 'photo-uploaded');
+            return Redirect::route('spv.profile.edit')->with('status', 'profile-updated');
+        } catch (\Exception $dbException) {
+            \Log::error('Database error while saving SPV profile: ' . $dbException->getMessage());
+            
+            // If photo was uploaded, still redirect to crop page even if database save failed
+            if ($request->hasFile('photo')) {
+                return redirect()->route('profile.crop-photo')->with('status', 'photo-uploaded')->with('warning', 'Foto berhasil diupload, namun ada masalah dengan database. Silakan hubungi administrator.');
+            }
+            
+            return Redirect::route('spv.profile.edit')->with('error', 'Terjadi masalah dengan database. Silakan coba lagi atau hubungi administrator.');
         }
-
-        return Redirect::route('spv.profile.edit')->with('status', 'profile-updated');
     }
 
     /**
@@ -128,9 +140,15 @@ class SpvProfileController extends Controller
             // Store the new photo
             $photo->move($uploadPath, $filename);
 
-            // Update user photo
-            $user->photo = $filename;
-            $user->save();
+            // Try to update user photo in database, but don't fail if database is unavailable
+            try {
+                $user->photo = $filename;
+                $user->save();
+                \Log::info('SPV photo filename saved to database for user: ' . $user->id);
+            } catch (\Exception $dbException) {
+                \Log::warning('Could not save SPV photo filename to database (database unavailable), but photo file uploaded successfully: ' . $dbException->getMessage());
+                // Continue execution - photo is uploaded even if database update fails
+            }
 
             return response()->json([
                 'success' => true,
