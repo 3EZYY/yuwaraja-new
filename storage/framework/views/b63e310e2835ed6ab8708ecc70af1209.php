@@ -1,7 +1,7 @@
 <?php $attributes ??= new \Illuminate\View\ComponentAttributeBag;
 
 $__newAttributes = [];
-$__propNames = \Illuminate\View\ComponentAttributeBag::extractPropNames((['status']));
+$__propNames = \Illuminate\View\ComponentAttributeBag::extractPropNames((['disabled' => false]));
 
 foreach ($attributes->all() as $__key => $__value) {
     if (in_array($__key, $__propNames)) {
@@ -16,7 +16,7 @@ $attributes = new \Illuminate\View\ComponentAttributeBag($__newAttributes);
 unset($__propNames);
 unset($__newAttributes);
 
-foreach (array_filter((['status']), 'is_string', ARRAY_FILTER_USE_KEY) as $__key => $__value) {
+foreach (array_filter((['disabled' => false]), 'is_string', ARRAY_FILTER_USE_KEY) as $__key => $__value) {
     $$__key = $$__key ?? $__value;
 }
 
@@ -28,10 +28,5 @@ foreach ($attributes->all() as $__key => $__value) {
 
 unset($__defined_vars, $__key, $__value); ?>
 
-<?php if($status): ?>
-    <div <?php echo e($attributes->merge(['class' => 'font-medium text-sm text-green-600'])); ?>>
-        <?php echo e($status); ?>
-
-    </div>
-<?php endif; ?>
-<?php /**PATH C:\laragon\www\yuwaraja-new\resources\views/components/auth-session-status.blade.php ENDPATH**/ ?>
+<input <?php if($disabled): echo 'disabled'; endif; ?> <?php echo e($attributes->merge(['class' => 'border-cyan-500/50 focus:border-cyan-400 focus:ring-cyan-500 rounded-md shadow-sm'])); ?>>
+<?php /**PATH C:\laragon\www\yuwaraja-new\resources\views/components/text-input.blade.php ENDPATH**/ ?>

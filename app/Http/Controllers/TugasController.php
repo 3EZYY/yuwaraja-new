@@ -34,7 +34,7 @@ class TugasController extends Controller
         }
 
         $request->validate([
-            'file' => 'required|file|max:10240', // Max 10MB
+            'file' => 'nullable|file|max:10240', // Max 10MB
             'keterangan' => 'nullable|string|max:1000'
         ]);
 

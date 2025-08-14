@@ -91,7 +91,9 @@
 
         <div class="min-h-screen bg-gradient-to-br from-gray-900 via-black to-blue-900/30">
             <!-- Sidebar -->
-            <x-sidebar :role="Auth::user()->role" />
+            @auth
+    <x-sidebar :role="Auth::user()->role" />
+@endauth
 
             <!-- Main Content -->
             <div class="lg:pl-72">

@@ -37,6 +37,7 @@ class ProfileUpdateRequest extends FormRequest
             'tempat_lahir' => ['nullable', 'string', 'max:100'],
             'tanggal_lahir' => ['nullable', 'date'],
             'jenis_kelamin' => ['nullable', 'string', 'in:Laki-Laki,Perempuan'],
+            'agama' => ['nullable', 'string', 'in:Islam,Kristen Protestan,Katolik,Hindu,Buddha,Khonghucu,Kepercayaan'],
             'asal_sekolah_jenis' => ['nullable', 'string', 'in:SMA,SMK,MAN,Lainnya'],
             'asal_sekolah_nama' => ['nullable', 'string', 'max:255'],
             'jurusan_sekolah' => ['nullable', 'string', 'max:255'],

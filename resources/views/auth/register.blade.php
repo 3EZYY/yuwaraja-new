@@ -97,13 +97,33 @@
 
                 <!-- Jenis Kelamin -->
                 <div style="animation-delay: 1.1s;">
-                    <x-input-label for="jenis_kelamin" value="Jenis Kelamin" class="mb-1 text-sm text-cyan-300 tracking-wide" />
-                    <select id="jenis_kelamin" name="jenis_kelamin" class="cyber-input cyber-select" required>
-                        <option value="" disabled {{ old('jenis_kelamin') ? '' : 'selected' }}>Pilih Jenis Kelamin</option>
-                        <option value="Laki-laki" {{ old('jenis_kelamin') == 'Laki-laki' ? 'selected' : '' }}>Laki-laki</option>
-                        <option value="Perempuan" {{ old('jenis_kelamin') == 'Perempuan' ? 'selected' : '' }}>Perempuan</option>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                <div>
+                    <x-input-label for="jenis_kelamin" value="Jenis Kelamin" class="font-semibold text-gray-300" />
+                    <select id="jenis_kelamin" name="jenis_kelamin" class="mt-1 block w-full bg-gray-800/50 border border-cyan-500/50 p-2 text-gray-200 rounded-lg focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400/50 transition">
+                        <option value="" disabled {{ old('jenis_kelamin') ? '' : 'selected' }}>-- Pilih Jenis Kelamin --</option>
+<option value="Laki-Laki" {{ old('jenis_kelamin') == 'Laki-Laki' ? 'selected' : '' }}>Laki-Laki</option>
+<option value="Perempuan" {{ old('jenis_kelamin') == 'Perempuan' ? 'selected' : '' }}>Perempuan</option>
                     </select>
-                    <x-input-error :messages="$errors->get('jenis_kelamin')" class="mt-2 text-yellow-400 text-xs" />
+                    <x-input-error class="mt-2 text-red-400" :messages="$errors->get('jenis_kelamin')" />
+                </div>
+                <div>
+            <x-input-label for="agama" value="Agama" class="font-semibold text-gray-300" />
+            <select id="agama" name="agama" class="mt-1 block w-full bg-gray-800/50 border border-cyan-500/50 p-2 text-gray-200 rounded-lg focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400/50 transition" onchange="toggleCustomInput(this)">
+                <option value="" disabled {{ old('agama') ? '' : 'selected' }}>-- Pilih Agama --</option>
+                <option value="Islam" {{ old('agama') == 'Islam' ? 'selected' : '' }}>Islam</option>
+                <option value="Kristen Protestan" {{ old('agama') == 'Kristen Protestan' ? 'selected' : '' }}>Kristen Protestan</option>
+                <option value="Katolik" {{ old('agama') == 'Katolik' ? 'selected' : '' }}>Katolik</option>
+                <option value="Hindu" {{ old('agama') == 'Hindu' ? 'selected' : '' }}>Hindu</option>
+                <option value="Buddha" {{ old('agama') == 'Buddha' ? 'selected' : '' }}>Buddha</option>
+                <option value="Khonghucu" {{ old('agama') == 'Khonghucu' ? 'selected' : '' }}>Khonghucu</option>
+                <option value="Kepercayaan" {{ old('agama') == 'Kepercayaan' ? 'selected' : '' }}>Kepercayaan</option>
+            </select>
+            <input type="text" id="agama_custom" name="agama_custom" placeholder="Masukkan agama lainnya" class="mt-2 hidden w-full bg-gray-800/50 border border-cyan-500/50 p-2 text-gray-200 rounded-lg focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400/50 transition" value="{{ old('agama_custom') }}">
+            <x-input-error class="mt-2 text-red-400" :messages="$errors->get('agama')" />
+            </div>
+            </div>
                 </div>
 
                 <!-- Asal Sekolah -->

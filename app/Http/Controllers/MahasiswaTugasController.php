@@ -50,7 +50,7 @@ class MahasiswaTugasController extends Controller
     public function submit(Request $request, Tugas $tugas)
     {
         $request->validate([
-            'file' => 'required|file|mimes:pdf,doc,docx,zip,rar|max:10240', // Max 10MB
+            'file' => 'nullable|file|mimes:pdf,doc,docx,zip,rar|max:10240', // Max 10MB
             'keterangan' => 'nullable|string|max:2000',
         ]);
 

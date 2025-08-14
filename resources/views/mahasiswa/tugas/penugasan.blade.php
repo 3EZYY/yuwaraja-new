@@ -268,8 +268,8 @@
                         <form action="{{ route('mahasiswa.tugas.submit', $tugas) }}" method="POST" enctype="multipart/form-data" class="space-y-4">
                             @csrf
                             <div>
-                                <label for="file" class="block text-sm font-semibold text-gray-300 mb-1">Upload File <span class="text-red-400">*</span></label>
-                                <input type="file" id="file" name="file" class="block w-full text-sm text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-teal-500/10 file:text-white hover:file:bg-teal-500/20 transition-colors cursor-pointer" accept=".pdf,.doc,.docx,.zip,.rar" required>
+                                <label for="file" class="block text-sm font-semibold text-gray-300 mb-1">Upload File (opsional) <span class="text-red-400">*</span></label>
+                                <input type="file" id="file" name="file" class="block w-full text-sm text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-teal-500/10 file:text-white hover:file:bg-teal-500/20 transition-colors cursor-pointer" accept=".pdf,.doc,.docx,.zip,.rar">
                                 <p class="mt-1 text-xs text-gray-500">Maks: 10MB (PDF, DOC, ZIP, RAR)</p>
                                 @error('file') <p class="text-sm text-red-400 mt-1">{{ $message }}</p> @enderror
                             </div>

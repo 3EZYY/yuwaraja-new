@@ -74,6 +74,7 @@ class RegisteredUserController extends Controller
                     }
                 }
             ],
+            'agama' => ['nullable', 'string', 'in:Islam,Kristen,Katolik,Hindu,Buddha,Konghucu,Kepercayaan'],
             'program_studi' => ['required', 'string', 'max:255'],
             'angkatan' => ['required', 'string', 'in:2023,2024,2025'],
             'nomor_telepon' => ['required', 'string', 'max:255'], // Tambahan 'required'
