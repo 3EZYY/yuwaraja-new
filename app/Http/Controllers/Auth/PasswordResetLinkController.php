@@ -24,21 +24,33 @@ class PasswordResetLinkController extends Controller
      * @throws \Illuminate\Validation\ValidationException
      */
     public function store(Request $request): RedirectResponse
-    {
-        $request->validate([
-            'email' => ['required', 'email'],
-        ]);
+{
+    $request->validate([
+        'email' => ['required', 'email'],
+    ]);
 
-        // We will send the password reset link to this user. Once we have attempted
-        // to send the link, we will examine the response then see the message we
-        // need to show to the user. Finally, we'll send out a proper response.
-        $status = Password::sendResetLink(
-            $request->only('email')
-        );
-
-        return $status == Password::RESET_LINK_SENT
-                    ? back()->with('status', __($status))
-                    : back()->withInput($request->only('email'))
-                        ->withErrors(['email' => __($status)]);
+    $email = $request->input('email');
+    
+    // Cek apakah email ada di field 'email' atau 'email_student'
+    $user = \App\Models\User::where('email', $email)
+                           ->orWhere('email_student', $email)
+                           ->first();
+    
+    if (!$user) {
+        return back()->withErrors(['email' => 'Email tidak ditemukan dalam sistem.']);
     }
+    
+    // Tentukan field email mana yang cocok untuk reset password
+    $resetEmail = $user->email === $email ? 'email' : 'email_student';
+    
+    // Kirim reset link dengan email yang tepat
+    $status = Password::sendResetLink([
+        $resetEmail => $email
+    ]);
+
+    return $status == Password::RESET_LINK_SENT
+                ? back()->with('status', __($status))
+                : back()->withInput($request->only('email'))
+                    ->withErrors(['email' => __($status)]);
+}
 }

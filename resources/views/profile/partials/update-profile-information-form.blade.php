@@ -26,6 +26,7 @@
                     @endif
                     <div class="flex flex-col gap-2 w-full">
                         <input id="photo" name="photo" type="file" accept="image/*" class="block w-full text-sm text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-teal-500/10 file:text-teal-300 hover:file:bg-teal-500/20 transition-colors cursor-pointer"/>
+                        <div id="photo-error" class="text-sm text-red-400"></div> 
                         <p class="text-xs text-gray-500 mt-1">Note: File foto jangan lebih dari 2MB, Jangan lupa SIMPAN PERUBAHAN!</p>
                         @if($user->photo)
                             <a href="{{ route('profile.crop-photo') }}" class="w-max inline-flex items-center px-3 py-1 bg-amber-500/10 hover:bg-amber-500/20 text-amber-300 text-xs rounded-lg transition-colors">
@@ -221,7 +222,7 @@
         </div>
 
         <div class="flex items-center gap-4 pt-4">
-            <button type="submit" class="inline-flex items-center justify-center px-6 py-2 bg-teal-500 hover:bg-teal-600 text-black font-bold rounded-lg transition-all duration-300 hover:shadow-lg hover:shadow-teal-500/20 font-display focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-900 focus:ring-teal-400">
+            <button id="submit-button" type="submit" class="inline-flex items-center justify-center px-6 py-2 bg-teal-500 hover:bg-teal-600 text-black font-bold rounded-lg transition-all duration-300 hover:shadow-lg hover:shadow-teal-500/20 font-display focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-900 focus:ring-teal-400">
                 Simpan Perubahan
             </button>
             @if (session('status') === 'profile-updated')
@@ -239,3 +240,36 @@
         </div>
     </form>
 </section>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const photoInput = document.getElementById('photo');
+        const submitButton = document.getElementById('submit-button');
+        const errorDiv = document.getElementById('photo-error');
+        
+        const maxSizeInMB = 2; // Batas ukuran file 2 MB
+        const maxSizeInBytes = maxSizeInMB * 1024 * 1024;
+
+        photoInput.addEventListener('change', function(event) {
+            const file = event.target.files[0];
+
+            // Selalu reset kondisi setiap kali user memilih file baru
+            errorDiv.textContent = '';
+            submitButton.disabled = false;
+            submitButton.style.opacity = '1';
+            submitButton.style.cursor = 'pointer';
+
+            if (file) {
+                if (file.size > maxSizeInBytes) {
+                    // Jika file terlalu besar
+                    errorDiv.textContent = `Ukuran file tidak boleh lebih dari ${maxSizeInMB}MB.`;
+                    submitButton.disabled = true; // Matikan tombol
+                    submitButton.style.opacity = '0.5'; // Buat tombol terlihat redup
+                    submitButton.style.cursor = 'not-allowed';
+
+                    // Kosongkan value input agar file besar tidak terkirim
+                    photoInput.value = '';
+                }
+            }
+        });
+    });
+</script>
